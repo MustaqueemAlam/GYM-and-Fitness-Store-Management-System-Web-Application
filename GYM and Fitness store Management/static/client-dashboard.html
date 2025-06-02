@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Dashboard - E-Fitness</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+    <div>
+      <!-- Logo + Title -->
+      <div class="flex items-center gap-3 mb-8">
+        <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
+        <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: User -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+          </svg>
+          Registration & Profile
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Credit Card -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect width="20" height="12" x="2" y="6" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+            <line x1="2" y1="10" x2="22" y2="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+          </svg>
+          Membership Subscription
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Calendar -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+          </svg>
+          Training Sessions
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Chart Line -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <polyline points="3 17 9 11 13 15 21 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+            <circle cx="3" cy="17" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="9" cy="11" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="13" cy="15" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="21" cy="7" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          </svg>
+          Daily Progress
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Chat -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          </svg>
+          Chat with Trainer
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Bell -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          </svg>
+          Notifications
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Shopping Cart -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+            <circle cx="7" cy="21" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="17" cy="21" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          </svg>
+          Fitness Store
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Document Text -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+            <path d="M4 4h16v16H4z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          </svg>
+          Subscription Management
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Target -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="12" cy="12" r="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+            <circle cx="12" cy="12" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          </svg>
+          Fitness Goals
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Heart -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+          </svg>
+          Body Measurements
+        </a>
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <!-- Icon: Newspaper -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+            <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+            <line x1="7" y1="16" x2="17" y2="16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+          </svg>
+          Fitness Articles & Resources
+        </a>
+      </nav>
+    </div>
+
+    <!-- Footer or logout -->
+    <div class="text-center text-xs text-gray-400 mt-6">
+      &copy; 2025 E-Fitness. All rights reserved.
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-1 p-8 overflow-auto">
+    <header class="mb-8 flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
+      <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Logout</button>
+    </header>
+
+    <!-- Dashboard stats -->
+	<section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+  <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-red-100 rounded-full">
+        <!-- Icon: User -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Active Sessions</p>
+        <p class="text-2xl font-semibold">12</p>
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm">
+      You’ve completed 12 workout sessions this week. Keep up the momentum!
+    </p>
+    <div class="w-full bg-gray-200 rounded-full h-2">
+      <div class="bg-red-600 h-2 rounded-full" style="width: 60%;"></div>
+    </div>
+    <p class="text-xs text-gray-400">60% of weekly goal completed</p>
+  </div>
+
+  <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-red-100 rounded-full">
+        <!-- Icon: Chart Line -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <polyline points="3 17 9 11 13 15 21 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+          <circle cx="3" cy="17" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          <circle cx="9" cy="11" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          <circle cx="13" cy="15" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+          <circle cx="21" cy="7" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Goals Achieved</p>
+        <p class="text-2xl font-semibold">7</p>
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm">
+      You have achieved 7 fitness goals so far. Great job reaching milestones!
+    </p>
+    <ul class="list-disc list-inside text-gray-500 text-xs">
+      <li>Run 5km in under 30 minutes</li>
+      <li>Workout 4 times a week</li>
+      <li>Complete yoga sessions</li>
+    </ul>
+  </div>
+
+  <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+    <div class="flex items-center gap-4">
+      <div class="p-3 bg-red-100 rounded-full">
+        <!-- Icon: Bell -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Unread Notifications</p>
+        <p class="text-2xl font-semibold">3</p>
+      </div>
+    </div>
+    <p class="text-gray-600 text-sm">
+      You have 3 unread notifications related to your workout plans and progress.
+    </p>
+    <ul class="text-xs text-gray-500">
+      <li>New workout plan available</li>
+      <li>Reminder: Hydration check</li>
+      <li>Message from your coach</li>
+    </ul>
+    <button class="mt-2 px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">
+      View All
+    </button>
+  </div>
+</section>
+     
+
+    <!-- Placeholder: Chart or content for Daily Progress -->
+    <section class="bg-white p-6 rounded shadow-md mb-10">
+      <h2 class="text-xl font-semibold mb-4 text-red-700">Daily Progress Chart</h2>
+      <canvas id="dailyProgressChart" height="150"></canvas>
+    </section>
+
+    <!-- More client-related content sections can go here -->
+  </main>
+
+  <script>
+    const ctx = document.getElementById('dailyProgressChart').getContext('2d');
+    const dailyProgressChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [{
+          label: 'Workout Minutes',
+          data: [30, 45, 60, 40, 70, 80, 50],
+          borderColor: '#dc2626',
+          backgroundColor: 'rgba(220, 38, 38, 0.2)',
+          fill: true,
+          tension: 0.3,
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          legend: {
+            labels: {
+              color: '#b91c1c'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

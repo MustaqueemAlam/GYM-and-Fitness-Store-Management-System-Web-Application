@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Fitness Login</title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" type="image/svg+xml" />
+
+  <!-- Your custom CSS -->
+  <link rel="stylesheet" href="./assets/css/style.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet" />
+  <!-- Ionicons CDN (this was missing) -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Tailwind custom input style */
+    .input {
+      @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
+    }
+  </style>
+</head>
+
+<body id="top" class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col">
+
+  <header class="header" data-header>
+    <div class="container">
+      <a href="index.html" class="logo">
+        <ion-icon name="barbell-sharp" aria-hidden="true" class="text-[#f94a4a] text-2xl"></ion-icon>
+        <span class="span">E- Fitness</span>
+      </a>
+      <nav class="navbar" data-navbar>
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+        </button>
+      </nav>
+      <a href="signup.html" class="btn btn-secondary">Sign-up</a>
+      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Background Gym GIF with overlay -->
+  <div class="absolute inset-0 -z-10">
+    <img src="./assets/images/bg.gif" alt="Gym Background GIF" class="w-full h-full object-cover opacity-40" />
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+  </div>
+
+
+  <!-- Login Form Section -->
+  <main class="flex-grow flex items-center justify-center px-4 py-24 min-h-screen">
+    <section
+      class="relative z-10 w-full max-w-3xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a]"
+    >
+      <h1
+        class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
+      >
+        E-Fitness Login
+      </h1>
+      <form id="loginForm" class="space-y-6" novalidate>
+        
+        <div>
+          <label for="email" class="font-semibold mb-1 block">Email</label>
+          <input id="email" name="email" type="email" required class="input" />
+        </div>
+
+        <div>
+          <label for="password" class="font-semibold mb-1 block">Password</label>
+          <input id="password" name="password" type="password" required class="input" />
+        </div>
+
+        <div>
+          <label for="userType" class="font-semibold mb-1 block">User Type</label>
+          <select id="userType" name="userType" required class="input">
+            <option value="" disabled selected>Select User Type</option>
+            <option>Admin</option>
+            <option>Trainer</option>
+            <option>Client</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
+        >
+          Login
+        </button>
+      </form>
+
+      <div class="text-center mt-6">
+        <a href="index.html" class="text-[#f94a4a] hover:underline">← Return to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Simple JS for nav toggle and alert -->
+  <script>
+    // Toggle Navbar on Mobile
+    const navToggler = document.querySelectorAll('[data-nav-toggler]');
+    const navbar = document.querySelector('[data-navbar]');
+    navToggler.forEach(btn =>
+      btn.addEventListener('click', () => {
+        navbar.classList.toggle('hidden');
+      })
+    );
+
+    // Login form submission alert
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = this.email.value;
+      const userType = this.userType.value;
+      alert(`Welcome back, ${email}!\nUser Type: ${userType}`);
+      this.reset();
+    });
+  </script>
+</body>
+
+</html>
