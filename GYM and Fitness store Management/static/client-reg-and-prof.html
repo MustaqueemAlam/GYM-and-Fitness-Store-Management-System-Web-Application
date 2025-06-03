@@ -19,7 +19,7 @@
 
       <!-- Navigation -->
       <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-        <a href="client-reg-and-prof.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
           <!-- Icon: User -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
@@ -122,167 +122,99 @@
   </aside>
 
  
-    <main class="flex-1 p-8 overflow-auto">
-      <header class="mb-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
-        <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Logout</button>
-      </header>
+<main class="flex-1 p-8 overflow-auto">
+  <section class="bg-white p-6 rounded shadow-md border border-gray-300 max-w-2xl mx-auto">
+    <h2 class="text-2xl font-bold text-red-600 mb-6">Your Profile</h2>
 
-      <!-- Identity Card -->
-      <section class="mb-10 bg-white p-6 rounded shadow-md border border-gray-300 max-w-md">
-        <h2 class="text-xl font-semibold mb-4 text-red-700">Your Identity Card</h2>
-        <div class="flex items-center gap-4">
-          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" alt="User Avatar" class="w-20 h-20 rounded-full border border-red-600" />
-          <div>
-            <p class="text-lg font-semibold text-gray-800" id="userName">Loading...</p>
-            <p class="text-gray-600" id="userEmail">Loading email...</p>
-            <p class="text-gray-600" id="userId">ID: Loading...</p>
-          </div>
-        </div>
-      </section>
-
-    
-
-        <!-- Dashboard stats -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
-        <div class="flex items-center gap-4">
-          <div class="p-3 bg-red-100 rounded-full">
-            <!-- Icon: User -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Active Sessions</p>
-            <p class="text-2xl font-semibold">12</p>
-          </div>
-        </div>
-        <p class="text-gray-600 text-sm">
-          You’ve completed 12 workout sessions this week. Keep up the momentum!
-        </p>
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div class="bg-red-600 h-2 rounded-full" style="width: 60%;"></div>
-        </div>
-        <p class="text-xs text-gray-400">60% of weekly goal completed</p>
+    <form id="profileForm" enctype="multipart/form-data" class="grid grid-cols-1 gap-6 md:grid-cols-2">
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+        <input type="text" name="FullName" id="FullName" class="mt-1 input" required />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" name="Email" id="Email" class="mt-1 input" disabled />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Phone</label>
+        <input type="text" name="Phone" id="Phone" class="mt-1 input" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">City</label>
+        <input type="text" name="City" id="City" class="mt-1 input" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Country</label>
+        <input type="text" name="Country" id="Country" class="mt-1 input" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Address</label>
+        <textarea name="Address" id="Address" rows="2" class="mt-1 input"></textarea>
       </div>
 
-      <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
-        <div class="flex items-center gap-4">
-          <div class="p-3 bg-red-100 rounded-full">
-            <!-- Icon: Chart Line -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <polyline points="3 17 9 11 13 15 21 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
-              <circle cx="3" cy="17" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="9" cy="11" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="13" cy="15" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="21" cy="7" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Goals Achieved</p>
-            <p class="text-2xl font-semibold">7</p>
-          </div>
-        </div>
-        <p class="text-gray-600 text-sm">
-          You have achieved 7 fitness goals so far. Great job reaching milestones!
-        </p>
-        <ul class="list-disc list-inside text-gray-500 text-xs">
-          <li>Run 5km in under 30 minutes</li>
-          <li>Workout 4 times a week</li>
-          <li>Complete yoga sessions</li>
-        </ul>
+      <!-- Profile Picture -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Profile Picture</label>
+        <input type="file" name="ProfilePic" id="ProfilePic" class="mt-1" />
+        <img id="profilePreview" src="" alt="Profile Picture" class="mt-2 w-24 h-24 rounded-full border border-red-500 object-cover" />
       </div>
 
-      <div class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
-        <div class="flex items-center gap-4">
-          <div class="p-3 bg-red-100 rounded-full">
-            <!-- Icon: Bell -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm text-gray-500">Unread Notifications</p>
-            <p class="text-2xl font-semibold">3</p>
-          </div>
-        </div>
-        <p class="text-gray-600 text-sm">
-          You have 3 unread notifications related to your workout plans and progress.
-        </p>
-        <ul class="text-xs text-gray-500">
-          <li>New workout plan available</li>
-          <li>Reminder: Hydration check</li>
-          <li>Message from your coach</li>
-        </ul>
-        <button class="mt-2 px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">
-          View All
+      <div class="md:col-span-2 text-right">
+        <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+          Update Profile
         </button>
       </div>
-    </section>
-     
-
-    <!-- Placeholder: Chart or content for Daily Progress -->
-    <section class="bg-white p-6 rounded shadow-md mb-10">
-      <h2 class="text-xl font-semibold mb-4 text-red-700">Daily Progress Chart</h2>
-      <canvas id="dailyProgressChart" height="150"></canvas>
-    </section>
-
-    <!-- More client-related content sections can go here -->
-  </main>
-
-  <script>
-    fetch('/profile', {
-      method: 'GET',
-      credentials: 'include'  // 🔥 REQUIRED to send session cookie
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Not authorized or session expired');
-      return res.json();
-    })
-    .then(data => {
-      if (data.success) {
-        const user = data.user;
-        document.getElementById('userName').textContent = user.FullName;
-        document.getElementById('userEmail').textContent = user.Email;
-        document.getElementById('userId').textContent = `ID: ${user.ClientID}`;
-        document.getElementById('welcomeMsg').textContent = `Welcome Back, ${user.FullName}!`;
-      } else {
-        alert(data.message);
-      }
-    })
-  
+    </form>
+  </section>
+</main>
 
 
-    const ctx = document.getElementById('dailyProgressChart').getContext('2d');
-    const dailyProgressChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-          label: 'Workout Minutes',
-          data: [30, 45, 60, 40, 70, 80, 50],
-          borderColor: '#dc2626',
-          backgroundColor: 'rgba(220, 38, 38, 0.2)',
-          fill: true,
-          tension: 0.3,
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#b91c1c'
+        <script>
+            
+        // Load profile data
+        fetch('/profile')
+            .then(res => res.json())
+            .then(data => {
+            if (data.success) {
+                const user = data.user;
+
+                for (const key in user) {
+                const input = document.getElementById(key);
+                if (input && key !== 'ProfilePic') {
+                    input.value = user[key] ?? '';
+                }
+                }
+
+                // Load profile image if available
+                if (user.ProfilePic && document.getElementById('profilePreview')) {
+                document.getElementById('profilePreview').src = `data:image/jpeg;base64,${user.ProfilePic}`;
+                }
+            } else {
+                alert('Failed to load profile');
             }
-          }
-        }
-      }
-    });
-  </script>
+            });
+
+        // Handle profile update
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            try {
+            const res = await fetch('/update-profile', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await res.json();
+            alert(result.message);
+            } catch (err) {
+            console.error(err);
+            alert('Update failed');
+            }
+        });
+        </script>
+</main>
+
 </body>
 </html>

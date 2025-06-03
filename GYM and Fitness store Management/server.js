@@ -6,8 +6,11 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const cors = require('cors');
+const upload = multer(); //FOR EDITING DP
 
-// Allow frontend origin and credentials
+
+
+
 app.use(cors({
   origin: 'http://localhost:4444',
   credentials: true
@@ -145,12 +148,18 @@ app.get('/profile', async (req, res) => {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
   }
   try {
-    const [rows] = await pool.execute('SELECT ClientID, FullName, Email FROM clients WHERE ClientID = ?', [req.session.userId]);
+    const [rows] = await pool.execute(`
+      SELECT 
+        ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country,
+        TO_BASE64(ProfilePic) AS ProfilePic  -- convert binary to base64 for front-end
+      FROM clients WHERE ClientID = ?
+    `, [req.session.userId]);
+
     if (rows.length === 0) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
-    const user = rows[0];
-    res.json({ success: true, user });
+
+    res.json({ success: true, user: rows[0] });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error' });
@@ -161,6 +170,78 @@ app.get('/profile', async (req, res) => {
 
 
 
+// app.get('/profile', async (req, res) => {
+//   if (!req.session.userId) {
+//     return res.status(401).json({ success: false, message: 'Unauthorized' });
+//   }
+
+//   try {
+//     const [rows] = await pool.execute(`
+//       SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country
+//       FROM clients WHERE ClientID = ?`, [req.session.userId]);
+
+//     if (rows.length === 0) {
+//       return res.status(404).json({ success: false, message: 'User not found' });
+//     }
+
+//     res.json({ success: true, user: rows[0] });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, message: 'Server error' });
+//   }
+// });
+
+
+
+// app.post('/update-profile', express.urlencoded({ extended: true }), async (req, res) => {
+//   if (!req.session.userId) {
+//     return res.status(401).json({ success: false, message: 'Unauthorized' });
+//   }
+
+//   const { FullName, Phone, City, Country, Address } = req.body;
+
+//   try {
+//     await pool.execute(`
+//       UPDATE clients SET FullName = ?, Phone = ?, City = ?, Country = ?, Address = ?
+//       WHERE ClientID = ?`, [FullName, Phone, City, Country, Address, req.session.userId]);
+
+//     res.json({ success: true, message: 'Profile updated successfully' });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ success: false, message: 'Failed to update profile' });
+//   }
+// });
+
+
+app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { FullName, Phone, City, Country, Address } = req.body;
+  const profilePicBuffer = req.file ? req.file.buffer : null;
+
+  try {
+    if (profilePicBuffer) {
+      await pool.execute(`
+        UPDATE clients 
+        SET FullName = ?, Phone = ?, City = ?, Country = ?, Address = ?, ProfilePic = ?
+        WHERE ClientID = ?`,
+        [FullName, Phone, City, Country, Address, profilePicBuffer, req.session.userId]);
+    } else {
+      await pool.execute(`
+        UPDATE clients 
+        SET FullName = ?, Phone = ?, City = ?, Country = ?, Address = ?
+        WHERE ClientID = ?`,
+        [FullName, Phone, City, Country, Address, req.session.userId]);
+    }
+
+    res.json({ success: true, message: 'Profile updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Failed to update profile' });
+  }
+});
 
 
 
