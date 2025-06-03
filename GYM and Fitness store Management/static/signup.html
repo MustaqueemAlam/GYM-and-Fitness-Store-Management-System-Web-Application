@@ -19,8 +19,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet" />
 
   <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
   <style>
     /* Tailwind custom input style */
     .input {
@@ -30,7 +31,6 @@
 </head>
 
 <body id="top" class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col">
-
 
   <header class="header" data-header>
     <div class="container">
@@ -59,102 +59,160 @@
   </div>
 
   <!-- Signup Container -->
-<main class="flex-grow flex items-center justify-center px-4 py-12">
-  <section
-    class="relative z-10 w-full max-w-3xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a]"
-  >
-    <h1
-      class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
+  <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <section
+      class="relative z-10 w-full max-w-3xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a]"
     >
-      E-Fitness Signup
-    </h1>
-    <form id="signupForm" class="space-y-6" enctype="multipart/form-data" novalidate>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div>
-          <label for="fullname" class="font-semibold mb-1 block">Full Name</label>
-          <input id="fullname" name="fullname" type="text" required class="input" />
-        </div>
-        <div>
-          <label for="email" class="font-semibold mb-1 block">Email</label>
-          <input id="email" name="email" type="email" required class="input" />
-        </div>
-
-        <div>
-          <label for="password" class="font-semibold mb-1 block">Password</label>
-          <input id="password" name="password" type="password" required class="input" />
-        </div>
-        <div>
-          <label for="phone" class="font-semibold mb-1 block">Phone</label>
-          <input id="phone" name="phone" type="tel" required class="input" />
-        </div>
-
-        <div>
-          <label for="gender" class="font-semibold mb-1 block">Gender</label>
-          <select id="gender" name="gender" required class="input">
-            <option value="" disabled selected>Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div>
-          <label for="dob" class="font-semibold mb-1 block">Date of Birth</label>
-          <input id="dob" name="dob" type="date" required class="input" />
-        </div>
-
-        <div>
-          <label for="city" class="font-semibold mb-1 block">City</label>
-          <input id="city" name="city" type="text" required class="input" />
-        </div>
-        <div>
-          <label for="country" class="font-semibold mb-1 block">Country</label>
-          <input id="country" name="country" type="text" required class="input" />
-        </div>
-      </div>
-
-      <div>
-        <label for="address" class="font-semibold mb-1 block">Address</label>
-        <textarea id="address" name="address" rows="2" required class="input"></textarea>
-      </div>
-
-      <div>
-        <label for="profilePic" class="font-semibold mb-1 block">Profile Picture</label>
-        <input
-          id="profilePic"
-          name="profilePic"
-          type="file"
-          accept="image/*"
-          required
-          class="input file:py-1 file:px-4 file:bg-[#f94a4a] file:text-white file:border-0 file:rounded cursor-pointer"
-        />
-      </div>
-
-      <button
-        type="submit"
-        class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
+      <h1
+        class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
       >
-        Sign Up
-      </button>
-    </form>
+        E-Fitness Signup
+      </h1>
+      <form id="signupForm" class="space-y-6" enctype="multipart/form-data" novalidate>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="fullname" class="font-semibold mb-1 block">Full Name</label>
+            <input id="fullname" name="FullName" type="text" required class="input" />
+          </div>
+          <div>
+            <label for="email" class="font-semibold mb-1 block">Email</label>
+            <input id="email" name="Email" type="email" required class="input" />
+          </div>
 
-    <div class="text-center mt-6">
-      <a href="index.html" class="text-[#f94a4a] hover:underline">← Return to Home</a>
-    </div>
-  </section>
-</main>
+          <div>
+            <label for="password" class="font-semibold mb-1 block">Password</label>
+            <input id="password" name="Password" type="password" required class="input" />
+          </div>
+          <div>
+            <label for="phone" class="font-semibold mb-1 block">Phone</label>
+            <input id="phone" name="Phone" type="text" required class="input" />
+          </div>
+
+  <div>
+  <label class="font-semibold mb-1 block">Gender</label>
+  <div class="flex items-center space-x-4">
+    <label class="inline-flex items-center">
+      <input type="radio" name="Gender" value="Male" required class="mr-2" />
+      Male
+    </label>
+    <label class="inline-flex items-center">
+      <input type="radio" name="Gender" value="Female" class="mr-2" />
+      Female
+    </label>
+  </div>
+</div>
+          <div> 
+            <label for="dob" class="font-semibold mb-1 block">Date of Birth</label>
+            <input id="dob" name="DOB" type="text" required class="input" placeholder="Select your DOB" />
+
+          </div>
+
+          <div>
+            <label for="city" class="font-semibold mb-1 block">City</label>
+            <input id="city" name="City" type="text" required class="input" />
+          </div>
+          <div>
+            <label for="country" class="font-semibold mb-1 block">Country</label>
+            <input id="country" name="Country" type="text" required class="input" />
+          </div>
+        </div>
+
+        <div>
+          <label for="address" class="font-semibold mb-1 block">Address</label>
+          <textarea id="address" name="Address" rows="2" required class="input"></textarea>
+        </div>
+
+        <div>
+          <label for="profilePic" class="font-semibold mb-1 block">Profile Picture</label>
+          <input
+            id="profilePic"
+            name="ProfilePic"
+            type="file"
+            accept="image/*"
+            class="input file:py-1 file:px-4 file:bg-[#f94a4a] file:text-white file:border-0 file:rounded cursor-pointer"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
+        >
+          Sign Up
+        </button>
+      </form>
+
+      <div class="text-center mt-6">
+        <a href="index.html" class="text-[#f94a4a] hover:underline">← Return to Home</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      try {
+        const response = await fetch('/signup', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: data.message,
+            confirmButtonText: 'OK',
+          });
+          this.reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.message || 'Signup failed',
+            confirmButtonText: 'OK',
+          });
+        }
+      } catch (err) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Server Error',
+          text: 'An unexpected error occurred. Please try again later.',
+          confirmButtonText: 'OK',
+        });
+      }
+    });
+    
+  </script>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+  flatpickr("#dob", {
+    dateFormat: "Y-m-d",
+    maxDate: "today",
+    defaultDate: null,
+  });
+</script>
 
 
   <script>
-    document.getElementById("signupForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const name = this.fullname.value;
-      alert(`Thank you for signing up, ${name}!`);
-      this.reset();
-    });
-  </script>
+  // Auto-set gender input from radio buttons
+  const genderRadios = document.querySelectorAll('input[name="genderRadio"]');
+  const genderInput = document.getElementById('gender');
 
-  <!-- Ionicons CDN -->
+  genderRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      genderInput.value = radio.value;
+    });
+  });
+</script>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

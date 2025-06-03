@@ -7,7 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>E-Fitness Login</title>
 
-  <!-- Favicon -->
+
+  <!-- SweetAlert2 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" type="image/svg+xml" />
 
   <!-- Your custom CSS -->
@@ -17,9 +21,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet" />
-  <!-- Ionicons CDN (this was missing) -->
+
+  <!-- Ionicons CDN -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -59,7 +65,6 @@
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
   </div>
 
-
   <!-- Login Form Section -->
   <main class="flex-grow flex items-center justify-center px-4 py-24 min-h-screen">
     <section
@@ -71,7 +76,7 @@
         E-Fitness Login
       </h1>
       <form id="loginForm" class="space-y-6" novalidate>
-        
+
         <div>
           <label for="email" class="font-semibold mb-1 block">Email</label>
           <input id="email" name="email" type="email" required class="input" />
@@ -106,26 +111,73 @@
     </section>
   </main>
 
-  <!-- Simple JS for nav toggle and alert -->
-  <script>
-    // Toggle Navbar on Mobile
-    const navToggler = document.querySelectorAll('[data-nav-toggler]');
-    const navbar = document.querySelector('[data-navbar]');
-    navToggler.forEach(btn =>
-      btn.addEventListener('click', () => {
-        navbar.classList.toggle('hidden');
-      })
-    );
+<script>
+  // Toggle Navbar on Mobile
+  const navToggler = document.querySelectorAll('[data-nav-toggler]');
+  const navbar = document.querySelector('[data-navbar]');
+  navToggler.forEach(btn =>
+    btn.addEventListener('click', () => {
+      navbar.classList.toggle('hidden');
+    })
+  );
 
-    // Login form submission alert
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const email = this.email.value;
-      const userType = this.userType.value;
-      alert(`Welcome back, ${email}!\nUser Type: ${userType}`);
-      this.reset();
-    });
-  </script>
+  // Login form submission handler with fetch POST to /login
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
+    const userType = e.target.userType.value;
+
+    if (!email || !password || !userType) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+      const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email, password, userType }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Show SweetAlert success with loading spinner
+        Swal.fire({
+          title: 'Logging you in...',
+          html: 'Please wait a moment',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+          willClose: () => {
+            // After 3 sec, redirect
+            sessionStorage.setItem('clientId', data.clientId);
+            sessionStorage.setItem('userType', data.userType);
+            sessionStorage.setItem('name', data.message.replace('Welcome back, ', '').replace('!', ''));
+
+            window.location.href = 'client-dashboard.html';
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Login failed',
+          text: data.message,
+        });
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Network error',
+        text: 'Please try again later.',
+      });
+      console.error(error);
+    }
+  });
+</script>
 </body>
-
 </html>
