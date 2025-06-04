@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const cors = require('cors');
-const upload = multer(); //FOR EDITING DP
+ 
 
 
 
@@ -166,51 +166,7 @@ app.get('/profile', async (req, res) => {
   }
 });
 
-
-
-
-
-// app.get('/profile', async (req, res) => {
-//   if (!req.session.userId) {
-//     return res.status(401).json({ success: false, message: 'Unauthorized' });
-//   }
-
-//   try {
-//     const [rows] = await pool.execute(`
-//       SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country
-//       FROM clients WHERE ClientID = ?`, [req.session.userId]);
-
-//     if (rows.length === 0) {
-//       return res.status(404).json({ success: false, message: 'User not found' });
-//     }
-
-//     res.json({ success: true, user: rows[0] });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, message: 'Server error' });
-//   }
-// });
-
-
-
-// app.post('/update-profile', express.urlencoded({ extended: true }), async (req, res) => {
-//   if (!req.session.userId) {
-//     return res.status(401).json({ success: false, message: 'Unauthorized' });
-//   }
-
-//   const { FullName, Phone, City, Country, Address } = req.body;
-
-//   try {
-//     await pool.execute(`
-//       UPDATE clients SET FullName = ?, Phone = ?, City = ?, Country = ?, Address = ?
-//       WHERE ClientID = ?`, [FullName, Phone, City, Country, Address, req.session.userId]);
-
-//     res.json({ success: true, message: 'Profile updated successfully' });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, message: 'Failed to update profile' });
-//   }
-// });
+ 
 
 
 app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
@@ -243,6 +199,125 @@ app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
   }
 });
 
+
+app.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Session destruction failed:', err);
+      return res.status(500).json({ success: false, message: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid'); // name of default session cookie
+    res.json({ success: true, message: 'Logged out successfully' });
+  });
+});
+
+app.get('/api/virtualclasses', async (req, res) => {
+  try {
+    const [rows] = await pool.execute(`
+      SELECT ClassID, Title, Description, StartTime, DurationMinutes, Platform, JoinLink 
+      FROM virtualclasses
+      ORDER BY StartTime ASC
+    `);
+    res.json({ success: true, classes: rows });
+  } catch (err) {
+    console.error('Error fetching virtual classes:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+
+
+app.get('/api/healthlog', async (req, res) => {
+  const clientId = req.session.userId;
+  const [rows] = await pool.execute(`
+    SELECT * FROM healthlogs 
+    WHERE ClientID = ? 
+    ORDER BY LogDate DESC 
+    LIMIT 1
+  `, [clientId]);
+
+  res.json({ success: true, log: rows[0] || null });
+});
+
+app.get('/api/attendance', async (req, res) => {
+  const clientId = req.session.userId;
+  const [rows] = await pool.execute(`
+    SELECT * FROM attendance 
+    WHERE ClientID = ? 
+    ORDER BY CheckInTime DESC 
+    LIMIT 7
+  `, [clientId]);
+
+  res.json({ success: true, records: rows });
+});
+
+app.post('/api/attendance/checkin', async (req, res) => {
+  const clientId = req.session.userId;
+  if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
+
+  try {
+    // Check if already checked in today
+    const today = new Date().toISOString().slice(0, 10);
+    const [existing] = await pool.execute(
+      `SELECT * FROM attendance WHERE ClientID = ? AND DATE(CheckInTime) = ?`, [clientId, today]
+    );
+
+    if (existing.length > 0) {
+      return res.json({ success: false, message: 'Already checked in today' });
+    }
+
+    await pool.execute(
+      `INSERT INTO attendance (ClientID, CheckInTime, Method) VALUES (?, NOW(), 'Manual')`,
+      [clientId]
+    );
+
+    res.json({ success: true, message: 'Checked in successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Check-in failed' });
+  }
+});
+
+app.post('/api/attendance/checkout', async (req, res) => {
+  const clientId = req.session.userId;
+  if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
+
+  try {
+    // Use server's current date (adjust if needed)
+    const [recordResult] = await pool.execute(`
+      SELECT * FROM attendance
+      WHERE ClientID = ? AND DATE(CheckInTime) = CURDATE()
+      ORDER BY CheckInTime DESC
+      LIMIT 1
+    `, [clientId]);
+
+    if (recordResult.length === 0) {
+      return res.json({ success: false, message: 'No check-in record found for today.' });
+    }
+
+    const record = recordResult[0];
+
+    if (record.CheckOutTime) {
+      return res.json({ success: false, message: 'Already checked out.' });
+    }
+
+    const now = new Date();
+    const checkIn = new Date(record.CheckInTime);
+    if (now <= checkIn) {
+      return res.json({ success: false, message: 'Check-out must be after check-in.' });
+    }
+
+    await pool.execute(
+      `UPDATE attendance SET CheckOutTime = NOW() WHERE AttendanceID = ?`,
+      [record.AttendanceID]
+    );
+
+    res.json({ success: true, message: 'Checked out successfully.' });
+  } catch (err) {
+    console.error('Check-out error:', err);
+    res.status(500).json({ success: false, message: 'Server error during check-out.' });
+  }
+});
 
 
 

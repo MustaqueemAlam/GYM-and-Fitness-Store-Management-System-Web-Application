@@ -44,7 +44,7 @@
           </svg>
           Training Sessions
         </a>
-        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+        <a href="client-daily-progress.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
           <!-- Icon: Chart Line -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <polyline points="3 17 9 11 13 15 21 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
@@ -102,7 +102,7 @@
           </svg>
           Body Measurements
         </a>
-        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+        <a href="client-virtual-classes.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
           <!-- Icon: Newspaper -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
@@ -110,12 +110,11 @@
             <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
             <line x1="7" y1="16" x2="17" y2="16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
           </svg>
-          Fitness Articles & Resources
+          Virtual classes
         </a>
       </nav>
     </div>
-
-    <!-- Footer or logout -->
+ 
     <div class="text-center text-xs text-gray-400 mt-6">
       &copy; 2025 E-Fitness. All rights reserved.
     </div>
@@ -125,14 +124,16 @@
     <main class="flex-1 p-8 overflow-auto">
       <header class="mb-8 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
-        <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">Logout</button>
+<button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+  Logout
+</button>
       </header>
 
       <!-- Identity Card -->
       <section class="mb-10 bg-white p-6 rounded shadow-md border border-gray-300 max-w-md">
         <h2 class="text-xl font-semibold mb-4 text-red-700">Your Identity Card</h2>
         <div class="flex items-center gap-4">
-          <img src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" alt="User Avatar" class="w-20 h-20 rounded-full border border-red-600" />
+          <img id="profilePic"  src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png" alt="User Avatar" class="w-20 h-20 rounded-full border border-red-600" />
           <div>
             <p class="text-lg font-semibold text-gray-800" id="userName">Loading...</p>
             <p class="text-gray-600" id="userEmail">Loading email...</p>
@@ -222,16 +223,18 @@
     </section>
      
 
-    <!-- Placeholder: Chart or content for Daily Progress -->
+   
     <section class="bg-white p-6 rounded shadow-md mb-10">
       <h2 class="text-xl font-semibold mb-4 text-red-700">Daily Progress Chart</h2>
       <canvas id="dailyProgressChart" height="150"></canvas>
     </section>
 
-    <!-- More client-related content sections can go here -->
+  
   </main>
 
   <script>
+
+    
     fetch('/profile', {
       method: 'GET',
       credentials: 'include'  // 🔥 REQUIRED to send session cookie
@@ -282,7 +285,97 @@
           }
         }
       }
+
+
+      
     });
   </script>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      const res = await fetch('/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        await Swal.fire({
+          icon: 'success',
+          title: 'Logged out',
+          text: result.message,
+          timer: 2000,
+          showConfirmButton: false
+        });
+
+        window.location.href = 'login.html';
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Logout Failed',
+          text: result.message || 'Something went wrong!'
+        });
+      }
+    } catch (err) {
+      console.error('Logout failed:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Logout Error',
+        text: 'Logout request failed.'
+      });
+    }
+  });
+</script>
+<script>
+fetch('/profile')
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      const user = data.user;
+
+      // Fill form inputs
+      for (const key in user) {
+        const input = document.getElementById(key);
+        if (input && key !== 'ProfilePic') {
+          input.value = user[key] ?? '';
+        }
+      }
+
+      // Identity Card
+      document.getElementById('userName').textContent = user.FullName ?? 'N/A';
+      document.getElementById('userEmail').textContent = user.Email ?? 'N/A';
+      document.getElementById('userId').textContent = `ID: ${user.ClientID ?? 'N/A'}`;
+
+      // Profile Picture
+      const base64Image = user.ProfilePic;
+      if (base64Image) {
+        const imageSrc = `data:image/jpeg;base64,${base64Image}`;
+        const profilePreview = document.getElementById('profilePreview');
+        const identityPic = document.getElementById('profilePic');
+        if (profilePreview) profilePreview.src = imageSrc;
+        if (identityPic) identityPic.src = imageSrc;
+      }
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: data.message || 'Failed to load profile'
+      });
+    }
+  })
+  .catch(err => {
+    console.error('Profile fetch error:', err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Could not load profile data.'
+    });
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

@@ -19,7 +19,7 @@
 
       <!-- Navigation -->
       <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-        <a href="#" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+        <a href="client-reg-and-prof.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
           <!-- Icon: User -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
@@ -114,107 +114,75 @@
         </a>
       </nav>
     </div>
-
-    <!-- Footer or logout -->
+ 
     <div class="text-center text-xs text-gray-400 mt-6">
       &copy; 2025 E-Fitness. All rights reserved.
     </div>
   </aside>
 
  
-<main class="flex-1 p-8 overflow-auto">
-  <section class="bg-white p-6 rounded shadow-md border border-gray-300 max-w-2xl mx-auto">
-    <h2 class="text-2xl font-bold text-red-600 mb-6">Your Profile</h2>
+    <main class="flex-1 p-8 overflow-auto">
+      <header class="mb-8 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
+<button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+  Logout
+</button>
+      </header>
 
-    <form id="profileForm" enctype="multipart/form-data" class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Full Name</label>
-        <input type="text" name="FullName" id="FullName" class="mt-1 input" required />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Email</label>
-        <input type="email" name="Email" id="Email" class="mt-1 input" disabled />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Phone</label>
-        <input type="text" name="Phone" id="Phone" class="mt-1 input" />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">City</label>
-        <input type="text" name="City" id="City" class="mt-1 input" />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Country</label>
-        <input type="text" name="Country" id="Country" class="mt-1 input" />
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Address</label>
-        <textarea name="Address" id="Address" rows="2" class="mt-1 input"></textarea>
-      </div>
+<section class="bg-white p-6 rounded shadow border mb-6">
+  <h2 class="text-xl font-semibold text-red-600 mb-4">Membership Subscription</h2>
+  <div class="space-y-2">
+    <p class="text-gray-700">Plan: <span id="planName" class="font-semibold">Loading...</span></p>
+    <p class="text-gray-700">Duration: <span id="planDuration" class="font-semibold">--</span> days</p>
+    <p class="text-gray-700">Status: <span id="subscriptionStatus" class="text-green-600 font-semibold">Active</span></p>
+    <p class="text-gray-700">Valid Till: <span id="endDate" class="font-semibold">--</span></p>
+  </div>
+</section>
 
-      <!-- Profile Picture -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700">Profile Picture</label>
-        <input type="file" name="ProfilePic" id="ProfilePic" class="mt-1" />
-        <img id="profilePreview" src="" alt="Profile Picture" class="mt-2 w-24 h-24 rounded-full border border-red-500 object-cover" />
-      </div>
-
-      <div class="md:col-span-2 text-right">
-        <button type="submit" class="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
-          Update Profile
-        </button>
-      </div>
-    </form>
-  </section>
-</main>
+  </main>
 
 
-        <script>
-            
-        // Load profile data
-        fetch('/profile')
-            .then(res => res.json())
-            .then(data => {
-            if (data.success) {
-                const user = data.user;
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+      const res = await fetch('/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-                for (const key in user) {
-                const input = document.getElementById(key);
-                if (input && key !== 'ProfilePic') {
-                    input.value = user[key] ?? '';
-                }
-                }
+      const result = await res.json();
 
-                // Load profile image if available
-                if (user.ProfilePic && document.getElementById('profilePreview')) {
-                document.getElementById('profilePreview').src = `data:image/jpeg;base64,${user.ProfilePic}`;
-                }
-            } else {
-                alert('Failed to load profile');
-            }
-            });
-
-        // Handle profile update
-        document.getElementById('profileForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(e.target);
-
-            try {
-            const res = await fetch('/update-profile', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await res.json();
-            alert(result.message);
-            } catch (err) {
-            console.error(err);
-            alert('Update failed');
-            }
+      if (result.success) {
+        await Swal.fire({
+          icon: 'success',
+          title: 'Logged out',
+          text: result.message,
+          timer: 2000,
+          showConfirmButton: false
         });
-        </script>
-</main>
+
+        window.location.href = 'login.html';
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Logout Failed',
+          text: result.message || 'Something went wrong!'
+        });
+      }
+    } catch (err) {
+      console.error('Logout failed:', err);
+      Swal.fire({
+        icon: 'error',
+        title: 'Logout Error',
+        text: 'Logout request failed.'
+      });
+    }
+  });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>
