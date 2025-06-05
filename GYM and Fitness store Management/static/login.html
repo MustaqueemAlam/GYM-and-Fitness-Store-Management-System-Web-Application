@@ -90,10 +90,10 @@
         <div>
           <label for="userType" class="font-semibold mb-1 block">User Type</label>
           <select id="userType" name="userType" required class="input">
-            <option value="" disabled selected>Select User Type</option>
-            <option>Admin</option>
-            <option>Trainer</option>
-            <option>Client</option>
+            <option value="">Select User Type</option>
+            <option value="client">Client</option>
+            <option value="admin">Admin</option>
+            <option value="trainer">Trainer</option>
           </select>
         </div>
 
@@ -105,79 +105,15 @@
         </button>
       </form>
 
+
       <div class="text-center mt-6">
         <a href="index.html" class="text-[#f94a4a] hover:underline">← Return to Home</a>
       </div>
     </section>
   </main>
 
-<script>
-  // Toggle Navbar on Mobile
-  const navToggler = document.querySelectorAll('[data-nav-toggler]');
-  const navbar = document.querySelector('[data-navbar]');
-  navToggler.forEach(btn =>
-    btn.addEventListener('click', () => {
-      navbar.classList.toggle('hidden');
-    })
-  );
 
-  // Login form submission handler with fetch POST to /login
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
 
-    const email = e.target.email.value.trim();
-    const password = e.target.password.value.trim();
-    const userType = e.target.userType.value;
-
-    if (!email || !password || !userType) {
-      alert("Please fill all fields.");
-      return;
-    }
-
-    try {
-      const res = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email, password, userType }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        // Show SweetAlert success with loading spinner
-        Swal.fire({
-          title: 'Logging you in...',
-          html: 'Please wait a moment',
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-          willClose: () => {
-            // After 3 sec, redirect
-            sessionStorage.setItem('clientId', data.clientId);
-            sessionStorage.setItem('userType', data.userType);
-            sessionStorage.setItem('name', data.message.replace('Welcome back, ', '').replace('!', ''));
-
-            window.location.href = 'client-dashboard.html';
-          }
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Login failed',
-          text: data.message,
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Network error',
-        text: 'Please try again later.',
-      });
-      console.error(error);
-    }
-  });
-</script>
+<script src="login.js"></script>
 </body>
 </html>

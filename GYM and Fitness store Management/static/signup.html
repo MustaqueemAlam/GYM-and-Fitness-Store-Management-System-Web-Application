@@ -146,72 +146,15 @@
       </div>
     </section>
   </main>
-  <script>
-    document.getElementById("signupForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-
-      const formData = new FormData(this);
-
-      try {
-        const response = await fetch('/signup', {
-          method: 'POST',
-          body: formData,
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: data.message,
-            confirmButtonText: 'OK',
-          });
-          this.reset();
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: data.message || 'Signup failed',
-            confirmButtonText: 'OK',
-          });
-        }
-      } catch (err) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Server Error',
-          text: 'An unexpected error occurred. Please try again later.',
-          confirmButtonText: 'OK',
-        });
-      }
-    });
-    
-  </script>
 
 
 
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-  flatpickr("#dob", {
-    dateFormat: "Y-m-d",
-    maxDate: "today",
-    defaultDate: null,
-  });
-</script>
 
 
-  <script>
-  // Auto-set gender input from radio buttons
-  const genderRadios = document.querySelectorAll('input[name="genderRadio"]');
-  const genderInput = document.getElementById('gender');
+<script src="signup.js"></script>
 
-  genderRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      genderInput.value = radio.value;
-    });
-  });
-</script>
 
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

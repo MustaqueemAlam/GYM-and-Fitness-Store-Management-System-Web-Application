@@ -103,46 +103,101 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
   }
 });
 // Login POST handler
-app.post('/login', express.urlencoded({ extended: true }), async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const { email, password, userType } = req.body;
 
+    console.log('--- Login Request Received ---');
+    console.log('Email:', email);
+    console.log('Password (hidden for security)');
+    console.log('User Type:', userType);
+
     if (!email || !password || !userType) {
+      console.log('❌ Missing required fields.');
       return res.status(400).json({ success: false, message: 'Please fill in all fields.' });
     }
+
     if (!validateEmail(email)) {
+      console.log('❌ Invalid email format.');
       return res.status(400).json({ success: false, message: 'Invalid email format.' });
     }
 
-    const [rows] = await pool.execute('SELECT * FROM clients WHERE Email = ?', [email]);
-    if (rows.length === 0) {
-      return res.status(401).json({ success: false, message: 'User not found.' });
-    }
-    const user = rows[0];
-    const match = await bcrypt.compare(password, user.PasswordHash.toString());
-    if (!match) {
-      return res.status(401).json({ success: false, message: 'Incorrect password.' });
-    }
-    if (userType.toLowerCase() !== 'client') {
-      return res.status(403).json({ success: false, message: 'User type mismatch or not supported yet.' });
+    let tableName, idField;
+    switch (userType.toLowerCase()) {
+      case 'client':
+        tableName = 'clients';
+        idField = 'ClientID';
+        break;
+      case 'admin':
+        tableName = 'admins';
+        idField = 'AdminID';
+        break;
+      case 'trainer':
+        tableName = 'trainers';
+        idField = 'TrainerID';
+        break;
+      default:
+        console.log('❌ Invalid user type:', userType);
+        return res.status(400).json({ success: false, message: 'Invalid user type.' });
     }
 
-    // Save user info in session (minimal info for security)
-    req.session.userId = user.ClientID;
+    console.log(`🔍 Querying table: ${tableName} for email: ${email}`);
+
+    const [rows] = await pool.execute(`SELECT * FROM ${tableName} WHERE Email = ?`, [email]);
+
+    if (rows.length === 0) {
+      console.log(`❌ No user found in ${tableName} with email ${email}`);
+      return res.status(401).json({ success: false, message: 'User not found.' });
+    }
+
+    const user = rows[0];
+    console.log('✅ User found:', user.Email);
+
+    if (!user.PasswordHash) {
+      console.log(`❌ PasswordHash missing for user: ${user.Email}`);
+      return res.status(500).json({ success: false, message: 'Password not set for this account.' });
+    }
+
+    console.log('🔐 Comparing password...');
+    const match = await bcrypt.compare(password, user.PasswordHash.toString());
+
+    if (!match) {
+      console.log('❌ Incorrect password for:', email);
+      return res.status(401).json({ success: false, message: 'Incorrect password.' });
+    }
+
+    // Save session
+    req.session.userId = user[idField];
     req.session.userName = user.FullName;
     req.session.userEmail = user.Email;
     req.session.userType = userType;
 
-    res.json({
+    console.log(`✅ Login successful for ${userType}: ${user.FullName}`);
+
+    const response = {
       success: true,
-      message: `Welcome back, ${user.FullName}!`
-    });
+      message: `Welcome back, ${user.FullName}!`,
+      userType: userType.toLowerCase(),
+    };
+
+    if (userType.toLowerCase() === 'admin') {
+      response.adminId = user[idField];
+    } else if (userType.toLowerCase() === 'trainer') {
+      response.trainerId = user[idField];
+    } else {
+      response.clientId = user[idField];
+    }
+
+    res.json(response);
 
   } catch (err) {
-    console.error(err);
+    console.error('❌ Login error:', err);
     res.status(500).json({ success: false, message: 'Server error during login.' });
   }
 });
+
+
+// bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
 
 
 app.get('/profile', async (req, res) => {
