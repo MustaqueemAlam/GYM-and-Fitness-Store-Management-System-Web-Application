@@ -6,10 +6,11 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const cors = require('cors');
- 
 
-
-
+const dayjs = require('dayjs');
+const utc = require('dayjs/plugin/utc');
+dayjs.extend(utc);
+const BD_OFFSET = 6 * 60; 
 
 app.use(cors({
   origin: 'http://localhost:4444',
@@ -17,7 +18,7 @@ app.use(cors({
 }));
 
 app.use(session({
-  secret: 'your-secret-key',      // change this to a strong secret in production
+  secret: 'your-secret-key',    
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -46,6 +47,7 @@ function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
+
 
 
 
@@ -227,17 +229,7 @@ app.get('/api/virtualclasses', async (req, res) => {
 
 
 
-app.get('/api/healthlog', async (req, res) => {
-  const clientId = req.session.userId;
-  const [rows] = await pool.execute(`
-    SELECT * FROM healthlogs 
-    WHERE ClientID = ? 
-    ORDER BY LogDate DESC 
-    LIMIT 1
-  `, [clientId]);
 
-  res.json({ success: true, log: rows[0] || null });
-});
 
 app.get('/api/attendance', async (req, res) => {
   const clientId = req.session.userId;
@@ -251,45 +243,48 @@ app.get('/api/attendance', async (req, res) => {
   res.json({ success: true, records: rows });
 });
 
+
 app.post('/api/attendance/checkin', async (req, res) => {
-  const clientId = req.session.userId;
+  const clientId = req.session?.userId;
   if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
 
   try {
-    // Check if already checked in today
-    const today = new Date().toISOString().slice(0, 10);
+    const todayBD = dayjs().utcOffset(BD_OFFSET).format('YYYY-MM-DD');
+
     const [existing] = await pool.execute(
-      `SELECT * FROM attendance WHERE ClientID = ? AND DATE(CheckInTime) = ?`, [clientId, today]
+      `SELECT * FROM attendance WHERE ClientID = ? AND DATE(CONVERT_TZ(CheckInTime, '+00:00', '+06:00')) = ?`,
+      [clientId, todayBD]
     );
 
     if (existing.length > 0) {
       return res.json({ success: false, message: 'Already checked in today' });
     }
 
+    const nowUtc = dayjs().utc().format('YYYY-MM-DD HH:mm:ss');
+
     await pool.execute(
-      `INSERT INTO attendance (ClientID, CheckInTime, Method) VALUES (?, NOW(), 'Manual')`,
-      [clientId]
+      `INSERT INTO attendance (ClientID, CheckInTime, Method) VALUES (?, ?, 'Manual')`,
+      [clientId, nowUtc]
     );
 
     res.json({ success: true, message: 'Checked in successfully' });
   } catch (err) {
-    console.error(err);
+    console.error('Check-in error:', err);
     res.status(500).json({ success: false, message: 'Check-in failed' });
   }
 });
 
 app.post('/api/attendance/checkout', async (req, res) => {
-  const clientId = req.session.userId;
+  const clientId = req.session?.userId;
   if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
 
   try {
-    // Use server's current date (adjust if needed)
-    const [recordResult] = await pool.execute(`
-      SELECT * FROM attendance
-      WHERE ClientID = ? AND DATE(CheckInTime) = CURDATE()
-      ORDER BY CheckInTime DESC
-      LIMIT 1
-    `, [clientId]);
+    const todayBD = dayjs().utcOffset(BD_OFFSET).format('YYYY-MM-DD');
+
+    const [recordResult] = await pool.execute(
+      `SELECT * FROM attendance WHERE ClientID = ? AND DATE(CONVERT_TZ(CheckInTime, '+00:00', '+06:00')) = ? ORDER BY CheckInTime DESC LIMIT 1`,
+      [clientId, todayBD]
+    );
 
     if (recordResult.length === 0) {
       return res.json({ success: false, message: 'No check-in record found for today.' });
@@ -301,21 +296,95 @@ app.post('/api/attendance/checkout', async (req, res) => {
       return res.json({ success: false, message: 'Already checked out.' });
     }
 
-    const now = new Date();
-    const checkIn = new Date(record.CheckInTime);
-    if (now <= checkIn) {
+    const nowUtc = dayjs().utc();
+    const checkInUtc = dayjs.utc(record.CheckInTime);
+
+    if (nowUtc.isBefore(checkInUtc)) {
       return res.json({ success: false, message: 'Check-out must be after check-in.' });
     }
 
+    const nowUtcFormatted = nowUtc.format('YYYY-MM-DD HH:mm:ss');
+
     await pool.execute(
-      `UPDATE attendance SET CheckOutTime = NOW() WHERE AttendanceID = ?`,
-      [record.AttendanceID]
+      `UPDATE attendance SET CheckOutTime = ? WHERE AttendanceID = ?`,
+      [nowUtcFormatted, record.AttendanceID]
     );
 
     res.json({ success: true, message: 'Checked out successfully.' });
   } catch (err) {
     console.error('Check-out error:', err);
     res.status(500).json({ success: false, message: 'Server error during check-out.' });
+  }
+});
+
+app.post('/api/healthlog', express.json(), async (req, res) => {
+  const clientId = req.session.userId;
+  if (!clientId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { Weight, Calories, WaterIntakeLitres, SleepHours, WorkoutDescription } = req.body;
+
+  // Validation
+  if (!Weight || !Calories || !WaterIntakeLitres || !SleepHours) {
+    return res.json({ success: false, message: 'All fields except workout notes are required.' });
+  }
+
+  try {
+    await pool.execute(`
+      INSERT INTO healthlogs (ClientID, Weight, Calories, WaterIntakeLitres, SleepHours, WorkoutDescription, LogDate)
+      VALUES (?, ?, ?, ?, ?, ?, CURDATE())
+    `, [clientId, Weight, Calories, WaterIntakeLitres, SleepHours, WorkoutDescription]);
+
+    res.json({ success: true, message: 'Daily log submitted.' });
+  } catch (err) {
+    console.error('Insert error:', err);
+    res.status(500).json({ success: false, message: 'Server error. Please try again.' });
+  }
+});
+app.get('/api/healthlog', async (req, res) => {
+  const clientId = req.session.userId;
+  if (!clientId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  try {
+    const [rows] = await pool.execute(`
+      SELECT * FROM healthlogs 
+      WHERE ClientID = ? 
+      ORDER BY LogDate DESC
+      LIMIT 7
+    `, [clientId]);
+
+    res.json({ success: true, logs: rows });
+  } catch (err) {
+    console.error('Fetch error:', err);
+    res.status(500).json({ success: false, message: 'Failed to fetch health logs.' });
+  }
+});
+
+// Fetch notifications
+app.get('/notifications', async (req, res) => {
+  try {
+    const clientId = req.session.userId;
+
+    if (!clientId) {
+      return res.status(401).json({ success: false, message: 'Not logged in.' });
+    }
+
+    const [notifications] = await pool.execute(
+      `SELECT NotificationID, Message, Type, IsRead, TrainerID,
+              DATE_FORMAT(SentAt, '%Y-%m-%d %H:%i:%s') as SentAt 
+       FROM notifications 
+       WHERE ClientID = ? 
+       ORDER BY SentAt DESC`, 
+      [clientId]
+    );
+
+    res.json({ success: true, notifications });
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ success: false, message: 'Error fetching notifications.' });
   }
 });
 
