@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Fitness Trainer- Red Theme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+    <div>
+      <!-- Logo + Title -->
+      <div class="flex items-center gap-3 mb-8">
+        <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Trainer Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
+        <h2 class="text-2xl font-bold text-red-700">E-Fitness Trainer</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex flex-col space-y-3">
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          Profile Management
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+          </svg>
+          Session Scheduling
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+          </svg>
+          Client Management
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+          </svg>
+          Attendance Monitoring
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Notifications
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+          </svg>
+          Virtual Classes
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
+          </svg>
+          Performance & Feedback
+        </a>
+      </nav>
+    </div>
+
+    <!-- Logout Button pinned bottom -->
+    <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+      </svg>
+      Logout
+    </button>
+  </aside>
+
+<!-- Main Content -->
+  <main class="flex-1 overflow-y-auto p-6">
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
+      <div class="flex items-center gap-4">
+        <button id="notifBtn" class="relative text-gray-700 hover:text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
+          </svg>
+          <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
+        </button>
+        <button id="chatBtn" class="text-gray-700 hover:text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+<section id="profile-management" class="bg-white p-8 rounded-2xl shadow-md ring-1 ring-red-100 max-w-7xl mx-auto border border-red-500">
+  <h2 class="text-2xl font-semibold text-red-700 mb-6">👤 Profile Management</h2>
+
+  <form id="trainerProfileForm" 
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm 
+           border border-red-500 rounded-lg divide-x divide-red-500 p-6">
+
+    <!-- Basic Info -->
+    <div class="space-y-4 col-span-1 lg:col-span-1 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <div>
+        <label for="FullName" class="block mb-1 font-medium text-gray-700">Full Name</label>
+        <input type="text" name="FullName" id="FullName" placeholder="Alex Thompson"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+      <div>
+        <label for="Email" class="block mb-1 font-medium text-gray-700">Email Address</label>
+        <input type="email" name="Email" id="Email" placeholder="alex.trainer@example.com"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+      <div>
+        <label for="Phone" class="block mb-1 font-medium text-gray-700">Phone Number</label>
+        <input type="tel" name="Phone" id="Phone" placeholder="+8801XXXXXXXXX"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+    </div>
+
+    <!-- Demographics -->
+    <div class="space-y-4 col-span-1 lg:col-span-1 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <div>
+        <label for="Gender" class="block mb-1 font-medium text-gray-700">Gender</label>
+        <select name="Gender" id="Gender"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm">
+          <option value="">Select gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label for="DOB" class="block mb-1 font-medium text-gray-700">Date of Birth</label>
+        <input type="date" name="DOB" id="DOB"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+      <div>
+        <label for="City" class="block mb-1 font-medium text-gray-700">City</label>
+        <input type="text" name="City" id="City" placeholder="Dhaka"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+      <div>
+        <label for="Country" class="block mb-1 font-medium text-gray-700">Country</label>
+        <input type="text" name="Country" id="Country" placeholder="Bangladesh"
+          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+      </div>
+    </div>
+
+    <!-- Profile Picture -->
+    <div class="col-span-1 flex flex-col items-center justify-start border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label for="ProfilePic" class="block mb-1 font-medium text-gray-700">Profile Picture</label>
+      <input type="file" name="ProfilePic" id="ProfilePic" accept="image/*"
+        class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-100 file:text-red-700 hover:file:bg-red-200" />
+      <div id="profilePicPreview" class="mt-4 w-32 h-32 rounded-full overflow-hidden border-2 border-red-400">
+        <!-- Preview will appear here -->
+      </div>
+    </div>
+
+    <!-- Full Width Textareas -->
+    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label for="Address" class="block mb-1 font-medium text-gray-700">Address</label>
+      <textarea name="Address" id="Address" rows="2" placeholder="House #, Road #, Area"
+        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
+    </div>
+
+    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label for="Qualifications" class="block mb-1 font-medium text-gray-700">Qualifications</label>
+      <textarea name="Qualifications" id="Qualifications" rows="2"
+        placeholder="B.Sc. in Sports Science, Certified Personal Trainer"
+        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
+    </div>
+
+    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label for="Expertise" class="block mb-1 font-medium text-gray-700">Areas of Expertise</label>
+      <textarea name="Expertise" id="Expertise" rows="2" placeholder="Strength Training, HIIT, Injury Prevention"
+        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
+    </div>
+
+    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label for="IntroVideoURL" class="block mb-1 font-medium text-gray-700">Intro Video URL (YouTube)</label>
+      <input type="url" name="IntroVideoURL" id="IntroVideoURL" placeholder="https://youtu.be/abc123"
+        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
+    </div>
+
+    <!-- Certifications Group -->
+    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
+      <label class="block mb-2 font-medium text-gray-700 text-base">Certifications</label>
+
+      <!-- Certification 1 -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Title</label>
+          <input type="text" name="cert_title_1" placeholder="e.g., Certified Personal Trainer (CPT)"
+            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Issuing Organization</label>
+          <input type="text" name="cert_issuer_1" placeholder="e.g., ACE, NASM"
+            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Year</label>
+          <input type="number" name="cert_year_1" placeholder="e.g., 2023"
+            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Certificate ID</label>
+          <input type="text" name="cert_id_1" placeholder="Optional ID"
+            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+        </div>
+        <div class="sm:col-span-2 lg:col-span-4">
+          <label class="block text-sm font-medium text-gray-600">Certificate URL</label>
+          <input type="url" name="cert_url_1" placeholder="Optional (e.g., https://...)"
+            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+        </div>
+      </div>
+    <!-- Submit Button Full Width -->
+    <div class="lg:col-span-3 flex justify-end mt-6">
+      <button type="submit"
+        class="bg-red-600 text-white px-6 py-3 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400">
+        Update Profile
+      </button>
+    </div>
+  </form>
+
+
+    <section class="mt-12">
+    <h3 class="text-xl font-semibold text-red-700 mb-4 border-b-2 border-red-600 pb-2">Profile Overview</h3>
+    <div class="overflow-x-auto">
+        <table class="min-w-full bg-white border-2 border-red-600 rounded-md shadow-md border-collapse">
+        <tbody>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400 w-40">Full Name</th>
+            <td id="displayFullName" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Email Address</th>
+            <td id="displayEmail" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Phone Number</th>
+            <td id="displayPhone" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Gender</th>
+            <td id="displayGender" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Date of Birth</th>
+            <td id="displayDOB" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">City</th>
+            <td id="displayCity" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Country</th>
+            <td id="displayCountry" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Address</th>
+            <td id="displayAddress" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Qualifications</th>
+            <td id="displayQualifications" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Expertise</th>
+            <td id="displayExpertise" class="px-6 py-3 border-r border-red-400"></td>
+            </tr>
+            <tr class="hover:bg-red-50 border-b border-red-400">
+            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Intro Video</th>
+            <td id="px-6 py-3 border-r border-red-400" id="displayIntroVideoURL">
+                <!-- JavaScript will inject clickable link here -->
+            </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+    </section>
+</section>
+
+</main>
+<script>
+  const form = document.getElementById('trainerProfileForm');
+  const profilePicInput = document.getElementById('ProfilePic');
+  const profilePicPreview = document.getElementById('profilePicPreview');
+
+  // Show profile picture preview
+  profilePicInput.addEventListener('change', function () {
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        profilePicPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Picture" class="w-full h-full object-cover" />`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      profilePicPreview.innerHTML = '';
+    }
+  });
+
+  // Update the table on form submit
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Collect form data
+    const formData = new FormData(form);
+    // Set table display
+    document.getElementById('displayFullName').textContent = formData.get('FullName') || '-';
+    document.getElementById('displayEmail').textContent = formData.get('Email') || '-';
+    document.getElementById('displayPhone').textContent = formData.get('Phone') || '-';
+    document.getElementById('displayGender').textContent = formData.get('Gender') || '-';
+    document.getElementById('displayDOB').textContent = formData.get('DOB') || '-';
+    document.getElementById('displayCity').textContent = formData.get('City') || '-';
+    document.getElementById('displayCountry').textContent = formData.get('Country') || '-';
+    document.getElementById('displayAddress').textContent = formData.get('Address') || '-';
+    document.getElementById('displayQualifications').textContent = formData.get('Qualifications') || '-';
+    document.getElementById('displayExpertise').textContent = formData.get('Expertise') || '-';
+    document.getElementById('displayIntroVideoURL').textContent = formData.get('IntroVideoURL') || '-';
+
+    // Combine certifications into a formatted string
+    const certTitle = formData.get('cert_title_1');
+    const certIssuer = formData.get('cert_issuer_1');
+    const certYear = formData.get('cert_year_1');
+    const certId = formData.get('cert_id_1');
+    const certUrl = formData.get('cert_url_1');
+
+    let certText = '-';
+    if (certTitle || certIssuer || certYear || certId || certUrl) {
+      certText = `
+Title: ${certTitle || '-'}
+Issuer: ${certIssuer || '-'}
+Year: ${certYear || '-'}
+ID: ${certId || '-'}
+URL: ${certUrl || '-'}
+      `.trim();
+    }
+    document.getElementById('displayCertifications').textContent = certText;
+  });
+</script>
+
+<script>
+  function updateIntroVideo(url) {
+    const container = document.getElementById('displayIntroVideoURL');
+    if (!url) {
+      container.innerHTML = 'No video provided';
+      return;
+    }
+    // Create a clickable link that opens in a new tab
+    container.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-red-600 hover:underline">
+      Watch Video
+    </a>`;
+  }
+
+</script>
+
+
+</body>
+</html>
