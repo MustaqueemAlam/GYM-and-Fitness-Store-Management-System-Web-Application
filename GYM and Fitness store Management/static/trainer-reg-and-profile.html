@@ -92,269 +92,116 @@
       </div>
     </header>
 
-<section id="profile-management" class="bg-white p-8 rounded-2xl shadow-md ring-1 ring-red-100 max-w-7xl mx-auto border border-red-500">
-  <h2 class="text-2xl font-semibold text-red-700 mb-6">👤 Profile Management</h2>
-
-  <form id="trainerProfileForm" 
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm 
-           border border-red-500 rounded-lg divide-x divide-red-500 p-6">
-
-    <!-- Basic Info -->
-    <div class="space-y-4 col-span-1 lg:col-span-1 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <div>
-        <label for="FullName" class="block mb-1 font-medium text-gray-700">Full Name</label>
-        <input type="text" name="FullName" id="FullName" placeholder="Alex Thompson"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-      <div>
-        <label for="Email" class="block mb-1 font-medium text-gray-700">Email Address</label>
-        <input type="email" name="Email" id="Email" placeholder="alex.trainer@example.com"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-      <div>
-        <label for="Phone" class="block mb-1 font-medium text-gray-700">Phone Number</label>
-        <input type="tel" name="Phone" id="Phone" placeholder="+8801XXXXXXXXX"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-    </div>
-
-    <!-- Demographics -->
-    <div class="space-y-4 col-span-1 lg:col-span-1 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <div>
-        <label for="Gender" class="block mb-1 font-medium text-gray-700">Gender</label>
-        <select name="Gender" id="Gender"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm">
-          <option value="">Select gender</option>
-          <option>Male</option>
-          <option>Female</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div>
-        <label for="DOB" class="block mb-1 font-medium text-gray-700">Date of Birth</label>
-        <input type="date" name="DOB" id="DOB"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-      <div>
-        <label for="City" class="block mb-1 font-medium text-gray-700">City</label>
-        <input type="text" name="City" id="City" placeholder="Dhaka"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-      <div>
-        <label for="Country" class="block mb-1 font-medium text-gray-700">Country</label>
-        <input type="text" name="Country" id="Country" placeholder="Bangladesh"
-          class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-      </div>
-    </div>
-
-    <!-- Profile Picture -->
-    <div class="col-span-1 flex flex-col items-center justify-start border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label for="ProfilePic" class="block mb-1 font-medium text-gray-700">Profile Picture</label>
-      <input type="file" name="ProfilePic" id="ProfilePic" accept="image/*"
-        class="block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-100 file:text-red-700 hover:file:bg-red-200" />
-      <div id="profilePicPreview" class="mt-4 w-32 h-32 rounded-full overflow-hidden border-2 border-red-400">
-        <!-- Preview will appear here -->
-      </div>
-    </div>
-
-    <!-- Full Width Textareas -->
-    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label for="Address" class="block mb-1 font-medium text-gray-700">Address</label>
-      <textarea name="Address" id="Address" rows="2" placeholder="House #, Road #, Area"
-        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
-    </div>
-
-    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label for="Qualifications" class="block mb-1 font-medium text-gray-700">Qualifications</label>
-      <textarea name="Qualifications" id="Qualifications" rows="2"
-        placeholder="B.Sc. in Sports Science, Certified Personal Trainer"
-        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
-    </div>
-
-    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label for="Expertise" class="block mb-1 font-medium text-gray-700">Areas of Expertise</label>
-      <textarea name="Expertise" id="Expertise" rows="2" placeholder="Strength Training, HIIT, Injury Prevention"
-        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm"></textarea>
-    </div>
-
-    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label for="IntroVideoURL" class="block mb-1 font-medium text-gray-700">Intro Video URL (YouTube)</label>
-      <input type="url" name="IntroVideoURL" id="IntroVideoURL" placeholder="https://youtu.be/abc123"
-        class="w-full border border-red-500 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-red-300 shadow-sm" />
-    </div>
-
-    <!-- Certifications Group -->
-    <div class="lg:col-span-3 border border-red-500 rounded-lg p-4 shadow-sm bg-gray-50">
-      <label class="block mb-2 font-medium text-gray-700 text-base">Certifications</label>
-
-      <!-- Certification 1 -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div>
-          <label class="block text-sm font-medium text-gray-600">Title</label>
-          <input type="text" name="cert_title_1" placeholder="e.g., Certified Personal Trainer (CPT)"
-            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
+<section id="profile-management" class="...">
+  <h2 class="...">Trainer Profile Form</h2>
+  <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data">
+    <!-- Profile Pic Section -->
+    <div class="col-span-1 md:col-span-2 flex flex-col items-center mb-6">
+      <label for="ProfilePic" class="relative group cursor-pointer">
+        <div class="w-32 h-32 rounded-full border-4 border-red-400 overflow-hidden shadow-md">
+          <img id="profilePicPreview" src="https://via.placeholder.com/150" alt="Profile Preview" class="object-cover w-full h-full" />
         </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-600">Issuing Organization</label>
-          <input type="text" name="cert_issuer_1" placeholder="e.g., ACE, NASM"
-            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-600">Year</label>
-          <input type="number" name="cert_year_1" placeholder="e.g., 2023"
-            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-600">Certificate ID</label>
-          <input type="text" name="cert_id_1" placeholder="Optional ID"
-            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
-        </div>
-        <div class="sm:col-span-2 lg:col-span-4">
-          <label class="block text-sm font-medium text-gray-600">Certificate URL</label>
-          <input type="url" name="cert_url_1" placeholder="Optional (e.g., https://...)"
-            class="mt-1 w-full border border-red-500 rounded-md px-4 py-2" />
-        </div>
-      </div>
-    <!-- Submit Button Full Width -->
-    <div class="lg:col-span-3 flex justify-end mt-6">
-      <button type="submit"
-        class="bg-red-600 text-white px-6 py-3 rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-        Update Profile
-      </button>
+        <input type="file" id="ProfilePic" name="ProfilePic" class="hidden" accept="image/*" onchange="previewImage(event)" />
+        <div class="mt-2 text-sm text-red-600 font-semibold underline">Upload Profile Picture</div>
+      </label>
+    </div>
+
+    <div>
+      <label for="FullName" class="block text-red-700 font-medium mb-1">Full Name</label>
+      <input type="text" id="FullName" name="FullName" class="w-full border-2 border-red-500 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-red-300" />
+    </div>
+
+    <div>
+      <label for="email" class="block text-red-700 font-medium mb-1">Email</label>
+      <input type="email" id="email" name="Email" class="w-full border-2 border-red-500 rounded-lg p-2 bg-red-100 cursor-not-allowed" readonly />
+    </div>
+
+    <div>
+      <label for="Phone" class="block text-red-700 font-medium mb-1">Phone</label>
+      <input type="tel" id="Phone" name="Phone" class="w-full border-2 border-red-500 rounded-lg p-2" />
+    </div>
+
+    <div>
+      <label for="Gender" class="block text-red-700 font-medium mb-1">Gender</label>
+      <select id="Gender" name="Gender" class="w-full border-2 border-red-500 rounded-lg p-2">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="DOB" class="block text-red-700 font-medium mb-1">Date of Birth</label>
+      <input type="date" id="DOB" name="DOB" class="w-full border-2 border-red-500 rounded-lg p-2" />
+    </div>
+
+    <div>
+      <label for="City" class="block text-red-700 font-medium mb-1">City</label>
+      <input type="text" id="City" name="City" class="w-full border-2 border-red-500 rounded-lg p-2" />
+    </div>
+
+    <div>
+      <label for="Country" class="block text-red-700 font-medium mb-1">Country</label>
+      <input type="text" id="Country" name="Country" class="w-full border-2 border-red-500 rounded-lg p-2" />
+    </div>
+
+    <div class="md:col-span-2">
+      <label for="Address" class="block text-red-700 font-medium mb-1">Address</label>
+      <textarea id="Address" name="Address" class="w-full border-2 border-red-500 rounded-lg p-2" rows="2"></textarea>
+    </div>
+
+    <div class="md:col-span-2 mt-6 flex justify-end">
+      <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg shadow hover:bg-red-700 transition">Save Profile</button>
     </div>
   </form>
-
-
-    <section class="mt-12">
-    <h3 class="text-xl font-semibold text-red-700 mb-4 border-b-2 border-red-600 pb-2">Profile Overview</h3>
-    <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border-2 border-red-600 rounded-md shadow-md border-collapse">
-        <tbody>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400 w-40">Full Name</th>
-            <td id="displayFullName" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Email Address</th>
-            <td id="displayEmail" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Phone Number</th>
-            <td id="displayPhone" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Gender</th>
-            <td id="displayGender" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Date of Birth</th>
-            <td id="displayDOB" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">City</th>
-            <td id="displayCity" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Country</th>
-            <td id="displayCountry" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Address</th>
-            <td id="displayAddress" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Qualifications</th>
-            <td id="displayQualifications" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Expertise</th>
-            <td id="displayExpertise" class="px-6 py-3 border-r border-red-400"></td>
-            </tr>
-            <tr class="hover:bg-red-50 border-b border-red-400">
-            <th class="px-6 py-3 text-left font-semibold text-red-800 border-r border-red-400">Intro Video</th>
-            <td id="px-6 py-3 border-r border-red-400" id="displayIntroVideoURL">
-                <!-- JavaScript will inject clickable link here -->
-            </td>
-            </tr>
-        </tbody>
-        </table>
-    </div>
-    </section>
+  <div id="message" class="text-red-600 mt-4"></div>
 </section>
 
-</main>
 <script>
-  const form = document.getElementById('trainerProfileForm');
-  const profilePicInput = document.getElementById('ProfilePic');
-  const profilePicPreview = document.getElementById('profilePicPreview');
+  // Load profile data
+  fetch('/trainer/profile', { credentials: 'include' })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        const user = data.trainer;
 
-  // Show profile picture preview
-  profilePicInput.addEventListener('change', function () {
-    const file = this.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        profilePicPreview.innerHTML = `<img src="${e.target.result}" alt="Profile Picture" class="w-full h-full object-cover" />`;
-      };
-      reader.readAsDataURL(file);
-    } else {
-      profilePicPreview.innerHTML = '';
-    }
-  });
+        for (const key in user) {
+          const input = document.getElementById(key);
+          if (input && key !== 'ProfilePicBase64') {
+            input.value = user[key] ?? '';
+          }
+        }
 
-  // Update the table on form submit
-  form.addEventListener('submit', function (e) {
+        // Load profile image if available
+        if (user.ProfilePicBase64 && document.getElementById('profilePreview')) {
+          document.getElementById('profilePreview').src = `data:image/jpeg;base64,${user.ProfilePicBase64}`;
+        }
+      } else {
+        alert('Failed to load profile');
+      }
+    });
+
+  // Handle profile update
+  document.getElementById('profileForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Collect form data
-    const formData = new FormData(form);
-    // Set table display
-    document.getElementById('displayFullName').textContent = formData.get('FullName') || '-';
-    document.getElementById('displayEmail').textContent = formData.get('Email') || '-';
-    document.getElementById('displayPhone').textContent = formData.get('Phone') || '-';
-    document.getElementById('displayGender').textContent = formData.get('Gender') || '-';
-    document.getElementById('displayDOB').textContent = formData.get('DOB') || '-';
-    document.getElementById('displayCity').textContent = formData.get('City') || '-';
-    document.getElementById('displayCountry').textContent = formData.get('Country') || '-';
-    document.getElementById('displayAddress').textContent = formData.get('Address') || '-';
-    document.getElementById('displayQualifications').textContent = formData.get('Qualifications') || '-';
-    document.getElementById('displayExpertise').textContent = formData.get('Expertise') || '-';
-    document.getElementById('displayIntroVideoURL').textContent = formData.get('IntroVideoURL') || '-';
+    const formData = new FormData(e.target);
 
-    // Combine certifications into a formatted string
-    const certTitle = formData.get('cert_title_1');
-    const certIssuer = formData.get('cert_issuer_1');
-    const certYear = formData.get('cert_year_1');
-    const certId = formData.get('cert_id_1');
-    const certUrl = formData.get('cert_url_1');
+    try {
+      const res = await fetch('/trainer/update-profile', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+      });
 
-    let certText = '-';
-    if (certTitle || certIssuer || certYear || certId || certUrl) {
-      certText = `
-Title: ${certTitle || '-'}
-Issuer: ${certIssuer || '-'}
-Year: ${certYear || '-'}
-ID: ${certId || '-'}
-URL: ${certUrl || '-'}
-      `.trim();
+      const result = await res.json();
+      alert(result.message);
+    } catch (err) {
+      console.error(err);
+      alert('Update failed');
     }
-    document.getElementById('displayCertifications').textContent = certText;
   });
-</script>
-
-<script>
-  function updateIntroVideo(url) {
-    const container = document.getElementById('displayIntroVideoURL');
-    if (!url) {
-      container.innerHTML = 'No video provided';
-      return;
-    }
-    // Create a clickable link that opens in a new tab
-    container.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-red-600 hover:underline">
-      Watch Video
-    </a>`;
-  }
-
 </script>
 
 

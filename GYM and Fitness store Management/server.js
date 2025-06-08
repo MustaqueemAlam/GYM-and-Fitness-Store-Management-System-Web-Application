@@ -445,6 +445,36 @@ app.get('/notifications', async (req, res) => {
 
 
 
+app.get('/trainer/profile', async (req, res) => {
+  if (!req.session.userId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
+  }
+
+  try {
+    const [rows] = await pool.execute(`
+      SELECT 
+        TrainerID, FullName, Email, Phone, Gender, DOB, Address, City, Country,
+        Qualifications, Expertise, IntroVideoURL,
+        CertTitle, CertIssuer, CertYear, CertID,
+        TO_BASE64(ProfilePic) AS ProfilePicBase64,
+        TO_BASE64(CertFile) AS CertFileBase64
+      FROM trainers WHERE TrainerID = ?
+    `, [req.session.userId]);
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Trainer not found' });
+    }
+
+    res.json({ success: true, trainer: rows[0] });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error fetching trainer profile' });
+  }
+});
+
+
+ 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
