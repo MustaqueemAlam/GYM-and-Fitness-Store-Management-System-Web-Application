@@ -92,74 +92,111 @@
       </div>
     </header>
 
-<section id="profile-management" class="...">
-  <h2 class="...">Trainer Profile Form</h2>
-  <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-6" enctype="multipart/form-data">
-    <!-- Profile Pic Section -->
-    <div class="col-span-1 md:col-span-2 flex flex-col items-center mb-6">
+<section id="profile-management">
+  <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Trainer Profile Form</h2>
+
+  <form id="profileForm" class="max-w-6xl mx-auto p-8 bg-white border-2 border-red-500 rounded-2xl shadow-lg space-y-8" enctype="multipart/form-data">
+    <!-- Profile Picture -->
+    <div class="flex justify-center mb-6">
       <label for="ProfilePic" class="relative group cursor-pointer">
         <div class="w-32 h-32 rounded-full border-4 border-red-400 overflow-hidden shadow-md">
           <img id="profilePicPreview" src="https://via.placeholder.com/150" alt="Profile Preview" class="object-cover w-full h-full" />
         </div>
         <input type="file" id="ProfilePic" name="ProfilePic" class="hidden" accept="image/*" onchange="previewImage(event)" />
-        <div class="mt-2 text-sm text-red-600 font-semibold underline">Upload Profile Picture</div>
+        <div class="mt-2 text-sm text-red-600 font-semibold underline text-center">Upload Profile Picture</div>
       </label>
     </div>
 
-    <div>
-      <label for="FullName" class="block text-red-700 font-medium mb-1">Full Name</label>
-      <input type="text" id="FullName" name="FullName" class="w-full border-2 border-red-500 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-red-300" />
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="block font-semibold">Full Name</label>
+        <input id="FullName" name="FullName" type="text" class="w-full p-3 border rounded-md" required>
+      </div>
+      <div>
+        <label class="block font-semibold">Email</label>
+        <input id="Email" name="Email" type="email" readonly class="w-full p-3 border rounded-md bg-gray-100">
+      </div>
+      <div>
+        <label class="block font-semibold">Phone</label>
+        <input id="Phone" name="Phone" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Gender</label>
+        <select id="Gender" name="Gender" class="w-full p-3 border rounded-md">
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div>
+        <label class="block font-semibold">Date of Birth</label>
+        <input id="DOB" name="DOB" type="date" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Date Joined</label>
+        <input id="DateJoined" name="DateJoined" type="text" readonly class="w-full p-3 border rounded-md bg-gray-100">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold">Address</label>
+        <textarea id="Address" name="Address" rows="2" class="w-full p-3 border rounded-md"></textarea>
+      </div>
+      <div>
+        <label class="block font-semibold">City</label>
+        <input id="City" name="City" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Country</label>
+        <input id="Country" name="Country" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold">Intro Video URL</label>
+        <input id="IntroVideoURL" name="IntroVideoURL" type="url" class="w-full p-3 border rounded-md">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold">Qualifications</label>
+        <textarea id="Qualifications" name="Qualifications" rows="2" class="w-full p-3 border rounded-md"></textarea>
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold">Expertise</label>
+        <textarea id="Expertise" name="Expertise" rows="2" class="w-full p-3 border rounded-md"></textarea>
+      </div>
     </div>
 
-    <div>
-      <label for="email" class="block text-red-700 font-medium mb-1">Email</label>
-      <input type="email" id="email" name="Email" class="w-full border-2 border-red-500 rounded-lg p-2 bg-red-100 cursor-not-allowed" readonly />
+    <h3 class="text-xl font-bold mt-6">Certification Details</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+      <div>
+        <label class="block font-semibold">Certification Title</label>
+        <input id="CertTitle" name="CertTitle" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Cert Issuer</label>
+        <input id="CertIssuer" name="CertIssuer" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Cert Year</label>
+        <input id="CertYear" name="CertYear" type="number" min="1900" max="2099" class="w-full p-3 border rounded-md">
+      </div>
+      <div>
+        <label class="block font-semibold">Cert ID</label>
+        <input id="CertID" name="CertID" type="text" class="w-full p-3 border rounded-md">
+      </div>
+      <div class="md:col-span-2">
+        <label class="block font-semibold">Certificate File</label>
+        <input id="CertFile" name="CertFile" type="file" class="w-full p-3 border rounded-md">
+        <a id="certDownloadLink" href="#" download="Certificate.pdf" class="text-blue-600 underline mt-2 hidden">Download Existing Certificate</a>
+      </div>
     </div>
 
-    <div>
-      <label for="Phone" class="block text-red-700 font-medium mb-1">Phone</label>
-      <input type="tel" id="Phone" name="Phone" class="w-full border-2 border-red-500 rounded-lg p-2" />
-    </div>
-
-    <div>
-      <label for="Gender" class="block text-red-700 font-medium mb-1">Gender</label>
-      <select id="Gender" name="Gender" class="w-full border-2 border-red-500 rounded-lg p-2">
-        <option value="">Select Gender</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="DOB" class="block text-red-700 font-medium mb-1">Date of Birth</label>
-      <input type="date" id="DOB" name="DOB" class="w-full border-2 border-red-500 rounded-lg p-2" />
-    </div>
-
-    <div>
-      <label for="City" class="block text-red-700 font-medium mb-1">City</label>
-      <input type="text" id="City" name="City" class="w-full border-2 border-red-500 rounded-lg p-2" />
-    </div>
-
-    <div>
-      <label for="Country" class="block text-red-700 font-medium mb-1">Country</label>
-      <input type="text" id="Country" name="Country" class="w-full border-2 border-red-500 rounded-lg p-2" />
-    </div>
-
-    <div class="md:col-span-2">
-      <label for="Address" class="block text-red-700 font-medium mb-1">Address</label>
-      <textarea id="Address" name="Address" class="w-full border-2 border-red-500 rounded-lg p-2" rows="2"></textarea>
-    </div>
-
-    <div class="md:col-span-2 mt-6 flex justify-end">
-      <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg shadow hover:bg-red-700 transition">Save Profile</button>
+    <div class="text-center pt-6">
+      <button type="submit" class="bg-red-600 text-white px-8 py-3 rounded-md hover:bg-red-700">Update Profile</button>
     </div>
   </form>
-  <div id="message" class="text-red-600 mt-4"></div>
+
+  <div id="message" class="text-red-600 mt-4 text-center"></div>
 </section>
 
 <script>
-  // Load profile data
   fetch('/trainer/profile', { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
@@ -168,42 +205,86 @@
 
         for (const key in user) {
           const input = document.getElementById(key);
-          if (input && key !== 'ProfilePicBase64') {
-            input.value = user[key] ?? '';
+          if (input && key !== 'ProfilePicBase64' && key !== 'CertFileBase64') {
+            input.value = user[key];
           }
         }
 
-        // Load profile image if available
-        if (user.ProfilePicBase64 && document.getElementById('profilePreview')) {
-          document.getElementById('profilePreview').src = `data:image/jpeg;base64,${user.ProfilePicBase64}`;
+        if (user.ProfilePicBase64) {
+          document.getElementById("profilePicPreview").src = `data:image/jpeg;base64,${user.ProfilePicBase64}`;
+        }
+
+        if (user.CertFileBase64) {
+          const link = document.getElementById("certDownloadLink");
+          link.href = `data:application/pdf;base64,${user.CertFileBase64}`;
+          link.style.display = 'inline';
         }
       } else {
-        alert('Failed to load profile');
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: data.message || "Failed to load profile."
+        });
       }
+    })
+    .catch(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: "Error loading profile."
+      });
     });
 
-  // Handle profile update
-  document.getElementById('profileForm').addEventListener('submit', async (e) => {
+  document.getElementById("profileForm").addEventListener("submit", async function (e) {
     e.preventDefault();
-
-    const formData = new FormData(e.target);
+    const formData = new FormData(this);
 
     try {
-      const res = await fetch('/trainer/update-profile', {
+      const res = await fetch('/trainer/profile/update', {
         method: 'POST',
         body: formData,
         credentials: 'include'
       });
 
       const result = await res.json();
-      alert(result.message);
+
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: result.message || 'Profile updated successfully.'
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Failed',
+          text: result.message || 'Failed to update profile.'
+        });
+      }
     } catch (err) {
       console.error(err);
-      alert('Update failed');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to update profile.'
+      });
     }
   });
+
+  function previewImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("profilePicPreview").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 </html>

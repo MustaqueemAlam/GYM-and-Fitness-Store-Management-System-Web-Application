@@ -6,17 +6,14 @@ const path = require('path');
 const app = express();
 const session = require('express-session');
 const cors = require('cors');
-
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
 const BD_OFFSET = 6 * 60; 
-
 app.use(cors({
   origin: 'http://localhost:4444',
   credentials: true
 }));
-
 app.use(session({
   secret: 'your-secret-key',    
   resave: false,
@@ -25,9 +22,7 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24   // 1 day session
   }
 }));
-
 const PORT = process.env.PORT || 4444;
-
 // Middleware for parsing urlencoded form data
 app.use(express.urlencoded({ extended: true }));
 // Serve static files
@@ -48,11 +43,7 @@ function validateEmail(email) {
   return re.test(email);
 }
 
-
-
-
-
-// Signup POST handler
+// Signup POST handler  for clients
 app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
   try {
     const {
@@ -70,11 +61,9 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
     if (!FullName || !Email || !Password || !Phone || !Gender || !DOB || !Address || !City || !Country) {
       return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
     }
-
     if (!validateEmail(Email)) {
       return res.status(400).json({ success: false, message: 'Invalid email format.' });
     }
-    //  can add more validations (phone number, DOB format, gender values) here as needed
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(Password, saltRounds);
     const profilePicBuffer = req.file ? req.file.buffer : null;
@@ -102,7 +91,7 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during signup.' });
   }
 });
-// Login POST handler
+// Login POST handler for all users
 app.post('/login', async (req, res) => {
   try {
     const { email, password, userType } = req.body;
@@ -165,7 +154,6 @@ app.post('/login', async (req, res) => {
       console.log('❌ Incorrect password for:', email);
       return res.status(401).json({ success: false, message: 'Incorrect password.' });
     }
-
     // Save session
     req.session.userId = user[idField];
     req.session.userName = user.FullName;
@@ -195,11 +183,7 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during login.' });
   }
 });
-
-
 // bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
-
-
 app.get('/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -222,10 +206,6 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
-
- 
-
-
 app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -255,8 +235,6 @@ app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to update profile' });
   }
 });
-
-
 app.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -267,7 +245,6 @@ app.post('/logout', (req, res) => {
     res.json({ success: true, message: 'Logged out successfully' });
   });
 });
-
 app.get('/api/virtualclasses', async (req, res) => {
   try {
     const [rows] = await pool.execute(`
@@ -281,11 +258,6 @@ app.get('/api/virtualclasses', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
-
-
-
-
-
 app.get('/api/attendance', async (req, res) => {
   const clientId = req.session.userId;
   const [rows] = await pool.execute(`
@@ -297,8 +269,6 @@ app.get('/api/attendance', async (req, res) => {
 
   res.json({ success: true, records: rows });
 });
-
-
 app.post('/api/attendance/checkin', async (req, res) => {
   const clientId = req.session?.userId;
   if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -371,20 +341,15 @@ app.post('/api/attendance/checkout', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during check-out.' });
   }
 });
-
 app.post('/api/healthlog', express.json(), async (req, res) => {
   const clientId = req.session.userId;
   if (!clientId) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
   }
-
   const { Weight, Calories, WaterIntakeLitres, SleepHours, WorkoutDescription } = req.body;
-
-  // Validation
   if (!Weight || !Calories || !WaterIntakeLitres || !SleepHours) {
     return res.json({ success: false, message: 'All fields except workout notes are required.' });
   }
-
   try {
     await pool.execute(`
       INSERT INTO healthlogs (ClientID, Weight, Calories, WaterIntakeLitres, SleepHours, WorkoutDescription, LogDate)
@@ -418,7 +383,7 @@ app.get('/api/healthlog', async (req, res) => {
   }
 });
 
-// Fetch notifications
+// Fetch client notifications
 app.get('/notifications', async (req, res) => {
   try {
     const clientId = req.session.userId;
@@ -445,6 +410,10 @@ app.get('/notifications', async (req, res) => {
 
 
 
+
+
+
+// Get trainer profile
 app.get('/trainer/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -454,7 +423,7 @@ app.get('/trainer/profile', async (req, res) => {
     const [rows] = await pool.execute(`
       SELECT 
         TrainerID, FullName, Email, Phone, Gender, DOB, Address, City, Country,
-        Qualifications, Expertise, IntroVideoURL,
+        Qualifications, Expertise, IntroVideoURL, DateJoined,
         CertTitle, CertIssuer, CertYear, CertID,
         TO_BASE64(ProfilePic) AS ProfilePicBase64,
         TO_BASE64(CertFile) AS CertFileBase64
@@ -470,6 +439,61 @@ app.get('/trainer/profile', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: 'Server error fetching trainer profile' });
+  }
+});
+// Update trainer profile
+const cpUpload = upload.fields([
+  { name: 'ProfilePic', maxCount: 1 },
+  { name: 'CertFile', maxCount: 1 }
+]);
+
+app.post('/trainer/profile/update', cpUpload, async (req, res) => {
+  const trainerId = req.session.userId;
+  if (!trainerId) {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+  const {
+    FullName, Phone, Gender, DOB, Address, City, Country,
+    Qualifications, Expertise, IntroVideoURL,
+    CertTitle, CertIssuer, CertYear, CertID
+  } = req.body;
+  const profilePicBuffer = req.files['ProfilePic']?.[0]?.buffer || null;
+  const certFileBuffer = req.files['CertFile']?.[0]?.buffer || null;
+  // Dynamically build SET clause and values
+  const fields = [
+    'FullName', 'Phone', 'Gender', 'DOB', 'Address',
+    'City', 'Country', 'Qualifications', 'Expertise',
+    'IntroVideoURL', 'CertTitle', 'CertIssuer', 'CertYear', 'CertID'
+  ];
+  const values = [
+    FullName, Phone, Gender, DOB, Address,
+    City, Country, Qualifications, Expertise,
+    IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID
+  ];
+
+  if (profilePicBuffer) {
+    fields.push('ProfilePic');
+    values.push(profilePicBuffer);
+  }
+
+  if (certFileBuffer) {
+    fields.push('CertFile');
+    values.push(certFileBuffer);
+  }
+
+  const setClause = fields.map(f => `${f} = ?`).join(', ');
+  values.push(trainerId);
+
+  try {
+    await pool.execute(`
+      UPDATE trainers SET ${setClause}
+      WHERE TrainerID = ?
+    `, values);
+
+    res.json({ success: true, message: 'Profile updated successfully.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error updating profile.' });
   }
 });
 
