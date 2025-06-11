@@ -497,8 +497,192 @@ app.post('/trainer/profile/update', cpUpload, async (req, res) => {
   }
 });
 
+// admin manage profile:
+// // Create Trainer
+// app.post('/trainers', async (req, res) => {
+//   try {
+//     const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
+//     const [result] = await db.execute(
+//       `INSERT INTO trainers (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country) 
+//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+//       [FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country]
+//     );
+//     res.status(201).json({ TrainerID: result.insertId });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
 
- 
+// // Read all Trainers
+// app.get('/trainers', async (req, res) => {
+//   try {
+//     const [rows] = await db.query('SELECT * FROM trainers');
+//     res.json(rows);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Read one Trainer by ID
+// app.get('/trainers/:id', async (req, res) => {
+//   try {
+//     const [rows] = await db.execute('SELECT * FROM trainers WHERE TrainerID = ?', [req.params.id]);
+//     if (rows.length === 0) return res.status(404).json({ error: 'Trainer not found' });
+//     res.json(rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Update Trainer by ID
+// app.put('/trainers/:id', async (req, res) => {
+//   try {
+//     const { FullName, Email, Phone, Gender, DOB, Address, City, Country } = req.body;
+//     const [result] = await db.execute(
+//       `UPDATE trainers SET FullName = ?, Email = ?, Phone = ?, Gender = ?, DOB = ?, Address = ?, City = ?, Country = ? WHERE TrainerID = ?`,
+//       [FullName, Email, Phone, Gender, DOB, Address, City, Country, req.params.id]
+//     );
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Trainer not found' });
+//     res.json({ message: 'Trainer updated' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Delete Trainer by ID
+// app.delete('/trainers/:id', async (req, res) => {
+//   try {
+//     const [result] = await db.execute('DELETE FROM trainers WHERE TrainerID = ?', [req.params.id]);
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Trainer not found' });
+//     res.json({ message: 'Trainer deleted' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Create Client
+// app.post('/clients', async (req, res) => {
+//   try {
+//     const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
+//     const [result] = await db.execute(
+//       `INSERT INTO clients (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country) 
+//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+//       [FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country]
+//     );
+//     res.status(201).json({ ClientID: result.insertId });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Read all Clients
+// app.get('/clients', async (req, res) => {
+//   try {
+//     const [rows] = await db.query('SELECT * FROM clients');
+//     res.json(rows);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Read one Client by ID
+// app.get('/clients/:id', async (req, res) => {
+//   try {
+//     const [rows] = await db.execute('SELECT * FROM clients WHERE ClientID = ?', [req.params.id]);
+//     if (rows.length === 0) return res.status(404).json({ error: 'Client not found' });
+//     res.json(rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Update Client by ID
+// app.put('/clients/:id', async (req, res) => {
+//   try {
+//     const { FullName, Email, Phone, Gender, DOB, Address, City, Country } = req.body;
+//     const [result] = await db.execute(
+//       `UPDATE clients SET FullName = ?, Email = ?, Phone = ?, Gender = ?, DOB = ?, Address = ?, City = ?, Country = ? WHERE ClientID = ?`,
+//       [FullName, Email, Phone, Gender, DOB, Address, City, Country, req.params.id]
+//     );
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Client not found' });
+//     res.json({ message: 'Client updated' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Delete Client by ID
+// app.delete('/clients/:id', async (req, res) => {
+//   try {
+//     const [result] = await db.execute('DELETE FROM clients WHERE ClientID = ?', [req.params.id]);
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Client not found' });
+//     res.json({ message: 'Client deleted' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+//  // Create Admin
+// app.post('/admins', async (req, res) => {
+//   try {
+//     const { FullName, Email, PasswordHash, Phone } = req.body;
+//     const [result] = await db.execute(
+//       `INSERT INTO admins (FullName, Email, PasswordHash, Phone) VALUES (?, ?, ?, ?)`,
+//       [FullName, Email, PasswordHash, Phone]
+//     );
+//     res.status(201).json({ AdminID: result.insertId });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Read all Admins
+// app.get('/admins', async (req, res) => {
+//   try {
+//     const [rows] = await db.query('SELECT * FROM admins');
+//     res.json(rows);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Read one Admin by ID
+// app.get('/admins/:id', async (req, res) => {
+//   try {
+//     const [rows] = await db.execute('SELECT * FROM admins WHERE AdminID = ?', [req.params.id]);
+//     if (rows.length === 0) return res.status(404).json({ error: 'Admin not found' });
+//     res.json(rows[0]);
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Update Admin by ID
+// app.put('/admins/:id', async (req, res) => {
+//   try {
+//     const { FullName, Email, Phone } = req.body;
+//     const [result] = await db.execute(
+//       `UPDATE admins SET FullName = ?, Email = ?, Phone = ? WHERE AdminID = ?`,
+//       [FullName, Email, Phone, req.params.id]
+//     );
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Admin not found' });
+//     res.json({ message: 'Admin updated' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
+// // Delete Admin by ID
+// app.delete('/admins/:id', async (req, res) => {
+//   try {
+//     const [result] = await db.execute('DELETE FROM admins WHERE AdminID = ?', [req.params.id]);
+//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Admin not found' });
+//     res.json({ message: 'Admin deleted' });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
