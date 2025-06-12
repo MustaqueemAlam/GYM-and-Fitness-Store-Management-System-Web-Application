@@ -10,10 +10,12 @@ const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
 const BD_OFFSET = 6 * 60; 
+
 app.use(cors({
   origin: 'http://localhost:4444',
   credentials: true
 }));
+
 app.use(session({
   secret: 'your-secret-key',    
   resave: false,
@@ -22,7 +24,12 @@ app.use(session({
     maxAge: 1000 * 60 * 60 * 24   // 1 day session
   }
 }));
+
 const PORT = process.env.PORT || 4444;
+
+app.use(express.json());       // to parse JSON bodies 
+app.use(express.urlencoded({ extended: true })); // to parse URL-encoded bodies (form submissions)
+
 // Middleware for parsing urlencoded form data
 app.use(express.urlencoded({ extended: true }));
 // Serve static files
@@ -37,6 +44,9 @@ const pool = mysql.createPool({
   password: '',
   database: 'gym',
 });
+
+
+
 // Helper to validate email format
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
@@ -413,7 +423,7 @@ app.get('/notifications', async (req, res) => {
 
 
 
-// Get trainer profile
+// Get trainer dashboard profile
 app.get('/trainer/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -497,191 +507,165 @@ app.post('/trainer/profile/update', cpUpload, async (req, res) => {
   }
 });
 
-// admin manage profile:
-// // Create Trainer
-// app.post('/trainers', async (req, res) => {
-//   try {
-//     const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
-//     const [result] = await db.execute(
-//       `INSERT INTO trainers (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country) 
-//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-//       [FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country]
-//     );
-//     res.status(201).json({ TrainerID: result.insertId });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
-// // Read all Trainers
-// app.get('/trainers', async (req, res) => {
-//   try {
-//     const [rows] = await db.query('SELECT * FROM trainers');
-//     res.json(rows);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
-// // Read one Trainer by ID
-// app.get('/trainers/:id', async (req, res) => {
-//   try {
-//     const [rows] = await db.execute('SELECT * FROM trainers WHERE TrainerID = ?', [req.params.id]);
-//     if (rows.length === 0) return res.status(404).json({ error: 'Trainer not found' });
-//     res.json(rows[0]);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+// admin manage profiles:
 
-// // Update Trainer by ID
-// app.put('/trainers/:id', async (req, res) => {
-//   try {
-//     const { FullName, Email, Phone, Gender, DOB, Address, City, Country } = req.body;
-//     const [result] = await db.execute(
-//       `UPDATE trainers SET FullName = ?, Email = ?, Phone = ?, Gender = ?, DOB = ?, Address = ?, City = ?, Country = ? WHERE TrainerID = ?`,
-//       [FullName, Email, Phone, Gender, DOB, Address, City, Country, req.params.id]
-//     );
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Trainer not found' });
-//     res.json({ message: 'Trainer updated' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+app.get('/manage/profile/admins', async (req, res) => {
+  try {
+    const [results] = await pool.query(
+      'SELECT AdminID, FullName, Email, Phone, DateJoined, Role FROM admins'
+    );
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: 'DB error', details: err });
+  }
+});
+app.get('/manage/profile/clients', async (req, res) => {
+  try {
+    const [results] = await pool.query(
+      'SELECT ClientID, FullName, Email, Phone, DateJoined, Gender, DOB, City, Country FROM clients'
+    );
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: 'DB error', details: err });
+  }
+});
+app.get('/manage/profile/trainers', async (req, res) => {
+  try {
+    const [results] = await pool.query(
+      `SELECT TrainerID, FullName, Email, Phone, DateJoined, Gender, DOB, City, Country, 
+      Qualifications, Expertise, IntroVideoURL as IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID 
+      FROM trainers`
+    );
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ error: 'DB error', details: err });
+  }
+});
 
-// // Delete Trainer by ID
-// app.delete('/trainers/:id', async (req, res) => {
-//   try {
-//     const [result] = await db.execute('DELETE FROM trainers WHERE TrainerID = ?', [req.params.id]);
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Trainer not found' });
-//     res.json({ message: 'Trainer deleted' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+// Trainer profile picture route
+app.get('/profile-pic/trainer/:id', async (req, res) => {
+  const [rows] = await pool.query('SELECT ProfilePic FROM trainers WHERE TrainerID = ?', [req.params.id]);
+  if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('Not found');
 
-// // Create Client
-// app.post('/clients', async (req, res) => {
-//   try {
-//     const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
-//     const [result] = await db.execute(
-//       `INSERT INTO clients (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country) 
-//        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-//       [FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country]
-//     );
-//     res.status(201).json({ ClientID: result.insertId });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  const picBuffer = rows[0].ProfilePic;
 
-// // Read all Clients
-// app.get('/clients', async (req, res) => {
-//   try {
-//     const [rows] = await db.query('SELECT * FROM clients');
-//     res.json(rows);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  // Detect MIME type from buffer
+  const isPng = picBuffer.slice(0, 8).toString('hex') === '89504e470d0a1a0a';
+  const isJpeg = picBuffer.slice(0, 3).toString('hex') === 'ffd8ff';
 
-// // Read one Client by ID
-// app.get('/clients/:id', async (req, res) => {
-//   try {
-//     const [rows] = await db.execute('SELECT * FROM clients WHERE ClientID = ?', [req.params.id]);
-//     if (rows.length === 0) return res.status(404).json({ error: 'Client not found' });
-//     res.json(rows[0]);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  if (isPng) {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (isJpeg) {
+    res.setHeader('Content-Type', 'image/jpeg');
+  } else {
+    res.setHeader('Content-Type', 'application/octet-stream'); // fallback
+  }
 
-// // Update Client by ID
-// app.put('/clients/:id', async (req, res) => {
-//   try {
-//     const { FullName, Email, Phone, Gender, DOB, Address, City, Country } = req.body;
-//     const [result] = await db.execute(
-//       `UPDATE clients SET FullName = ?, Email = ?, Phone = ?, Gender = ?, DOB = ?, Address = ?, City = ?, Country = ? WHERE ClientID = ?`,
-//       [FullName, Email, Phone, Gender, DOB, Address, City, Country, req.params.id]
-//     );
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Client not found' });
-//     res.json({ message: 'Client updated' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  res.send(picBuffer);
+});
+app.get('/profile-pic/client/:id', async (req, res) => {
+  const [rows] = await pool.query('SELECT ProfilePic FROM clients WHERE ClientID = ?', [req.params.id]);
+  if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('Not found');
 
-// // Delete Client by ID
-// app.delete('/clients/:id', async (req, res) => {
-//   try {
-//     const [result] = await db.execute('DELETE FROM clients WHERE ClientID = ?', [req.params.id]);
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Client not found' });
-//     res.json({ message: 'Client deleted' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  const picBuffer = rows[0].ProfilePic;
 
-//  // Create Admin
-// app.post('/admins', async (req, res) => {
-//   try {
-//     const { FullName, Email, PasswordHash, Phone } = req.body;
-//     const [result] = await db.execute(
-//       `INSERT INTO admins (FullName, Email, PasswordHash, Phone) VALUES (?, ?, ?, ?)`,
-//       [FullName, Email, PasswordHash, Phone]
-//     );
-//     res.status(201).json({ AdminID: result.insertId });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  const isPng = picBuffer.slice(0, 8).toString('hex') === '89504e470d0a1a0a';
+  const isJpeg = picBuffer.slice(0, 3).toString('hex') === 'ffd8ff';
 
-// // Read all Admins
-// app.get('/admins', async (req, res) => {
-//   try {
-//     const [rows] = await db.query('SELECT * FROM admins');
-//     res.json(rows);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  if (isPng) {
+    res.setHeader('Content-Type', 'image/png');
+  } else if (isJpeg) {
+    res.setHeader('Content-Type', 'image/jpeg');
+  } else {
+    res.setHeader('Content-Type', 'application/octet-stream');
+  }
 
-// // Read one Admin by ID
-// app.get('/admins/:id', async (req, res) => {
-//   try {
-//     const [rows] = await db.execute('SELECT * FROM admins WHERE AdminID = ?', [req.params.id]);
-//     if (rows.length === 0) return res.status(404).json({ error: 'Admin not found' });
-//     res.json(rows[0]);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+  res.send(picBuffer);
+});
 
-// // Update Admin by ID
-// app.put('/admins/:id', async (req, res) => {
-//   try {
-//     const { FullName, Email, Phone } = req.body;
-//     const [result] = await db.execute(
-//       `UPDATE admins SET FullName = ?, Email = ?, Phone = ? WHERE AdminID = ?`,
-//       [FullName, Email, Phone, req.params.id]
-//     );
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Admin not found' });
-//     res.json({ message: 'Admin updated' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
 
-// // Delete Admin by ID
-// app.delete('/admins/:id', async (req, res) => {
-//   try {
-//     const [result] = await db.execute('DELETE FROM admins WHERE AdminID = ?', [req.params.id]);
-//     if (result.affectedRows === 0) return res.status(404).json({ error: 'Admin not found' });
-//     res.json({ message: 'Admin deleted' });
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// });
+// Admin PUT (edit)
+app.put('/manage/profile/admin/:id', async (req, res) => {
+  const { id } = req.params;
+  const { FullName, Email, Phone } = req.body;
+  try {
+    await pool.query(
+      'UPDATE admins SET FullName = ?, Email = ?, Phone = ? WHERE AdminID = ?',
+      [FullName || '', Email || '', Phone || '', id]
+    );
+    res.json({ message: 'Admin updated' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update admin', details: err });
+  }
+});
+
+// Admin DELETE (already working)
+app.delete('/manage/profile/admin/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM admins WHERE AdminID = ?', [id]);
+    res.json({ message: 'Admin deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete admin', details: err });
+  }
+});
+
+// Trainer PUT (edit)
+app.put('/manage/profile/trainer/:id', async (req, res) => {
+  const { id } = req.params;
+  const { FullName, Email, Phone } = req.body;
+  try {
+    await pool.query(
+      'UPDATE trainers SET FullName = ?, Email = ?, Phone = ? WHERE TrainerID = ?',
+      [FullName || '', Email || '', Phone || '', id]
+    );
+    res.json({ message: 'Trainer updated' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update trainer', details: err });
+  }
+});
+
+// Trainer DELETE
+app.delete('/manage/profile/trainer/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM trainers WHERE TrainerID = ?', [id]);
+    res.json({ message: 'Trainer deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete trainer', details: err });
+  }
+});
+
+// Client PUT (edit)
+app.put('/manage/profile/client/:id', async (req, res) => {
+  const { id } = req.params;
+  const { FullName, Email, Phone } = req.body;
+  try {
+    await pool.query(
+      'UPDATE clients SET FullName = ?, Email = ?, Phone = ? WHERE ClientID = ?',
+      [FullName || '', Email || '', Phone || '', id]
+    );
+    res.json({ message: 'Client updated' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update client', details: err });
+  }
+});
+
+// Client DELETE
+app.delete('/manage/profile/client/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM clients WHERE ClientID = ?', [id]);
+    res.json({ message: 'Client deleted' });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to delete client', details: err });
+  }
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

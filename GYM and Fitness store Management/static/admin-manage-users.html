@@ -79,6 +79,7 @@
         <thead class="bg-red-200 text-red-900">
           <tr>
             <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Profile</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Email</th>
             <th class="px-4 py-2">Phone</th>
@@ -113,6 +114,7 @@
         <thead class="bg-red-200 text-red-900">
           <tr>
             <th class="px-4 py-2">ID</th>
+            <th class="px-4 py-2">Profile</th>
             <th class="px-4 py-2">Name</th>
             <th class="px-4 py-2">Email</th>
             <th class="px-4 py-2">Phone</th>
@@ -257,375 +259,196 @@
       });
       event.target.classList.add('bg-red-500', 'text-white');
       event.target.classList.remove('bg-red-200', 'text-red-900');
-
       // Hide all user-tabs
       document.querySelectorAll('.user-tab').forEach(tabDiv => tabDiv.classList.add('hidden'));
-
       // Show selected tab
       document.getElementById(tab + 'Tab').classList.remove('hidden');
     }
-
-    document.addEventListener('DOMContentLoaded', () => {
-    showTab({target: document.querySelector('.tab-btn')}, 'trainers'); // default tab
-
-    loadAllData();
-
-    // Form event listeners
-    document.getElementById('trainerForm').addEventListener('submit', submitTrainerForm);
-    document.getElementById('clientForm').addEventListener('submit', submitClientForm);
-    document.getElementById('adminForm').addEventListener('submit', submitAdminForm);
-    });
-
-    // Load data for all tabs
-    async function loadAllData() {
-    await Promise.all([loadTrainers(), loadClients(), loadAdmins()]);
-    }
-
-    // ==================== TRAINERS ====================
-
-    async function loadTrainers() {
-    try {
-        const res = await fetch('/api/trainers');
-        if (!res.ok) throw new Error('Failed to load trainers');
-        const trainers = await res.json();
-        const tbody = document.getElementById('trainersTable');
-        tbody.innerHTML = '';
-        trainers.forEach(t => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="px-4 py-2">${t.TrainerID}</td>
-            <td class="px-4 py-2">${escapeHtml(t.FullName)}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Email)}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Phone || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Gender || '')}</td>
-            <td class="px-4 py-2">${t.DOB ? t.DOB.split('T')[0] : ''}</td>
-            <td class="px-4 py-2">${escapeHtml(t.City || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Country || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Qualifications || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(t.Expertise || '')}</td>
-            <td class="px-4 py-2"><a href="${escapeHtml(t.IntroVideoURL || '#')}" target="_blank" class="text-blue-600 underline">Video</a></td>
-            <td class="px-4 py-2">${escapeHtml(t.CertTitle || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(t.CertIssuer || '')}</td>
-            <td class="px-4 py-2">${t.CertYear || ''}</td>
-            <td class="px-4 py-2">${escapeHtml(t.CertID || '')}</td>
-            <td class="px-4 py-2">${t.DateJoined ? t.DateJoined.split('T')[0] : ''}</td>
-            <td class="px-4 py-2 space-x-2">
-            <button onclick="editTrainer(${t.TrainerID})" class="bg-yellow-400 hover:bg-yellow-500 px-2 py-1 rounded text-black">Edit</button>
-            <button onclick="deleteTrainer(${t.TrainerID})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white">Delete</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-        });
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-
-    function editTrainer(id) {
-    // Fetch single trainer data from backend then fill form
-    fetch(`/api/trainers/${id}`)
-        .then(res => res.json())
-        .then(t => {
-        const form = document.getElementById('trainerForm');
-        form.TrainerID.value = t.TrainerID;
-        form.FullName.value = t.FullName || '';
-        form.Email.value = t.Email || '';
-        // Password field is left blank for security - user can input new password if wanted
-        form.Password.value = '';
-        form.Phone.value = t.Phone || '';
-        form.Gender.value = t.Gender || '';
-        form.DOB.value = t.DOB ? t.DOB.split('T')[0] : '';
-        form.City.value = t.City || '';
-        form.Country.value = t.Country || '';
-        form.Address.value = t.Address || '';
-        form.Qualifications.value = t.Qualifications || '';
-        form.Expertise.value = t.Expertise || '';
-        form.IntroVideoURL.value = t.IntroVideoURL || '';
-        form.CertTitle.value = t.CertTitle || '';
-        form.CertIssuer.value = t.CertIssuer || '';
-        form.CertYear.value = t.CertYear || '';
-        form.CertID.value = t.CertID || '';
-        // File inputs cleared for security
-        form.ProfilePic.value = '';
-        form.CertFile.value = '';
-        openModal('trainerModal');
-        })
-        .catch(() => {
-        Swal.fire('Error', 'Failed to load trainer data.', 'error');
-        });
-    }
-
-    async function submitTrainerForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    let method = 'POST';
-    let url = '/api/trainers';
-    const trainerId = formData.get('TrainerID');
-
-    if (trainerId) {
-        method = 'PUT';
-        url = `/api/trainers/${trainerId}`;
-    }
-
-    try {
-        const res = await fetch(url, {
-        method,
-        body: formData,
-        });
-        if (!res.ok) throw new Error('Failed to save trainer');
-        await loadTrainers();
-        closeModal('trainerModal');
-        Swal.fire('Success', 'Trainer saved successfully!', 'success');
-        form.reset();
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-
-    function deleteTrainer(id) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-        try {
-            const res = await fetch(`/api/trainers/${id}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Failed to delete trainer');
-            await loadTrainers();
-            Swal.fire('Deleted!', 'Trainer has been deleted.', 'success');
-        } catch (error) {
-            Swal.fire('Error', error.message, 'error');
-        }
-        }
-    });
-    }
-
-    // ==================== CLIENTS ====================
-
-    async function loadClients() {
-    try {
-        const res = await fetch('/api/clients');
-        if (!res.ok) throw new Error('Failed to load clients');
-        const clients = await res.json();
-        const tbody = document.getElementById('clientsTable');
-        tbody.innerHTML = '';
-        clients.forEach(c => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="px-4 py-2">${c.ClientID}</td>
-            <td class="px-4 py-2">${escapeHtml(c.FullName)}</td>
-            <td class="px-4 py-2">${escapeHtml(c.Email)}</td>
-            <td class="px-4 py-2">${escapeHtml(c.Phone || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(c.Gender || '')}</td>
-            <td class="px-4 py-2">${c.DOB ? c.DOB.split('T')[0] : ''}</td>
-            <td class="px-4 py-2">${escapeHtml(c.City || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(c.Country || '')}</td>
-            <td class="px-4 py-2">${c.DateJoined ? c.DateJoined.split('T')[0] : ''}</td>
-            <td class="px-4 py-2 space-x-2">
-            <button onclick="editClient(${c.ClientID})" class="bg-yellow-400 hover:bg-yellow-500 px-2 py-1 rounded text-black">Edit</button>
-            <button onclick="deleteClient(${c.ClientID})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white">Delete</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-        });
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-
-    function editClient(id) {
-    fetch(`/api/clients/${id}`)
-        .then(res => res.json())
-        .then(c => {
-        const form = document.getElementById('clientForm');
-        form.ClientID.value = c.ClientID;
-        form.FullName.value = c.FullName || '';
-        form.Email.value = c.Email || '';
-        form.Password.value = '';
-        form.Phone.value = c.Phone || '';
-        form.Gender.value = c.Gender || '';
-        form.DOB.value = c.DOB ? c.DOB.split('T')[0] : '';
-        form.City.value = c.City || '';
-        form.Country.value = c.Country || '';
-        form.Address.value = c.Address || '';
-        openModal('clientModal');
-        })
-        .catch(() => {
-        Swal.fire('Error', 'Failed to load client data.', 'error');
-        });
-    }
-
-    async function submitClientForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    let method = 'POST';
-    let url = '/api/clients';
-    const clientId = formData.get('ClientID');
-
-    if (clientId) {
-        method = 'PUT';
-        url = `/api/clients/${clientId}`;
-    }
-
-    try {
-        const res = await fetch(url, {
-        method,
-        body: formData,
-        });
-        if (!res.ok) throw new Error('Failed to save client');
-        await loadClients();
-        closeModal('clientModal');
-        Swal.fire('Success', 'Client saved successfully!', 'success');
-        form.reset();
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-
-    function deleteClient(id) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-        try {
-            const res = await fetch(`/api/clients/${id}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Failed to delete client');
-            await loadClients();
-            Swal.fire('Deleted!', 'Client has been deleted.', 'success');
-        } catch (error) {
-            Swal.fire('Error', error.message, 'error');
-        }
-        }
-    });
-    }
-
-    // ==================== ADMINS ====================
-
-    async function loadAdmins() {
-    try {
-        const res = await fetch('/api/admins');
-        if (!res.ok) throw new Error('Failed to load admins');
-        const admins = await res.json();
-        const tbody = document.getElementById('adminsTable');
-        tbody.innerHTML = '';
-        admins.forEach(a => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td class="px-4 py-2">${a.AdminID}</td>
-            <td class="px-4 py-2">${escapeHtml(a.FullName)}</td>
-            <td class="px-4 py-2">${escapeHtml(a.Email)}</td>
-            <td class="px-4 py-2">${escapeHtml(a.Phone || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(a.Gender || '')}</td>
-            <td class="px-4 py-2">${a.DOB ? a.DOB.split('T')[0] : ''}</td>
-            <td class="px-4 py-2">${escapeHtml(a.City || '')}</td>
-            <td class="px-4 py-2">${escapeHtml(a.Country || '')}</td>
-            <td class="px-4 py-2">${a.DateJoined ? a.DateJoined.split('T')[0] : ''}</td>
-            <td class="px-4 py-2 space-x-2">
-            <button onclick="editAdmin(${a.AdminID})" class="bg-yellow-400 hover:bg-yellow-500 px-2 py-1 rounded text-black">Edit</button>
-            <button onclick="deleteAdmin(${a.AdminID})" class="bg-red-600 hover:bg-red-700 px-2 py-1 rounded text-white">Delete</button>
-            </td>
-        `;
-        tbody.appendChild(tr);
-        });
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-
-    function editAdmin(id) {
-    fetch(`/api/admins/${id}`)
-        .then(res => res.json())
-        .then(a => {
-        const form = document.getElementById('adminForm');
-        form.AdminID.value = a.AdminID;
-        form.FullName.value = a.FullName || '';
-        form.Email.value = a.Email || '';
-        form.Password.value = '';
-        form.Phone.value = a.Phone || '';
-        form.Gender.value = a.Gender || '';
-        form.DOB.value = a.DOB ? a.DOB.split('T')[0] : '';
-        form.City.value = a.City || '';
-        form.Country.value = a.Country || '';
-        form.Address.value = a.Address || '';
-        openModal('adminModal');
-        })
-        .catch(() => {
-        Swal.fire('Error', 'Failed to load admin data.', 'error');
-        });
-    }
-
-    async function submitAdminForm(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-
-    let method = 'POST';
-    let url = '/api/admins';
-    const adminId = formData.get('AdminID');
-
-    if (adminId) {
-        method = 'PUT';
-        url = `/api/admins/${adminId}`;
-    }
-
-    try {
-        const res = await fetch(url, {
-        method,
-        body: formData,
-        });
-        if (!res.ok) throw new Error('Failed to save admin');
-        await loadAdmins();
-        closeModal('adminModal');
-        Swal.fire('Success', 'Admin saved successfully!', 'success');
-        form.reset();
-    } catch (error) {
-        Swal.fire('Error', error.message, 'error');
-    }
-    }
-    function deleteAdmin(id) {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'This action cannot be undone.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes, delete it!'
-    }).then(async (result) => {
-        if (result.isConfirmed) {
-        try {
-            const res = await fetch(`/api/admins/${id}`, { method: 'DELETE' });
-            if (!res.ok) throw new Error('Failed to delete admin');
-            await loadAdmins();
-            Swal.fire('Deleted!', 'Admin has been deleted.', 'success');
-        } catch (error) {
-            Swal.fire('Error', error.message, 'error');
-        }
-        }
-    });
-    }
-    // ========== Helpers ==========
     function openModal(modalId) {
     document.getElementById(modalId).classList.remove('hidden');
     }
     function closeModal(modalId) {
     document.getElementById(modalId).classList.add('hidden');
     }
+    window.onload = () => {
+    ['trainer', 'client', 'admin'].forEach(role => loadUsers(role));
+    };
+
+    const endpoints = {
+    trainer: '/manage/profile/trainers',
+    client: '/manage/profile/clients',
+    admin: '/manage/profile/admins'
+    
+    };
+
+    async function loadUsers(role) {
+    try {
+        const response = await fetch(endpoints[role]);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const users = await response.json();
+
+        const tbody = document.getElementById(`${role}sTable`);
+        tbody.innerHTML = '';
+
+        users.forEach(user => {
+        const idKey = role === 'trainer' ? 'TrainerID' : role === 'client' ? 'ClientID' : 'AdminID';
+        let row = '';
+
+        if(role === 'trainer') {
+            row = `
+            <tr>
+                <td class="border p-2">${user.TrainerID}</td>
+                <td class="border p-2">
+                <img src="/profile-pic/trainer/${user.TrainerID}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                </td>
+                <td class="border p-2">${user.FullName}</td>
+                <td class="border p-2">${user.Email}</td>
+                <td class="border p-2">${user.Phone || ''}</td>
+                <td class="border p-2">${user.Gender || ''}</td>
+                <td class="border p-2">${user.DOB ? user.DOB.split('T')[0] : ''}</td>
+                <td class="border p-2">${user.City || ''}</td>
+                <td class="border p-2">${user.Country || ''}</td>
+                <td class="border p-2">${user.Qualifications || ''}</td>
+                <td class="border p-2">${user.Expertise || ''}</td>
+                <td class="border p-2">${user.IntroVideoURL ? `<a href="${user.IntroVideoURL}" target="_blank">Link</a>` : ''}</td>
+                <td class="border p-2">${user.CertTitle || ''}</td>
+                <td class="border p-2">${user.CertIssuer || ''}</td>
+                <td class="border p-2">${user.CertYear || ''}</td>
+                <td class="border p-2">${user.CertID || ''}</td>
+                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
+                <td class="border p-2">
+                <button onclick="editUser('trainer', ${user.TrainerID})" class="text-blue-600">Edit</button>
+                <button onclick="deleteUser('trainer', ${user.TrainerID})" class="text-red-600">Delete</button>
+                </td>
+            </tr>`;
+        }
+        else if(role === 'client') {
+            row = `
+            <tr>
+                <td class="border p-2">${user.ClientID}</td>
+                <td class="border p-2">
+                <img src="/profile-pic/client/${user.ClientID}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
+                </td>
+                <td class="border p-2">${user.FullName}</td>
+                <td class="border p-2">${user.Email}</td>
+                <td class="border p-2">${user.Phone || ''}</td>
+                <td class="border p-2">${user.Gender || ''}</td>
+                <td class="border p-2">${user.DOB ? user.DOB.split('T')[0] : ''}</td>
+                <td class="border p-2">${user.City || ''}</td>
+                <td class="border p-2">${user.Country || ''}</td>
+                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
+                <td class="border p-2">
+                <button onclick="editUser('client', ${user.ClientID})" class="text-blue-600">Edit</button>
+                <button onclick="deleteUser('client', ${user.ClientID})" class="text-red-600">Delete</button>
+                </td>
+            </tr>`;
+        }
+        else if(role === 'admin') {
+            row = `
+            <tr>
+                <td class="border p-2">${user.AdminID}</td>
+                <td class="border p-2">${user.FullName}</td>
+                <td class="border p-2">${user.Email}</td>
+                <td class="border p-2">${user.Phone || ''}</td>
+                <td class="border p-2">${user.Role || ''}</td>
+                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
+                <td class="border p-2">
+                <button onclick="editUser('admin', ${user.AdminID})" class="text-blue-600">Edit</button>
+                <button onclick="deleteUser('admin', ${user.AdminID})" class="text-red-600">Delete</button>
+                </td>
+            </tr>`;
+        }
+
+        tbody.innerHTML += row;
+        });
+
+    } catch (error) {
+        console.error(`Failed to load ${role}s:`, error);
+    }
+    }
 </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+async function editUser(role, id) {
+    const { value: formValues } = await Swal.fire({
+        title: `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`,
+        html:
+            `<input id="swal-input1" class="swal2-input" placeholder="New name">` +
+            `<input id="swal-input2" class="swal2-input" placeholder="New email">` +
+            `<input id="swal-input3" class="swal2-input" placeholder="New phone">`,
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+            return {
+                FullName: document.getElementById('swal-input1').value.trim(),
+                Email: document.getElementById('swal-input2').value.trim(),
+                Phone: document.getElementById('swal-input3').value.trim()
+            };
+        }
+    });
+
+    if (!formValues) return; // Cancel clicked
+
+    const payload = {};
+    if (formValues.FullName) payload.FullName = formValues.FullName;
+    if (formValues.Email) payload.Email = formValues.Email;
+    if (formValues.Phone) payload.Phone = formValues.Phone;
+
+    if (Object.keys(payload).length === 0) {
+        return Swal.fire('No changes', 'No fields were filled in.', 'info');
+    }
+
+    try {
+        // Use singular role to match backend route
+        const res = await fetch(`/manage/profile/${role}/${id}`, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.error || 'Update failed');
+
+        await Swal.fire('✅ Updated!', `${role} updated successfully.`, 'success');
+        loadUsers(role);
+    } catch (err) {
+        Swal.fire('❌ Error', err.message, 'error');
+    }
+}
+
+async function deleteUser(role, id) {
+    const confirmResult = await Swal.fire({
+        title: `Delete ${role}?`,
+        text: `Are you sure you want to delete this ${role}? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    });
+
+    if (!confirmResult.isConfirmed) return;
+
+    try {
+        // Use singular role to match backend route
+        const res = await fetch(`/manage/profile/${role}/${id}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.error || 'Delete failed');
+
+        await Swal.fire('✅ Deleted!', `${role} was deleted successfully.`, 'success');
+        loadUsers(role);
+    } catch (err) {
+        Swal.fire('❌ Error', err.message, 'error');
+    }
+}
+</script>
+
 </body>
 </html>
