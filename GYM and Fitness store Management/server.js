@@ -664,7 +664,36 @@ app.delete('/manage/profile/client/:id', async (req, res) => {
   }
 });
 
+//trainer view attendance
+app.get('/trainer/view/attendance', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM attendance ORDER BY CheckInTime DESC');
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching attendance:", err);
+    res.status(500).json({ error: 'Failed to fetch attendance' });
+  }
+});
+app.get('/trainer/client/:clientId', async (req, res) => {
+  const clientId = req.params.clientId;
+  try {
+    const [rows] = await pool.query('SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country, ProfilePic, DateJoined FROM clients WHERE ClientID = ?', [clientId]);
 
+    if (rows.length === 0) return res.status(404).json({ error: 'Client not found' });
+
+    const client = rows[0];
+    
+    // Convert BLOB to base64 string for frontend
+    if (client.ProfilePic) {
+      client.ProfilePic = `data:image/jpeg;base64,${client.ProfilePic.toString('base64')}`;
+    }
+
+    res.json(client);
+  } catch (err) {
+    console.error("Error fetching client details:", err);
+    res.status(500).json({ error: 'Failed to fetch client details' });
+  }
+});
 
 
 app.listen(PORT, () => {
