@@ -1,0 +1,302 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-Fitness Trainer- Red Theme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+    <div>
+      <!-- Logo + Title -->
+      <div class="flex items-center gap-3 mb-8">
+        <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Trainer Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
+        <h2 class="text-2xl font-bold text-red-700">E-Fitness Trainer</h2>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex flex-col space-y-3">
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          Profile Management
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+          </svg>
+          Session Scheduling
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+          </svg>
+          Client Management
+        </a>
+        <a href="trainer-attendance-monitor.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+          </svg>
+          Attendance Monitoring
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Notifications
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+          </svg>
+          Virtual Classes
+        </a>
+        <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
+          </svg>
+          Performance & Feedback
+        </a>
+      </nav>
+    </div>
+
+    <!-- Logout Button pinned bottom -->
+    <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+      <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+      </svg>
+      Logout
+    </button>
+  </aside>
+
+<!-- Main Content -->
+  <main class="flex-1 overflow-y-auto p-6">
+    <header class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
+      <div class="flex items-center gap-4">
+        <button id="notifBtn" class="relative text-gray-700 hover:text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
+          </svg>
+          <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
+        </button>
+        <button id="chatBtn" class="text-gray-700 hover:text-red-600">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+<section id="virtual-classes" class="mt-10 bg-white p-6 rounded-lg shadow-lg">
+  <h2 class="text-2xl font-semibold text-red-700 mb-4">Host a Virtual Class</h2>
+  <form id="virtualClassForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <input type="hidden" id="trainerId" value="<!--TrainerID here dynamically-->" />
+    
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Title</label>
+      <input type="text" id="classTitle" required class="w-full mt-1 p-2 border rounded" placeholder="Enter class title" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Platform</label>
+      <select id="classPlatform" required class="w-full mt-1 p-2 border rounded">
+        <option value="" disabled selected>Select a platform</option>
+        <option value="Zoom">Zoom</option>
+        <option value="GoogleMeet">GoogleMeet</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Start Time</label>
+      <input type="datetime-local" id="startTime" required class="w-full mt-1 p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Duration (minutes)</label>
+      <input type="number" id="duration" required min="1" class="w-full mt-1 p-2 border rounded" />
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="block text-sm font-medium text-gray-700">Join Link</label>
+      <input type="url" id="joinLink" required class="w-full mt-1 p-2 border rounded" placeholder="https://..." />
+    </div>
+
+    <div class="md:col-span-2">
+      <label class="block text-sm font-medium text-gray-700">Description</label>
+      <textarea id="description" rows="3" class="w-full mt-1 p-2 border rounded" placeholder="Brief description..."></textarea>
+    </div>
+
+ 
+
+<div class="md:col-span-2 text-right">
+  <input type="hidden" id="classId" name="classId" value="">
+  <button type="submit" id="submitBtn" class="bg-red-600 text-white px-5 py-2 rounded hover:bg-red-700 transition">
+    Create Class
+  </button>
+</div>
+
+  </form>
+
+  <!-- List of existing classes -->
+  <div id="classList" class="mt-8">
+    <h3 class="text-xl font-semibold text-red-700 mb-3">Your Virtual Classes</h3>
+    <div id="classCards" class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Dynamic class cards go here -->
+    </div>
+  </div>
+</section>
+    <script>
+        document.getElementById('virtualClassForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const classId = document.getElementById('classId').value; // empty if creating
+        const data = {
+            Title: document.getElementById('classTitle').value,
+            Description: document.getElementById('description').value,
+            StartTime: document.getElementById('startTime').value,
+            DurationMinutes: document.getElementById('duration').value,
+            Platform: document.getElementById('classPlatform').value,
+            JoinLink: document.getElementById('joinLink').value
+        };
+
+        const endpoint = classId ? `/trainer/virtual-classes/update/${classId}` : '/trainer/virtual-classes/create';
+        const method = classId ? 'PUT' : 'POST';
+
+        try {
+            const response = await fetch(endpoint, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (result.success) {
+            Swal.fire('Success', result.message, 'success');
+            document.getElementById('virtualClassForm').reset();
+            document.getElementById('submitBtn').textContent = 'Create Class';
+            document.getElementById('classId').value = '';
+            fetchClasses();
+            } else {
+            Swal.fire('Error', result.message || 'Something went wrong.', 'error');
+            }
+        } catch (err) {
+            console.error('❌ Server error:', err);
+            Swal.fire('Error', 'Failed to connect to server.', 'error');
+        }
+        });
+
+        async function fetchClasses() {
+        try {
+            const res = await fetch('/trainer/virtual-classes', { credentials: 'include' });
+
+            const contentType = res.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+            const html = await res.text();
+            console.error('Received HTML instead of JSON:', html);
+            return Swal.fire('Error', 'Invalid response format from server.', 'error');
+            }
+
+            const classes = await res.json();
+            const container = document.getElementById('classCards');
+            container.innerHTML = ''; // Clear previous cards
+
+            classes.forEach(cls => {
+            const card = document.createElement('div');
+            card.className = 'p-4 border rounded shadow bg-white';
+            card.innerHTML =card.innerHTML = `
+                <h4 class="text-lg font-bold text-red-700">${cls.Title}</h4>
+                <p class="text-sm text-gray-600">${new Date(cls.StartTime).toLocaleString()}</p>
+                <p class="text-sm">Platform: <span class="font-medium">${cls.Platform}</span></p>
+                <p class="text-sm text-gray-700 mt-1">${cls.Description || ''}</p>
+                <a href="${cls.JoinLink}" target="_blank" class="text-blue-600 hover:underline mt-2 block">Join Link</a>
+                <button class="edit-btn bg-yellow-500 text-white px-2 py-1 mt-2 rounded" data-id="${cls.ClassID}">Edit</button>
+                <button class="delete-btn bg-red-600 text-white px-2 py-1 mt-2 rounded ml-2" data-id="${cls.ClassID}">Delete</button>
+            `;
+            container.appendChild(card);
+            });
+
+            container.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const classId = btn.getAttribute('data-id');
+                const confirmed = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'This will permanently delete the class.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                });
+
+                if (confirmed.isConfirmed) {
+                try {
+                    const response = await fetch(`/trainer/virtual-classes/delete/${classId}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                    Swal.fire('Deleted!', result.message, 'success');
+                    fetchClasses(); // Refresh list
+                    // Clear form if the deleted class is being edited
+                    if (document.getElementById('classId').value === classId) {
+                        document.getElementById('virtualClassForm').reset();
+                        document.getElementById('submitBtn').textContent = 'Create Class';
+                        document.getElementById('classId').value = '';
+                    }
+                    } else {
+                    Swal.fire('Error', result.message || 'Failed to delete class.', 'error');
+                    }
+                } catch (err) {
+                    console.error('❌ Delete error:', err);
+                    Swal.fire('Error', 'Server error during delete.', 'error');
+                }
+                }
+            });
+            });
+
+            // Add event listeners to all edit buttons AFTER cards created
+            container.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const classId = btn.getAttribute('data-id');
+                const cls = classes.find(c => c.ClassID == classId);
+
+                // Fill form with class details
+                document.getElementById('classTitle').value = cls.Title;
+                document.getElementById('description').value = cls.Description;
+                document.getElementById('startTime').value = cls.StartTime.replace('Z', ''); // Adjust format if needed
+                document.getElementById('duration').value = cls.DurationMinutes;
+                document.getElementById('classPlatform').value = cls.Platform;
+                document.getElementById('joinLink').value = cls.JoinLink;
+
+                // Store the classId in hidden field
+                document.getElementById('classId').value = cls.ClassID;
+
+                // Change submit button text to indicate update mode
+                document.getElementById('submitBtn').textContent = 'Update Class';
+            });
+            });
+
+        } catch (err) {
+            console.error('❌ Failed to load classes:', err);
+            Swal.fire('Error', 'Could not load virtual classes.', 'error');
+        }
+        }
+
+        // Fetch classes on page load
+        window.addEventListener('load', fetchClasses);
+
+    </script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

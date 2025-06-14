@@ -696,6 +696,111 @@ app.get('/trainer/client/:clientId', async (req, res) => {
 });
 
 
+
+
+//  trainer virtual-classes/create/update/delete
+
+app.post('/trainer/virtual-classes/create', async (req, res) => {
+  if (!req.session.userId || req.session.userType !== 'trainer') {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { Title, Description, StartTime, DurationMinutes, Platform, JoinLink } = req.body;
+
+  if (!Title || !StartTime || !DurationMinutes || !Platform || !JoinLink) {
+    return res.status(400).json({ success: false, message: 'All required fields must be filled.' });
+  }
+
+  try {
+    await pool.query(
+      `INSERT INTO virtualclasses 
+       (TrainerID, Title, Description, StartTime, DurationMinutes, Platform, JoinLink) 
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [
+        req.session.userId,
+        Title,
+        Description || '',
+        StartTime,
+        DurationMinutes,
+        Platform,
+        JoinLink
+      ]
+    );
+
+    res.json({ success: true, message: 'Virtual class created successfully.' });
+  } catch (err) {
+    console.error('❌ Error creating virtual class:', err);
+    res.status(500).json({ success: false, message: 'Server error during class creation.' });
+  }
+});
+app.get('/trainer/virtual-classes', async (req, res) => {
+  if (!req.session.userId || req.session.userType !== 'trainer') {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM virtualclasses WHERE TrainerID = ? ORDER BY StartTime DESC',
+      [req.session.userId]
+    );
+    res.json(rows); // Send the list of classes
+  } catch (err) {
+    console.error('❌ Error fetching virtual classes:', err);
+    res.status(500).json({ success: false, message: 'Error fetching classes.' });
+  }
+});
+app.put('/trainer/virtual-classes/update/:id', async (req, res) => {
+  if (!req.session.userId || req.session.userType !== 'trainer') {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { id } = req.params;
+  const { Title, Description, StartTime, DurationMinutes, Platform, JoinLink } = req.body;
+
+  try {
+    const [result] = await pool.query(
+      `UPDATE virtualclasses 
+       SET Title = ?, Description = ?, StartTime = ?, DurationMinutes = ?, Platform = ?, JoinLink = ?
+       WHERE ClassID = ? AND TrainerID = ?`,
+      [Title, Description, StartTime, DurationMinutes, Platform, JoinLink, id, req.session.userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Class not found or not yours.' });
+    }
+
+    res.json({ success: true, message: 'Class updated successfully.' });
+  } catch (err) {
+    console.error('❌ Error updating class:', err);
+    res.status(500).json({ success: false, message: 'Server error during update.' });
+  }
+});
+app.delete('/trainer/virtual-classes/delete/:id', async (req, res) => {
+  if (!req.session.userId || req.session.userType !== 'trainer') {
+    return res.status(401).json({ success: false, message: 'Unauthorized' });
+  }
+
+  const { id } = req.params;
+
+  try {
+    const [result] = await pool.query(
+      'DELETE FROM virtualclasses WHERE ClassID = ? AND TrainerID = ?',
+      [id, req.session.userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Class not found or not yours.' });
+    }
+
+    res.json({ success: true, message: 'Class deleted successfully.' });
+  } catch (err) {
+    console.error('❌ Error deleting class:', err);
+    res.status(500).json({ success: false, message: 'Server error during delete.' });
+  }
+});
+
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
