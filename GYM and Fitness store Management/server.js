@@ -101,6 +101,8 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during signup.' });
   }
 });
+
+
 // Login POST handler for all users
 app.post('/login', async (req, res) => {
   try {
@@ -392,6 +394,148 @@ app.get('/api/healthlog', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch health logs.' });
   }
 });
+///fetch client daily goals
+// Route to get fitness goals for the logged-in client
+app.get('/goals/me', async (req, res) => {
+  const clientId = req.session.userId;
+  const userType = req.session.userType;
+
+  if (!clientId || userType !== 'client') {
+    return res.status(401).json({ error: 'Unauthorized. Please log in as a client.' });
+  }
+
+  try {
+    const [rows] = await pool.execute(
+      'SELECT * FROM fitnessgoals WHERE ClientID = ? ORDER BY TargetDate',
+      [clientId]
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching goals:', err);
+    res.status(500).json({ error: 'Failed to fetch fitness goals.' });
+  }
+});
+//update progress
+app.put('/goals/update-status/:goalId', async (req, res) => {
+  const clientId = req.session.userId;
+  const userType = req.session.userType;
+
+  if (!clientId || userType !== 'client') {
+    return res.status(401).json({ success: false, message: 'Unauthorized.' });
+  }
+
+  const goalId = req.params.goalId;
+  const { isAchieved } = req.body;
+
+  try {
+    const [check] = await pool.execute(
+      'SELECT * FROM fitnessgoals WHERE GoalID = ? AND ClientID = ?',
+      [goalId, clientId]
+    );
+
+    if (check.length === 0) {
+      return res.status(404).json({ success: false, message: 'Goal not found or not yours.' });
+    }
+
+    await pool.execute(
+      'UPDATE fitnessgoals SET IsAchieved = ? WHERE GoalID = ?',
+      [isAchieved ? 1 : 0, goalId]
+    );
+
+    res.json({ success: true, message: 'Goal status updated.' });
+  } catch (err) {
+    console.error('Update error:', err);
+    res.status(500).json({ success: false, message: 'Server error updating goal status.' });
+  }
+});
+// Trainer manage client fitness goals
+// Get all clients with goals
+app.get('/trainer/goals', async (req, res) => {
+  try {
+    const [clients] = await pool.execute('SELECT * FROM clients');
+    const [goals] = await pool.execute('SELECT * FROM fitnessgoals');
+
+    const clientsWithGoals = clients.map(client => ({
+      ...client,
+      goals: goals.filter(goal => goal.ClientID === client.ClientID)
+    }));
+
+    res.json({ success: true, data: clientsWithGoals });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error fetching clients and goals' });
+  }
+});
+
+// Add new goal
+app.post('/trainer/goals', async (req, res) => {
+  try {
+    const { ClientID, GoalTitle, GoalDescription, TargetDate, IsAchieved } = req.body;
+
+    const sql = `
+      INSERT INTO fitnessgoals (ClientID, GoalTitle, GoalDescription, TargetDate, IsAchieved)
+      VALUES (?, ?, ?, ?, ?)
+    `;
+
+    const [result] = await pool.execute(sql, [ClientID, GoalTitle, GoalDescription, TargetDate, IsAchieved]);
+    res.json({ success: true, message: 'Goal added successfully', goalId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error adding goal' });
+  }
+});
+
+// Update goal
+app.put('/trainer/goals/:goalId', async (req, res) => {
+  try {
+    const goalId = req.params.goalId;
+    const { GoalTitle, GoalDescription, TargetDate, IsAchieved } = req.body;
+
+    const sql = `
+      UPDATE fitnessgoals
+      SET GoalTitle = ?, GoalDescription = ?, TargetDate = ?, IsAchieved = ?
+      WHERE GoalID = ?
+    `;
+
+    await pool.execute(sql, [GoalTitle, GoalDescription, TargetDate, IsAchieved, goalId]);
+    res.json({ success: true, message: 'Goal updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error updating goal' });
+  }
+});
+
+// Delete goal
+app.delete('/trainer/goals/:goalId', async (req, res) => {
+  try {
+    const goalId = req.params.goalId;
+    await pool.execute('DELETE FROM fitnessgoals WHERE GoalID = ?', [goalId]);
+    res.json({ success: true, message: 'Goal deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error deleting goal' });
+  }
+});
+
+//new goals 
+app.post('/trainer/new/goals', async (req, res) => {
+  try {
+    const { ClientID, GoalTitle, GoalDescription, TargetDate } = req.body;
+
+    const sql = `
+      INSERT INTO fitnessgoals (ClientID, GoalTitle, GoalDescription, TargetDate)
+      VALUES (?, ?, ?, ?)
+    `;
+
+    const [result] = await pool.execute(sql, [ClientID, GoalTitle, GoalDescription, TargetDate]);
+
+    res.json({ success: true, message: 'Goal added successfully', goalId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Error adding goal' });
+  }
+});
+
 
 // Fetch client notifications
 app.get('/notifications', async (req, res) => {
