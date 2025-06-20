@@ -945,6 +945,97 @@ app.delete('/trainer/virtual-classes/delete/:id', async (req, res) => {
 
 
 
+
+// GET all products with optional search and filter (including unavailable ones)
+app.get('/api/products', async (req, res) => {
+  try {
+    const { search = '', category = '' } = req.query;
+    let sql = `SELECT * FROM products WHERE 1`; // always true, allows adding optional filters
+    const params = [];
+
+    if (search) {
+      sql += ` AND (Name LIKE ? OR Description LIKE ? OR Brand LIKE ?)`;
+      params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+    }
+
+    if (category) {
+      sql += ` AND Category = ?`;
+      params.push(category);
+    }
+
+    const [rows] = await pool.query(sql, params);
+
+    // convert image to base64
+    rows.forEach(product => {
+      if (product.Image) {
+        product.Image = Buffer.from(product.Image).toString('base64');
+      }
+    });
+
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// POST - Add product
+app.post('/api/products', upload.single('Image'), async (req, res) => {
+  try {
+    const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
+    const Image = req.file ? req.file.buffer : null;
+
+    const sql = `
+      INSERT INTO products (Name, Description, Category, Brand, Price, Stock, Image, IsActive)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    await pool.query(sql, [Name, Description, Category, Brand, Price, Stock, Image, IsActive]);
+
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT - Update product
+app.put('/api/products/:id', upload.single('Image'), async (req, res) => {
+  try {
+    const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
+    const Image = req.file ? req.file.buffer : null;
+    const { id } = req.params;
+
+    const sql = Image
+      ? `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, Image=?, IsActive=? WHERE ProductID=?`
+      : `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, IsActive=? WHERE ProductID=?`;
+
+    const values = Image
+      ? [Name, Description, Category, Brand, Price, Stock, Image, IsActive, id]
+      : [Name, Description, Category, Brand, Price, Stock, IsActive, id];
+
+    await pool.query(sql, values);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/products/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [result] = await pool.query(
+      'DELETE FROM products WHERE ProductID = ?',
+      [id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
