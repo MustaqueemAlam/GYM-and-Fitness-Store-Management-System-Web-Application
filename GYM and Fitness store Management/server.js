@@ -1205,6 +1205,99 @@ app.get('/api/client/active-subscriptions', async (req, res) => {
   }
 });
 
+app.get('/api/admin/subscriptions', async (req, res) => {
+  try {
+    const [rows] = await pool.query(`
+      SELECT 
+        s.SubscriptionID,
+        s.ClientID,
+        c.FullName,
+        c.Email,
+        sp.PlanName,
+        sp.Price,
+        s.StartDate,
+        s.EndDate,
+        s.IsActive,
+        p.PaymentID,
+        p.Amount,
+        p.PaymentDate,
+        p.Method,
+        p.Status,
+        p.TransactionRef
+      FROM subscriptions s
+      LEFT JOIN clients c ON s.ClientID = c.ClientID
+      LEFT JOIN subscription_plans sp ON s.PlanID = sp.PlanID
+      LEFT JOIN payments p ON s.SubscriptionID = p.SubscriptionID
+      ORDER BY s.StartDate DESC
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error loading subscriptions:', err.message);
+    res.status(500).json({ error: 'Failed to load subscriptions' });
+  }
+});
+
+// Delete a subscription and its related payment
+app.delete('/api/admin/subscriptions/:id', async (req, res) => {
+  const subscriptionId = req.params.id;
+
+  try {
+    await pool.query('DELETE FROM payments WHERE SubscriptionID = ?', [subscriptionId]);
+    await pool.query('DELETE FROM subscriptions WHERE SubscriptionID = ?', [subscriptionId]);
+    res.json({ message: 'Subscription and related payment deleted successfully' });
+  } catch (err) {
+    console.error('Error deleting subscription:', err.message);
+    res.status(500).json({ error: 'Failed to delete subscription' });
+  }
+});
+
+// Update subscription status
+app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
+  const subscriptionId = req.params.id;
+  const { isActive, paymentStatus } = req.body;
+
+  if (typeof isActive === 'undefined' || !paymentStatus) {
+    return res.status(400).json({ error: 'isActive and paymentStatus are required' });
+  }
+
+  try {
+    // Update subscription IsActive status
+    const [subscriptionResult] = await pool.query(
+      'UPDATE subscriptions SET IsActive = ? WHERE SubscriptionID = ?',
+      [isActive ? 1 : 0, subscriptionId]
+    );
+
+    // Update payment Status for the given subscription
+    const [paymentResult] = await pool.query(
+      'UPDATE payments SET Status = ? WHERE SubscriptionID = ?',
+      [paymentStatus, subscriptionId]
+    );
+
+    console.log('Subscription Update:', subscriptionResult);
+    console.log('Payment Update:', paymentResult);
+
+    if (subscriptionResult.affectedRows === 0) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+
+    if (paymentResult.affectedRows === 0) {
+      // Important: inform client no payment found to update!
+      return res.status(404).json({ error: 'Payment for subscription not found' });
+    }
+
+    res.json({ message: 'Subscription and payment status updated successfully' });
+  } catch (err) {
+    console.error('Error updating subscription/payment status:', err);
+    res.status(500).json({ error: 'Failed to update subscription/payment status' });
+  }
+});
+
+
+
+// Fallback 404 route
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
