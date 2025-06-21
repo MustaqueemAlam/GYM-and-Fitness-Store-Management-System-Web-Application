@@ -4,8 +4,10 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const app = express();
+
 const session = require('express-session');
 const cors = require('cors');
+
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
@@ -16,20 +18,21 @@ app.use(cors({
   credentials: true
 }));
 
+// 1 day session
 app.use(session({
   secret: 'your-secret-key',    
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24   // 1 day session
+    maxAge: 1000 * 60 * 60 * 24  
   }
 }));
 
 const PORT = process.env.PORT || 4444;
-
-app.use(express.json());       // to parse JSON bodies 
-app.use(express.urlencoded({ extended: true })); // to parse URL-encoded bodies (form submissions)
-
+// to parse JSON bodies 
+app.use(express.json());      
+// to parse URL-encoded bodies (form submissions) 
+app.use(express.urlencoded({ extended: true })); 
 // Middleware for parsing urlencoded form data
 app.use(express.urlencoded({ extended: true }));
 // Serve static files
@@ -37,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 // Setup multer for file uploads (profile picture)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
 // MySQL connection pool
 const pool = mysql.createPool({
   host: 'localhost',
@@ -45,15 +49,16 @@ const pool = mysql.createPool({
   database: 'gym',
 });
 
-
-
 // Helper to validate email format
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
 
-// Signup POST handler  for clients
+
+/**
+ * Signup POST handler  for clients
+ */
 app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
   try {
     const {
@@ -67,7 +72,6 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
       City,
       Country,
     } = req.body;
-    // Simple validation
     if (!FullName || !Email || !Password || !Phone || !Gender || !DOB || !Address || !City || !Country) {
       return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
     }
@@ -102,8 +106,9 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
   }
 });
 
-
-// Login POST handler for all users
+/**
+ * Login POST handler for all users
+ */
 app.post('/login', async (req, res) => {
   try {
     const { email, password, userType } = req.body;
@@ -171,15 +176,12 @@ app.post('/login', async (req, res) => {
     req.session.userName = user.FullName;
     req.session.userEmail = user.Email;
     req.session.userType = userType;
-
     console.log(`✅ Login successful for ${userType}: ${user.FullName}`);
-
     const response = {
       success: true,
       message: `Welcome back, ${user.FullName}!`,
       userType: userType.toLowerCase(),
     };
-
     if (userType.toLowerCase() === 'admin') {
       response.adminId = user[idField];
     } else if (userType.toLowerCase() === 'trainer') {
@@ -187,15 +189,20 @@ app.post('/login', async (req, res) => {
     } else {
       response.clientId = user[idField];
     }
-
     res.json(response);
-
   } catch (err) {
     console.error('❌ Login error:', err);
     res.status(500).json({ success: false, message: 'Server error during login.' });
   }
 });
-// bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
+/**
+ * bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
+ */
+
+
+/**
+ * Client fetch their own data
+ */
 app.get('/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -218,6 +225,10 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
+/**
+ * Client update their own data
+ */
 app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -247,6 +258,10 @@ app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to update profile' });
   }
 });
+
+/**
+ * Client logout session
+ */ 
 app.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -257,6 +272,10 @@ app.post('/logout', (req, res) => {
     res.json({ success: true, message: 'Logged out successfully' });
   });
 });
+
+/**
+ * Client fetch virtual class routines
+ */ 
 app.get('/api/virtualclasses', async (req, res) => {
   try {
     const [rows] = await pool.execute(`
@@ -270,6 +289,10 @@ app.get('/api/virtualclasses', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
+/**
+ * Client fetch their attendance records
+ */ 
 app.get('/api/attendance', async (req, res) => {
   const clientId = req.session.userId;
   const [rows] = await pool.execute(`
@@ -281,6 +304,10 @@ app.get('/api/attendance', async (req, res) => {
 
   res.json({ success: true, records: rows });
 });
+
+/**
+ * Client check in and out their attendance records
+ */ 
 app.post('/api/attendance/checkin', async (req, res) => {
   const clientId = req.session?.userId;
   if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -353,6 +380,12 @@ app.post('/api/attendance/checkout', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during check-out.' });
   }
 });
+
+
+/**
+ * Client update their health log records
+ */ 
+
 app.post('/api/healthlog', express.json(), async (req, res) => {
   const clientId = req.session.userId;
   if (!clientId) {
@@ -374,6 +407,11 @@ app.post('/api/healthlog', express.json(), async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error. Please try again.' });
   }
 });
+
+/**
+ * Client fetch their health log records
+ */ 
+
 app.get('/api/healthlog', async (req, res) => {
   const clientId = req.session.userId;
   if (!clientId) {
@@ -394,8 +432,10 @@ app.get('/api/healthlog', async (req, res) => {
     res.status(500).json({ success: false, message: 'Failed to fetch health logs.' });
   }
 });
-///fetch client daily goals
-// Route to get fitness goals for the logged-in client
+
+/**
+ * fetch client daily goals
+ */ 
 app.get('/goals/me', async (req, res) => {
   const clientId = req.session.userId;
   const userType = req.session.userType;
@@ -415,7 +455,9 @@ app.get('/goals/me', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch fitness goals.' });
   }
 });
-//update progress
+/**
+ *  client update progress
+ */ 
 app.put('/goals/update-status/:goalId', async (req, res) => {
   const clientId = req.session.userId;
   const userType = req.session.userType;
@@ -448,8 +490,12 @@ app.put('/goals/update-status/:goalId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error updating goal status.' });
   }
 });
-// Trainer manage client fitness goals
-// Get all clients with goals
+
+/**
+* Trainer manage client fitness goals
+* Get all clients with goals
+ */ 
+
 app.get('/trainer/goals', async (req, res) => {
   try {
     const [clients] = await pool.execute('SELECT * FROM clients');
@@ -467,7 +513,11 @@ app.get('/trainer/goals', async (req, res) => {
   }
 });
 
-// Add new goal
+
+/**
+ * Trainer add new goal
+ */ 
+
 app.post('/trainer/goals', async (req, res) => {
   try {
     const { ClientID, GoalTitle, GoalDescription, TargetDate, IsAchieved } = req.body;
@@ -485,7 +535,9 @@ app.post('/trainer/goals', async (req, res) => {
   }
 });
 
-// Update goal
+/**
+ * Trainer Update goal
+ */ 
 app.put('/trainer/goals/:goalId', async (req, res) => {
   try {
     const goalId = req.params.goalId;
@@ -504,8 +556,9 @@ app.put('/trainer/goals/:goalId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error updating goal' });
   }
 });
-
-// Delete goal
+/**
+ * Trainer Delete goal
+ */ 
 app.delete('/trainer/goals/:goalId', async (req, res) => {
   try {
     const goalId = req.params.goalId;
@@ -517,7 +570,10 @@ app.delete('/trainer/goals/:goalId', async (req, res) => {
   }
 });
 
-//new goals 
+/**
+ * Trainer add new goals 
+ */ 
+
 app.post('/trainer/new/goals', async (req, res) => {
   try {
     const { ClientID, GoalTitle, GoalDescription, TargetDate } = req.body;
@@ -536,8 +592,9 @@ app.post('/trainer/new/goals', async (req, res) => {
   }
 });
 
-
-// Fetch client notifications
+/**
+ * Fetch client notifications
+ */ 
 app.get('/notifications', async (req, res) => {
   try {
     const clientId = req.session.userId;
@@ -563,11 +620,10 @@ app.get('/notifications', async (req, res) => {
 });
 
 
+/**
+ * Get trainer dashboard profile
+ */ 
 
-
-
-
-// Get trainer dashboard profile
 app.get('/trainer/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -651,10 +707,9 @@ app.post('/trainer/profile/update', cpUpload, async (req, res) => {
   }
 });
 
-
-
-// admin manage profiles:
-
+/**
+ * Admin manage profiles:
+ */ 
 app.get('/manage/profile/admins', async (req, res) => {
   try {
     const [results] = await pool.query(
@@ -692,9 +747,7 @@ app.get('/manage/profile/trainers', async (req, res) => {
 app.get('/profile-pic/trainer/:id', async (req, res) => {
   const [rows] = await pool.query('SELECT ProfilePic FROM trainers WHERE TrainerID = ?', [req.params.id]);
   if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('Not found');
-
   const picBuffer = rows[0].ProfilePic;
-
   // Detect MIME type from buffer
   const isPng = picBuffer.slice(0, 8).toString('hex') === '89504e470d0a1a0a';
   const isJpeg = picBuffer.slice(0, 3).toString('hex') === 'ffd8ff';
@@ -706,7 +759,6 @@ app.get('/profile-pic/trainer/:id', async (req, res) => {
   } else {
     res.setHeader('Content-Type', 'application/octet-stream'); // fallback
   }
-
   res.send(picBuffer);
 });
 app.get('/profile-pic/client/:id', async (req, res) => {
@@ -729,8 +781,10 @@ app.get('/profile-pic/client/:id', async (req, res) => {
   res.send(picBuffer);
 });
 
+/**
+ * Admin PUT (edit)
+ */ 
 
-// Admin PUT (edit)
 app.put('/manage/profile/admin/:id', async (req, res) => {
   const { id } = req.params;
   const { FullName, Email, Phone } = req.body;
@@ -745,7 +799,10 @@ app.put('/manage/profile/admin/:id', async (req, res) => {
   }
 });
 
-// Admin DELETE (already working)
+/**
+ * Admin DELETE
+ */ 
+
 app.delete('/manage/profile/admin/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -756,7 +813,10 @@ app.delete('/manage/profile/admin/:id', async (req, res) => {
   }
 });
 
-// Trainer PUT (edit)
+/**
+ * Trainer PUT (edit)
+ */ 
+
 app.put('/manage/profile/trainer/:id', async (req, res) => {
   const { id } = req.params;
   const { FullName, Email, Phone } = req.body;
@@ -808,7 +868,11 @@ app.delete('/manage/profile/client/:id', async (req, res) => {
   }
 });
 
-//trainer view attendance
+
+/**
+ * Trainer view attendance
+ */ 
+
 app.get('/trainer/view/attendance', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM attendance ORDER BY CheckInTime DESC');
@@ -818,20 +882,20 @@ app.get('/trainer/view/attendance', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch attendance' });
   }
 });
+
+/**
+ * Trainer view attendance abd client profile
+ */ 
 app.get('/trainer/client/:clientId', async (req, res) => {
   const clientId = req.params.clientId;
   try {
     const [rows] = await pool.query('SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country, ProfilePic, DateJoined FROM clients WHERE ClientID = ?', [clientId]);
-
     if (rows.length === 0) return res.status(404).json({ error: 'Client not found' });
-
     const client = rows[0];
-    
     // Convert BLOB to base64 string for frontend
     if (client.ProfilePic) {
       client.ProfilePic = `data:image/jpeg;base64,${client.ProfilePic.toString('base64')}`;
     }
-
     res.json(client);
   } catch (err) {
     console.error("Error fetching client details:", err);
@@ -839,10 +903,9 @@ app.get('/trainer/client/:clientId', async (req, res) => {
   }
 });
 
-
-
-
-//  trainer virtual-classes/create/update/delete
+/**
+ * Trainer virtual-classes/create/update/delete
+ */ 
 
 app.post('/trainer/virtual-classes/create', async (req, res) => {
   if (!req.session.userId || req.session.userType !== 'trainer') {
@@ -877,6 +940,7 @@ app.post('/trainer/virtual-classes/create', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during class creation.' });
   }
 });
+
 app.get('/trainer/virtual-classes', async (req, res) => {
   if (!req.session.userId || req.session.userType !== 'trainer') {
     return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -943,10 +1007,10 @@ app.delete('/trainer/virtual-classes/delete/:id', async (req, res) => {
   }
 });
 
+/**
+ * GET all products with optional search and filter (including unavailable ones)
+ */ 
 
-
-
-// GET all products with optional search and filter (including unavailable ones)
 app.get('/api/products', async (req, res) => {
   try {
     const { search = '', category = '' } = req.query;
@@ -962,23 +1026,23 @@ app.get('/api/products', async (req, res) => {
       sql += ` AND Category = ?`;
       params.push(category);
     }
-
     const [rows] = await pool.query(sql, params);
-
     // convert image to base64
     rows.forEach(product => {
       if (product.Image) {
         product.Image = Buffer.from(product.Image).toString('base64');
       }
     });
-
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// POST - Add product
+/**
+ * Admin POST - Add product
+ */ 
+
 app.post('/api/products', upload.single('Image'), async (req, res) => {
   try {
     const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
@@ -995,7 +1059,9 @@ app.post('/api/products', upload.single('Image'), async (req, res) => {
   }
 });
 
-// PUT - Update product
+/**
+ * Admin PUT - Update product
+ */ 
 app.put('/api/products/:id', upload.single('Image'), async (req, res) => {
   try {
     const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
@@ -1017,6 +1083,10 @@ app.put('/api/products/:id', upload.single('Image'), async (req, res) => {
   }
 });
 
+/**
+ * Admin - del product
+ */ 
+
 app.delete('/api/products/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -1037,8 +1107,11 @@ app.delete('/api/products/:id', async (req, res) => {
 });
 
 
-//plans managed by admin:
-// Get all plans
+/**
+ * Admin - subs plans management:
+ */ 
+
+
 app.get('/api/plans', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM subscription_plans ORDER BY PlanID ASC');
@@ -1049,7 +1122,11 @@ app.get('/api/plans', async (req, res) => {
   }
 });
 
-// Add new plan
+
+/**
+ * Admin - subs plans management ---Add new plan:
+ */  
+
 app.post('/api/plans', async (req, res) => {
   const { PlanName, Description, DurationMonths, Price } = req.body;
 
@@ -1069,7 +1146,11 @@ app.post('/api/plans', async (req, res) => {
   }
 });
 
-// Update existing plan
+
+/**
+ * Admin - subs plans management -Update existing plan:
+ */  
+
 app.put('/api/plans/:id', async (req, res) => {
   const { id } = req.params;
   const { PlanName, Description, DurationMonths, Price } = req.body;
@@ -1095,7 +1176,9 @@ app.put('/api/plans/:id', async (req, res) => {
   }
 });
 
-// Delete plan
+/**
+ * Admin - subs plans management -Dek existing plan:
+ */  
 app.delete('/api/plans/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -1110,14 +1193,9 @@ app.delete('/api/plans/:id', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-
-// Client: View available plans (public)
+/**
+ * Client: View available subs plans (public)
+ */  
 app.get('/api/client/plans', async (req, res) => {
   try {
     const [plans] = await pool.query('SELECT * FROM subscription_plans ORDER BY PlanID ASC');
@@ -1128,7 +1206,9 @@ app.get('/api/client/plans', async (req, res) => {
   }
 });
 
-// Client: Purchase a plan (no login middleware)
+/**
+ * Client: Purchase a plan (no login middleware)
+ */ 
 app.post('/api/client/purchase', async (req, res) => {
   const clientId = req.session.userId;
   const { PlanID, StartDate, PaymentMethod, TransactionRef } = req.body;
@@ -1163,10 +1243,8 @@ app.post('/api/client/purchase', async (req, res) => {
       [clientId, subscriptionId, plan.Price, PaymentMethod, TransactionRef]
     );
     const paymentId = payRes.insertId;
-    
     // Log to verify
     console.log('Inserted payment with ID:', paymentId);
-
     res.status(201).json({
       message: 'Purchase successful',
       SubscriptionID: subscriptionId,
@@ -1181,15 +1259,16 @@ app.post('/api/client/purchase', async (req, res) => {
 function formatDate(d) {
   return d.toISOString().split('T')[0];
 }
-//view client availabe subs:
+
+/**
+ * Client-View active subscriptions
+ */ 
 
 app.get('/api/client/active-subscriptions', async (req, res) => {
-  const clientId = req.session.clientId || req.session.userId; // ensure session set correctly
-
+  const clientId = req.session.clientId || req.session.userId; 
   if (!clientId) {
     return res.status(401).json({ error: 'Unauthorized: Client ID missing' });
   }
-
   try {
     const [rows] = await pool.query(`
       SELECT s.SubscriptionID, s.StartDate, s.EndDate, p.PlanName, p.Description, p.Price
@@ -1197,13 +1276,17 @@ app.get('/api/client/active-subscriptions', async (req, res) => {
       JOIN subscription_plans p ON s.PlanID = p.PlanID
       WHERE s.ClientID = ? AND s.IsActive = 1
     `, [clientId]);
-
     res.json(rows);
   } catch (err) {
     console.error('Failed to fetch active subscriptions:', err);
     res.status(500).json({ error: 'Server error fetching subscriptions' });
   }
 });
+
+
+/**
+ * Admin0 manage active subscriptions abd payments
+ */ 
 
 app.get('/api/admin/subscriptions', async (req, res) => {
   try {
@@ -1251,7 +1334,10 @@ app.delete('/api/admin/subscriptions/:id', async (req, res) => {
   }
 });
 
-// Update subscription status
+/**
+ * Admin-- Update subscription status
+ */ 
+
 app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
   const subscriptionId = req.params.id;
   const { isActive, paymentStatus } = req.body;
@@ -1266,25 +1352,20 @@ app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
       'UPDATE subscriptions SET IsActive = ? WHERE SubscriptionID = ?',
       [isActive ? 1 : 0, subscriptionId]
     );
-
     // Update payment Status for the given subscription
     const [paymentResult] = await pool.query(
       'UPDATE payments SET Status = ? WHERE SubscriptionID = ?',
       [paymentStatus, subscriptionId]
     );
-
     console.log('Subscription Update:', subscriptionResult);
     console.log('Payment Update:', paymentResult);
-
     if (subscriptionResult.affectedRows === 0) {
       return res.status(404).json({ error: 'Subscription not found' });
     }
-
     if (paymentResult.affectedRows === 0) {
-      // Important: inform client no payment found to update!
+      //inform client no payment found to update!
       return res.status(404).json({ error: 'Payment for subscription not found' });
     }
-
     res.json({ message: 'Subscription and payment status updated successfully' });
   } catch (err) {
     console.error('Error updating subscription/payment status:', err);
@@ -1292,9 +1373,10 @@ app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
   }
 });
 
+/**
+ * Fallback 404 route
+ */ 
 
-
-// Fallback 404 route
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
