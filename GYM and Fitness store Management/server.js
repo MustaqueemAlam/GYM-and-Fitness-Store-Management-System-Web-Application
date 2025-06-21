@@ -592,33 +592,6 @@ app.post('/trainer/new/goals', async (req, res) => {
   }
 });
 
-/**
- * Fetch client notifications
- */ 
-app.get('/notifications', async (req, res) => {
-  try {
-    const clientId = req.session.userId;
-
-    if (!clientId) {
-      return res.status(401).json({ success: false, message: 'Not logged in.' });
-    }
-
-    const [notifications] = await pool.execute(
-      `SELECT NotificationID, Message, Type, IsRead, TrainerID,
-              DATE_FORMAT(SentAt, '%Y-%m-%d %H:%i:%s') as SentAt 
-       FROM notifications 
-       WHERE ClientID = ? 
-       ORDER BY SentAt DESC`, 
-      [clientId]
-    );
-
-    res.json({ success: true, notifications });
-  } catch (error) {
-    console.error('Error fetching notifications:', error);
-    res.status(500).json({ success: false, message: 'Error fetching notifications.' });
-  }
-});
-
 
 /**
  * Get trainer dashboard profile

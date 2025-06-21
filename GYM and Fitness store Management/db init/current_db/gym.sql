@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 21, 2025 at 05:51 AM
+-- Generation Time: Jun 22, 2025 at 12:35 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -112,6 +112,53 @@ INSERT INTO `bookings` (`BookingID`, `SessionID`, `ClientID`, `Status`, `Booking
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chat_messages`
+--
+
+CREATE TABLE `chat_messages` (
+  `MessageID` int(11) NOT NULL,
+  `ThreadID` int(11) NOT NULL,
+  `SenderID` int(11) NOT NULL,
+  `SenderRole` enum('Client','Trainer','Admin') NOT NULL,
+  `EncryptedText` text NOT NULL,
+  `AttachmentURL` varchar(255) DEFAULT NULL,
+  `Status` enum('Sent','Delivered','Read') DEFAULT 'Sent',
+  `SentAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_participants`
+--
+
+CREATE TABLE `chat_participants` (
+  `ParticipantID` int(11) NOT NULL,
+  `ThreadID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `UserRole` enum('Client','Trainer','Admin') NOT NULL,
+  `JoinedAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chat_threads`
+--
+
+CREATE TABLE `chat_threads` (
+  `ThreadID` int(11) NOT NULL,
+  `ParticipantOneID` int(11) NOT NULL,
+  `ParticipantOneRole` enum('Client','Trainer','Admin') NOT NULL,
+  `ParticipantTwoID` int(11) NOT NULL,
+  `ParticipantTwoRole` enum('Client','Trainer','Admin') NOT NULL,
+  `IsGroup` tinyint(1) DEFAULT 0,
+  `CreatedAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `clients`
 --
 
@@ -158,6 +205,65 @@ INSERT INTO `clients` (`ClientID`, `FullName`, `Email`, `PasswordHash`, `Phone`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `client_diet_logs`
+--
+
+CREATE TABLE `client_diet_logs` (
+  `LogID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `DietPlanID` int(11) DEFAULT NULL,
+  `LogDate` date DEFAULT curdate(),
+  `MealDetails` text DEFAULT NULL,
+  `CaloriesIntake` int(11) DEFAULT NULL,
+  `WaterIntakeLitres` decimal(4,2) DEFAULT NULL,
+  `SupplementsTaken` text DEFAULT NULL,
+  `Mood` enum('Energetic','Normal','Tired','Bloated') DEFAULT NULL,
+  `DigestionStatus` enum('Good','Average','Poor') DEFAULT NULL,
+  `TrainerComments` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_progress_snapshots`
+--
+
+CREATE TABLE `client_progress_snapshots` (
+  `SnapshotID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `DateTaken` date DEFAULT curdate(),
+  `WeightKg` decimal(5,2) DEFAULT NULL,
+  `BodyFatPercent` decimal(4,2) DEFAULT NULL,
+  `BMI` decimal(4,2) DEFAULT NULL,
+  `ProgressImage` longblob DEFAULT NULL,
+  `Notes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `client_workouts`
+--
+
+CREATE TABLE `client_workouts` (
+  `WorkoutLogID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `ExerciseID` int(11) DEFAULT NULL,
+  `DatePerformed` date DEFAULT curdate(),
+  `SetsDone` int(11) DEFAULT NULL,
+  `RepsDone` int(11) DEFAULT NULL,
+  `WeightUsedKg` decimal(5,2) DEFAULT NULL,
+  `HeartRate` int(11) DEFAULT NULL,
+  `CaloriesBurned` int(11) DEFAULT NULL,
+  `FatigueLevel` enum('Low','Moderate','High') DEFAULT 'Moderate',
+  `TrainerNotes` text DEFAULT NULL,
+  `ClientFeedback` text DEFAULT NULL,
+  `Attachment` longblob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `dashboardkpi`
 -- (See below for the actual view)
 --
@@ -167,6 +273,83 @@ CREATE TABLE `dashboardkpi` (
 ,`ActiveSubscriptions` bigint(21)
 ,`TotalRevenue` decimal(32,2)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `diet_meals`
+--
+
+CREATE TABLE `diet_meals` (
+  `MealID` int(11) NOT NULL,
+  `DietPlanID` int(11) DEFAULT NULL,
+  `MealType` enum('Breakfast','Lunch','Dinner','Snack') DEFAULT NULL,
+  `MealTime` time DEFAULT NULL,
+  `FoodItems` text DEFAULT NULL,
+  `Calories` int(11) DEFAULT NULL,
+  `Macros` varchar(100) DEFAULT NULL,
+  `Notes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `diet_plans`
+--
+
+CREATE TABLE `diet_plans` (
+  `DietPlanID` int(11) NOT NULL,
+  `TrainerID` int(11) DEFAULT NULL,
+  `Title` varchar(100) DEFAULT NULL,
+  `Goal` varchar(100) DEFAULT NULL,
+  `CaloriesPerDay` int(11) DEFAULT NULL,
+  `MacronutrientRatio` varchar(100) DEFAULT NULL,
+  `RecommendedSupplements` text DEFAULT NULL,
+  `StartDate` date DEFAULT NULL,
+  `EndDate` date DEFAULT NULL,
+  `SpecialInstructions` text DEFAULT NULL,
+  `ApprovedByNutritionistID` int(11) DEFAULT NULL,
+  `CreatedAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `diet_requests`
+--
+
+CREATE TABLE `diet_requests` (
+  `RequestID` int(11) NOT NULL,
+  `ClientID` int(11) DEFAULT NULL,
+  `RequestDate` datetime DEFAULT current_timestamp(),
+  `GoalDescription` text DEFAULT NULL,
+  `Allergies` text DEFAULT NULL,
+  `Preferences` text DEFAULT NULL,
+  `MedicalConditions` text DEFAULT NULL,
+  `Status` enum('Pending','Approved','Rejected') DEFAULT 'Pending',
+  `ReviewedBy` int(11) DEFAULT NULL,
+  `ResponseNotes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feedbacks`
+--
+
+CREATE TABLE `feedbacks` (
+  `FeedbackID` int(11) NOT NULL,
+  `SenderID` int(11) NOT NULL,
+  `SenderRole` enum('Client','Trainer','Admin') NOT NULL,
+  `ReceiverID` int(11) DEFAULT NULL,
+  `ReceiverRole` enum('Client','Trainer','Admin') DEFAULT NULL,
+  `FeedbackType` enum('System','Trainer','Facility','Diet','App','Session') DEFAULT 'System',
+  `Subject` varchar(150) DEFAULT NULL,
+  `Message` text DEFAULT NULL,
+  `Rating` int(11) DEFAULT NULL,
+  `Attachment` longblob DEFAULT NULL,
+  `SubmittedAt` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -194,7 +377,8 @@ INSERT INTO `fitnessgoals` (`GoalID`, `ClientID`, `GoalTitle`, `GoalDescription`
 (4, 4, 'Flexibility', 'Touch toes with ease', '2025-07-01', 1),
 (6, 16, 'Better Sleep', 'Average 8 hours/night', '2025-08-10', 1),
 (7, 16, 'Hydration Habit', 'Drink 3L water daily', '2025-07-20', 1),
-(9, 5, 'Gain Muscle again', '55', '2025-06-26', 0);
+(9, 5, 'Gain Muscle again', '55', '2025-06-26', 0),
+(13, NULL, '', '', '0000-00-00', 0);
 
 -- --------------------------------------------------------
 
@@ -233,87 +417,22 @@ INSERT INTO `healthlogs` (`LogID`, `ClientID`, `LogDate`, `Weight`, `Calories`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `membershipplans`
---
-
-CREATE TABLE `membershipplans` (
-  `PlanID` int(11) NOT NULL,
-  `Name` varchar(100) DEFAULT NULL,
-  `Description` text DEFAULT NULL,
-  `DurationDays` int(11) DEFAULT NULL,
-  `Price` decimal(10,2) DEFAULT NULL,
-  `Discount` decimal(5,2) DEFAULT NULL,
-  `IsActive` tinyint(1) DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `membershipplans`
---
-
-INSERT INTO `membershipplans` (`PlanID`, `Name`, `Description`, `DurationDays`, `Price`, `Discount`, `IsActive`) VALUES
-(1, 'Basic Plan', '1 Month Access', 30, 2000.00, 0.00, 1),
-(2, 'Standard Plan', '3 Months Access', 90, 5000.00, 5.00, 1),
-(3, 'Premium Plan', '6 Months Access', 180, 9000.00, 10.00, 1),
-(4, 'Gold Plan', '12 Months Access', 365, 16000.00, 15.00, 1),
-(5, 'Student Plan', '3 Months for Students', 90, 4000.00, 10.00, 1),
-(6, 'Weekend Plan', 'Weekends Only', 60, 3000.00, 5.00, 1),
-(7, 'Corporate Plan', 'Corporate Members', 180, 8500.00, 20.00, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `messages`
---
-
-CREATE TABLE `messages` (
-  `MessageID` int(11) NOT NULL,
-  `SenderID` int(11) DEFAULT NULL,
-  `SenderType` enum('Client','Trainer') DEFAULT NULL,
-  `ReceiverID` int(11) DEFAULT NULL,
-  `ReceiverType` enum('Client','Trainer') DEFAULT NULL,
-  `MessageText` text DEFAULT NULL,
-  `Attachment` longblob DEFAULT NULL,
-  `Timestamp` datetime DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`MessageID`, `SenderID`, `SenderType`, `ReceiverID`, `ReceiverType`, `MessageText`, `Attachment`, `Timestamp`) VALUES
-(1, 1, 'Client', 1, 'Trainer', 'Hi, I need help with my diet.', NULL, '2025-06-02 22:35:09'),
-(2, 2, 'Client', 2, 'Trainer', 'Can we reschedule today\'s session?', NULL, '2025-06-02 22:35:09'),
-(3, 3, 'Client', 3, 'Trainer', 'Is cardio everyday good?', NULL, '2025-06-02 22:35:09'),
-(4, 1, 'Trainer', 1, 'Client', 'Let me send you a new diet chart.', NULL, '2025-06-02 22:35:09'),
-(5, 2, 'Trainer', 2, 'Client', 'Sure, what time works for you?', NULL, '2025-06-02 22:35:09'),
-(6, 3, 'Trainer', 3, 'Client', 'We can alternate cardio and strength.', NULL, '2025-06-02 22:35:09'),
-(7, 4, 'Trainer', 4, 'Client', 'Remember to stay hydrated!', NULL, '2025-06-02 22:35:09');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `notifications`
 --
 
 CREATE TABLE `notifications` (
   `NotificationID` int(11) NOT NULL,
-  `Message` text DEFAULT NULL,
-  `Type` enum('Booking','Payment','Message','Promotion') DEFAULT NULL,
+  `SenderID` int(11) NOT NULL,
+  `SenderRole` enum('Client','Trainer','Admin') NOT NULL,
+  `ReceiverID` int(11) NOT NULL,
+  `ReceiverRole` enum('Client','Trainer','Admin') NOT NULL,
+  `Title` varchar(150) NOT NULL,
+  `Message` text NOT NULL,
+  `Type` enum('Booking','Payment','Reminder','Alert','Feedback','System','Promotion') DEFAULT 'System',
+  `ActionLink` varchar(255) DEFAULT NULL,
   `IsRead` tinyint(1) DEFAULT 0,
-  `SentAt` datetime DEFAULT current_timestamp(),
-  `ClientID` int(11) DEFAULT NULL,
-  `TrainerID` int(11) DEFAULT NULL
+  `CreatedAt` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `notifications`
---
-
-INSERT INTO `notifications` (`NotificationID`, `Message`, `Type`, `IsRead`, `SentAt`, `ClientID`, `TrainerID`) VALUES
-(1, 'Your training session with Jane is confirmed.', 'Booking', 0, '2025-06-05 14:18:59', 16, 1),
-(2, 'Your payment was received successfully.', 'Payment', 0, '2025-06-05 14:18:59', 16, 2),
-(3, 'New message from trainer Mark.', 'Message', 0, '2025-06-05 14:18:59', 2, 2),
-(4, 'Don\'t miss our summer fitness promotion!', 'Promotion', 0, '2025-06-05 14:18:59', 2, 4);
 
 -- --------------------------------------------------------
 
@@ -394,13 +513,11 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`PaymentID`, `ClientID`, `SubscriptionID`, `Amount`, `PaymentDate`, `Method`, `Status`, `TransactionRef`) VALUES
-(1, 1, 1, 2000.00, '2025-01-01 00:00:00', 'bKash', 'Completed', 'TXN1001'),
-(2, 2, 2, 5000.00, '2025-01-10 00:00:00', 'Nagad', 'Completed', 'TXN1002'),
 (3, 3, 3, 9000.00, '2025-01-15 00:00:00', 'SSLCommerz', 'Completed', 'TXN1003'),
 (4, 4, 4, 16000.00, '2025-01-20 00:00:00', 'Stripe', 'Completed', 'TXN1004'),
-(5, 5, 5, 4000.00, '2025-02-01 00:00:00', 'PayPal', 'Refunded', 'TXN1005'),
+(5, 5, 5, 4000.00, '2025-02-01 00:00:00', 'PayPal', 'Completed', 'TXN1005'),
 (6, 6, 6, 3000.00, '2025-02-10 00:00:00', 'bKash', 'Completed', 'TXN1006'),
-(7, 7, 7, 8500.00, '2025-03-01 00:00:00', 'Stripe', 'Completed', 'TXN1007');
+(9, 16, 11, 8000.00, '2025-06-21 10:48:02', 'bKash', 'Refunded', '33fdss');
 
 -- --------------------------------------------------------
 
@@ -451,38 +568,6 @@ CREATE TABLE `product_payments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sessions`
---
-
-CREATE TABLE `sessions` (
-  `SessionID` int(11) NOT NULL,
-  `TrainerID` int(11) DEFAULT NULL,
-  `Title` varchar(100) DEFAULT NULL,
-  `Description` text DEFAULT NULL,
-  `StartTime` datetime DEFAULT NULL,
-  `EndTime` datetime DEFAULT NULL,
-  `Location` varchar(255) DEFAULT NULL,
-  `MaxParticipants` int(11) DEFAULT NULL,
-  `IsVirtual` tinyint(1) DEFAULT NULL,
-  `VirtualLink` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `sessions`
---
-
-INSERT INTO `sessions` (`SessionID`, `TrainerID`, `Title`, `Description`, `StartTime`, `EndTime`, `Location`, `MaxParticipants`, `IsVirtual`, `VirtualLink`) VALUES
-(1, 1, 'Strength Training', 'Muscle building session', '2025-06-10 10:00:00', '2025-06-10 11:00:00', 'Room A', 10, 0, NULL),
-(2, 2, 'Cardio Burn', 'High energy cardio session', '2025-06-11 11:00:00', '2025-06-11 12:00:00', 'Room B', 8, 0, NULL),
-(3, 3, 'HIIT Blast', 'High Intensity Interval Training', '2025-06-12 09:00:00', '2025-06-12 10:00:00', 'Room C', 12, 1, 'https://zoom.us/session1'),
-(4, 4, 'Yoga Flow', 'Morning Yoga for flexibility', '2025-06-13 07:00:00', '2025-06-13 08:00:00', 'Room D', 15, 1, 'https://meet.google.com/session2'),
-(5, 5, 'Bodybuilding Basics', 'Bulking 101', '2025-06-14 13:00:00', '2025-06-14 14:00:00', 'Room A', 6, 0, NULL),
-(6, 6, 'Zumba Dance', 'Fun dance workout', '2025-06-15 17:00:00', '2025-06-15 18:00:00', 'Room B', 20, 0, NULL),
-(7, 7, 'CrossFit Grind', 'Endurance focused', '2025-06-16 16:00:00', '2025-06-16 17:00:00', 'Room C', 10, 1, 'https://zoom.us/session3');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `subscriptions`
 --
 
@@ -500,13 +585,11 @@ CREATE TABLE `subscriptions` (
 --
 
 INSERT INTO `subscriptions` (`SubscriptionID`, `ClientID`, `PlanID`, `StartDate`, `EndDate`, `IsActive`) VALUES
-(1, 1, 1, '2025-01-01', '2025-01-31', 1),
-(2, 2, 2, '2025-01-10', '2025-04-10', 1),
 (3, 3, 3, '2025-01-15', '2025-07-15', 1),
 (4, 4, 4, '2025-01-20', '2026-01-20', 1),
-(5, 5, 5, '2025-02-01', '2025-05-01', 0),
+(5, 5, 5, '2025-02-01', '2025-05-01', 1),
 (6, 6, 6, '2025-02-10', '2025-04-10', 1),
-(7, 7, 7, '2025-03-01', '2025-09-01', 1);
+(11, 16, 3, '2025-07-01', '2026-01-01', 1);
 
 -- --------------------------------------------------------
 
@@ -615,6 +698,46 @@ INSERT INTO `virtualclasses` (`ClassID`, `TrainerID`, `Title`, `Description`, `S
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `workout_exercises`
+--
+
+CREATE TABLE `workout_exercises` (
+  `ExerciseID` int(11) NOT NULL,
+  `PlanID` int(11) DEFAULT NULL,
+  `ExerciseName` varchar(100) DEFAULT NULL,
+  `Equipment` varchar(100) DEFAULT NULL,
+  `Sets` int(11) DEFAULT NULL,
+  `Reps` int(11) DEFAULT NULL,
+  `WeightKg` decimal(5,2) DEFAULT NULL,
+  `RestSeconds` int(11) DEFAULT NULL,
+  `VideoURL` varchar(255) DEFAULT NULL,
+  `TargetMuscleGroups` varchar(255) DEFAULT NULL,
+  `DayNumber` int(11) DEFAULT NULL,
+  `Notes` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workout_plans`
+--
+
+CREATE TABLE `workout_plans` (
+  `PlanID` int(11) NOT NULL,
+  `TrainerID` int(11) DEFAULT NULL,
+  `Title` varchar(100) NOT NULL,
+  `Goal` varchar(150) DEFAULT NULL,
+  `Level` enum('Beginner','Intermediate','Advanced') DEFAULT 'Beginner',
+  `DurationWeeks` int(11) DEFAULT 4,
+  `FocusAreas` varchar(255) DEFAULT NULL,
+  `CustomInstructions` text DEFAULT NULL,
+  `CreatedAt` datetime DEFAULT current_timestamp(),
+  `IsActive` tinyint(1) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Structure for view `dashboardkpi`
 --
 DROP TABLE IF EXISTS `dashboardkpi`;
@@ -648,11 +771,71 @@ ALTER TABLE `bookings`
   ADD KEY `ClientID` (`ClientID`);
 
 --
+-- Indexes for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  ADD PRIMARY KEY (`MessageID`);
+
+--
+-- Indexes for table `chat_participants`
+--
+ALTER TABLE `chat_participants`
+  ADD PRIMARY KEY (`ParticipantID`);
+
+--
+-- Indexes for table `chat_threads`
+--
+ALTER TABLE `chat_threads`
+  ADD PRIMARY KEY (`ThreadID`);
+
+--
 -- Indexes for table `clients`
 --
 ALTER TABLE `clients`
   ADD PRIMARY KEY (`ClientID`),
   ADD UNIQUE KEY `Email` (`Email`);
+
+--
+-- Indexes for table `client_diet_logs`
+--
+ALTER TABLE `client_diet_logs`
+  ADD PRIMARY KEY (`LogID`);
+
+--
+-- Indexes for table `client_progress_snapshots`
+--
+ALTER TABLE `client_progress_snapshots`
+  ADD PRIMARY KEY (`SnapshotID`);
+
+--
+-- Indexes for table `client_workouts`
+--
+ALTER TABLE `client_workouts`
+  ADD PRIMARY KEY (`WorkoutLogID`);
+
+--
+-- Indexes for table `diet_meals`
+--
+ALTER TABLE `diet_meals`
+  ADD PRIMARY KEY (`MealID`);
+
+--
+-- Indexes for table `diet_plans`
+--
+ALTER TABLE `diet_plans`
+  ADD PRIMARY KEY (`DietPlanID`);
+
+--
+-- Indexes for table `diet_requests`
+--
+ALTER TABLE `diet_requests`
+  ADD PRIMARY KEY (`RequestID`);
+
+--
+-- Indexes for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  ADD PRIMARY KEY (`FeedbackID`);
 
 --
 -- Indexes for table `fitnessgoals`
@@ -669,24 +852,10 @@ ALTER TABLE `healthlogs`
   ADD KEY `ClientID` (`ClientID`);
 
 --
--- Indexes for table `membershipplans`
---
-ALTER TABLE `membershipplans`
-  ADD PRIMARY KEY (`PlanID`);
-
---
--- Indexes for table `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`MessageID`);
-
---
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`NotificationID`),
-  ADD KEY `ClientID` (`ClientID`),
-  ADD KEY `TrainerID` (`TrainerID`);
+  ADD PRIMARY KEY (`NotificationID`);
 
 --
 -- Indexes for table `orderitems`
@@ -727,13 +896,6 @@ ALTER TABLE `product_payments`
   ADD KEY `ClientID` (`ClientID`);
 
 --
--- Indexes for table `sessions`
---
-ALTER TABLE `sessions`
-  ADD PRIMARY KEY (`SessionID`),
-  ADD KEY `TrainerID` (`TrainerID`);
-
---
 -- Indexes for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
@@ -763,6 +925,18 @@ ALTER TABLE `virtualclasses`
   ADD KEY `TrainerID` (`TrainerID`);
 
 --
+-- Indexes for table `workout_exercises`
+--
+ALTER TABLE `workout_exercises`
+  ADD PRIMARY KEY (`ExerciseID`);
+
+--
+-- Indexes for table `workout_plans`
+--
+ALTER TABLE `workout_plans`
+  ADD PRIMARY KEY (`PlanID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -785,16 +959,76 @@ ALTER TABLE `bookings`
   MODIFY `BookingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `chat_messages`
+--
+ALTER TABLE `chat_messages`
+  MODIFY `MessageID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `chat_participants`
+--
+ALTER TABLE `chat_participants`
+  MODIFY `ParticipantID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `chat_threads`
+--
+ALTER TABLE `chat_threads`
+  MODIFY `ThreadID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
   MODIFY `ClientID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `client_diet_logs`
+--
+ALTER TABLE `client_diet_logs`
+  MODIFY `LogID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `client_progress_snapshots`
+--
+ALTER TABLE `client_progress_snapshots`
+  MODIFY `SnapshotID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `client_workouts`
+--
+ALTER TABLE `client_workouts`
+  MODIFY `WorkoutLogID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `diet_meals`
+--
+ALTER TABLE `diet_meals`
+  MODIFY `MealID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `diet_plans`
+--
+ALTER TABLE `diet_plans`
+  MODIFY `DietPlanID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `diet_requests`
+--
+ALTER TABLE `diet_requests`
+  MODIFY `RequestID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `feedbacks`
+--
+ALTER TABLE `feedbacks`
+  MODIFY `FeedbackID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `fitnessgoals`
 --
 ALTER TABLE `fitnessgoals`
-  MODIFY `GoalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `GoalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `healthlogs`
@@ -803,22 +1037,10 @@ ALTER TABLE `healthlogs`
   MODIFY `LogID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `membershipplans`
---
-ALTER TABLE `membershipplans`
-  MODIFY `PlanID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `MessageID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `NotificationID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `NotificationID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `orderitems`
@@ -836,7 +1058,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -851,22 +1073,16 @@ ALTER TABLE `product_payments`
   MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `sessions`
---
-ALTER TABLE `sessions`
-  MODIFY `SessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
 -- AUTO_INCREMENT for table `subscriptions`
 --
 ALTER TABLE `subscriptions`
-  MODIFY `SubscriptionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `SubscriptionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `subscription_plans`
 --
 ALTER TABLE `subscription_plans`
-  MODIFY `PlanID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `PlanID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `trainers`
@@ -879,6 +1095,18 @@ ALTER TABLE `trainers`
 --
 ALTER TABLE `virtualclasses`
   MODIFY `ClassID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `workout_exercises`
+--
+ALTER TABLE `workout_exercises`
+  MODIFY `ExerciseID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `workout_plans`
+--
+ALTER TABLE `workout_plans`
+  MODIFY `PlanID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -910,13 +1138,6 @@ ALTER TABLE `healthlogs`
   ADD CONSTRAINT `healthlogs_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`);
 
 --
--- Constraints for table `notifications`
---
-ALTER TABLE `notifications`
-  ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`) ON DELETE SET NULL,
-  ADD CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`TrainerID`) REFERENCES `trainers` (`TrainerID`) ON DELETE SET NULL;
-
---
 -- Constraints for table `orderitems`
 --
 ALTER TABLE `orderitems`
@@ -943,12 +1164,6 @@ ALTER TABLE `payments`
 ALTER TABLE `product_payments`
   ADD CONSTRAINT `product_payments_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`),
   ADD CONSTRAINT `product_payments_ibfk_2` FOREIGN KEY (`ClientID`) REFERENCES `clients` (`ClientID`);
-
---
--- Constraints for table `sessions`
---
-ALTER TABLE `sessions`
-  ADD CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`TrainerID`) REFERENCES `trainers` (`TrainerID`);
 
 --
 -- Constraints for table `subscriptions`
