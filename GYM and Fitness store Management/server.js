@@ -1036,6 +1036,175 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
+
+//plans managed by admin:
+// Get all plans
+app.get('/api/plans', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM subscription_plans ORDER BY PlanID ASC');
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching plans:', error);
+    res.status(500).json({ error: 'Failed to fetch subscription plans' });
+  }
+});
+
+// Add new plan
+app.post('/api/plans', async (req, res) => {
+  const { PlanName, Description, DurationMonths, Price } = req.body;
+
+  if (!PlanName || !DurationMonths || Price === undefined) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO subscription_plans (PlanName, Description, DurationMonths, Price) VALUES (?, ?, ?, ?)',
+      [PlanName, Description || null, DurationMonths, Price]
+    );
+    res.status(201).json({ PlanID: result.insertId });
+  } catch (error) {
+    console.error('Error adding plan:', error);
+    res.status(500).json({ error: 'Failed to add subscription plan' });
+  }
+});
+
+// Update existing plan
+app.put('/api/plans/:id', async (req, res) => {
+  const { id } = req.params;
+  const { PlanName, Description, DurationMonths, Price } = req.body;
+
+  if (!PlanName || !DurationMonths || Price === undefined) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      'UPDATE subscription_plans SET PlanName = ?, Description = ?, DurationMonths = ?, Price = ? WHERE PlanID = ?',
+      [PlanName, Description || null, DurationMonths, Price, id]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Plan not found' });
+    }
+
+    res.json({ message: 'Plan updated' });
+  } catch (error) {
+    console.error('Error updating plan:', error);
+    res.status(500).json({ error: 'Failed to update subscription plan' });
+  }
+});
+
+// Delete plan
+app.delete('/api/plans/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [result] = await pool.query('DELETE FROM subscription_plans WHERE PlanID = ?', [id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Plan not found' });
+    }
+    res.json({ message: 'Plan deleted' });
+  } catch (error) {
+    console.error('Error deleting plan:', error);
+    res.status(500).json({ error: 'Failed to delete subscription plan' });
+  }
+});
+
+
+
+
+
+
+
+
+// Client: View available plans (public)
+app.get('/api/client/plans', async (req, res) => {
+  try {
+    const [plans] = await pool.query('SELECT * FROM subscription_plans ORDER BY PlanID ASC');
+    res.json(plans);
+  } catch (error) {
+    console.error('Failed to fetch plans:', error);
+    res.status(500).json({ error: 'Failed to fetch subscription plans' });
+  }
+});
+
+// Client: Purchase a plan (no login middleware)
+app.post('/api/client/purchase', async (req, res) => {
+  const clientId = req.session.userId;
+  const { PlanID, StartDate, PaymentMethod, TransactionRef } = req.body;
+
+  if (!clientId) return res.status(401).json({ error: 'Client not logged in' });
+  if (!PlanID || !StartDate || !PaymentMethod || !TransactionRef) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const [[plan]] = await pool.query(
+      'SELECT DurationMonths, Price FROM subscription_plans WHERE PlanID = ?',
+      [PlanID]
+    );
+    if (!plan) return res.status(404).json({ error: 'Plan not found' });
+
+    const start = new Date(StartDate);
+    if (isNaN(start)) return res.status(400).json({ error: 'Invalid StartDate' });
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + plan.DurationMonths);
+
+    const [subRes] = await pool.query(
+      `INSERT INTO subscriptions (ClientID, PlanID, StartDate, EndDate, IsActive)
+       VALUES (?, ?, ?, ?, 1)`,
+      [clientId, PlanID, formatDate(start), formatDate(end)]
+    );
+    const subscriptionId = subRes.insertId;
+
+    const [payRes] = await pool.query(
+      `INSERT INTO payments (ClientID, SubscriptionID, Amount, PaymentDate, Method, Status, TransactionRef)
+       VALUES (?, ?, ?, NOW(), ?, 'Completed', ?)`,
+      [clientId, subscriptionId, plan.Price, PaymentMethod, TransactionRef]
+    );
+    const paymentId = payRes.insertId;
+    
+    // Log to verify
+    console.log('Inserted payment with ID:', paymentId);
+
+    res.status(201).json({
+      message: 'Purchase successful',
+      SubscriptionID: subscriptionId,
+      PaymentID: paymentId
+    });
+  } catch (err) {
+    console.error('Purchase error:', err);
+    res.status(500).json({ error: 'Internal server error during purchase' });
+  }
+});
+
+function formatDate(d) {
+  return d.toISOString().split('T')[0];
+}
+//view client availabe subs:
+
+app.get('/api/client/active-subscriptions', async (req, res) => {
+  const clientId = req.session.clientId || req.session.userId; // ensure session set correctly
+
+  if (!clientId) {
+    return res.status(401).json({ error: 'Unauthorized: Client ID missing' });
+  }
+
+  try {
+    const [rows] = await pool.query(`
+      SELECT s.SubscriptionID, s.StartDate, s.EndDate, p.PlanName, p.Description, p.Price
+      FROM subscriptions s
+      JOIN subscription_plans p ON s.PlanID = p.PlanID
+      WHERE s.ClientID = ? AND s.IsActive = 1
+    `, [clientId]);
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Failed to fetch active subscriptions:', err);
+    res.status(500).json({ error: 'Server error fetching subscriptions' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

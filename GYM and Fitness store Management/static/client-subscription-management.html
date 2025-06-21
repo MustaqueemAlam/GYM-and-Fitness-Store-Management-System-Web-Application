@@ -121,25 +121,208 @@
   </aside>
 
  
-    <main class="flex-1 p-8 overflow-auto">
-      <header class="mb-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
-<button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
-  Logout
-</button>
-      </header>
+<main class="flex-1 p-8 overflow-auto">
+  <!-- Header -->
+  <header class="mb-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
+    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
+      Logout
+    </button>
+  </header>
+  <section class="mt-10">
+    <h2 class="text-2xl font-semibold text-green-700 mb-4">Your Active Subscriptions</h2>
+    <div id="activePlansContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Active plans will appear here -->
+    </div>
+  </section>
+  <!-- Plan Container -->
+  <section>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Available Plans</h2>
+    <div id="plansContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Plans will load here -->
+    </div>
+  </section>
+</main>
 
-<section class="bg-white p-6 rounded shadow border mb-6">
-  <h2 class="text-xl font-semibold text-red-600 mb-4">Manage Subscription</h2>
-  <div class="space-y-2">
-    <p class="text-gray-700">Next Billing Date: <span class="font-semibold" id="nextBilling">--</span></p>
-    <p class="text-gray-700">Current Plan: <span class="font-semibold" id="currentPlan">--</span></p>
-    <button class="mt-3 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Change Plan</button>
-    <button class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400">Cancel</button>
+<!-- Purchase Modal -->
+<div id="purchaseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white p-6 rounded shadow max-w-sm w-full">
+    <h3 class="text-xl mb-4 font-semibold">Confirm Purchase</h3>
+
+    <label class="block mb-2 font-medium">Start Date:</label>
+    <input type="date" id="startDateInput" class="border p-2 w-full mb-4" />
+
+    <label class="block mb-2 font-medium">Payment Method:</label>
+    <select id="paymentMethodInput" class="border p-2 w-full mb-4">
+      <option value="">Select a method</option>
+      <option value="bKash">bKash</option>
+      <option value="Nagad">Nagad</option>
+      <option value="SSLCommerz">SSLCommerz</option>
+      <option value="Stripe">Stripe</option>
+      <option value="PayPal">PayPal</option>
+    </select>
+
+    <label class="block mb-2 font-medium">Transaction Reference:</label>
+    <input type="text" id="transactionRefInput" placeholder="TXN12345..." class="border p-2 w-full mb-4" />
+
+    <div class="flex justify-end gap-2">
+      <button id="cancelPurchaseBtn" class="px-4 py-2 rounded border hover:bg-gray-100 transition">Cancel</button>
+      <button id="confirmPurchaseBtn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">Confirm</button>
+    </div>
   </div>
-</section>
+</div>
 
-  </main>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  const plansContainer = document.getElementById('plansContainer');
+  const purchaseModal = document.getElementById('purchaseModal');
+  const startDateInput = document.getElementById('startDateInput');
+  const paymentMethodInput = document.getElementById('paymentMethodInput');
+  const transactionRefInput = document.getElementById('transactionRefInput');
+  const cancelPurchaseBtn = document.getElementById('cancelPurchaseBtn');
+  const confirmPurchaseBtn = document.getElementById('confirmPurchaseBtn');
+  const activePlansContainer = document.getElementById('activePlansContainer');
+
+  let currentPlanId = null;
+  let hasActiveSubscription = false;
+
+  // Load plans
+  async function loadPlans() {
+    try {
+      const res = await fetch('/api/client/plans', { credentials: 'include' });
+      if (!res.ok) throw new Error('Failed to load plans');
+      const plans = await res.json();
+      renderPlans(plans);
+    } catch (err) {
+      Swal.fire('Error', err.message, 'error');
+    }
+  }
+
+  // Check and load active subscriptions
+  async function loadActiveSubscriptions() {
+    try {
+      const res = await fetch('/api/client/active-subscriptions', {
+        credentials: 'include'
+      });
+      if (!res.ok) throw new Error('Failed to load active subscriptions');
+      const activePlans = await res.json();
+
+      hasActiveSubscription = activePlans.length > 0;
+      renderActivePlans(activePlans);
+    } catch (err) {
+      Swal.fire('Error', err.message, 'error');
+    }
+  }
+
+  // Render available plans
+  function renderPlans(plans) {
+    plansContainer.innerHTML = '';
+    if (!plans.length) {
+      plansContainer.innerHTML = `<p class="col-span-full text-center text-gray-500">No plans available.</p>`;
+      return;
+    }
+
+    plans.forEach(plan => {
+      const card = document.createElement('div');
+      card.className = 'p-4 border rounded shadow hover:shadow-lg transition';
+      card.innerHTML = `
+        <h3 class="text-xl font-semibold mb-2">${plan.PlanName}</h3>
+        <p class="mb-2">${plan.Description || 'No description'}</p>
+        <p class="mb-2">Duration: ${plan.DurationMonths} month(s)</p>
+        <p class="mb-4">Price: BDT. ${parseFloat(plan.Price).toFixed(2)}</p>
+        <button class="purchaseBtn bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">Purchase</button>
+      `;
+      card.querySelector('.purchaseBtn').onclick = () => {
+        if (hasActiveSubscription) {
+          Swal.fire('Notice', 'You already have an active subscription. Wait until it expires to purchase a new one.', 'info');
+        } else {
+          openPurchaseModal(plan.PlanID);
+        }
+      };
+      plansContainer.appendChild(card);
+    });
+  }
+
+  // Render active subscriptions
+  function renderActivePlans(plans) {
+    activePlansContainer.innerHTML = '';
+    if (!plans.length) {
+      activePlansContainer.innerHTML = `<p class="col-span-full text-center text-gray-500">No active subscriptions found.</p>`;
+      return;
+    }
+
+    plans.forEach(plan => {
+      const card = document.createElement('div');
+      card.className = 'p-4 border-l-4 border-green-500 bg-white rounded shadow';
+      card.innerHTML = `
+        <h3 class="text-lg font-semibold text-green-800">${plan.PlanName}</h3>
+        <p class="text-sm text-gray-700">${plan.Description || 'No description'}</p>
+        <p class="text-sm text-gray-500 mt-1">Start: ${plan.StartDate}</p>
+        <p class="text-sm text-gray-500">End: ${plan.EndDate}</p>
+        <p class="mt-2 font-semibold text-green-700">Price: $${parseFloat(plan.Price).toFixed(2)}</p>
+      `;
+      activePlansContainer.appendChild(card);
+    });
+  }
+
+  // Modal functions
+  function openPurchaseModal(planId) {
+    currentPlanId = planId;
+    startDateInput.value = '';
+    paymentMethodInput.value = '';
+    transactionRefInput.value = '';
+    purchaseModal.classList.remove('hidden');
+  }
+
+  function closePurchaseModal() {
+    purchaseModal.classList.add('hidden');
+    currentPlanId = null;
+  }
+
+  cancelPurchaseBtn.onclick = closePurchaseModal;
+
+  confirmPurchaseBtn.onclick = async () => {
+    const startDate = startDateInput.value;
+    const paymentMethod = paymentMethodInput.value;
+    const transactionRef = transactionRefInput.value.trim();
+
+    if (!startDate || !paymentMethod || !transactionRef) {
+      Swal.fire('Error', 'All fields are required', 'error');
+      return;
+    }
+
+    try {
+      const res = await fetch('/api/client/purchase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          PlanID: currentPlanId,
+          StartDate: startDate,
+          PaymentMethod: paymentMethod,
+          TransactionRef: transactionRef
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to purchase plan');
+
+      Swal.fire('Success', `Subscription successful! Payment ID: ${data.PaymentID}`, 'success');
+      closePurchaseModal();
+      loadActiveSubscriptions(); // Refresh active plans
+    } catch (err) {
+      Swal.fire('Error', err.message, 'error');
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', async () => {
+    await loadActiveSubscriptions();
+    loadPlans();
+  });
+</script>
+
 
 
 <script>
