@@ -4,9 +4,13 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value.trim();
     const userType = document.getElementById("userType").value;
-
     if (!email || !password || !userType) {
-      alert("Please fill all fields.");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Incomplete Form',
+        text: 'Please fill in all fields before submitting.',
+        confirmButtonColor: '#f94a4a'
+      });
       return;
     }
 
@@ -61,4 +65,26 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       });
       console.error(error);
     }
+});
+
+const passwordInput = document.getElementById("password");
+const toggleBtn = document.getElementById("togglePassword");
+const eyeIcon = document.getElementById("eyeIcon");
+
+toggleBtn.addEventListener("click", () => {
+  const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+  passwordInput.setAttribute("type", type);
+
+    // Toggle icon
+  eyeIcon.setAttribute("name", type === "password" ? "eye-outline" : "eye-off-outline");
+});
+
+document.getElementById("forgotPasswordLink").addEventListener("click", function (e) {
+  e.preventDefault(); // prevent default link behavior
+  Swal.fire({
+    icon: 'info',
+    title: 'Feature Unavailable',
+    text: 'The password recovery feature is currently unavailable. Please try again later.',
+    confirmButtonColor: '#f94a4a'
+  });
 });

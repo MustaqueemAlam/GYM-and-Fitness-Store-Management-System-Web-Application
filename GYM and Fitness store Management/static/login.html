@@ -61,7 +61,7 @@
 
   <!-- Background Gym GIF with overlay -->
   <div class="absolute inset-0 -z-10">
-    <img src="./assets/images/bg.gif" alt="Gym Background GIF" class="w-full h-full object-cover opacity-40" />
+    <img src="./assets/images/GYMHOMEBD.jpg" alt="Gym Background GIF" class="w-full h-full object-cover opacity-40" />
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
   </div>
 
@@ -75,20 +75,26 @@
       >
         E-Fitness Login
       </h1>
-      <form id="loginForm" class="space-y-6" novalidate>
-
+        <!-- Main Login Form -->
+      <form id="loginForm" class="space-y-5" novalidate>
         <div>
-          <label for="email" class="font-semibold mb-1 block">Email</label>
+          <label for="email" class="block font-semibold mb-1">Email</label>
           <input id="email" name="email" type="email" required class="input" />
         </div>
 
         <div>
-          <label for="password" class="font-semibold mb-1 block">Password</label>
-          <input id="password" name="password" type="password" required class="input" />
+          <label for="password" class="block font-semibold mb-1">Password</label>
+          <div class="relative">
+            <input id="password" name="password" type="password" required class="input pr-10" />
+            <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#f94a4a]">
+              <ion-icon name="eye-outline" id="eyeIcon"></ion-icon>
+            </button>
+          </div>
         </div>
 
+
         <div>
-          <label for="userType" class="font-semibold mb-1 block">User Type</label>
+          <label for="userType" class="block font-semibold mb-1">User Type</label>
           <select id="userType" name="userType" required class="input">
             <option value="">Select User Type</option>
             <option value="client">Client</option>
@@ -97,13 +103,21 @@
           </select>
         </div>
 
-        <button
-          type="submit"
-          class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
-        >
+        <div class="flex justify-between items-center text-sm">
+          <a href="#" id="forgotPasswordLink" class="link">Forgot Password?</a>
+        </div>
+
+
+        <button type="submit" class="w-full bg-[#f94a4a] hover:bg-red-600 text-white py-3 rounded-lg font-bold transition">
           Login
         </button>
       </form>
+
+      <p class="text-center text-sm mt-6 text-gray-600">
+        Don’t have an account?
+        <a href="signup.html" class="text-[#f94a4a] font-medium hover:underline">Sign up</a>
+      </p>
+      
 
 
       <div class="text-center mt-6">
