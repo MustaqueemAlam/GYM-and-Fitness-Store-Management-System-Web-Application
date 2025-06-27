@@ -14,9 +14,11 @@ dayjs.extend(utc);
 const BD_OFFSET = 6 * 60; 
 
 app.use(cors({
-  origin: 'http://localhost:4444',
+  origin: 'http://localhost:4444',  //  frontend origin
   credentials: true
 }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // 1 day session
 app.use(session({
@@ -54,58 +56,6 @@ function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
-
-
-/**
- * Signup POST handler  for clients
- */
-app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
-  try {
-    const {
-      FullName,
-      Email,
-      Password,
-      Phone,
-      Gender,
-      DOB,
-      Address,
-      City,
-      Country,
-    } = req.body;
-    if (!FullName || !Email || !Password || !Phone || !Gender || !DOB || !Address || !City || !Country) {
-      return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
-    }
-    if (!validateEmail(Email)) {
-      return res.status(400).json({ success: false, message: 'Invalid email format.' });
-    }
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(Password, saltRounds);
-    const profilePicBuffer = req.file ? req.file.buffer : null;
-    const sql = `
-      INSERT INTO clients (
-        FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, ProfilePic
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-    const params = [
-      FullName,
-      Email,
-      hashedPassword,
-      Phone,
-      Gender,
-      DOB,
-      Address,
-      City,
-      Country,
-      profilePicBuffer,
-    ];
-    const [result] = await pool.execute(sql, params);
-    res.json({ success: true, message: 'Signup successful!', clientId: result.insertId });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false, message: 'Server error during signup.' });
-  }
-});
-
 /**
  * Login POST handler for all users
  */
@@ -195,9 +145,62 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error during login.' });
   }
 });
+
 /**
  * bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
  */
+
+/**
+ * Signup POST handler  for clients
+ */
+app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
+  try {
+    const {
+      FullName,
+      Email,
+      Password,
+      Phone,
+      Gender,
+      DOB,
+      Address,
+      City,
+      Country,
+    } = req.body;
+    if (!FullName || !Email || !Password || !Phone || !Gender || !DOB || !Address || !City || !Country) {
+      return res.status(400).json({ success: false, message: 'Please fill in all required fields.' });
+    }
+    if (!validateEmail(Email)) {
+      return res.status(400).json({ success: false, message: 'Invalid email format.' });
+    }
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(Password, saltRounds);
+    const profilePicBuffer = req.file ? req.file.buffer : null;
+    const sql = `
+      INSERT INTO clients (
+        FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, ProfilePic
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const params = [
+      FullName,
+      Email,
+      hashedPassword,
+      Phone,
+      Gender,
+      DOB,
+      Address,
+      City,
+      Country,
+      profilePicBuffer,
+    ];
+    const [result] = await pool.execute(sql, params);
+    res.json({ success: true, message: 'Signup successful!', clientId: result.insertId });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error during signup.' });
+  }
+});
+
+
 
 
 /**
@@ -1353,6 +1356,7 @@ app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

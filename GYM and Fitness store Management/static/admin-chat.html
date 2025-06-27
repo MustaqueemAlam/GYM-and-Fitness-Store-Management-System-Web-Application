@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Dashboard - Red Theme</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="css/admin-payments.css" />
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+<!-- Sidebar -->
+<aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+  <div>
+    <!-- Logo + Title -->
+    <div class="flex items-center gap-3 mb-8">
+      <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
+      <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex flex-col space-y-3">
+      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+        </svg>
+        Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+        </svg>
+        Users
+      </a>
+      <a href="admin-subs-plan.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
+        </svg>
+        Subscription Plans
+      </a>
+      <a href="admin-payments.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+        </svg>
+        Payments
+      </a>
+      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+        </svg>
+        Reports
+      </a>
+      <a href="admin-chat.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+        </svg>
+        Chat
+      </a>
+    </nav>
+  </div>
+
+  <!-- Logout Button pinned bottom -->
+  <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+    <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+    </svg>
+    Logout
+  </button>
+</aside>
+  
+
+<main class="flex-1 p-8 overflow-auto">
+  <header class="mb-8 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-red-700">Admin Dashboard</h1>
+  </header>
+  <!-- Chat UI Section -->
+  <section class="h-[80vh] flex border rounded shadow overflow-hidden">
+    <!-- Left Panel -->
+    <aside class="w-1/3 bg-white border-r border-gray-200 flex flex-col">
+      <div class="p-4 font-semibold text-red-700 text-xl border-b">Chats</div>
+      <!-- Search box -->
+      <div class="p-3 border-b">
+        <input
+          id="userSearchInput"
+          type="search"
+          placeholder="Search users to chat..."
+          class="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-red-300"
+        />
+        <div id="searchFeedback" class="mt-1 text-xs text-gray-500"></div>
+      </div>
+      <!-- Conversation List -->
+      <ul id="conversationList" class="flex-1 overflow-y-auto divide-y divide-gray-100">
+        <!-- Conversations dynamically inserted here -->
+      </ul>
+      <!-- Search Results List -->
+      <ul id="searchResultsList" class="flex-1 overflow-y-auto divide-y divide-gray-100 hidden">
+        <!-- Search results dynamically inserted here -->
+      </ul>
+    </aside>
+    <!-- Right Panel: Chat Window -->
+    <div class="flex-1 flex flex-col">
+      <!-- Chat Header -->
+      <div class="flex items-center gap-4 p-4 border-b bg-white shadow-sm">
+        <img id="chatParticipantPic" class="w-10 h-10 rounded-full object-cover" src="" alt="User" />
+        <div>
+          <h3 id="chatParticipantName" class="text-lg font-semibold text-red-700"></h3>
+          <span id="chatParticipantRole" class="text-xs text-gray-500"></span>
+        </div>
+      </div>
+      <!-- Messages -->
+      <div id="chatMessages" class="flex-1 p-4 space-y-3 overflow-y-auto bg-red-50">
+        <!-- Messages will be loaded here -->
+      </div>
+      <!-- Message Input -->
+      <div class="p-4 border-t bg-white flex items-center gap-3">
+        <input
+          type="text"
+          id="chatInput"
+          placeholder="Type your message..."
+          class="flex-1 border rounded-full px-4 py-2 focus:outline-none focus:ring focus:border-red-300"
+        />
+        <button id="sendMessageBtn" class="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700">Send</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="chat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</body>
+</html>
