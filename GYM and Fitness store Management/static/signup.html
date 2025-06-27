@@ -39,16 +39,18 @@
         <span class="span">E- Fitness</span>
       </a>
       <nav class="navbar" data-navbar>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
-        </button>
-      </nav>
-      <a href="login.html" class="btn btn-secondary">Log in</a>
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
+              <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+              </button>
+              <ul class="navbar-list">
+                <li>
+                  <a href="index.html" class="navbar-link active" data-nav-link>Home</a>
+                </li>
+                <li>
+                  <a href="login.html" class="navbar-link" data-nav-link>Login</a>
+                </li>
+              </ul>
+            </nav>
     </div>
   </header>
 
@@ -58,101 +60,246 @@
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
   </div>
 
-  <!-- Signup Container -->
-  <main class="flex-grow flex items-center justify-center px-4 py-12">
-    <section
-      class="relative z-10 w-full max-w-3xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a]"
+<!-- Signup Container -->
+<main class="flex-grow flex items-center justify-center px-4 py-12">
+  <section
+    class="relative z-10 w-full max-w-4xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a] flex gap-8"
+  >
+    <!-- Profile Picture Preview on Left -->
+    <div class="flex flex-col items-center w-48">
+      <div
+        id="profilePreview"
+        class="w-40 h-40 rounded-full bg-gray-200 border-4 border-[#f94a4a] overflow-hidden mb-4 flex items-center justify-center"
+      >
+        <span class="text-gray-400">No Image</span>
+      </div>
+      <label
+        for="profilePic"
+        class="cursor-pointer text-[#f94a4a] font-semibold hover:underline text-center"
+      >
+        Upload Profile Picture
+      </label>
+    </div>
+
+    <!-- Signup Form -->
+    <form
+      id="signupForm"
+      class="space-y-6 flex-1"
+      enctype="multipart/form-data"
+      novalidate
     >
       <h1
         class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
       >
         E-Fitness Signup
       </h1>
-      <form id="signupForm" class="space-y-6" enctype="multipart/form-data" novalidate>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div>
-            <label for="fullname" class="font-semibold mb-1 block">Full Name</label>
-            <input id="fullname" name="FullName" type="text" required class="input" />
-          </div>
-          <div>
-            <label for="email" class="font-semibold mb-1 block">Email</label>
-            <input id="email" name="Email" type="email" required class="input" />
-          </div>
 
-          <div>
-            <label for="password" class="font-semibold mb-1 block">Password</label>
-            <input id="password" name="Password" type="password" required class="input" />
-          </div>
-          <div>
-            <label for="phone" class="font-semibold mb-1 block">Phone</label>
-            <input id="phone" name="Phone" type="text" required class="input" />
-          </div>
-
-  <div>
-  <label class="font-semibold mb-1 block">Gender</label>
-  <div class="flex items-center space-x-4">
-    <label class="inline-flex items-center">
-      <input type="radio" name="Gender" value="Male" required class="mr-2" />
-      Male
-    </label>
-    <label class="inline-flex items-center">
-      <input type="radio" name="Gender" value="Female" class="mr-2" />
-      Female
-    </label>
-  </div>
-</div>
-          <div> 
-            <label for="dob" class="font-semibold mb-1 block">Date of Birth</label>
-            <input id="dob" name="DOB" type="text" required class="input" placeholder="Select your DOB" />
-
-          </div>
-
-          <div>
-            <label for="city" class="font-semibold mb-1 block">City</label>
-            <input id="city" name="City" type="text" required class="input" />
-          </div>
-          <div>
-            <label for="country" class="font-semibold mb-1 block">Country</label>
-            <input id="country" name="Country" type="text" required class="input" />
-          </div>
-        </div>
-
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <label for="address" class="font-semibold mb-1 block">Address</label>
-          <textarea id="address" name="Address" rows="2" required class="input"></textarea>
-        </div>
-
-        <div>
-          <label for="profilePic" class="font-semibold mb-1 block">Profile Picture</label>
+          <label for="fullname" class="font-semibold mb-1 block">Full Name</label>
           <input
-            id="profilePic"
-            name="ProfilePic"
-            type="file"
-            accept="image/*"
-            class="input file:py-1 file:px-4 file:bg-[#f94a4a] file:text-white file:border-0 file:rounded cursor-pointer"
+            id="fullname"
+            name="FullName"
+            type="text"
+            required
+            class="input"
+          />
+        </div>
+        <div>
+          <label for="email" class="font-semibold mb-1 block">Email</label>
+          <input id="email" name="Email" type="email" required class="input" />
+        </div>
+
+        <div>
+          <label for="password" class="font-semibold mb-1 block">Password</label>
+          <input
+            id="password"
+            name="Password"
+            type="password"
+            required
+            class="input"
+          />
+        </div>
+        <div>
+          <label for="phone" class="font-semibold mb-1 block">Phone</label>
+          <input id="phone" name="Phone" type="text" required class="input" />
+        </div>
+
+        <div>
+          <label class="font-semibold mb-1 block">Gender</label>
+          <div class="flex items-center space-x-4">
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="Gender"
+                value="Male"
+                required
+                class="mr-2"
+              />
+              Male
+            </label>
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="Gender"
+                value="Female"
+                class="mr-2"
+              />
+              Female
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label for="dob" class="font-semibold mb-1 block">Date of Birth</label>
+          <input
+            id="dob"
+            name="DOB"
+            type="text"
+            required
+            class="input"
+            placeholder="Select your DOB"
           />
         </div>
 
-        <button
-          type="submit"
-          class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
-        >
-          Sign Up
-        </button>
-      </form>
+        <div>
+          <label for="country" class="font-semibold mb-1 block">Country</label>
+          <select
+            id="country"
+            name="Country"
+            class="input"
+            onchange="populateCities()"
+            required
+          >
+            <option value="">-- Select Country --</option>
+            <option value="Bangladesh">🇧🇩 Bangladesh</option>
+            <option value="India">🇮🇳 India</option>
+            <option value="Pakistan">🇵🇰 Pakistan</option>
+            <option value="Sri Lanka">🇱🇰 Sri Lanka</option>
+            <option value="Nepal">🇳🇵 Nepal</option>
+            <option value="USA">🇺🇸 USA</option>
+            <option value="China">🇨🇳 China</option>
+            <option value="Russia">🇷🇺 Russia</option>
+            <option value="South Africa">🇿🇦 South Africa</option>
+          </select>
+        </div>
 
-      <div class="text-center mt-6">
-        <a href="index.html" class="text-[#f94a4a] hover:underline">← Return to Home</a>
+        <div>
+          <label for="city" class="font-semibold mb-1 block">City</label>
+          <select id="city" name="City" class="input" required>
+            <option value="">-- Select City --</option>
+          </select>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="address" class="font-semibold mb-1 block">Address</label>
+          <textarea
+            id="address"
+            name="Address"
+            rows="2"
+            required
+            class="input"
+          ></textarea>
+        </div>
       </div>
-    </section>
-  </main>
+<div class="mt-4 space-y-4 text-sm text-gray-700">
+        <label class="inline-flex items-center">
+          <input type="checkbox" id="agreeTerms" required class="mr-2" />
+          I agree to the
+          <button
+            type="button"
+            class="text-[#f94a4a] underline hover:text-red-600"
+            onclick="openModal('termsModal')"
+          >
+            Terms of Service
+          </button>
+        </label>
+
+        <label class="inline-flex items-center">
+          <input type="checkbox" id="agreePrivacy" required class="mr-2" />
+          I agree to the
+          <button
+            type="button"
+            class="text-[#f94a4a] underline hover:text-red-600"
+            onclick="openModal('privacyModal')"
+          >
+            Privacy Policy
+          </button>
+        </label>
+      </div>
+
+      <!-- Hidden actual file input -->
+      <input
+        id="profilePic"
+        name="ProfilePic"
+        type="file"
+        accept="image/*"
+        class="hidden"
+        onchange="previewProfilePic(event)"
+      />
+
+      <button
+        type="submit"
+        class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition"
+      >
+        Sign Up
+      </button>
+    </form>
+  </section>
+</main>
+<div
+  id="termsModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+>
+  <div class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto">
+    <h2 class="text-2xl font-bold mb-4">Terms of Service</h2>
+    <div class="text-gray-800 text-sm space-y-4">
+      <p>Put your detailed Terms of Service content here...</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus luctus urna sed urna ultricies ac tempor dui sagittis.</p>
+      <!-- Add more realistic terms content here -->
+    </div>
+    <button
+      onclick="closeModal('termsModal')"
+      class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
+      aria-label="Close Terms Modal"
+    >
+      &times;
+    </button>
+  </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div
+  id="privacyModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+>
+  <div class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto">
+    <h2 class="text-2xl font-bold mb-4">Privacy Policy</h2>
+    <div class="text-gray-800 text-sm space-y-4">
+      <p>Put your detailed Privacy Policy content here...</p>
+      <p>Your privacy is important to us. We do not share your data without consent.</p>
+    </div>
+    <button
+      onclick="closeModal('privacyModal')"
+      class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
+      aria-label="Close Privacy Modal"
+    >
+      &times;
+    </button>
+  </div>
+</div>
 
 
+
+
+
+
+<!-- intl-tel-input for country flag dropdown -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
 <script src="signup.js"></script>
 <link rel="stylesheet" href="css/signup.css" />
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

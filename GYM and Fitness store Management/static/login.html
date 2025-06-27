@@ -6,37 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>E-Fitness Login</title>
-
-
-  <!-- SweetAlert2 CSS -->
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
-<!-- SweetAlert2 JS -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" type="image/svg+xml" />
-
-  <!-- Your custom CSS -->
   <link rel="stylesheet" href="./assets/css/style.css" />
-
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap" rel="stylesheet" />
-
-  <!-- Ionicons CDN -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
   <style>
-    /* Tailwind custom input style */
     .input {
       @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
     }
   </style>
-</head>
 
+</head>
 <body id="top" class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col">
 
   <header class="header" data-header>
@@ -46,26 +32,26 @@
         <span class="span">E- Fitness</span>
       </a>
       <nav class="navbar" data-navbar>
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-          <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
-        </button>
-      </nav>
-      <a href="signup.html" class="btn btn-secondary">Sign-up</a>
-      <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
-        <span class="line"></span>
-        <span class="line"></span>
-        <span class="line"></span>
-      </button>
+              <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+                <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
+              </button>
+              <ul class="navbar-list">
+                <li>
+                  <a href="index.html" class="navbar-link active" data-nav-link>Home</a>
+                </li>
+                <li>
+                  <a href="signup.html" class="navbar-link" data-nav-link>Join Now</a>
+                </li>
+              </ul>
+            </nav>
     </div>
   </header>
 
-  <!-- Background Gym GIF with overlay -->
   <div class="absolute inset-0 -z-10">
     <img src="./assets/images/GYMHOMEBD.jpg" alt="Gym Background GIF" class="w-full h-full object-cover opacity-40" />
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
   </div>
 
-  <!-- Login Form Section -->
   <main class="flex-grow flex items-center justify-center px-4 py-24 min-h-screen">
     <section
       class="relative z-10 w-full max-w-3xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a]"
@@ -113,10 +99,15 @@
         </button>
       </form>
 
-      <p class="text-center text-sm mt-6 text-gray-600">
-        Don’t have an account?
-        <a href="signup.html" class="text-[#f94a4a] font-medium hover:underline">Sign up</a>
-      </p>
+      <div class="mt-8 text-center">
+        <p class="text-lg font-semibold text-gray-700 uppercase tracking-wide">
+          Don’t have an account?
+          <a href="signup.html" class="text-[#f94a4a] font-extrabold hover:underline hover:text-red-600 ml-1">
+            Sign Up
+          </a>
+        </p>
+      </div>
+
       
 
 
