@@ -11,122 +11,95 @@ const cors = require('cors');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
-const BD_OFFSET = 6 * 60; 
 
+// Middleware for CORS
 app.use(cors({
-  origin: 'http://localhost:4444',  //  frontend origin
+  origin: 'http://localhost:54112',   // Frontend origin
   credentials: true
 }));
+
+// Middleware to parse JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 1 day session
+// Session configuration (1 day validity)
 app.use(session({
-  secret: 'your-secret-key',    
+  secret: 'your-secret-key-please-change-this-in-production', // **IMPORTANT: Change this to a strong, random string**
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24  
+    maxAge: 1000 * 60 * 60 * 24 // 24 hours
   }
 }));
 
-const PORT = process.env.PORT || 4444;
-// to parse JSON bodies 
-app.use(express.json());      
-// to parse URL-encoded bodies (form submissions) 
-app.use(express.urlencoded({ extended: true })); 
-// Middleware for parsing urlencoded form data
-app.use(express.urlencoded({ extended: true }));
-// Serve static files
+const PORT = process.env.PORT||4444;
+
+
+// Serve static files (e.g., if we store profile pictures publicly)
 app.use(express.static(path.join(__dirname, 'static')));
-// Setup multer for file uploads (profile picture)
+
+// Multer setup for file uploads (using memory storage for profile pictures)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// MySQL connection pool
+// MySQL connection pool setup
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: '', 
   database: 'gym',
 });
 
-// Helper to validate email format
+// Helper function to validate email format
 function validateEmail(email) {
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
+
+
 /**
- * Login POST handler for all users
+ * Login POST handler for all users (Client, Admin, Trainer)
  */
 app.post('/login', async (req, res) => {
   try {
     const { email, password, userType } = req.body;
 
-    console.log('--- Login Request Received ---');
-    console.log('Email:', email);
-    console.log('Password (hidden for security)');
-    console.log('User Type:', userType);
-
     if (!email || !password || !userType) {
-      console.log('❌ Missing required fields.');
       return res.status(400).json({ success: false, message: 'Please fill in all fields.' });
     }
-
     if (!validateEmail(email)) {
-      console.log('❌ Invalid email format.');
       return res.status(400).json({ success: false, message: 'Invalid email format.' });
     }
 
     let tableName, idField;
     switch (userType.toLowerCase()) {
-      case 'client':
-        tableName = 'clients';
-        idField = 'ClientID';
-        break;
-      case 'admin':
-        tableName = 'admins';
-        idField = 'AdminID';
-        break;
-      case 'trainer':
-        tableName = 'trainers';
-        idField = 'TrainerID';
-        break;
-      default:
-        console.log('❌ Invalid user type:', userType);
-        return res.status(400).json({ success: false, message: 'Invalid user type.' });
+      case 'client': tableName = 'clients'; idField = 'ClientID'; break;
+      case 'admin': tableName = 'admins'; idField = 'AdminID'; break;
+      case 'trainer': tableName = 'trainers'; idField = 'TrainerID'; break;
+      default: return res.status(400).json({ success: false, message: 'Invalid user type.' });
     }
 
-    console.log(`🔍 Querying table: ${tableName} for email: ${email}`);
-
     const [rows] = await pool.execute(`SELECT * FROM ${tableName} WHERE Email = ?`, [email]);
-
     if (rows.length === 0) {
-      console.log(`❌ No user found in ${tableName} with email ${email}`);
       return res.status(401).json({ success: false, message: 'User not found.' });
     }
 
     const user = rows[0];
-    console.log('✅ User found:', user.Email);
-
     if (!user.PasswordHash) {
-      console.log(`❌ PasswordHash missing for user: ${user.Email}`);
       return res.status(500).json({ success: false, message: 'Password not set for this account.' });
     }
 
-    console.log('🔐 Comparing password...');
     const match = await bcrypt.compare(password, user.PasswordHash.toString());
-
     if (!match) {
-      console.log('❌ Incorrect password for:', email);
       return res.status(401).json({ success: false, message: 'Incorrect password.' });
     }
+
     // Save session
     req.session.userId = user[idField];
     req.session.userName = user.FullName;
     req.session.userEmail = user.Email;
-    req.session.userType = userType;
-    console.log(`✅ Login successful for ${userType}: ${user.FullName}`);
+    req.session.userType = userType.toLowerCase(); // Store lowercase in session
+    
     const response = {
       success: true,
       message: `Welcome back, ${user.FullName}!`,
@@ -141,9 +114,201 @@ app.post('/login', async (req, res) => {
     }
     res.json(response);
   } catch (err) {
-    console.error('❌ Login error:', err);
+    console.error('Login error:', err);
     res.status(500).json({ success: false, message: 'Server error during login.' });
   }
+});
+
+// API endpoint to get user session data
+app.get('/api/user-session', (req, res) => {
+  if (req.session.userId && req.session.userType) {
+    res.json({
+      userId: req.session.userId,
+      userType: req.session.userType,
+      userName: req.session.userName,
+      userEmail: req.session.userEmail
+    });
+  } else {
+    res.status(401).json({ message: 'No active session' });
+  }
+});
+
+
+/**
+ * Client daily progress tracking
+ */
+
+// Middleware to protect routes, ensuring only logged-in clients can access
+const requireClientAuth = (req, res, next) => {
+    // Check if client ID from session matches the one in URL params
+    // This assumes the client ID in the URL is for the currently logged-in client.
+    // For a multi-client trainer view, this logic would need adjustment.
+    if (req.session.userId && req.session.userType === 'client' && req.session.userId === parseInt(req.params.clientId)) {
+        next(); // User is authenticated as a client and accessing their own data, proceed
+    } else {
+        res.status(403).json({ success: false, message: 'Access denied. Client authentication required to access this resource.' });
+    }
+};
+
+/**
+ * Client daily progress tracking API endpoints
+ */
+
+// GET all exercises
+app.get('/api/exercises', async (req, res) => {
+    try {
+        const [rows] = await pool.execute('SELECT ExerciseID, ExerciseName, Description, Category FROM exercises ORDER BY ExerciseName ASC');
+        res.json(rows);
+    } catch (err) {
+        console.error('Error fetching exercises:', err);
+        res.status(500).json({ success: false, message: 'Server error fetching exercises.' });
+    }
+});
+
+// GET client's progress snapshots
+app.get('/api/client/:clientId/progress-snapshots', requireClientAuth, async (req, res) => {
+    const { clientId } = req.params;
+    try {
+        const [rows] = await pool.execute(
+            'SELECT SnapshotID, ClientID, DateTaken, WeightKg, BodyFatPercent, BMI, Notes FROM client_progress_snapshots WHERE ClientID = ? ORDER BY DateTaken DESC',
+            [clientId]
+        );
+        // Do not send LONGBLOB directly in listing, create a separate endpoint for image retrieval
+        // The frontend will call a specific endpoint for the image data when needed.
+        res.json(rows);
+    } catch (err) {
+        console.error('Error fetching progress snapshots for client', clientId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error fetching progress snapshots.' });
+    }
+});
+
+// POST a new client progress snapshot
+app.post('/api/client/:clientId/progress-snapshots', requireClientAuth, upload.single('progressImage'), async (req, res) => {
+    const { clientId } = req.params;
+    const { dateTaken, weightKg, bodyFatPercent, bmi, notes } = req.body;
+    const progressImageBuffer = req.file ? req.file.buffer : null; // Access the buffer directly
+    // Removed progressImageMimeType as it's not in the provided DB schema
+
+    if (!dateTaken || !weightKg || !bodyFatPercent || !bmi) {
+        return res.status(400).json({ success: false, message: 'Missing required snapshot fields.' });
+    }
+
+    try {
+        const [result] = await pool.execute(
+            'INSERT INTO client_progress_snapshots (ClientID, DateTaken, WeightKg, BodyFatPercent, BMI, ProgressImage, Notes) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [clientId, dateTaken, weightKg, bodyFatPercent, bmi, progressImageBuffer, notes]
+        );
+        res.status(201).json({ success: true, message: 'Progress snapshot added successfully!', snapshotId: result.insertId });
+    } catch (err) {
+        console.error('Error adding progress snapshot for client', clientId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error adding progress snapshot.' });
+    }
+});
+
+// GET progress image by SnapshotID
+app.get('/api/client/:clientId/progress-snapshots/:snapshotId/image', requireClientAuth, async (req, res) => {
+    const { clientId, snapshotId } = req.params;
+    try {
+        const [rows] = await pool.execute(
+            'SELECT ProgressImage FROM client_progress_snapshots WHERE ClientID = ? AND SnapshotID = ?',
+            [clientId, snapshotId]
+        );
+
+        if (rows.length === 0 || !rows[0].ProgressImage) {
+            return res.status(404).json({ success: false, message: 'Image not found.' });
+        }
+
+        const imageData = rows[0].ProgressImage;
+        // Default to octet-stream as MimeType is not stored in DB based on provided schema
+        const imageMimeType = 'application/octet-stream'; 
+
+        res.writeHead(200, {
+            'Content-Type': imageMimeType,
+            'Content-Length': imageData.length
+        });
+        res.end(imageData);
+
+    } catch (err) {
+        console.error('Error serving progress image for snapshot', snapshotId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error serving progress image.' });
+    }
+});
+
+
+// GET client's workout logs
+app.get('/api/client/:clientId/workouts', requireClientAuth, async (req, res) => {
+    const { clientId } = req.params;
+    try {
+        const [rows] = await pool.execute(
+            `SELECT cw.WorkoutLogID, cw.ClientID, cw.DatePerformed, cw.SetsDone, cw.RepsDone, cw.WeightUsedKg, 
+                    cw.HeartRate, cw.CaloriesBurned, cw.FatigueLevel, cw.TrainerNotes, cw.ClientFeedback, 
+                    e.ExerciseName
+             FROM client_workouts cw
+             JOIN exercises e ON cw.ExerciseID = e.ExerciseID
+             WHERE cw.ClientID = ?
+             ORDER BY cw.DatePerformed DESC`,
+            [clientId]
+        );
+        // Do not send LONGBLOB directly, create a separate endpoint for attachment retrieval
+        // AttachmentMimeType is removed as it's not in the provided DB schema.
+        res.json(rows);
+    } catch (err) {
+        console.error('Error fetching workout logs for client', clientId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error fetching workout logs.' });
+    }
+});
+
+// POST a new client workout log
+app.post('/api/client/:clientId/workouts', requireClientAuth, upload.single('attachment'), async (req, res) => {
+    const { clientId } = req.params;
+    const { datePerformed, exerciseId, setsDone, repsDone, weightUsedKg, heartRate, caloriesBurned, fatigueLevel, clientFeedback } = req.body;
+    const attachmentBuffer = req.file ? req.file.buffer : null;
+    // Removed attachmentMimeType as it's not in the provided DB schema
+
+    if (!datePerformed || !exerciseId || !setsDone || !repsDone || !weightUsedKg) {
+        return res.status(400).json({ success: false, message: 'Missing required workout log fields.' });
+    }
+
+    try {
+        const [result] = await pool.execute(
+            `INSERT INTO client_workouts (ClientID, ExerciseID, DatePerformed, SetsDone, RepsDone, WeightUsedKg, HeartRate, CaloriesBurned, FatigueLevel, TrainerNotes, ClientFeedback, Attachment) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [clientId, exerciseId, dayjs(datePerformed).format('YYYY-MM-DD'), setsDone, repsDone, weightUsedKg, heartRate || null, caloriesBurned || null, fatigueLevel, null, clientFeedback, attachmentBuffer]
+        );
+        res.status(201).json({ success: true, message: 'Workout log added successfully!', workoutLogId: result.insertId });
+    } catch (err) {
+        console.error('Error adding workout log for client', clientId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error adding workout log.' });
+    }
+});
+
+// GET attachment by WorkoutLogID
+app.get('/api/client/:clientId/workouts/:workoutLogId/attachment', requireClientAuth, async (req, res) => {
+    const { clientId, workoutLogId } = req.params;
+    try {
+        const [rows] = await pool.execute(
+            'SELECT Attachment FROM client_workouts WHERE ClientID = ? AND WorkoutLogID = ?',
+            [clientId, workoutLogId]
+        );
+
+        if (rows.length === 0 || !rows[0].Attachment) {
+            return res.status(404).json({ success: false, message: 'Attachment not found.' });
+        }
+
+        const attachmentData = rows[0].Attachment;
+        // Default to octet-stream as MimeType is not stored in DB based on provided schema
+        const attachmentMimeType = 'application/octet-stream'; 
+
+        res.writeHead(200, {
+            'Content-Type': attachmentMimeType,
+            'Content-Length': attachmentData.length
+        });
+        res.end(attachmentData);
+
+    } catch (err) {
+        console.error('Error serving workout attachment for log', workoutLogId, ':', err);
+        res.status(500).json({ success: false, message: 'Server error serving workout attachment.' });
+    }
 });
 
 /**
@@ -264,7 +429,7 @@ app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
 
 /**
  * Client logout session
- */ 
+ */
 app.post('/logout', (req, res) => {
   req.session.destroy(err => {
     if (err) {
@@ -278,7 +443,7 @@ app.post('/logout', (req, res) => {
 
 /**
  * Client fetch virtual class routines
- */ 
+ */
 app.get('/api/virtualclasses', async (req, res) => {
   try {
     const [rows] = await pool.execute(`
@@ -295,7 +460,7 @@ app.get('/api/virtualclasses', async (req, res) => {
 
 /**
  * Client fetch their attendance records
- */ 
+ */
 app.get('/api/attendance', async (req, res) => {
   const clientId = req.session.userId;
   const [rows] = await pool.execute(`
@@ -310,7 +475,7 @@ app.get('/api/attendance', async (req, res) => {
 
 /**
  * Client check in and out their attendance records
- */ 
+ */
 app.post('/api/attendance/checkin', async (req, res) => {
   const clientId = req.session?.userId;
   if (!clientId) return res.status(401).json({ success: false, message: 'Unauthorized' });
@@ -387,7 +552,7 @@ app.post('/api/attendance/checkout', async (req, res) => {
 
 /**
  * Client update their health log records
- */ 
+ */
 
 app.post('/api/healthlog', express.json(), async (req, res) => {
   const clientId = req.session.userId;
@@ -413,7 +578,7 @@ app.post('/api/healthlog', express.json(), async (req, res) => {
 
 /**
  * Client fetch their health log records
- */ 
+ */
 
 app.get('/api/healthlog', async (req, res) => {
   const clientId = req.session.userId;
@@ -438,7 +603,7 @@ app.get('/api/healthlog', async (req, res) => {
 
 /**
  * fetch client daily goals
- */ 
+ */
 app.get('/goals/me', async (req, res) => {
   const clientId = req.session.userId;
   const userType = req.session.userType;
@@ -460,7 +625,7 @@ app.get('/goals/me', async (req, res) => {
 });
 /**
  *  client update progress
- */ 
+ */
 app.put('/goals/update-status/:goalId', async (req, res) => {
   const clientId = req.session.userId;
   const userType = req.session.userType;
@@ -497,7 +662,7 @@ app.put('/goals/update-status/:goalId', async (req, res) => {
 /**
 * Trainer manage client fitness goals
 * Get all clients with goals
- */ 
+ */
 
 app.get('/trainer/goals', async (req, res) => {
   try {
@@ -519,7 +684,7 @@ app.get('/trainer/goals', async (req, res) => {
 
 /**
  * Trainer add new goal
- */ 
+ */
 
 app.post('/trainer/goals', async (req, res) => {
   try {
@@ -540,7 +705,7 @@ app.post('/trainer/goals', async (req, res) => {
 
 /**
  * Trainer Update goal
- */ 
+ */
 app.put('/trainer/goals/:goalId', async (req, res) => {
   try {
     const goalId = req.params.goalId;
@@ -561,7 +726,7 @@ app.put('/trainer/goals/:goalId', async (req, res) => {
 });
 /**
  * Trainer Delete goal
- */ 
+ */
 app.delete('/trainer/goals/:goalId', async (req, res) => {
   try {
     const goalId = req.params.goalId;
@@ -575,7 +740,7 @@ app.delete('/trainer/goals/:goalId', async (req, res) => {
 
 /**
  * Trainer add new goals 
- */ 
+ */
 
 app.post('/trainer/new/goals', async (req, res) => {
   try {
@@ -598,7 +763,7 @@ app.post('/trainer/new/goals', async (req, res) => {
 
 /**
  * Get trainer dashboard profile
- */ 
+ */
 
 app.get('/trainer/profile', async (req, res) => {
   if (!req.session.userId) {
@@ -685,7 +850,7 @@ app.post('/trainer/profile/update', cpUpload, async (req, res) => {
 
 /**
  * Admin manage profiles:
- */ 
+ */
 app.get('/manage/profile/admins', async (req, res) => {
   try {
     const [results] = await pool.query(
@@ -759,7 +924,7 @@ app.get('/profile-pic/client/:id', async (req, res) => {
 
 /**
  * Admin PUT (edit)
- */ 
+ */
 
 app.put('/manage/profile/admin/:id', async (req, res) => {
   const { id } = req.params;
@@ -777,7 +942,7 @@ app.put('/manage/profile/admin/:id', async (req, res) => {
 
 /**
  * Admin DELETE
- */ 
+ */
 
 app.delete('/manage/profile/admin/:id', async (req, res) => {
   const { id } = req.params;
@@ -791,7 +956,7 @@ app.delete('/manage/profile/admin/:id', async (req, res) => {
 
 /**
  * Trainer PUT (edit)
- */ 
+ */
 
 app.put('/manage/profile/trainer/:id', async (req, res) => {
   const { id } = req.params;
@@ -847,7 +1012,7 @@ app.delete('/manage/profile/client/:id', async (req, res) => {
 
 /**
  * Trainer view attendance
- */ 
+ */
 
 app.get('/trainer/view/attendance', async (req, res) => {
   try {
@@ -861,7 +1026,7 @@ app.get('/trainer/view/attendance', async (req, res) => {
 
 /**
  * Trainer view attendance abd client profile
- */ 
+ */
 app.get('/trainer/client/:clientId', async (req, res) => {
   const clientId = req.params.clientId;
   try {
@@ -881,7 +1046,7 @@ app.get('/trainer/client/:clientId', async (req, res) => {
 
 /**
  * Trainer virtual-classes/create/update/delete
- */ 
+ */
 
 app.post('/trainer/virtual-classes/create', async (req, res) => {
   if (!req.session.userId || req.session.userType !== 'trainer') {
@@ -985,7 +1150,7 @@ app.delete('/trainer/virtual-classes/delete/:id', async (req, res) => {
 
 /**
  * GET all products with optional search and filter (including unavailable ones)
- */ 
+ */
 
 app.get('/api/products', async (req, res) => {
   try {
@@ -1017,7 +1182,7 @@ app.get('/api/products', async (req, res) => {
 
 /**
  * Admin POST - Add product
- */ 
+ */
 
 app.post('/api/products', upload.single('Image'), async (req, res) => {
   try {
@@ -1037,7 +1202,7 @@ app.post('/api/products', upload.single('Image'), async (req, res) => {
 
 /**
  * Admin PUT - Update product
- */ 
+ */
 app.put('/api/products/:id', upload.single('Image'), async (req, res) => {
   try {
     const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
@@ -1061,7 +1226,7 @@ app.put('/api/products/:id', upload.single('Image'), async (req, res) => {
 
 /**
  * Admin - del product
- */ 
+ */
 
 app.delete('/api/products/:id', async (req, res) => {
   try {
@@ -1085,7 +1250,7 @@ app.delete('/api/products/:id', async (req, res) => {
 
 /**
  * Admin - subs plans management:
- */ 
+ */
 
 
 app.get('/api/plans', async (req, res) => {
@@ -1101,7 +1266,7 @@ app.get('/api/plans', async (req, res) => {
 
 /**
  * Admin - subs plans management ---Add new plan:
- */  
+ */
 
 app.post('/api/plans', async (req, res) => {
   const { PlanName, Description, DurationMonths, Price } = req.body;
@@ -1125,7 +1290,7 @@ app.post('/api/plans', async (req, res) => {
 
 /**
  * Admin - subs plans management -Update existing plan:
- */  
+ */
 
 app.put('/api/plans/:id', async (req, res) => {
   const { id } = req.params;
@@ -1154,7 +1319,7 @@ app.put('/api/plans/:id', async (req, res) => {
 
 /**
  * Admin - subs plans management -Dek existing plan:
- */  
+ */
 app.delete('/api/plans/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -1171,7 +1336,7 @@ app.delete('/api/plans/:id', async (req, res) => {
 
 /**
  * Client: View available subs plans (public)
- */  
+ */
 app.get('/api/client/plans', async (req, res) => {
   try {
     const [plans] = await pool.query('SELECT * FROM subscription_plans ORDER BY PlanID ASC');
@@ -1184,7 +1349,7 @@ app.get('/api/client/plans', async (req, res) => {
 
 /**
  * Client: Purchase a plan (no login middleware)
- */ 
+ */
 app.post('/api/client/purchase', async (req, res) => {
   const clientId = req.session.userId;
   const { PlanID, StartDate, PaymentMethod, TransactionRef } = req.body;
@@ -1238,10 +1403,10 @@ function formatDate(d) {
 
 /**
  * Client-View active subscriptions
- */ 
+ */
 
 app.get('/api/client/active-subscriptions', async (req, res) => {
-  const clientId = req.session.clientId || req.session.userId; 
+  const clientId = req.session.clientId || req.session.userId;
   if (!clientId) {
     return res.status(401).json({ error: 'Unauthorized: Client ID missing' });
   }
@@ -1262,7 +1427,7 @@ app.get('/api/client/active-subscriptions', async (req, res) => {
 
 /**
  * Admin0 manage active subscriptions abd payments
- */ 
+ */
 
 app.get('/api/admin/subscriptions', async (req, res) => {
   try {
@@ -1312,7 +1477,7 @@ app.delete('/api/admin/subscriptions/:id', async (req, res) => {
 
 /**
  * Admin-- Update subscription status
- */ 
+ */
 
 app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
   const subscriptionId = req.params.id;
@@ -1349,9 +1514,8 @@ app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
   }
 });
 
-/**
- * Fallback 404 route
- */ 
+
+
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });

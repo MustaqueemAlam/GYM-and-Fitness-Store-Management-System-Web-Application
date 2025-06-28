@@ -292,32 +292,6 @@ CREATE TABLE `feedbacks` (
 );
 
 
-CREATE TABLE `chat_threads` (
-  `ThreadID` INT AUTO_INCREMENT PRIMARY KEY,
-  `ParticipantOneID` INT NOT NULL,
-  `ParticipantOneRole` ENUM('Client', 'Trainer', 'Admin') NOT NULL,
-  `ParticipantTwoID` INT NOT NULL,
-  `ParticipantTwoRole` ENUM('Client', 'Trainer', 'Admin') NOT NULL,
-  `IsGroup` TINYINT(1) DEFAULT 0,
-  `CreatedAt` DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-CREATE TABLE `chat_messages` (
-  `MessageID` INT AUTO_INCREMENT PRIMARY KEY,
-  `ThreadID` INT NOT NULL,
-  `SenderID` INT NOT NULL,
-  `SenderRole` ENUM('Client', 'Trainer', 'Admin') NOT NULL,
-  `EncryptedText` TEXT NOT NULL, -- Store encrypted message
-  `AttachmentURL` VARCHAR(255), -- Optional external file
-  `Status` ENUM('Sent','Delivered','Read') DEFAULT 'Sent',
-  `SentAt` DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-CREATE TABLE `chat_participants` (
-  `ParticipantID` INT AUTO_INCREMENT PRIMARY KEY,
-  `ThreadID` INT NOT NULL,
-  `UserID` INT NOT NULL,
-  `UserRole` ENUM('Client', 'Trainer', 'Admin') NOT NULL,
-  `JoinedAt` DATETIME DEFAULT CURRENT_TIMESTAMP
-);
 
 CREATE TABLE `workout_plans` (
   `PlanID` INT AUTO_INCREMENT PRIMARY KEY,
@@ -426,3 +400,25 @@ CREATE TABLE `client_progress_snapshots` (
   `Notes` TEXT
 );
 
+
+CREATE TABLE `client_workouts` (
+  `WorkoutLogID` INT AUTO_INCREMENT PRIMARY KEY,
+  `ClientID` INT,
+  `ExerciseID` INT,
+  `DatePerformed` DATE DEFAULT CURRENT_DATE,
+  `SetsDone` INT,
+  `RepsDone` INT,
+  `WeightUsedKg` DECIMAL(5,2),
+  `HeartRate` INT,
+  `CaloriesBurned` INT,
+  `FatigueLevel` ENUM('Low','Moderate','High') DEFAULT 'Moderate',
+  `TrainerNotes` TEXT,
+  `ClientFeedback` TEXT,
+  `Attachment` LONGBLOB
+);
+CREATE TABLE `exercises` (
+  `ExerciseID` int(11) NOT NULL,
+  `ExerciseName` varchar(255) NOT NULL,
+  `Description` text DEFAULT NULL,
+  `Category` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
