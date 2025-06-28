@@ -1,113 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard - Red Theme</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-<!-- Sidebar -->
-<aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-  <div>
-    <!-- Logo + Title -->
-    <div class="flex items-center gap-3 mb-8">
-      <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
-      <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Red Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      <div>
+        <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
+        </a>
 
-    <!-- Navigation -->
-    <nav class="flex flex-col space-y-3">
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
-        </svg>
-        Dashboard
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
-        </svg>
-        Users
-      </a>
-      <a href="admin-subs-plan.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
-        </svg>
-        Subscription Plans
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
-        </svg>
-        Payments
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Reports
-      </a>
-            <a href="admin-chat.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Chat
-      </a>
-    </nav>
-  </div>
+        <!-- Navigation -->
+        <nav class="flex flex-col space-y-3">
 
-  <!-- Logout Button pinned bottom -->
-  <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-    <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-    </svg>
-    Logout
-  </button>
-</aside>
-  
-  <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-    <div class="flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-red-700">Manage Products</h1>
-      <div class="flex gap-2 items-center">
-        <input id="searchInput" type="text" placeholder="Search products..." class="border px-3 py-2 rounded-lg" oninput="loadProducts(this.value)">
-        <button onclick="openModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add Product</button>
+          <a href="admin-manage-users.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+            </svg>
+            Users
+          </a>
+          <a href="admin-manage-products.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Products
+          </a>
+          <a href="admin-subs-plan.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Subscription Plans
+          </a>
+          <a href="admin-payments.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+            </svg>
+            Payments
+          </a>
+          <a href="admin-reports.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Reports
+          </a>
+          <a href="admin-chat.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Chat
+          </a>
+          <a href="admin-noti-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            </svg>
+            Feedback and Notifications
+          </a>
+        </nav>
       </div>
-    </div>
 
-    <div id="productContainer" class="flex flex-wrap gap-6 mt-6"></div>
+      <!-- Logout Button pinned bottom -->
+      <a href="login.html"
+        class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+        </svg>
+        Logout
+      </a>
+    </aside>
 
-    <!-- Centered Modal -->
-    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
-      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
-        <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl">&times;</button>
-        <h2 class="text-xl font-bold text-red-600 mb-4" id="modalTitle">Add New Product</h2>
-        <form id="productForm">
-          <input type="hidden" name="ProductID" id="productId">
-          <div class="grid grid-cols-2 gap-4">
-            <input required name="Name" id="name" placeholder="Product Name" class="border p-2 rounded">
-            <input required name="Brand" id="brand" placeholder="Brand" class="border p-2 rounded">
-            <input required name="Category" id="category" placeholder="Category" class="border p-2 rounded">
-            <input required name="Price" id="price" type="number" step="0.01" placeholder="Price" class="border p-2 rounded">
-            <input required name="Stock" id="stock" type="number" placeholder="Stock" class="border p-2 rounded">
-            <select name="IsActive" id="isActive" class="border p-2 rounded">
-              <option value="1">In Stock</option>
-              <option value="0">Out of Stock</option>
-            </select>
-            <input name="Image" id="image" type="file" accept="image/*" class="border p-2 rounded col-span-2">
-          </div>
-          <textarea required name="Description" id="description" rows="3" placeholder="Product Description" class="border p-2 rounded w-full mt-4"></textarea>
-          <div class="flex justify-end mt-4">
-            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Save</button>
-          </div>
-        </form>
+    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-red-700">Manage Products</h1>
+        <div class="flex gap-2 items-center">
+          <input id="searchInput" type="text" placeholder="Search products..."
+            class="border px-3 py-2 rounded-lg"
+            oninput="loadProducts(this.value)">
+          <button onclick="openModal()"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Add
+            Product</button>
+        </div>
       </div>
-    </div>
-  </main>
 
-  <script>
+      <div id="productContainer" class="flex flex-wrap gap-6 mt-6"></div>
+
+      <!-- Centered Modal -->
+      <div id="productModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
+          <button onclick="closeModal()"
+            class="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-2xl">&times;</button>
+          <h2 class="text-xl font-bold text-red-600 mb-4" id="modalTitle">Add
+            New Product</h2>
+          <form id="productForm">
+            <input type="hidden" name="ProductID" id="productId">
+            <div class="grid grid-cols-2 gap-4">
+              <input required name="Name" id="name" placeholder="Product Name"
+                class="border p-2 rounded">
+              <input required name="Brand" id="brand" placeholder="Brand"
+                class="border p-2 rounded">
+              <input required name="Category" id="category"
+                placeholder="Category" class="border p-2 rounded">
+              <input required name="Price" id="price" type="number" step="0.01"
+                placeholder="Price" class="border p-2 rounded">
+              <input required name="Stock" id="stock" type="number"
+                placeholder="Stock" class="border p-2 rounded">
+              <select name="IsActive" id="isActive" class="border p-2 rounded">
+                <option value="1">In Stock</option>
+                <option value="0">Out of Stock</option>
+              </select>
+              <input name="Image" id="image" type="file" accept="image/*"
+                class="border p-2 rounded col-span-2">
+            </div>
+            <textarea required name="Description" id="description" rows="3"
+              placeholder="Product Description"
+              class="border p-2 rounded w-full mt-4"></textarea>
+            <div class="flex justify-end mt-4">
+              <button type="submit"
+                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script>
     const productModal = document.getElementById('productModal');
     const productForm = document.getElementById('productForm');
     const productContainer = document.getElementById('productContainer');
@@ -207,7 +264,7 @@
 
     loadProducts();
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</body>
+  </body>
 </html>

@@ -1,96 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard - Red Theme</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="css/admin-payments.css" />
-</head>
-<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-<!-- Sidebar -->
-<aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-  <div>
-    <!-- Logo + Title -->
-    <div class="flex items-center gap-3 mb-8">
-      <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
-      <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Red Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      <div>
+        <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
+        </a>
 
-    <!-- Navigation -->
-    <nav class="flex flex-col space-y-3">
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
-        </svg>
-        Dashboard
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
-        </svg>
-        Users
-      </a>
-      <a href="admin-subs-plan.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
-        </svg>
-        Subscription Plans
-      </a>
-      <a href="admin-payments.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
-        </svg>
-        Payments
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Reports
-      </a>
-    </nav>
-  </div>
+        <!-- Navigation -->
+        <nav class="flex flex-col space-y-3">
 
-  <!-- Logout Button pinned bottom -->
-  <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-    <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-    </svg>
-    Logout
-  </button>
-</aside>
-  
-<main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-    <section>
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-    <div class="flex flex-col gap-1">
-      <h2 class="text-2xl font-bold text-red-700">Client Subscriptions & Payments</h2>
-      <p id="summaryText" class="text-sm text-gray-600"></p>
-    </div>
-    <div>
-      <select id="paymentFilter" class="border rounded px-3 py-1 text-sm text-gray-700 shadow-sm">
-        <option value="">All Payment Methods</option>
-        <option value="bKash">bKash</option>
-        <option value="Nagad">Nagad</option>
-        <option value="SSLCommerz">SSLCommerz</option>
-        <option value="Stripe">Stripe</option>
-        <option value="PayPal">PayPal</option>
-      </select>
-    </div>
-  </div>
+          <a href="admin-manage-users.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+            </svg>
+            Users
+          </a>
+          <a href="admin-manage-products.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Products
+          </a>
+          <a href="admin-subs-plan.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Subscription Plans
+          </a>
+          <a href="admin-payments.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+            </svg>
+            Payments
+          </a>
+          <a href="admin-reports.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Reports
+          </a>
+          <a href="admin-chat.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Chat
+          </a>
+          <a href="admin-noti-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            </svg>
+            Feedback and Notifications
+          </a>
+        </nav>
+      </div>
+      <a href="login.html"
+        class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+        </svg>
+        Logout
+      </a>
+    </aside>
 
+    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+      <section>
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-2xl font-bold text-red-700">Client Subscriptions &
+              Payments</h2>
+            <p id="summaryText" class="text-sm text-gray-600"></p>
+          </div>
+          <div>
+            <select id="paymentFilter"
+              class="border rounded px-3 py-1 text-sm text-gray-700 shadow-sm">
+              <option value>All Payment Methods</option>
+              <option value="bKash">bKash</option>
+              <option value="Nagad">Nagad</option>
+              <option value="SSLCommerz">SSLCommerz</option>
+              <option value="Stripe">Stripe</option>
+              <option value="PayPal">PayPal</option>
+            </select>
+          </div>
+        </div>
 
-  <section>
-    <div id="subsPaymentsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Loaded dynamically -->
-    </div>
-  </section>
-</main>
+        <section>
+          <div id="subsPaymentsContainer"
+            class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Loaded dynamically -->
+          </div>
+        </section>
+      </main>
 
-<script>
+      <script>
     let allData = [];
 
     async function loadSubsAndPayments() {
@@ -280,8 +326,7 @@
   window.addEventListener('DOMContentLoaded', loadSubsAndPayments);
 </script>
 
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-</body>
-</html>
+    </body>
+  </html>

@@ -1,262 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard - Red Theme</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-<!-- Sidebar -->
-<aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-  <div>
-    <!-- Logo + Title -->
-    <div class="flex items-center gap-3 mb-8">
-      <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
-      <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Red Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      <div>
+        <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
+        </a>
 
-    <!-- Navigation -->
-    <nav class="flex flex-col space-y-3">
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+        <!-- Navigation -->
+        <nav class="flex flex-col space-y-3">
+
+          <a href="admin-manage-users.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+            </svg>
+            Users
+          </a>
+          <a href="admin-manage-products.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Products
+          </a>
+          <a href="admin-subs-plan.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Subscription Plans
+          </a>
+          <a href="admin-payments.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+            </svg>
+            Payments
+          </a>
+          <a href="admin-reports.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Reports
+          </a>
+          <a href="admin-chat.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Chat
+          </a>
+          <a href="admin-noti-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            </svg>
+            Feedback and Notifications
+          </a>
+        </nav>
+      </div>
+
+      <!-- Logout Button pinned bottom -->
+      <a href="login.html"
+        class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
         </svg>
-        Dashboard
+        Logout
       </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
-        </svg>
-        Users
-      </a>
-      <a href="admin-subs-plan.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
-        </svg>
-        Subscription Plans
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
-        </svg>
-        Payments
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Reports
-      </a>
-            <a href="admin-chat.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Chat
-      </a>
-    </nav>
-  </div>
+    </aside>
 
-  <!-- Logout Button pinned bottom -->
-  <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-    <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-    </svg>
-    Logout
-  </button>
-</aside>
+    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+      <!-- Tabs for User Type -->
+      <div class="flex gap-4">
+        <button onclick="showTab(event, 'trainers')"
+          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Trainers</button>
+        <button onclick="showTab(event, 'clients')"
+          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Clients</button>
+        <button onclick="showTab(event, 'admins')"
+          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Admins</button>
+      </div>
 
-<main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-  <!-- Tabs for User Type -->
-  <div class="flex gap-4">
-    <button onclick="showTab(event, 'trainers')" class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Trainers</button>
-    <button onclick="showTab(event, 'clients')" class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Clients</button>
-    <button onclick="showTab(event, 'admins')" class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Admins</button>
-  </div>
-
-  <!-- Trainers Tab -->
-  <div id="trainersTab" class="user-tab">
-    <h2 class="text-xl font-bold mt-6 mb-2">Trainers</h2>
-    <button onclick="openModal('trainerModal')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+ Add Trainer</button>
-    <div class="overflow-x-auto">
-      <table class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-        <thead class="bg-red-200 text-red-900">
-          <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Profile</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Gender</th>
-            <th class="px-4 py-2">DOB</th>
-            <th class="px-4 py-2">City</th>
-            <th class="px-4 py-2">Country</th>
-            <th class="px-4 py-2">Qualifications</th>
-            <th class="px-4 py-2">Expertise</th>
-            <th class="px-4 py-2">Intro Video</th>
-            <th class="px-4 py-2">Cert Title</th>
-            <th class="px-4 py-2">Cert Issuer</th>
-            <th class="px-4 py-2">Cert Year</th>
-            <th class="px-4 py-2">Cert ID</th>
-            <th class="px-4 py-2">Date Joined</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="trainersTable">
-          <!-- Trainer rows go here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Clients Tab -->
-  <div id="clientsTab" class="user-tab hidden">
-    <h2 class="text-xl font-bold mt-6 mb-2">Clients</h2>
-    <button onclick="openModal('clientModal')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+ Add Client</button>
-    <div class="overflow-x-auto">
-      <table class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-        <thead class="bg-red-200 text-red-900">
-          <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Profile</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Gender</th>
-            <th class="px-4 py-2">DOB</th>
-            <th class="px-4 py-2">City</th>
-            <th class="px-4 py-2">Country</th>
-            <th class="px-4 py-2">Date Joined</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="clientsTable">
-          <!-- Client rows go here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Admins Tab -->
-  <div id="adminsTab" class="user-tab hidden">
-    <h2 class="text-xl font-bold mt-6 mb-2">Admins</h2>
-    <button onclick="openModal('adminModal')" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+ Add Admin</button>
-    <div class="overflow-x-auto">
-      <table class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-        <thead class="bg-red-200 text-red-900">
-          <tr>
-            <th class="px-4 py-2">ID</th>
-            <th class="px-4 py-2">Name</th>
-            <th class="px-4 py-2">Email</th>
-            <th class="px-4 py-2">Phone</th>
-            <th class="px-4 py-2">Role</th>
-            <th class="px-4 py-2">Date Joined</th>
-            <th class="px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="adminsTable">
-          <!-- Admin rows go here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <!-- Trainer Modal -->
-  <div id="trainerModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-4xl overflow-y-auto max-h-[90vh]">
-      <h3 class="text-xl font-bold mb-4">Add/Edit Trainer</h3>
-      <form id="trainerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4" enctype="multipart/form-data">
-        <input type="hidden" name="TrainerID" id="TrainerID">
-        <input type="text" name="FullName" placeholder="Full Name" class="border p-2 rounded" required>
-        <input type="email" name="Email" placeholder="Email" class="border p-2 rounded" required>
-        <input type="password" name="Password" placeholder="Password" class="border p-2 rounded" required>
-        <input type="text" name="Phone" placeholder="Phone" class="border p-2 rounded">
-        <select name="Gender" class="border p-2 rounded">
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="date" name="DOB" placeholder="Date of Birth" class="border p-2 rounded">
-        <input type="text" name="City" placeholder="City" class="border p-2 rounded">
-        <input type="text" name="Country" placeholder="Country" class="border p-2 rounded">
-        <textarea name="Address" placeholder="Address" class="border p-2 rounded col-span-2"></textarea>
-        <input type="text" name="Qualifications" placeholder="Qualifications" class="border p-2 rounded">
-        <input type="text" name="Expertise" placeholder="Expertise" class="border p-2 rounded">
-        <input type="url" name="IntroVideoURL" placeholder="Intro Video URL" class="border p-2 rounded">
-        <input type="text" name="CertTitle" placeholder="Certificate Title" class="border p-2 rounded">
-        <input type="text" name="CertIssuer" placeholder="Certificate Issuer" class="border p-2 rounded">
-        <input type="number" name="CertYear" placeholder="Certificate Year" class="border p-2 rounded" min="1900" max="2099" step="1">
-        <input type="text" name="CertID" placeholder="Certificate ID" class="border p-2 rounded">
-        <label class="col-span-2">Profile Picture:
-          <input type="file" name="ProfilePic" class="border p-2 rounded w-full">
-        </label>
-        <label class="col-span-2">Certificate File:
-          <input type="file" name="CertFile" class="border p-2 rounded w-full">
-        </label>
-        <div class="col-span-2 flex justify-end gap-2 mt-4">
-          <button type="button" onclick="closeModal('trainerModal')" class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-          <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+      <!-- Trainers Tab -->
+      <div id="trainersTab" class="user-tab">
+        <h2 class="text-xl font-bold mt-6 mb-2">Trainers</h2>
+        <button onclick="openModal('trainerModal')"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
+          Add Trainer</button>
+        <div class="overflow-x-auto">
+          <table
+            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
+            <thead class="bg-red-200 text-red-900">
+              <tr>
+                <th class="px-4 py-2">ID</th>
+                <th class="px-4 py-2">Profile</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Phone</th>
+                <th class="px-4 py-2">Gender</th>
+                <th class="px-4 py-2">DOB</th>
+                <th class="px-4 py-2">City</th>
+                <th class="px-4 py-2">Country</th>
+                <th class="px-4 py-2">Qualifications</th>
+                <th class="px-4 py-2">Expertise</th>
+                <th class="px-4 py-2">Intro Video</th>
+                <th class="px-4 py-2">Cert Title</th>
+                <th class="px-4 py-2">Cert Issuer</th>
+                <th class="px-4 py-2">Cert Year</th>
+                <th class="px-4 py-2">Cert ID</th>
+                <th class="px-4 py-2">Date Joined</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="trainersTable">
+              <!-- Trainer rows go here -->
+            </tbody>
+          </table>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- Client Modal -->
-  <div id="clientModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-3xl overflow-y-auto max-h-[90vh]">
-      <h3 class="text-xl font-bold mb-4">Add/Edit Client</h3>
-      <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="hidden" name="ClientID" id="ClientID">
-        <input type="text" name="FullName" placeholder="Full Name" class="border p-2 rounded" required>
-        <input type="email" name="Email" placeholder="Email" class="border p-2 rounded" required>
-        <input type="password" name="Password" placeholder="Password" class="border p-2 rounded" required>
-        <input type="text" name="Phone" placeholder="Phone" class="border p-2 rounded">
-        <select name="Gender" class="border p-2 rounded">
-          <option value="">Select Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
-        <input type="date" name="DOB" placeholder="Date of Birth" class="border p-2 rounded">
-        <input type="text" name="City" placeholder="City" class="border p-2 rounded">
-        <input type="text" name="Country" placeholder="Country" class="border p-2 rounded">
-        <textarea name="Address" placeholder="Address" class="border p-2 rounded col-span-2"></textarea>
-        <div class="col-span-2 flex justify-end gap-2 mt-4">
-          <button type="button" onclick="closeModal('clientModal')" class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-          <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+      <!-- Clients Tab -->
+      <div id="clientsTab" class="user-tab hidden">
+        <h2 class="text-xl font-bold mt-6 mb-2">Clients</h2>
+        <button onclick="openModal('clientModal')"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
+          Add Client</button>
+        <div class="overflow-x-auto">
+          <table
+            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
+            <thead class="bg-red-200 text-red-900">
+              <tr>
+                <th class="px-4 py-2">ID</th>
+                <th class="px-4 py-2">Profile</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Phone</th>
+                <th class="px-4 py-2">Gender</th>
+                <th class="px-4 py-2">DOB</th>
+                <th class="px-4 py-2">City</th>
+                <th class="px-4 py-2">Country</th>
+                <th class="px-4 py-2">Date Joined</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="clientsTable">
+              <!-- Client rows go here -->
+            </tbody>
+          </table>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- Admin Modal -->
-  <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]">
-      <h3 class="text-xl font-bold mb-4">Add/Edit Admin</h3>
-      <form id="adminForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <input type="hidden" name="AdminID" id="AdminID">
-        <input type="text" name="FullName" placeholder="Full Name" class="border p-2 rounded" required>
-        <input type="email" name="Email" placeholder="Email" class="border p-2 rounded" required>
-        <input type="password" name="Password" placeholder="Password" class="border p-2 rounded" required>
-        <input type="text" name="Phone" placeholder="Phone" class="border p-2 rounded">
-        <select name="Role" class="border p-2 rounded">
-          <option value="">Select Role</option>
-          <option value="SuperAdmin">Super Admin</option>
-          <option value="Admin">Admin</option>
-        </select>
-        <div class="col-span-2 flex justify-end gap-2 mt-4">
-          <button type="button" onclick="closeModal('adminModal')" class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-          <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+      <!-- Admins Tab -->
+      <div id="adminsTab" class="user-tab hidden">
+        <h2 class="text-xl font-bold mt-6 mb-2">Admins</h2>
+        <button onclick="openModal('adminModal')"
+          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
+          Add Admin</button>
+        <div class="overflow-x-auto">
+          <table
+            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
+            <thead class="bg-red-200 text-red-900">
+              <tr>
+                <th class="px-4 py-2">ID</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Phone</th>
+                <th class="px-4 py-2">Role</th>
+                <th class="px-4 py-2">Date Joined</th>
+                <th class="px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminsTable">
+              <!-- Admin rows go here -->
+            </tbody>
+          </table>
         </div>
-      </form>
-    </div>
-  </div>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+      </div>
+
+      <!-- Trainer Modal -->
+      <div id="trainerModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div
+          class="bg-white p-6 rounded-lg w-full max-w-4xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-xl font-bold mb-4">Add/Edit Trainer</h3>
+          <form id="trainerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            enctype="multipart/form-data">
+            <input type="hidden" name="TrainerID" id="TrainerID">
+            <input type="text" name="FullName" placeholder="Full Name"
+              class="border p-2 rounded" required>
+            <input type="email" name="Email" placeholder="Email"
+              class="border p-2 rounded" required>
+            <input type="password" name="Password" placeholder="Password"
+              class="border p-2 rounded" required>
+            <input type="text" name="Phone" placeholder="Phone"
+              class="border p-2 rounded">
+            <select name="Gender" class="border p-2 rounded">
+              <option value>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="date" name="DOB" placeholder="Date of Birth"
+              class="border p-2 rounded">
+            <input type="text" name="City" placeholder="City"
+              class="border p-2 rounded">
+            <input type="text" name="Country" placeholder="Country"
+              class="border p-2 rounded">
+            <textarea name="Address" placeholder="Address"
+              class="border p-2 rounded col-span-2"></textarea>
+            <input type="text" name="Qualifications"
+              placeholder="Qualifications" class="border p-2 rounded">
+            <input type="text" name="Expertise" placeholder="Expertise"
+              class="border p-2 rounded">
+            <input type="url" name="IntroVideoURL" placeholder="Intro Video URL"
+              class="border p-2 rounded">
+            <input type="text" name="CertTitle" placeholder="Certificate Title"
+              class="border p-2 rounded">
+            <input type="text" name="CertIssuer"
+              placeholder="Certificate Issuer" class="border p-2 rounded">
+            <input type="number" name="CertYear" placeholder="Certificate Year"
+              class="border p-2 rounded" min="1900" max="2099" step="1">
+            <input type="text" name="CertID" placeholder="Certificate ID"
+              class="border p-2 rounded">
+            <label class="col-span-2">Profile Picture:
+              <input type="file" name="ProfilePic"
+                class="border p-2 rounded w-full">
+            </label>
+            <label class="col-span-2">Certificate File:
+              <input type="file" name="CertFile"
+                class="border p-2 rounded w-full">
+            </label>
+            <div class="col-span-2 flex justify-end gap-2 mt-4">
+              <button type="button" onclick="closeModal('trainerModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
+              <button type="submit"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Client Modal -->
+      <div id="clientModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div
+          class="bg-white p-6 rounded-lg w-full max-w-3xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-xl font-bold mb-4">Add/Edit Client</h3>
+          <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="hidden" name="ClientID" id="ClientID">
+            <input type="text" name="FullName" placeholder="Full Name"
+              class="border p-2 rounded" required>
+            <input type="email" name="Email" placeholder="Email"
+              class="border p-2 rounded" required>
+            <input type="password" name="Password" placeholder="Password"
+              class="border p-2 rounded" required>
+            <input type="text" name="Phone" placeholder="Phone"
+              class="border p-2 rounded">
+            <select name="Gender" class="border p-2 rounded">
+              <option value>Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="date" name="DOB" placeholder="Date of Birth"
+              class="border p-2 rounded">
+            <input type="text" name="City" placeholder="City"
+              class="border p-2 rounded">
+            <input type="text" name="Country" placeholder="Country"
+              class="border p-2 rounded">
+            <textarea name="Address" placeholder="Address"
+              class="border p-2 rounded col-span-2"></textarea>
+            <div class="col-span-2 flex justify-end gap-2 mt-4">
+              <button type="button" onclick="closeModal('clientModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
+              <button type="submit"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Admin Modal -->
+      <div id="adminModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div
+          class="bg-white p-6 rounded-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-xl font-bold mb-4">Add/Edit Admin</h3>
+          <form id="adminForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="hidden" name="AdminID" id="AdminID">
+            <input type="text" name="FullName" placeholder="Full Name"
+              class="border p-2 rounded" required>
+            <input type="email" name="Email" placeholder="Email"
+              class="border p-2 rounded" required>
+            <input type="password" name="Password" placeholder="Password"
+              class="border p-2 rounded" required>
+            <input type="text" name="Phone" placeholder="Phone"
+              class="border p-2 rounded">
+            <select name="Role" class="border p-2 rounded">
+              <option value>Select Role</option>
+              <option value="SuperAdmin">Super Admin</option>
+              <option value="Admin">Admin</option>
+            </select>
+            <div class="col-span-2 flex justify-end gap-2 mt-4">
+              <button type="button" onclick="closeModal('adminModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
+              <button type="submit"
+                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
         function showTab(event, tab) {
       // Remove active styles from all tab buttons
       document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -374,10 +468,9 @@
     }
 </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
+    <script>
 async function editUser(role, id) {
     const { value: formValues } = await Swal.fire({
         title: `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`,
@@ -456,5 +549,5 @@ async function deleteUser(role, id) {
 }
 </script>
 
-</body>
+  </body>
 </html>

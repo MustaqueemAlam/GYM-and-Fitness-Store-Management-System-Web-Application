@@ -1,165 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin Dashboard - Red Theme</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-<!-- Sidebar -->
-<aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-  <div>
-    <!-- Logo + Title -->
-    <div class="flex items-center gap-3 mb-8">
-      <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
-      <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard - Red Theme</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      <div>
+        <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
+        </a>
 
-    <!-- Navigation -->
-    <nav class="flex flex-col space-y-3">
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
-        </svg>
-        Dashboard
-      </a>
-      <a href="admin-manage-users.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
-        </svg>
-        Users
-      </a>
-      <a href="admin-manage-products.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
-        </svg>
-        Products
-      </a>
-      <a href="admin-subs-plan.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12v8" />
-        </svg>
-        Subscription Plans
-      </a>
-      <a href="admin-payments.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
-        </svg>
-        Payments
-      </a>
-      <a href="#" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Reports
-      </a>
-            <a href="admin-chat.html" class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-        </svg>
-        Chat
-      </a>
-    </nav>
-  </div>
+        <!-- Navigation -->
+        <nav class="flex flex-col space-y-3">
 
-  <!-- Logout Button pinned bottom -->
-  <button class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-    <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-    </svg>
-    Logout
-  </button>
-</aside>
+          <a href="admin-manage-users.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+            </svg>
+            Users
+          </a>
+          <a href="admin-manage-products.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Products
+          </a>
+          <a href="admin-subs-plan.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M12 12v8" />
+            </svg>
+            Subscription Plans
+          </a>
+          <a href="admin-payments.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+            </svg>
+            Payments
+          </a>
+          <a href="admin-reports.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Reports
+          </a>
+          <a href="admin-chat.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Chat
+          </a>
+          <a href="admin-noti-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            </svg>
+            Feedback and Notifications
+          </a>
+        </nav>
+      </div>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-    <!-- Header -->
-    <header class="flex justify-between items-center">
-      <h1 class="text-3xl font-bold text-red-800">Welcome, Admin</h1>
-      <div class="flex items-center gap-4">
-        <button id="notifBtn" class="relative text-gray-700 hover:text-red-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
-          </svg>
-          <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-        </button>
-        <button id="chatBtn" class="text-gray-700 hover:text-red-600">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        </button>
-      </div>
-    </header>
+      <!-- Logout Button pinned bottom -->
+      <a href="login.html"
+        class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+        </svg>
+        Logout
+      </a>
 
-    <!-- Stats Cards -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-gradient-to-br from-red-100 to-red-200 p-4 rounded-lg shadow text-red-800">
-        Users<br><strong class="text-xl">235</strong>
-      </div>
-      <div class="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-lg shadow text-green-800">
-        Revenue<br><strong class="text-xl">$12,340</strong>
-      </div>
-      <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-lg shadow text-yellow-800">
-        Active Plans<br><strong class="text-xl">78</strong>
-      </div>
-      <div class="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-lg shadow text-pink-800">
-        Messages<br><strong class="text-xl">45</strong>
-      </div>
-    </section>
+    </aside>
 
-    <!-- Charts Section -->
-    <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="text-lg font-bold mb-2 text-red-700">User Growth</h2>
-        <canvas id="userGrowthChart" height="200"></canvas>
-      </div>
-      <div class="bg-white p-4 rounded-lg shadow">
-        <h2 class="text-lg font-bold mb-2 text-red-700">Revenue Breakdown</h2>
-        <canvas id="revenueChart" height="200"></canvas>
-      </div>
-    </section>
+    <!-- Main Content -->
+    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+      <!-- Header -->
+      <header class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-red-800">Welcome, Admin</h1>
+        <div class="flex items-center gap-4">
+          <button id="notifBtn"
+            class="relative text-gray-700 hover:text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
+            </svg>
+            <span
+              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
+          </button>
+          <button id="chatBtn" class="text-gray-700 hover:text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+          </button>
+        </div>
+      </header>
 
-    <!-- Activity Table -->
-    <section class="bg-white p-6 rounded-lg shadow overflow-x-auto">
-      <h2 class="text-lg font-bold mb-4 text-red-700">Recent Activities</h2>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="text-gray-600 uppercase text-sm">
-            <th class="p-2 border-b">Date</th>
-            <th class="p-2 border-b">Activity</th>
-            <th class="p-2 border-b">User</th>
-            <th class="p-2 border-b">Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="hover:bg-red-50">
-            <td class="p-2 border-b">2025-06-01</td>
-            <td class="p-2 border-b">New subscription</td>
-            <td class="p-2 border-b">Jane Smith</td>
-            <td class="p-2 border-b">Client</td>
-          </tr>
-          <tr class="hover:bg-red-50">
-            <td class="p-2 border-b">2025-06-02</td>
-            <td class="p-2 border-b">Class Added</td>
-            <td class="p-2 border-b">Trainer A</td>
-            <td class="p-2 border-b">Trainer</td>
-          </tr>
-          <tr class="hover:bg-red-50">
-            <td class="p-2 border-b">2025-06-03</td>
-            <td class="p-2 border-b">Message sent</td>
-            <td class="p-2 border-b">Mike Johnson</td>
-            <td class="p-2 border-b">Client</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </main>
+      <!-- Stats Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div
+          class="bg-gradient-to-br from-red-100 to-red-200 p-4 rounded-lg shadow text-red-800">
+          Users<br><strong class="text-xl">235</strong>
+        </div>
+        <div
+          class="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-lg shadow text-green-800">
+          Revenue<br><strong class="text-xl">$12,340</strong>
+        </div>
+        <div
+          class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-lg shadow text-yellow-800">
+          Active Plans<br><strong class="text-xl">78</strong>
+        </div>
+        <div
+          class="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-lg shadow text-pink-800">
+          Messages<br><strong class="text-xl">45</strong>
+        </div>
+      </section>
 
-  <script>
+      <!-- Charts Section -->
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 text-red-700">User Growth</h2>
+          <canvas id="userGrowthChart" height="200"></canvas>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow">
+          <h2 class="text-lg font-bold mb-2 text-red-700">Revenue Breakdown</h2>
+          <canvas id="revenueChart" height="200"></canvas>
+        </div>
+      </section>
+
+      <!-- Activity Table -->
+      <section class="bg-white p-6 rounded-lg shadow overflow-x-auto">
+        <h2 class="text-lg font-bold mb-4 text-red-700">Recent Activities</h2>
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="text-gray-600 uppercase text-sm">
+              <th class="p-2 border-b">Date</th>
+              <th class="p-2 border-b">Activity</th>
+              <th class="p-2 border-b">User</th>
+              <th class="p-2 border-b">Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-red-50">
+              <td class="p-2 border-b">2025-06-01</td>
+              <td class="p-2 border-b">New subscription</td>
+              <td class="p-2 border-b">Jane Smith</td>
+              <td class="p-2 border-b">Client</td>
+            </tr>
+            <tr class="hover:bg-red-50">
+              <td class="p-2 border-b">2025-06-02</td>
+              <td class="p-2 border-b">Class Added</td>
+              <td class="p-2 border-b">Trainer A</td>
+              <td class="p-2 border-b">Trainer</td>
+            </tr>
+            <tr class="hover:bg-red-50">
+              <td class="p-2 border-b">2025-06-03</td>
+              <td class="p-2 border-b">Message sent</td>
+              <td class="p-2 border-b">Mike Johnson</td>
+              <td class="p-2 border-b">Client</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <script>
     document.getElementById('notifBtn').onclick = () => alert('Notification Center Coming Soon');
     document.getElementById('chatBtn').onclick = () => alert('Chat Panel Coming Soon');
 
@@ -189,5 +235,5 @@
       }
     });
   </script>
-</body>
+  </body>
 </html>
