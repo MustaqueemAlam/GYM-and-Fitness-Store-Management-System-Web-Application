@@ -306,20 +306,6 @@ CREATE TABLE `workout_plans` (
   `IsActive` TINYINT(1) DEFAULT 1
 );
 
-CREATE TABLE `workout_exercises` (
-  `ExerciseID` INT AUTO_INCREMENT PRIMARY KEY,
-  `PlanID` INT,
-  `ExerciseName` VARCHAR(100),
-  `Equipment` VARCHAR(100),
-  `Sets` INT,
-  `Reps` INT,
-  `WeightKg` DECIMAL(5,2),
-  `RestSeconds` INT,
-  `VideoURL` VARCHAR(255),
-  `TargetMuscleGroups` VARCHAR(255),
-  `DayNumber` INT,
-  `Notes` TEXT
-);
 
 CREATE TABLE `client_workouts` (
   `WorkoutLogID` INT AUTO_INCREMENT PRIMARY KEY,
@@ -401,21 +387,7 @@ CREATE TABLE `client_progress_snapshots` (
 );
 
 
-CREATE TABLE `client_workouts` (
-  `WorkoutLogID` INT AUTO_INCREMENT PRIMARY KEY,
-  `ClientID` INT,
-  `ExerciseID` INT,
-  `DatePerformed` DATE DEFAULT CURRENT_DATE,
-  `SetsDone` INT,
-  `RepsDone` INT,
-  `WeightUsedKg` DECIMAL(5,2),
-  `HeartRate` INT,
-  `CaloriesBurned` INT,
-  `FatigueLevel` ENUM('Low','Moderate','High') DEFAULT 'Moderate',
-  `TrainerNotes` TEXT,
-  `ClientFeedback` TEXT,
-  `Attachment` LONGBLOB
-);
+
 CREATE TABLE `exercises` (
   `ExerciseID` int(11) NOT NULL,
   `ExerciseName` varchar(255) NOT NULL,

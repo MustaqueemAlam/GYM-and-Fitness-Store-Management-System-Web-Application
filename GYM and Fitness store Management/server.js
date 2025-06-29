@@ -1016,33 +1016,122 @@ app.delete('/manage/profile/client/:id', async (req, res) => {
  * Trainer view attendance
  */
 
-app.get('/trainer/view/attendance', async (req, res) => {
+/**
+ * Trainer view attendance and client profile
+ */
+app.get('/trainer/attendance/count', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM attendance ORDER BY CheckInTime DESC');
-    res.json(rows);
+    const [rows] = await pool.query(`
+        SELECT ClientID, COUNT(*) AS AttendanceCount
+        FROM attendance
+        GROUP BY ClientID
+    `);
+    res.json({ success: true, counts: rows });
   } catch (err) {
-    console.error("Error fetching attendance:", err);
-    res.status(500).json({ error: 'Failed to fetch attendance' });
+    console.error("Error fetching attendance counts:", err);
+    res.status(500).json({ success: false, message: 'Failed to fetch attendance counts', error: err.message });
   }
 });
 
 /**
- * Trainer view attendance abd client profile
+ * Trainer view attendance (existing endpoint, no changes needed here, just for context)
+ */
+app.get('/trainer/view/attendance', async (req, res) => {
+  try {
+    // You might want to include a verifyToken middleware here as well
+    // if attendance data is only for authenticated trainers.
+    const [rows] = await pool.query('SELECT AttendanceID, ClientID, CheckInTime, CheckOutTime, Method FROM attendance ORDER BY CheckInTime DESC');
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching attendance:", err);
+    res.status(500).json({ error: 'Failed to fetch attendance data' });
+  }
+});
+
+/**
+ * Trainer view client profile (existing endpoint, no changes needed here, just for context)
  */
 app.get('/trainer/client/:clientId', async (req, res) => {
   const clientId = req.params.clientId;
   try {
+    // You might want to include a verifyToken middleware here as well
     const [rows] = await pool.query('SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country, ProfilePic, DateJoined FROM clients WHERE ClientID = ?', [clientId]);
     if (rows.length === 0) return res.status(404).json({ error: 'Client not found' });
     const client = rows[0];
     // Convert BLOB to base64 string for frontend
     if (client.ProfilePic) {
-      client.ProfilePic = `data:image/jpeg;base64,${client.ProfilePic.toString('base64')}`;
+      client.ProfilePic = client.ProfilePic.toString('base64'); // Only send the base64 string
     }
     res.json(client);
   } catch (err) {
     console.error("Error fetching client details:", err);
     res.status(500).json({ error: 'Failed to fetch client details' });
+  }
+});
+
+// --- NEW ENDPOINTS FOR HISTORY MODALS ---
+
+/**
+ * Trainer: Fetch all check-in history for a specific client.
+ * Requires client ID as a URL parameter.
+ */
+app.get('/trainer/client/:clientId/checkin-history', async (req, res) => {
+  // Add authentication/authorization check if not handled by a global middleware
+  // if (!req.session.userId || req.session.userType !== 'trainer') {
+  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
+  // }
+
+  const { clientId } = req.params;
+  try {
+    const [rows] = await pool.query(
+      `SELECT CheckInTime, Method
+       FROM attendance
+       WHERE ClientID = ? AND CheckInTime IS NOT NULL
+       ORDER BY CheckInTime DESC`, // Most recent check-ins first
+      [clientId]
+    );
+
+    if (rows.length > 0) {
+      res.json({ success: true, records: rows });
+    } else {
+      // It's not an error if no history is found, just an empty set.
+      res.json({ success: true, records: [] });
+    }
+  } catch (err) {
+    console.error(`Error fetching check-in history for ClientID ${clientId}:`, err);
+    res.status(500).json({ success: false, error: 'Internal server error while fetching check-in history.' });
+  }
+});
+
+/**
+ * Trainer: Fetch all check-out history for a specific client.
+ * Requires client ID as a URL parameter.
+ */
+app.get('/trainer/client/:clientId/checkout-history', async (req, res) => {
+  // Add authentication/authorization check if not handled by a global middleware
+  // if (!req.session.userId || req.session.userType !== 'trainer') {
+  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
+  // }
+
+  const { clientId } = req.params;
+  try {
+    const [rows] = await pool.query(
+      `SELECT CheckOutTime, Method
+       FROM attendance
+       WHERE ClientID = ? AND CheckOutTime IS NOT NULL
+       ORDER BY CheckOutTime DESC`, // Most recent check-outs first
+      [clientId]
+    );
+
+    if (rows.length > 0) {
+      res.json({ success: true, records: rows });
+    } else {
+      // It's not an error if no history is found, just an empty set.
+      res.json({ success: true, records: [] });
+    }
+  } catch (err) {
+    console.error(`Error fetching check-out history for ClientID ${clientId}:`, err);
+    res.status(500).json({ success: false, error: 'Internal server error while fetching check-out history.' });
   }
 });
 
@@ -1517,6 +1606,77 @@ app.put('/api/admin/subscriptions/:id/status', async (req, res) => {
 });
 
 
+/**
+ * Trainer-- View client progress status
+ */
+
+app.get('/api/clients', async (req, res) => { // API to search and get client basic info
+    try {
+        const searchQuery = req.query.search;
+        let query = 'SELECT ClientID, FullName, Email, ProfilePic FROM clients';
+        const params = [];
+        if (searchQuery) {
+            query += ' WHERE FullName LIKE ? OR Email LIKE ?';
+            params.push(`%${searchQuery}%`, `%${searchQuery}%`);
+        }
+        const [rows] = await pool.execute(query, params);
+        const clients = rows.map(client => ({        // Convert Buffer ProfilePic to base64 for display
+            ...client,
+            ProfilePic: client.ProfilePic ? Buffer.from(client.ProfilePic).toString('base64') : null
+        }));
+
+        res.json({ success: true, clients });
+    } catch (error) {
+        console.error('Error fetching clients:', error);
+        res.status(500).json({ success: false, message: 'Server error fetching clients.' });
+    }
+});
+
+app.get('/api/clients/:clientId/details', async (req, res) => {  // API to get detailed client info, workouts, and progress snapshots
+    try {
+        const { clientId } = req.params;
+        // Fetch client basic details
+        const [clientRows] = await pool.execute(
+            'SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country, ProfilePic, DateJoined FROM clients WHERE ClientID = ?',
+            [clientId]
+        );
+        if (clientRows.length === 0) {
+            return res.status(404).json({ success: false, message: 'Client not found.' });
+        }
+        const client = clientRows[0];
+        // Convert ProfilePic to base64
+        client.ProfilePic = client.ProfilePic ? Buffer.from(client.ProfilePic).toString('base64') : null;
+        // Fetch client workouts
+        const [workoutRows] = await pool.execute(
+            'SELECT WorkoutLogID, ExerciseID, DatePerformed, SetsDone, RepsDone, WeightUsedKg, HeartRate, CaloriesBurned, FatigueLevel, TrainerNotes, ClientFeedback, Attachment FROM client_workouts WHERE ClientID = ? ORDER BY DatePerformed DESC LIMIT 10', // Limit to recent 10 workouts
+            [clientId]
+        );
+        const workouts = workoutRows.map(workout => ({
+            ...workout,
+            Attachment: workout.Attachment ? Buffer.from(workout.Attachment).toString('base64') : null
+        }));
+        // Fetch client progress snapshots
+        const [progressRows] = await pool.execute(
+            'SELECT SnapshotID, DateTaken, WeightKg, BodyFatPercent, BMI, ProgressImage, Notes FROM client_progress_snapshots WHERE ClientID = ? ORDER BY DateTaken DESC LIMIT 5', // Limit to recent 5 snapshots
+            [clientId]
+        );
+        const progressSnapshots = progressRows.map(snapshot => ({
+            ...snapshot,
+            ProgressImage: snapshot.ProgressImage ? Buffer.from(snapshot.ProgressImage).toString('base64') : null
+        }));
+
+        res.json({
+            success: true,
+            client,
+            workouts,
+            progressSnapshots
+        });
+
+    } catch (error) {
+        console.error('Error fetching client details:', error);
+        res.status(500).json({ success: false, message: 'Server error fetching client details.' });
+    }
+});
 
 
 app.use((req, res) => {
