@@ -12,9 +12,12 @@ const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
 
+
+const BD_OFFSET = 6 * 60; 
+
 // Middleware for CORS
 app.use(cors({
-  origin: 'http://localhost:54112',   // Frontend origin
+  origin: 'http://localhost:4444',   // Frontend origin
   credentials: true
 }));
 
@@ -24,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session configuration (1 day validity)
 app.use(session({
-  secret: 'your-secret-key-please-change-this-in-production', // **IMPORTANT: Change this to a strong, random string**
+  secret: 'your-secret-key-please-change-this-in-production', 
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -142,7 +145,6 @@ app.get('/api/user-session', (req, res) => {
 const requireClientAuth = (req, res, next) => {
     // Check if client ID from session matches the one in URL params
     // This assumes the client ID in the URL is for the currently logged-in client.
-    // For a multi-client trainer view, this logic would need adjustment.
     if (req.session.userId && req.session.userType === 'client' && req.session.userId === parseInt(req.params.clientId)) {
         next(); // User is authenticated as a client and accessing their own data, proceed
     } else {
