@@ -1679,6 +1679,289 @@ app.get('/api/clients/:clientId/details', async (req, res) => {  // API to get d
 });
 
 
+// =========================================================
+// WORKOUT PLAN MANAGEMENT ENDPOINTS FOR TRAINER DASHBOARD
+// =========================================================
+
+
+// Middleware to check if user is a logged-in trainer
+const isTrainer = (req, res, next) => {
+  if (req.session.userId && req.session.userType === 'trainer') {
+    next();
+  } else {
+    res.status(403).json({ success: false, message: 'Access denied. Trainer login required.' });
+  }
+};
+
+
+
+/**
+ * GET Trainer's Own Workout Plans
+ */
+app.get('/trainer/workout-plans', isTrainer, async (req, res) => {
+  try {
+    const trainerId = req.session.userId;
+    const [rows] = await pool.query(
+      'SELECT * FROM workout_plans WHERE TrainerID = ? ORDER BY CreatedAt DESC',
+      [trainerId]
+    );
+    res.json({ success: true, plans: rows });
+  } catch (err) {
+    console.error('Error fetching trainer\'s workout plans:', err);
+    res.status(500).json({ success: false, message: 'Failed to fetch your workout plans.' });
+  }
+});
+
+/**
+ * POST Create a New Workout Plan
+ */
+app.post('/trainer/workout-plans', isTrainer, async (req, res) => {
+  const { Title, Goal, Level, DurationWeeks, FocusAreas, CustomInstructions } = req.body;
+  const trainerId = req.session.userId;
+
+  if (!Title || !Goal || !Level || !DurationWeeks) {
+    return res.status(400).json({ success: false, message: 'Title, Goal, Level, and Duration are required fields.' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      `INSERT INTO workout_plans (TrainerID, Title, Goal, Level, DurationWeeks, FocusAreas, CustomInstructions)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [trainerId, Title, Goal, Level, DurationWeeks, FocusAreas, CustomInstructions]
+    );
+    res.status(201).json({ success: true, message: 'Workout plan created successfully.', planId: result.insertId });
+  } catch (err) {
+    console.error('Error creating workout plan:', err);
+    res.status(500).json({ success: false, message: 'Server error during workout plan creation.' });
+  }
+});
+
+/**
+ * PUT Update an Existing Workout Plan
+ * Trainer can only update their own plans.
+ */
+app.put('/trainer/workout-plans/:planId', isTrainer, async (req, res) => {
+  const { planId } = req.params;
+  const { Title, Goal, Level, DurationWeeks, FocusAreas, CustomInstructions, IsActive } = req.body;
+  const trainerId = req.session.userId;
+
+  try {
+    const [result] = await pool.query(
+      `UPDATE workout_plans
+       SET Title = ?, Goal = ?, Level = ?, DurationWeeks = ?, FocusAreas = ?, CustomInstructions = ?, IsActive = ?
+       WHERE PlanID = ? AND TrainerID = ?`, // Ensure only trainer's own plans are updated
+      [Title, Goal, Level, DurationWeeks, FocusAreas, CustomInstructions, IsActive, planId, trainerId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Workout plan not found or you do not have permission to update it.' });
+    }
+    res.json({ success: true, message: 'Workout plan updated successfully.' });
+  } catch (err) {
+    console.error(`Error updating workout plan ${planId}:`, err);
+    res.status(500).json({ success: false, message: 'Server error during workout plan update.' });
+  }
+});
+
+/**
+ * DELETE a Workout Plan
+ * Trainer can only delete their own plans.
+ */
+app.delete('/trainer/workout-plans/:planId', isTrainer, async (req, res) => {
+  const { planId } = req.params;
+  const trainerId = req.session.userId;
+
+  try {
+    const [result] = await pool.query(
+      'DELETE FROM workout_plans WHERE PlanID = ? AND TrainerID = ?', // Ensure only trainer's own plans are deleted
+      [planId, trainerId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Workout plan not found or you do not have permission to delete it.' });
+    }
+    res.json({ success: true, message: 'Workout plan deleted successfully.' });
+  } catch (err) {
+    console.error(`Error deleting workout plan ${planId}:`, err);
+    res.status(500).json({ success: false, message: 'Server error during workout plan deletion.' });
+  }
+});
+
+// --- NEW: UNIVERSAL EXERCISE MANAGEMENT ---
+
+/**
+ * GET All Universal Exercises
+ */
+app.get('/exercises', isTrainer, async (req, res) => { 
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM exercises ORDER BY ExerciseName ASC'
+    );
+    res.json({ success: true, exercises: rows });
+  } catch (err) {
+    console.error('Error fetching exercises:', err);
+    res.status(500).json({ success: false, message: 'Failed to fetch exercises.' });
+  }
+});
+
+/**
+ * POST Create a New Exercise
+ */
+app.post('/exercises', isTrainer, async (req, res) => { 
+  const { ExerciseName, Description, Category } = req.body;
+
+  if (!ExerciseName) {
+    return res.status(400).json({ success: false, message: 'Exercise Name is required.' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      `INSERT INTO exercises (ExerciseName, Description, Category)
+       VALUES (?, ?, ?)`,
+      [ExerciseName, Description, Category]
+    );
+    res.status(201).json({ success: true, message: 'Exercise created successfully.', exerciseId: result.insertId });
+  } catch (err) {
+    console.error('Error creating exercise:', err);
+    res.status(500).json({ success: false, message: 'Server error during exercise creation.' });
+  }
+});
+
+/**
+ * PUT Update an Existing Exercise
+ */
+app.put('/exercises/:exerciseId', isTrainer, async (req, res) => { 
+  const { exerciseId } = req.params;
+  const { ExerciseName, Description, Category } = req.body;
+
+  if (!ExerciseName) {
+    return res.status(400).json({ success: false, message: 'Exercise Name is required.' });
+  }
+
+  try {
+    const [result] = await pool.query(
+      `UPDATE exercises
+       SET ExerciseName = ?, Description = ?, Category = ?
+       WHERE ExerciseID = ?`,
+      [ExerciseName, Description, Category, exerciseId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Exercise not found.' });
+    }
+    res.json({ success: true, message: 'Exercise updated successfully.' });
+  } catch (err) {
+    console.error(`Error updating exercise ${exerciseId}:`, err);
+    res.status(500).json({ success: false, message: 'Server error during exercise update.' });
+  }
+});
+
+/**
+ * DELETE an Exercise
+ */
+app.delete('/exercises/:exerciseId', isTrainer, async (req, res) => { 
+  const { exerciseId } = req.params;
+
+  try {
+    const [result] = await pool.query(
+      'DELETE FROM exercises WHERE ExerciseID = ?',
+      [exerciseId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, message: 'Exercise not found.' });
+    }
+    res.json({ success: true, message: 'Exercise deleted successfully.' });
+  } catch (err) {
+    console.error(`Error deleting exercise ${exerciseId}:`, err);
+    res.status(500).json({ success: false, message: 'Server error during exercise deletion.' });
+  }
+});
+
+
+
+
+
+
+
+
+
+/**
+ * GET All Workout Plans (for Clients to view)
+ * Clients can view all active workout plans.
+ */
+
+
+const isClient = (req, res, next) => {
+  if (req.session.userId && req.session.userType === 'client') {
+    next();
+  } else {
+    res.status(403).json({ success: false, message: 'Access denied. Client login required.' });
+  }
+};
+
+
+app.get('/client/workout-plans', isClient, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT wp.*, t.FullName as TrainerName, t.Email as TrainerEmail, t.Phone as TrainerPhone
+       FROM workout_plans wp
+       LEFT JOIN trainers t ON wp.TrainerID = t.TrainerID
+       WHERE wp.IsActive = 1
+       ORDER BY wp.CreatedAt DESC`
+    );
+    res.json({ success: true, plans: rows });
+  } catch (err) {
+    console.error('Error fetching workout plans for client:', err);
+    res.status(500).json({ success: false, message: 'Failed to fetch workout plans.' });
+  }
+});
+
+/**
+ * GET All Universal Exercises (for Clients to view)
+ */
+app.get('/client/exercises', isClient, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      'SELECT * FROM exercises ORDER BY ExerciseName ASC'
+    );
+    res.json({ success: true, exercises: rows });
+  } catch (err) {
+    console.error('Error fetching exercises for client:', err);
+    res.status(500).json({ success: false, message: 'Failed to fetch exercises.' });
+  }
+});
+
+/**
+ * GET Trainer Details by TrainerID (for Client modal)
+ */
+app.get('/client/trainer/:trainerId', isClient, async (req, res) => {
+  const { trainerId } = req.params;
+  try {
+    const [rows] = await pool.query(
+      `SELECT TrainerID, FullName, Email, Phone, Expertise, Qualifications, ProfilePic, IntroVideoURL
+       FROM trainers
+       WHERE TrainerID = ?`,
+      [trainerId]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ success: false, message: 'Trainer not found.' });
+    }
+
+    const trainer = rows[0];
+    // Convert BLOB to base64 string for frontend
+    if (trainer.ProfilePic) {
+      trainer.ProfilePic = trainer.ProfilePic.toString('base64');
+    }
+    res.json({ success: true, trainer: trainer });
+  } catch (err) {
+    console.error(`Error fetching trainer ${trainerId} details for client:`, err);
+    res.status(500).json({ success: false, message: 'Server error fetching trainer details.' });
+  }
+});
+
+
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });

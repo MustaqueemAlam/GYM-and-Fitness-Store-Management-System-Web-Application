@@ -3,16 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>E-Fitness Trainer- Red Theme</title>
+        <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-        <!-- Sidebar -->
         <aside
             class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
             <div>
-                <!-- Logo + Title -->
                 <a href="trainer-dashboard.html" class="block">
                     <div
                         class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
@@ -25,7 +23,6 @@
                     </div>
                 </a>
 
-                <!-- Navigation -->
                 <nav class="flex flex-col space-y-3">
                     <a href="trainer-reg-and-profile.html"
                         class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
@@ -61,7 +58,7 @@
                         Client Progress
                     </a>
                     <a href="trainer-Workout-Plan-Management.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        class="flex items-center gap-3 text-red-600 font-medium transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-5 h-5 text-red-500"
                             fill="none" viewBox="0 0 24 24"
@@ -121,7 +118,6 @@
                 </nav>
             </div>
 
-            <!-- Logout Button pinned bottom -->
             <button
                 onclick="window.location.href='login.html';"
                 class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
@@ -137,12 +133,9 @@
             </button>
         </aside>
 
-        <!-- Main Content -->
         <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-            <!-- Header -->
             <header class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold text-red-800">Welcome,
-                    Trainer</h1>
+                <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
                 <div class="flex items-center gap-4">
                     <button id="notifBtn"
                         onclick="window.location.href='trainer-noti.html';"
@@ -158,10 +151,541 @@
                             class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
                     </button>
                 </div>
-            </header> 
+            </header>
+
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-red-700">My Workout Plans</h2>
+                    <button
+                        onclick="openPlanModal('create')"
+                        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                        Add New Plan
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-red-100 text-red-800">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Title</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Goal</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Level</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Duration
+                                    (Weeks)</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Focus
+                                    Areas</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Created
+                                    At</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Active</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myWorkoutPlansTableBody"
+                            class="bg-white divide-y divide-gray-100 text-sm">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white shadow-md rounded-lg p-6 mt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-red-700">Universal Exercises</h2>
+                    <button
+                        onclick="openExerciseModal('create')"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors">
+                        Add New Exercise
+                    </button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-blue-100 text-blue-800">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Exercise Name</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Description</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Category</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="universalExercisesTableBody"
+                            class="bg-white divide-y divide-gray-100 text-sm">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="workoutPlanModal"
+                class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+                <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 relative">
+                    <button onclick="closeModal('workoutPlanModal')"
+                        class="absolute top-2 right-2 text-gray-600 hover:text-red-600">&times;</button>
+                    <h2 id="planModalTitle" class="text-xl font-semibold text-red-700 mb-4">Create Workout Plan</h2>
+                    <form id="workoutPlanForm" onsubmit="handlePlanFormSubmit(event)">
+                        <input type="hidden" id="planId" name="PlanID">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="title" class="block text-sm font-medium text-gray-700">Title <span class="text-red-500">*</span></label>
+                                <input type="text" id="title" name="Title" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="goal" class="block text-sm font-medium text-gray-700">Goal <span class="text-red-500">*</span></label>
+                                <input type="text" id="goal" name="Goal" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="level" class="block text-sm font-medium text-gray-700">Level <span class="text-red-500">*</span></label>
+                                <select id="level" name="Level" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Advanced">Advanced</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="durationWeeks" class="block text-sm font-medium text-gray-700">Duration (Weeks) <span class="text-red-500">*</span></label>
+                                <input type="number" id="durationWeeks" name="DurationWeeks" required min="1"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="focusAreas" class="block text-sm font-medium text-gray-700">Focus Areas (e.g., cardio, strength, flexibility)</label>
+                                <input type="text" id="focusAreas" name="FocusAreas"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="customInstructions" class="block text-sm font-medium text-gray-700">Custom Instructions</label>
+                                <textarea id="customInstructions" name="CustomInstructions" rows="3"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm"></textarea>
+                            </div>
+                            <div id="planIsActiveField" class="md:col-span-2 flex items-center hidden">
+                                <input type="checkbox" id="planIsActive" name="IsActive"
+                                    class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded">
+                                <label for="planIsActive" class="ml-2 block text-sm text-gray-900">Is Active</label>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end gap-3">
+                            <button type="button" onclick="closeModal('workoutPlanModal')"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">Cancel</button>
+                            <button type="submit" id="planSubmitButton"
+                                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md transition-colors">Create Plan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="exerciseModal"
+                class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+                <div class="bg-white rounded-xl shadow-lg w-full max-w-2xl p-6 relative">
+                    <button onclick="closeModal('exerciseModal')"
+                        class="absolute top-2 right-2 text-gray-600 hover:text-red-600">&times;</button>
+                    <h2 id="exerciseModalTitle" class="text-xl font-semibold text-blue-700 mb-4">Add New Exercise</h2>
+                    <form id="exerciseForm" onsubmit="handleExerciseFormSubmit(event)">
+                        <input type="hidden" id="exerciseId" name="ExerciseID">
+                        <div class="grid grid-cols-1 gap-4">
+                            <div>
+                                <label for="exerciseName" class="block text-sm font-medium text-gray-700">Exercise Name <span class="text-red-500">*</span></label>
+                                <input type="text" id="exerciseName" name="ExerciseName" required
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                            <div>
+                                <label for="exerciseDescription" class="block text-sm font-medium text-gray-700">Description</label>
+                                <textarea id="exerciseDescription" name="Description" rows="3"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"></textarea>
+                            </div>
+                            <div>
+                                <label for="exerciseCategory" class="block text-sm font-medium text-gray-700">Category (e.g., Strength, Cardio, Flexibility)</label>
+                                <input type="text" id="exerciseCategory" name="Category"
+                                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            </div>
+                        </div>
+                        <div class="mt-6 flex justify-end gap-3">
+                            <button type="button" onclick="closeModal('exerciseModal')"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">Cancel</button>
+                            <button type="submit" id="exerciseSubmitButton"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition-colors">Add Exercise</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetchWorkoutPlans();
+                fetchExercises();
+            });
 
+            function formatDateTime(datetime) {
+                if (!datetime) return '-';
+                const date = new Date(datetime);
+                const options = {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit',
+                    hour12: true
+                };
+                return date.toLocaleString('en-US', options);
+            }
+
+            function closeModal(modalId) {
+                document.getElementById(modalId).classList.add('hidden');
+                document.getElementById(modalId).classList.remove('flex');
+            }
+
+            // --- Workout Plan Management Functions ---
+            let myWorkoutPlans = []; // Cache for trainer's own plans
+
+            async function fetchWorkoutPlans() {
+                try {
+                    const res = await fetch('/trainer/workout-plans', { credentials: 'include' });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        myWorkoutPlans = data.plans; // Store fetched plans
+                        renderWorkoutPlans(myWorkoutPlans, 'myWorkoutPlansTableBody');
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to fetch your workout plans.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error fetching workout plans:', error);
+                    Swal.fire('Error', 'Network error or server unavailable while fetching workout plans.', 'error');
+                }
+            }
+
+            function renderWorkoutPlans(plans, tableBodyId) {
+                const tableBody = document.getElementById(tableBodyId);
+                tableBody.innerHTML = ''; // Clear existing rows
+
+                if (plans.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-gray-500">No workout plans found.</td></tr>`;
+                    return;
+                }
+
+                plans.forEach(plan => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-red-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap">${plan.Title}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${plan.Goal}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${plan.Level}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${plan.DurationWeeks}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${plan.FocusAreas || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${formatDateTime(plan.CreatedAt)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${plan.IsActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${plan.IsActive ? 'Yes' : 'No'}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button onclick="openPlanModal('edit', ${plan.PlanID})"
+                                class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                            <button onclick="deleteWorkoutPlan(${plan.PlanID})"
+                                class="text-red-600 hover:text-red-900">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function openPlanModal(mode, planId = null) {
+                const modal = document.getElementById('workoutPlanModal');
+                const form = document.getElementById('workoutPlanForm');
+                const modalTitle = document.getElementById('planModalTitle');
+                const submitButton = document.getElementById('planSubmitButton');
+                const isActiveField = document.getElementById('planIsActiveField');
+
+                form.reset(); // Clear previous form data
+                form.dataset.mode = mode; // Store mode (create/edit)
+
+                isActiveField.classList.add('hidden'); // Hide IsActive by default
+
+                if (mode === 'create') {
+                    modalTitle.textContent = 'Create New Workout Plan';
+                    submitButton.textContent = 'Create Plan';
+                    document.getElementById('planId').value = '';
+                } else { // 'edit'
+                    modalTitle.textContent = 'Edit Workout Plan';
+                    submitButton.textContent = 'Update Plan';
+                    document.getElementById('planId').value = planId;
+                    isActiveField.classList.remove('hidden'); // Show IsActive for edit mode
+
+                    const planToEdit = myWorkoutPlans.find(p => p.PlanID === planId);
+
+                    if (planToEdit) {
+                        document.getElementById('title').value = planToEdit.Title;
+                        document.getElementById('goal').value = planToEdit.Goal;
+                        document.getElementById('level').value = planToEdit.Level;
+                        document.getElementById('durationWeeks').value = planToEdit.DurationWeeks;
+                        document.getElementById('focusAreas').value = planToEdit.FocusAreas || '';
+                        document.getElementById('customInstructions').value = planToEdit.CustomInstructions || '';
+                        document.getElementById('planIsActive').checked = planToEdit.IsActive;
+                    } else {
+                        Swal.fire('Error', 'Workout plan details not found for editing.', 'error');
+                        closeModal('workoutPlanModal');
+                        return;
+                    }
+                }
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            async function handlePlanFormSubmit(event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const mode = form.dataset.mode;
+                const planId = document.getElementById('planId').value;
+
+                const formData = {
+                    Title: document.getElementById('title').value,
+                    Goal: document.getElementById('goal').value,
+                    Level: document.getElementById('level').value,
+                    DurationWeeks: parseInt(document.getElementById('durationWeeks').value, 10),
+                    FocusAreas: document.getElementById('focusAreas').value,
+                    CustomInstructions: document.getElementById('customInstructions').value,
+                };
+
+                if (mode === 'edit') {
+                    formData.IsActive = document.getElementById('planIsActive').checked;
+                }
+
+                let url = '/trainer/workout-plans';
+                let method = 'POST';
+
+                if (mode === 'edit' && planId) {
+                    url = `/trainer/workout-plans/${planId}`;
+                    method = 'PUT';
+                }
+
+                try {
+                    const res = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData),
+                        credentials: 'include'
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success');
+                        closeModal('workoutPlanModal');
+                        fetchWorkoutPlans(); // Refresh the plans table
+                    } else {
+                        Swal.fire('Error', data.message || 'An error occurred.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Workout Plan Form submission error:', error);
+                    Swal.fire('Error', 'Network error or server unavailable.', 'error');
+                }
+            }
+
+            async function deleteWorkoutPlan(planId) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        try {
+                            const res = await fetch(`/trainer/workout-plans/${planId}`, {
+                                method: 'DELETE',
+                                credentials: 'include'
+                            });
+
+                            const data = await res.json();
+
+                            if (data.success) {
+                                Swal.fire('Deleted!', data.message, 'success');
+                                fetchWorkoutPlans(); // Refresh the plans table
+                            } else {
+                                Swal.fire('Error', data.message || 'Failed to delete plan.', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Delete workout plan error:', error);
+                            Swal.fire('Error', 'Network error or server unavailable.', 'error');
+                        }
+                    }
+                });
+            }
+
+            // --- Universal Exercise Management Functions ---
+            let allExercises = []; // Cache for all universal exercises
+
+            async function fetchExercises() {
+                try {
+                    const res = await fetch('/exercises', { credentials: 'include' });
+                    const data = await res.json();
+
+                    if (data.success) {
+                        allExercises = data.exercises; // Store fetched exercises
+                        renderExercises(allExercises, 'universalExercisesTableBody');
+                    } else {
+                        Swal.fire('Error', data.message || 'Failed to fetch universal exercises.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Error fetching exercises:', error);
+                    Swal.fire('Error', 'Network error or server unavailable while fetching exercises.', 'error');
+                }
+            }
+
+            function renderExercises(exercises, tableBodyId) {
+                const tableBody = document.getElementById(tableBodyId);
+                tableBody.innerHTML = ''; // Clear existing rows
+
+                if (exercises.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-500">No exercises found.</td></tr>`;
+                    return;
+                }
+
+                exercises.forEach(exercise => {
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-blue-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap">${exercise.ExerciseName}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${exercise.Description || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${exercise.Category || '-'}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button onclick="openExerciseModal('edit', ${exercise.ExerciseID})"
+                                class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                            <button onclick="deleteExercise(${exercise.ExerciseID})"
+                                class="text-red-600 hover:text-red-900">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function openExerciseModal(mode, exerciseId = null) {
+                const modal = document.getElementById('exerciseModal');
+                const form = document.getElementById('exerciseForm');
+                const modalTitle = document.getElementById('exerciseModalTitle');
+                const submitButton = document.getElementById('exerciseSubmitButton');
+
+                form.reset(); // Clear previous form data
+                form.dataset.mode = mode; // Store mode (create/edit)
+
+                if (mode === 'create') {
+                    modalTitle.textContent = 'Add New Exercise';
+                    submitButton.textContent = 'Add Exercise';
+                    document.getElementById('exerciseId').value = '';
+                } else { // 'edit'
+                    modalTitle.textContent = 'Edit Exercise';
+                    submitButton.textContent = 'Update Exercise';
+                    document.getElementById('exerciseId').value = exerciseId;
+
+                    const exerciseToEdit = allExercises.find(e => e.ExerciseID === exerciseId);
+
+                    if (exerciseToEdit) {
+                        document.getElementById('exerciseName').value = exerciseToEdit.ExerciseName;
+                        document.getElementById('exerciseDescription').value = exerciseToEdit.Description || '';
+                        document.getElementById('exerciseCategory').value = exerciseToEdit.Category || '';
+                    } else {
+                        Swal.fire('Error', 'Exercise details not found for editing.', 'error');
+                        closeModal('exerciseModal');
+                        return;
+                    }
+                }
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            async function handleExerciseFormSubmit(event) {
+                event.preventDefault();
+
+                const form = event.target;
+                const mode = form.dataset.mode;
+                const exerciseId = document.getElementById('exerciseId').value;
+
+                const formData = {
+                    ExerciseName: document.getElementById('exerciseName').value,
+                    Description: document.getElementById('exerciseDescription').value,
+                    Category: document.getElementById('exerciseCategory').value,
+                };
+
+                let url = '/exercises';
+                let method = 'POST';
+
+                if (mode === 'edit' && exerciseId) {
+                    url = `/exercises/${exerciseId}`;
+                    method = 'PUT';
+                }
+
+                try {
+                    const res = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData),
+                        credentials: 'include'
+                    });
+
+                    const data = await res.json();
+
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success');
+                        closeModal('exerciseModal');
+                        fetchExercises(); // Refresh the exercises table
+                    } else {
+                        Swal.fire('Error', data.message || 'An error occurred.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Exercise Form submission error:', error);
+                    Swal.fire('Error', 'Network error or server unavailable.', 'error');
+                }
+            }
+
+            async function deleteExercise(exerciseId) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        try {
+                            const res = await fetch(`/exercises/${exerciseId}`, {
+                                method: 'DELETE',
+                                credentials: 'include'
+                            });
+
+                            const data = await res.json();
+
+                            if (data.success) {
+                                Swal.fire('Deleted!', data.message, 'success');
+                                fetchExercises(); // Refresh the exercises table
+                            } else {
+                                Swal.fire('Error', data.message || 'Failed to delete exercise.', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Delete exercise error:', error);
+                            Swal.fire('Error', 'Network error or server unavailable.', 'error');
+                        }
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

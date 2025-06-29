@@ -1,242 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>Client Dashboard - E-Fitness</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
-    <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-        <!-- Sidebar -->
-        <aside
-            class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-            <div>
-                <!-- Logo + Title -->
-                <a href="client-dashboard.html"
-                    class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
-                    <img
-                        src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                        alt="Gym Logo"
-                        class="w-10 h-10 rounded-full object-cover shadow-md" />
-                    <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                        Client</h2>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Client Dashboard - Workout & Exercise Sessions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Optional: Add custom styles here if needed */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+        .modal-close {
+            position: absolute;
+            top: 0.75rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+        <div>
+            <a href="client-dashboard.html" class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
+                <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Gym Logo" class="w-10 h-10 rounded-full object-cover shadow-md" />
+                <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+            </a>
+
+            <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
+                <a href="client-reg-and-prof.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+                    </svg>
+                    Registration & Profile
                 </a>
+                <a href="client-regular-prog-tracker.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <rect width="20" height="12" x="2" y="6" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+                        <line x1="2" y1="10" x2="22" y2="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                    </svg>
+                    Progress Tracker
+                </a>
+                <a href="client-diet-management.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+                        <line x1="16" y1="2" x2="16" y2="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="8" y1="2" x2="8" y2="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="3" y1="10" x2="21" y2="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                    </svg>
+                    Diet Management
+                </a>
+                <a href="client-daily-progress.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <polyline points="3 17 9 11 13 15 21 7" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></polyline>
+                        <circle cx="3" cy="17" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="9" cy="11" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="13" cy="15" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="21" cy="7" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                    </svg>
+                    Daily Metrics and Attendance
+                </a>
+                <a href="client-fitness-store.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                        <circle cx="7" cy="21" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="17" cy="21" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                    </svg>
+                    Fitness Store
+                </a>
+                <a href="client-subscription-management.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                        <path d="M4 4h16v16H4z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                    </svg>
+                    Subscription Management
+                </a>
+                <a href="client-fitness-goals.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="12" cy="12" r="6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                        <circle cx="12" cy="12" r="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></circle>
+                    </svg>
+                    Fitness Goals
+                </a>
+                <a href="client-workout-sessions.html" class="flex items-center gap-3 text-red-600 font-medium transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                    </svg>
+                    Workout and sessions
+                </a>
+                <a href="client-virtual-classes.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+                        <line x1="7" y1="8" x2="17" y2="8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="7" y1="16" x2="17" y2="16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                    </svg>
+                    Virtual classes
+                </a>
+                <a href="client-Feedback.html" class="flex items-center gap-3 hover:text-red-600 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <rect x="3" y="4" width="18" height="16" rx="2" ry="2" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></rect>
+                        <line x1="7" y1="8" x2="17" y2="8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="7" y1="12" x2="17" y2="12" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                        <line x1="7" y1="16" x2="17" y2="16" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></line>
+                    </svg>
+                    Feedback
+                </a>
+            </nav>
+        </div>
 
-                <!-- Navigation -->
-                <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-                    <a href="client-reg-and-prof.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: User -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
-                        </svg>
-                        Registration & Profile
-                    </a>
-                    <a href="client-regular-prog-tracker.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Credit Card -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect width="20" height="12" x="2" y="6" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="2" y1="10" x2="22" y2="10"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Progress Tracker
-                    </a>
-                    <a href="client-diet-management.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Calendar -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="18" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Diet Management
-                    </a>
-                    <a href="client-daily-progress.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Chart Line -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <polyline points="3 17 9 11 13 15 21 7"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></polyline>
-                            <circle cx="3" cy="17" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="9" cy="11" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="13" cy="15" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="21" cy="7" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Daily Metrics and Attendance
-                    </a>
-                    <a href="client-fitness-store.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Shopping Cart -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                            <circle cx="7" cy="21" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="17" cy="21" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Fitness Store
-                    </a>
-                    <a href="client-subscription-management.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Document Text -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                            <path d="M4 4h16v16H4z" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                        </svg>
-                        Subscription Management
-                    </a>
-                    <a href="client-fitness-goals.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Target -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <circle cx="12" cy="12" r="10" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="12" cy="12" r="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="12" cy="12" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Fitness Goals
-                    </a>
-                    <a href="client-workout-sessions.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Heart -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                        </svg>
-                        Workout and sessions
-                    </a>
-                    <a href="client-virtual-classes.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Newspaper -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="16" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="12" x2="17" y2="12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="16" x2="17" y2="16"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Virtual classes
-                    </a>
-                    <a href="client-Feedback.html"
-                        class="flex items-center gap-3 hover:text-red-600 transition-colors">
-                        <!-- Icon: Newspaper -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="16" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="12" x2="17" y2="12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="16" x2="17" y2="16"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Feedback
-                    </a>
-                </nav>
+        <div class="text-center text-xs text-gray-400 mt-6">
+            &copy; 2025 E-Fitness. All rights reserved.
+        </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-auto">
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-red-800">Explore Workouts & Exercises</h1>
+            <div class="flex items-center gap-4">
+                <button id="notifBtn" onclick="window.location.href='client-noti.html';" class="relative text-gray-700 hover:text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
+                    </svg>
+                    <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
+                </button>
             </div>
+        </header>
 
-            <div class="text-center text-xs text-gray-400 mt-6">
-                &copy; 2025 E-Fitness. All rights reserved.
+        <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-red-700 mb-4">Available Workout Plans</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-red-100 text-red-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Title</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Goal</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Level</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Duration (Weeks)</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Focus Areas</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Trainer</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workoutPlansTableBody" class="bg-white divide-y divide-gray-100 text-sm">
+                        </tbody>
+                </table>
             </div>
-        </aside>
-        <main class="flex-1 p-8 overflow-auto">
-        </script>
+        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-blue-700 mb-4">Universal Exercises Library</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-blue-100 text-blue-800">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Exercise Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Description</th>
+                            <th class="px-6 py-3 text-left text-xs font-semibold uppercase">Category</th>
+                        </tr>
+                    </thead>
+                    <tbody id="exercisesTableBody" class="bg-white divide-y divide-gray-100 text-sm">
+                        </tbody>
+                </table>
+            </div>
+        </div>
 
-    </body>
+        <div id="trainerDetailsModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal('trainerDetailsModal')">&times;</span>
+                <h2 class="text-2xl font-bold text-red-700 mb-4">Trainer Details</h2>
+                <div id="trainerDetailsContent" class="space-y-4">
+                    </div>
+                <div class="mt-6 text-right">
+                    <button onclick="closeModal('trainerDetailsModal')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchWorkoutPlansForClient();
+            fetchExercisesForClient();
+        });
+
+        function formatDateTime(datetime) {
+            if (!datetime) return '-';
+            const date = new Date(datetime);
+            const options = {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: true
+            };
+            return date.toLocaleString('en-US', options);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        // --- Client Workout Plan View Functions ---
+
+        async function fetchWorkoutPlansForClient() {
+            try {
+                const res = await fetch('/client/workout-plans', { credentials: 'include' });
+                const data = await res.json();
+
+                if (data.success) {
+                    renderWorkoutPlansForClient(data.plans, 'workoutPlansTableBody');
+                } else {
+                    Swal.fire('Error', data.message || 'Failed to fetch workout plans.', 'error');
+                }
+            } catch (error) {
+                console.error('Error fetching workout plans for client:', error);
+                Swal.fire('Error', 'Network error or server unavailable while fetching workout plans.', 'error');
+            }
+        }
+
+        function renderWorkoutPlansForClient(plans, tableBodyId) {
+            const tableBody = document.getElementById(tableBodyId);
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            if (plans.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">No active workout plans available.</td></tr>`;
+                return;
+            }
+
+            plans.forEach(plan => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-red-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${plan.Title}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${plan.Goal}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${plan.Level}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${plan.DurationWeeks}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${plan.FocusAreas || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${plan.TrainerName ? `<a href="#" onclick="showTrainerDetails(${plan.TrainerID})" class="text-blue-600 hover:underline">${plan.TrainerName}</a>` : 'N/A'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="viewPlanDetails(${JSON.stringify(plan).replace(/"/g, '&quot;')})"
+                                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md text-xs transition-colors">View Details</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function showTrainerDetails(trainerId) {
+            const modal = document.getElementById('trainerDetailsModal');
+            const content = document.getElementById('trainerDetailsContent');
+            content.innerHTML = '<p class="text-gray-500">Loading trainer details...</p>'; // Loading state
+
+            try {
+                const res = await fetch(`/client/trainer/${trainerId}`, { credentials: 'include' });
+                const data = await res.json();
+
+                if (data.success) {
+                    const trainer = data.trainer;
+                    content.innerHTML = `
+                        <div class="flex items-center mb-4">
+                            ${trainer.ProfilePic ? `<img src="data:image/jpeg;base64,${trainer.ProfilePic}" alt="${trainer.FullName}" class="w-20 h-20 rounded-full object-cover mr-4 shadow-md">` : `<div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-xl font-bold mr-4">N/A</div>`}
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-800">${trainer.FullName}</h3>
+                                <p class="text-gray-600">Email: ${trainer.Email}</p>
+                                <p class="text-gray-600">Phone: ${trainer.Phone || 'N/A'}</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700"><strong>Expertise:</strong> ${trainer.Expertise || 'Not specified'}</p>
+                        <p class="text-gray-700"><strong>Qualifications:</strong> ${trainer.Qualifications || 'Not specified'}</p>
+                        ${trainer.IntroVideoURL ? `<p class="text-gray-700"><strong>Intro Video:</strong> <a href="${trainer.IntroVideoURL}" target="_blank" class="text-blue-600 hover:underline">Watch Video</a></p>` : ''}
+                    `;
+                } else {
+                    content.innerHTML = `<p class="text-red-600">${data.message || 'Failed to load trainer details.'}</p>`;
+                }
+            } catch (error) {
+                console.error('Error fetching trainer details:', error);
+                content.innerHTML = `<p class="text-red-600">Network error or server unavailable.</p>`;
+            } finally {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function viewPlanDetails(plan) {
+            // A more detailed view could be implemented here, perhaps in another modal or expanding row
+            // For now, let's just show an alert with more details
+            Swal.fire({
+                title: plan.Title,
+                html: `
+                    <p><strong>Goal:</strong> ${plan.Goal}</p>
+                    <p><strong>Level:</strong> ${plan.Level}</p>
+                    <p><strong>Duration:</strong> ${plan.DurationWeeks} Weeks</p>
+                    <p><strong>Focus Areas:</strong> ${plan.FocusAreas || 'N/A'}</p>
+                    <p><strong>Instructions:</strong> ${plan.CustomInstructions || 'No custom instructions provided.'}</p>
+                    <p><strong>Created By:</strong> ${plan.TrainerName || 'Unknown Trainer'}</p>
+                    ${plan.TrainerID ? `<button onclick="showTrainerDetails(${plan.TrainerID})" class="mt-4 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md">View Trainer Profile</button>` : ''}
+                `,
+                icon: 'info',
+                confirmButtonText: 'Got It'
+            });
+        }
+
+        // --- Client Universal Exercise View Functions ---
+
+        async function fetchExercisesForClient() {
+            try {
+                const res = await fetch('/client/exercises', { credentials: 'include' });
+                const data = await res.json();
+
+                if (data.success) {
+                    renderExercisesForClient(data.exercises, 'exercisesTableBody');
+                } else {
+                    Swal.fire('Error', data.message || 'Failed to fetch exercises.', 'error');
+                }
+            } catch (error) {
+                console.error('Error fetching exercises for client:', error);
+                Swal.fire('Error', 'Network error or server unavailable while fetching exercises.', 'error');
+            }
+        }
+
+        function renderExercisesForClient(exercises, tableBodyId) {
+            const tableBody = document.getElementById(tableBodyId);
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            if (exercises.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">No exercises found in the library.</td></tr>`;
+                return;
+            }
+
+            exercises.forEach(exercise => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-blue-50';
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${exercise.ExerciseName}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${exercise.Description || '-'}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${exercise.Category || '-'}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
 </html>
