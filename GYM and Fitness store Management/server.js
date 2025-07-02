@@ -1069,14 +1069,13 @@ app.get('/trainer/client/:clientId', async (req, res) => {
   }
 });
 
-// --- NEW ENDPOINTS FOR HISTORY MODALS ---
 
 /**
  * Trainer: Fetch all check-in history for a specific client.
  * Requires client ID as a URL parameter.
  */
 app.get('/trainer/client/:clientId/checkin-history', async (req, res) => {
-  // Add authentication/authorization check if not handled by a global middleware
+  // Need to Add authentication/authorization check if not handled by a global middleware
   // if (!req.session.userId || req.session.userType !== 'trainer') {
   //   return res.status(401).json({ success: false, message: 'Unauthorized' });
   // }
@@ -1439,7 +1438,7 @@ app.get('/api/client/plans', async (req, res) => {
 });
 
 /**
- * Client: Purchase a plan (no login middleware)
+ * Client: Purchase a plan 
  */
 app.post('/api/client/purchase', async (req, res) => {
   const clientId = req.session.userId;
