@@ -1516,7 +1516,7 @@ app.get('/api/client/active-subscriptions', async (req, res) => {
 
 
 /**
- * Admin0 manage active subscriptions abd payments
+ * Admin manage active subscriptions abd payments
  */
 
 app.get('/api/admin/subscriptions', async (req, res) => {
