@@ -40,13 +40,13 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
 
             if (data.userType === 'admin') {
               sessionStorage.setItem('adminId', data.adminId);
-              window.location.href = 'admin-dashboard.html';
+              window.location.href = 'admin/admin-dashboard.html';
             } else if (data.userType === 'trainer') {
               sessionStorage.setItem('trainerId', data.trainerId);
-              window.location.href = 'trainer-dashboard.html';
+              window.location.href = 'trainer/trainer-dashboard.html';
             } else {
               sessionStorage.setItem('clientId', data.clientId);
-              window.location.href = 'client-dashboard.html';
+              window.location.href = 'client/client-dashboard.html';
             }
           }
         });
