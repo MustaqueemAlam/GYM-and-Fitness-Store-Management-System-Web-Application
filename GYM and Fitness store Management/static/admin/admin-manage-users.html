@@ -3,12 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard - Red Theme</title>
+    <title>Admin Dashboard - User Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* Custom scrollbar for modals */
+      .max-h-[90vh]::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      .max-h-[90vh]::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      .max-h-[90vh]::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+      }
+
+      .max-h-[90vh]::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+    </style>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-    <!-- Sidebar -->
     <aside
       class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
       <div>
@@ -20,80 +39,136 @@
           <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
         </a>
 
-        <!-- Navigation -->
         <nav class="flex flex-col space-y-3">
-
-          <a href="admin-manage-users.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+          <a
+            href="admin-manage-users.html"
+            class="flex items-center gap-3 text-red-600 font-medium transition-colors bg-red-100 py-2 px-3 rounded-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
             </svg>
             Users
           </a>
-          <a href="admin-manage-products.html"
+          <a
+            href="admin-manage-products.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
                 d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M12 12v8" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 12v8" />
             </svg>
             Products
           </a>
-          <a href="admin-subs-plan.html"
+          <a
+            href="admin-subs-plan.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
                 d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M12 12v8" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 12v8" />
             </svg>
             Subscription Plans
           </a>
-          <a href="admin-payments.html"
+          <a
+            href="admin-payments.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 14l-2-2 4-4 6 6-2 2" />
             </svg>
             Payments
           </a>
-          <a href="admin-reports.html"
+          <a
+            href="admin-reports.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 17v-2a4 4 0 014-4h4" />
             </svg>
             Reports
           </a>
 
-          <a href="admin-noti-feedback.html"
+          <a
+            href="admin-noti-feedback.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
             </svg>
             Feedback and Notifications
           </a>
         </nav>
       </div>
 
-      <!-- Logout Button pinned bottom -->
-      <a href="../login.html"
+      <a
+        href="../login.html"
         class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
-          viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
         </svg>
         Logout
@@ -101,241 +176,472 @@
     </aside>
 
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-      <!-- Tabs for User Type -->
       <div class="flex gap-4">
-        <button onclick="showTab(event, 'trainers')"
-          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Trainers</button>
-        <button onclick="showTab(event, 'clients')"
-          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Clients</button>
-        <button onclick="showTab(event, 'admins')"
-          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">Admins</button>
+        <button
+          onclick="showTab(event, 'trainers')"
+          class="tab-btn bg-red-500 px-4 py-2 rounded font-medium text-white">
+          Trainers
+        </button>
+        <button
+          onclick="showTab(event, 'clients')"
+          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">
+          Clients
+        </button>
+        <button
+          onclick="showTab(event, 'admins')"
+          class="tab-btn bg-red-200 px-4 py-2 rounded font-medium text-red-900">
+          Admins
+        </button>
       </div>
 
-      <!-- Trainers Tab -->
       <div id="trainersTab" class="user-tab">
-        <h2 class="text-xl font-bold mt-6 mb-2">Trainers</h2>
-        <button onclick="openModal('trainerModal')"
-          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
-          Add Trainer</button>
-        <div class="overflow-x-auto">
-          <table
-            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-            <thead class="bg-red-200 text-red-900">
+        <h2 class="text-2xl font-bold text-red-700 mb-4">Manage Trainers</h2>
+        <button
+          onclick="openCreateModal('trainer')"
+          class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md transition-colors shadow-md mb-6">
+          + Add New Trainer
+        </button>
+
+        <div class="mb-4 flex items-center space-x-4">
+          <input
+            type="text"
+            id="searchTrainer"
+            onkeyup="filterTable('trainers')"
+            placeholder="Search trainers..."
+            class="p-2 border border-gray-300 rounded-md w-1/3 focus:ring-red-500 focus:border-red-500" />
+          <select
+            id="filterTrainerGender"
+            onchange="filterTable('trainers')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Genders</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <select
+            id="filterTrainerCity"
+            onchange="filterTable('trainers')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Cities</option>
+          </select>
+          <select
+            id="filterTrainerCountry"
+            onchange="filterTable('trainers')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Countries</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs text-red-900 uppercase bg-red-200">
               <tr>
-                <th class="px-4 py-2">ID</th>
-                <th class="px-4 py-2">Profile</th>
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Phone</th>
-                <th class="px-4 py-2">Gender</th>
-                <th class="px-4 py-2">DOB</th>
-                <th class="px-4 py-2">City</th>
-                <th class="px-4 py-2">Country</th>
-                <th class="px-4 py-2">Qualifications</th>
-                <th class="px-4 py-2">Expertise</th>
-                <th class="px-4 py-2">Intro Video</th>
-                <th class="px-4 py-2">Cert Title</th>
-                <th class="px-4 py-2">Cert Issuer</th>
-                <th class="px-4 py-2">Cert Year</th>
-                <th class="px-4 py-2">Cert ID</th>
-                <th class="px-4 py-2">Date Joined</th>
-                <th class="px-4 py-2">Actions</th>
+                <th scope="col" class="px-4 py-3">ID</th>
+                <th scope="col" class="px-4 py-3">Profile</th>
+                <th scope="col" class="px-4 py-3">Name</th>
+                <th scope="col" class="px-4 py-3">Email</th>
+                <th scope="col" class="px-4 py-3">Phone</th>
+                <th scope="col" class="px-4 py-3">Gender</th>
+                <th scope="col" class="px-4 py-3">DOB</th>
+                <th scope="col" class="px-4 py-3">Address</th>
+                <th scope="col" class="px-4 py-3">City</th>
+                <th scope="col" class="px-4 py-3">Country</th>
+                <th scope="col" class="px-4 py-3">Qualifications</th>
+                <th scope="col" class="px-4 py-3">Expertise</th>
+                <th scope="col" class="px-4 py-3">Intro Video</th>
+                <th scope="col" class="px-4 py-3">Cert Title</th>
+                <th scope="col" class="px-4 py-3">Cert Issuer</th>
+                <th scope="col" class="px-4 py-3">Cert Year</th>
+                <th scope="col" class="px-4 py-3">Cert ID</th>
+                <th scope="col" class="px-4 py-3">Date Joined</th>
+                <th scope="col" class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody id="trainersTable">
-              <!-- Trainer rows go here -->
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Clients Tab -->
       <div id="clientsTab" class="user-tab hidden">
-        <h2 class="text-xl font-bold mt-6 mb-2">Clients</h2>
-        <button onclick="openModal('clientModal')"
-          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
-          Add Client</button>
-        <div class="overflow-x-auto">
-          <table
-            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-            <thead class="bg-red-200 text-red-900">
+        <h2 class="text-2xl font-bold text-red-700 mb-4">Manage Clients</h2>
+        <button
+          onclick="openCreateModal('client')"
+          class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md transition-colors shadow-md mb-6">
+          + Add New Client
+        </button>
+
+        <div class="mb-4 flex items-center space-x-4">
+          <input
+            type="text"
+            id="searchClient"
+            onkeyup="filterTable('clients')"
+            placeholder="Search clients..."
+            class="p-2 border border-gray-300 rounded-md w-1/3 focus:ring-red-500 focus:border-red-500" />
+          <select
+            id="filterClientGender"
+            onchange="filterTable('clients')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Genders</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+          <select
+            id="filterClientCity"
+            onchange="filterTable('clients')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Cities</option>
+          </select>
+          <select
+            id="filterClientCountry"
+            onchange="filterTable('clients')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Countries</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs text-red-900 uppercase bg-red-200">
               <tr>
-                <th class="px-4 py-2">ID</th>
-                <th class="px-4 py-2">Profile</th>
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Phone</th>
-                <th class="px-4 py-2">Gender</th>
-                <th class="px-4 py-2">DOB</th>
-                <th class="px-4 py-2">City</th>
-                <th class="px-4 py-2">Country</th>
-                <th class="px-4 py-2">Date Joined</th>
-                <th class="px-4 py-2">Actions</th>
+                <th scope="col" class="px-4 py-3">ID</th>
+                <th scope="col" class="px-4 py-3">Profile</th>
+                <th scope="col" class="px-4 py-3">Name</th>
+                <th scope="col" class="px-4 py-3">Email</th>
+                <th scope="col" class="px-4 py-3">Phone</th>
+                <th scope="col" class="px-4 py-3">Gender</th>
+                <th scope="col" class="px-4 py-3">DOB</th>
+                <th scope="col" class="px-4 py-3">Address</th>
+                <th scope="col" class="px-4 py-3">City</th>
+                <th scope="col" class="px-4 py-3">Country</th>
+                <th scope="col" class="px-4 py-3">Date Joined</th>
+                <th scope="col" class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody id="clientsTable">
-              <!-- Client rows go here -->
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admins Tab -->
       <div id="adminsTab" class="user-tab hidden">
-        <h2 class="text-xl font-bold mt-6 mb-2">Admins</h2>
-        <button onclick="openModal('adminModal')"
-          class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded mb-4">+
-          Add Admin</button>
-        <div class="overflow-x-auto">
-          <table
-            class="w-full bg-white shadow-md rounded-lg overflow-hidden text-sm">
-            <thead class="bg-red-200 text-red-900">
+        <h2 class="text-2xl font-bold text-red-700 mb-4">Manage Admins</h2>
+        <button
+          onclick="openCreateModal('admin')"
+          class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-md transition-colors shadow-md mb-6">
+          + Add New Admin
+        </button>
+
+        <div class="mb-4 flex items-center space-x-4">
+          <input
+            type="text"
+            id="searchAdmin"
+            onkeyup="filterTable('admins')"
+            placeholder="Search admins..."
+            class="p-2 border border-gray-300 rounded-md w-1/3 focus:ring-red-500 focus:border-red-500" />
+          <select
+            id="filterAdminRole"
+            onchange="filterTable('admins')"
+            class="p-2 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500">
+            <option value>All Roles</option>
+            <option value="SuperAdmin">Super Admin</option>
+            <option value="Manager">Manager</option>
+          </select>
+        </div>
+        <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+          <table class="w-full text-sm text-left text-gray-700">
+            <thead class="text-xs text-red-900 uppercase bg-red-200">
               <tr>
-                <th class="px-4 py-2">ID</th>
-                <th class="px-4 py-2">Name</th>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Phone</th>
-                <th class="px-4 py-2">Role</th>
-                <th class="px-4 py-2">Date Joined</th>
-                <th class="px-4 py-2">Actions</th>
+                <th scope="col" class="px-4 py-3">ID</th>
+                <th scope="col" class="px-4 py-3">Profile</th>
+                <th scope="col" class="px-4 py-3">Name</th>
+                <th scope="col" class="px-4 py-3">Email</th>
+                <th scope="col" class="px-4 py-3">Phone</th>
+                <th scope="col" class="px-4 py-3">Role</th>
+                <th scope="col" class="px-4 py-3">Date Joined</th>
+                <th scope="col" class="px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody id="adminsTable">
-              <!-- Admin rows go here -->
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Trainer Modal -->
-      <div id="trainerModal"
-        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+      <div
+        id="trainerModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
         <div
-          class="bg-white p-6 rounded-lg w-full max-w-4xl overflow-y-auto max-h-[90vh]">
-          <h3 class="text-xl font-bold mb-4">Add/Edit Trainer</h3>
-          <form id="trainerForm" class="grid grid-cols-1 md:grid-cols-2 gap-4"
+          class="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-2xl font-bold text-red-700 mb-5"
+            id="trainerModalTitle">
+            Add/Edit Trainer
+          </h3>
+          <form
+            id="trainerForm"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
             enctype="multipart/form-data">
-            <input type="hidden" name="TrainerID" id="TrainerID">
-            <input type="text" name="FullName" placeholder="Full Name"
-              class="border p-2 rounded" required>
-            <input type="email" name="Email" placeholder="Email"
-              class="border p-2 rounded" required>
-            <input type="password" name="Password" placeholder="Password"
-              class="border p-2 rounded" required>
-            <input type="text" name="Phone" placeholder="Phone"
-              class="border p-2 rounded">
-            <select name="Gender" class="border p-2 rounded">
+            <input type="hidden" name="trainerId" id="trainerId" />
+            <input
+              type="text"
+              name="FullName"
+              placeholder="Full Name"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="email"
+              name="Email"
+              placeholder="Email"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="password"
+              name="PasswordHash"
+              placeholder="Password (leave blank to keep current)"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="Phone"
+              placeholder="Phone"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <select
+              name="Gender"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500">
               <option value>Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
-            <input type="date" name="DOB" placeholder="Date of Birth"
-              class="border p-2 rounded">
-            <input type="text" name="City" placeholder="City"
-              class="border p-2 rounded">
-            <input type="text" name="Country" placeholder="Country"
-              class="border p-2 rounded">
-            <textarea name="Address" placeholder="Address"
-              class="border p-2 rounded col-span-2"></textarea>
-            <input type="text" name="Qualifications"
-              placeholder="Qualifications" class="border p-2 rounded">
-            <input type="text" name="Expertise" placeholder="Expertise"
-              class="border p-2 rounded">
-            <input type="url" name="IntroVideoURL" placeholder="Intro Video URL"
-              class="border p-2 rounded">
-            <input type="text" name="CertTitle" placeholder="Certificate Title"
-              class="border p-2 rounded">
-            <input type="text" name="CertIssuer"
-              placeholder="Certificate Issuer" class="border p-2 rounded">
-            <input type="number" name="CertYear" placeholder="Certificate Year"
-              class="border p-2 rounded" min="1900" max="2099" step="1">
-            <input type="text" name="CertID" placeholder="Certificate ID"
-              class="border p-2 rounded">
-            <label class="col-span-2">Profile Picture:
-              <input type="file" name="ProfilePic"
-                class="border p-2 rounded w-full">
+            <input
+              type="date"
+              name="DOB"
+              placeholder="Date of Birth"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="City"
+              placeholder="City"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="Country"
+              placeholder="Country"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <textarea
+              name="Address"
+              placeholder="Address"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500 col-span-2"></textarea>
+            <textarea
+              name="Qualifications"
+              placeholder="Qualifications"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500 col-span-2"></textarea>
+            <textarea
+              name="Expertise"
+              placeholder="Expertise"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500 col-span-2"></textarea>
+            <input
+              type="url"
+              name="IntroVideoURL"
+              placeholder="Intro Video URL"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="CertTitle"
+              placeholder="Certificate Title"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="CertIssuer"
+              placeholder="Certificate Issuer"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="number"
+              name="CertYear"
+              placeholder="Certificate Year"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              min="1900"
+              max="2099"
+              step="1" />
+            <input
+              type="text"
+              name="CertID"
+              placeholder="Certificate ID"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <label class="col-span-2 block text-gray-700 font-medium">Profile
+              Picture:
+              <input
+                type="file"
+                name="ProfilePic"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100" />
             </label>
-            <label class="col-span-2">Certificate File:
-              <input type="file" name="CertFile"
-                class="border p-2 rounded w-full">
+            <label
+              class="col-span-2 block text-gray-700 font-medium">Certificate
+              File:
+              <input
+                type="file"
+                name="CertFile"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100" />
             </label>
-            <div class="col-span-2 flex justify-end gap-2 mt-4">
-              <button type="button" onclick="closeModal('trainerModal')"
-                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-              <button type="submit"
-                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            <div class="col-span-2 flex justify-end gap-3 mt-5">
+              <button
+                type="button"
+                onclick="closeModal('trainerModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+                Save Trainer
+              </button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Client Modal -->
-      <div id="clientModal"
-        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+      <div
+        id="clientModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
         <div
-          class="bg-white p-6 rounded-lg w-full max-w-3xl overflow-y-auto max-h-[90vh]">
-          <h3 class="text-xl font-bold mb-4">Add/Edit Client</h3>
+          class="bg-white p-6 rounded-lg shadow-xl w-full max-w-3xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-2xl font-bold text-red-700 mb-5"
+            id="clientModalTitle">
+            Add/Edit Client
+          </h3>
           <form id="clientForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="hidden" name="ClientID" id="ClientID">
-            <input type="text" name="FullName" placeholder="Full Name"
-              class="border p-2 rounded" required>
-            <input type="email" name="Email" placeholder="Email"
-              class="border p-2 rounded" required>
-            <input type="password" name="Password" placeholder="Password"
-              class="border p-2 rounded" required>
-            <input type="text" name="Phone" placeholder="Phone"
-              class="border p-2 rounded">
-            <select name="Gender" class="border p-2 rounded">
+            <input type="hidden" name="clientId" id="clientId" />
+            <input
+              type="text"
+              name="FullName"
+              placeholder="Full Name"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="email"
+              name="Email"
+              placeholder="Email"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="password"
+              name="PasswordHash"
+              placeholder="Password (leave blank to keep current)"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="Phone"
+              placeholder="Phone"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <select
+              name="Gender"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500">
               <option value>Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
               <option value="Other">Other</option>
             </select>
-            <input type="date" name="DOB" placeholder="Date of Birth"
-              class="border p-2 rounded">
-            <input type="text" name="City" placeholder="City"
-              class="border p-2 rounded">
-            <input type="text" name="Country" placeholder="Country"
-              class="border p-2 rounded">
-            <textarea name="Address" placeholder="Address"
-              class="border p-2 rounded col-span-2"></textarea>
-            <div class="col-span-2 flex justify-end gap-2 mt-4">
-              <button type="button" onclick="closeModal('clientModal')"
-                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-              <button type="submit"
-                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            <input
+              type="date"
+              name="DOB"
+              placeholder="Date of Birth"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="City"
+              placeholder="City"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="Country"
+              placeholder="Country"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <textarea
+              name="Address"
+              placeholder="Address"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500 col-span-2"></textarea>
+            <label class="col-span-2 block text-gray-700 font-medium">Profile
+              Picture:
+              <input
+                type="file"
+                name="ProfilePic"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100" />
+            </label>
+            <div class="col-span-2 flex justify-end gap-3 mt-5">
+              <button
+                type="button"
+                onclick="closeModal('clientModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+                Save Client
+              </button>
             </div>
           </form>
         </div>
       </div>
 
-      <!-- Admin Modal -->
-      <div id="adminModal"
-        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+      <div
+        id="adminModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
         <div
-          class="bg-white p-6 rounded-lg w-full max-w-2xl overflow-y-auto max-h-[90vh]">
-          <h3 class="text-xl font-bold mb-4">Add/Edit Admin</h3>
+          class="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-2xl font-bold text-red-700 mb-5" id="adminModalTitle">
+            Add/Edit Admin
+          </h3>
           <form id="adminForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input type="hidden" name="AdminID" id="AdminID">
-            <input type="text" name="FullName" placeholder="Full Name"
-              class="border p-2 rounded" required>
-            <input type="email" name="Email" placeholder="Email"
-              class="border p-2 rounded" required>
-            <input type="password" name="Password" placeholder="Password"
-              class="border p-2 rounded" required>
-            <input type="text" name="Phone" placeholder="Phone"
-              class="border p-2 rounded">
-            <select name="Role" class="border p-2 rounded">
+            <input type="hidden" name="adminId" id="adminId" />
+            <input
+              type="text"
+              name="FullName"
+              placeholder="Full Name"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="email"
+              name="Email"
+              placeholder="Email"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500"
+              required />
+            <input
+              type="password"
+              name="PasswordHash"
+              placeholder="Password (leave blank to keep current)"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500" />
+            <input
+              type="text"
+              name="Phone"
+              placeholder="Phone"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-500" />
+            <select
+              name="Role"
+              class="border border-gray-300 p-2 rounded-md focus:ring-red-500 focus:border-red-500">
               <option value>Select Role</option>
               <option value="SuperAdmin">Super Admin</option>
-              <option value="Admin">Admin</option>
+              <option value="Manager">Manager</option>
             </select>
-            <div class="col-span-2 flex justify-end gap-2 mt-4">
-              <button type="button" onclick="closeModal('adminModal')"
-                class="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded">Cancel</button>
-              <button type="submit"
-                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Save</button>
+            <label class="col-span-2 block text-gray-700 font-medium">Profile
+              Picture:
+              <input
+                type="file"
+                name="ProfilePic"
+                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-700 hover:file:bg-red-100" />
+            </label>
+            <div class="col-span-2 flex justify-end gap-3 mt-5">
+              <button
+                type="button"
+                onclick="closeModal('adminModal')"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+                Save Admin
+              </button>
             </div>
           </form>
         </div>
@@ -343,203 +649,429 @@
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function showTab(event, tab) {
-      // Remove active styles from all tab buttons
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('bg-red-500', 'text-white');
-        btn.classList.add('bg-red-200', 'text-red-900');
-      });
-      event.target.classList.add('bg-red-500', 'text-white');
-      event.target.classList.remove('bg-red-200', 'text-red-900');
-      // Hide all user-tabs
-      document.querySelectorAll('.user-tab').forEach(tabDiv => tabDiv.classList.add('hidden'));
-      // Show selected tab
-      document.getElementById(tab + 'Tab').classList.remove('hidden');
-    }
-    function openModal(modalId) {
-    document.getElementById(modalId).classList.remove('hidden');
-    }
-    function closeModal(modalId) {
-    document.getElementById(modalId).classList.add('hidden');
-    }
-    window.onload = () => {
-    ['trainer', 'client', 'admin'].forEach(role => loadUsers(role));
-    };
-
-    const endpoints = {
-    trainer: '/manage/profile/trainers',
-    client: '/manage/profile/clients',
-    admin: '/manage/profile/admins'
     
+    // Function to show/hide tabs and apply active styles
+    function showTab(event, tab) {
+        // Remove active styles from all tab buttons
+        document.querySelectorAll('.tab-btn').forEach((btn) => {
+            btn.classList.remove('bg-red-500', 'text-white');
+            btn.classList.add('bg-red-200', 'text-red-900');
+        });
+        // Add active styles to the clicked button
+        event.target.classList.add('bg-red-500', 'text-white');
+        event.target.classList.remove('bg-red-200', 'text-red-900');
+
+        // Hide all user-tabs
+        document
+            .querySelectorAll('.user-tab')
+            .forEach((tabDiv) => tabDiv.classList.add('hidden'));
+        // Show selected tab
+        document.getElementById(tab + 'Tab').classList.remove('hidden');
+    }
+
+    // Helper to open a modal
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.remove('hidden');
+    }
+
+    // Helper to close a modal
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.add('hidden');
+        // Reset forms when closing to clear old data
+        ['trainerForm', 'clientForm', 'adminForm'].forEach((formId) => {
+            const form = document.getElementById(formId);
+            if (form) {
+                form.reset();
+                // Clear hidden ID fields
+                const role = formId.replace('Form', '');
+                const hiddenIdField = form.querySelector(`input[name="${role}Id"]`);
+                if (hiddenIdField) {
+                    hiddenIdField.value = '';
+                }
+                // Reset modal titles
+                document.getElementById(`${form.id.replace('Form', 'ModalTitle')}`).textContent = `Add New ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+                
+                // Make password field required for new creation, optional for edit
+                const passwordField = form.querySelector('input[name="PasswordHash"]');
+                if (passwordField) {
+                    passwordField.setAttribute('required', 'true');
+                    passwordField.placeholder = 'Password';
+                }
+            }
+        });
+    }
+
+    // API Endpoints
+    const endpoints = {
+        trainer: '/manage/profile/trainers',
+        client: '/manage/profile/clients',
+        admin: '/manage/profile/admins',
     };
 
+    // Function to open modal for creating a new user
+    function openCreateModal(role) {
+        const modalId = `${role}Modal`;
+        const formId = `${role}Form`;
+        const modalTitleId = `${role}ModalTitle`;
+
+        document.getElementById(formId).reset(); // Clear any previous data
+        // Ensure ID is empty for creation
+        const idField = document.getElementById(formId).querySelector(`input[name="${role}Id"]`);
+        if (idField) {
+            idField.value = ''; 
+        }
+        document.getElementById(modalTitleId).textContent = `Add New ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+
+        // Make password field required for new creation
+        const passwordField = document.getElementById(formId).querySelector('input[name="PasswordHash"]');
+        if (passwordField) {
+            passwordField.setAttribute('required', 'true');
+            passwordField.placeholder = 'Password';
+        }
+
+        openModal(modalId);
+    }
+
+    // Load users on page load
+    window.onload = () => {
+        ['trainer', 'client', 'admin'].forEach((role) => loadUsers(role));
+        // Set initial active tab
+        document
+            .querySelector('.tab-btn')
+            .classList.add('bg-red-500', 'text-white');
+        document
+            .querySelector('.tab-btn')
+            .classList.remove('bg-red-200', 'text-red-900');
+        document.getElementById('trainersTab').classList.remove('hidden');
+    };
+
+    // Function to load users for a given role
     async function loadUsers(role) {
-    try {
-        const response = await fetch(endpoints[role]);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const users = await response.json();
+        try {
+            const response = await fetch(endpoints[role]);
+            if (!response.ok)
+                throw new Error(`HTTP error! status: ${response.status}`);
+            const users = await response.json();
 
-        const tbody = document.getElementById(`${role}sTable`);
-        tbody.innerHTML = '';
+            const tbody = document.getElementById(`${role}sTable`);
+            tbody.innerHTML = ''; // Clear existing rows
 
-        users.forEach(user => {
-        const idKey = role === 'trainer' ? 'TrainerID' : role === 'client' ? 'ClientID' : 'AdminID';
-        let row = '';
+            users.forEach((user) => {
+                const idKey =
+                    role === 'trainer'
+                        ? 'TrainerID'
+                        : role === 'client'
+                            ? 'ClientID'
+                            : 'AdminID';
+                let row = '';
+                const profilePicSrc = `/profile-pic/${role}/${user[idKey]}`; // Adjust profile pic path
 
-        if(role === 'trainer') {
-            row = `
-            <tr>
-                <td class="border p-2">${user.TrainerID}</td>
-                <td class="border p-2">
-                <img src="/profile-pic/trainer/${user.TrainerID}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
-                </td>
-                <td class="border p-2">${user.FullName}</td>
-                <td class="border p-2">${user.Email}</td>
-                <td class="border p-2">${user.Phone || ''}</td>
-                <td class="border p-2">${user.Gender || ''}</td>
-                <td class="border p-2">${user.DOB ? user.DOB.split('T')[0] : ''}</td>
-                <td class="border p-2">${user.City || ''}</td>
-                <td class="border p-2">${user.Country || ''}</td>
-                <td class="border p-2">${user.Qualifications || ''}</td>
-                <td class="border p-2">${user.Expertise || ''}</td>
-                <td class="border p-2">${user.IntroVideoURL ? `<a href="${user.IntroVideoURL}" target="_blank">Link</a>` : ''}</td>
-                <td class="border p-2">${user.CertTitle || ''}</td>
-                <td class="border p-2">${user.CertIssuer || ''}</td>
-                <td class="border p-2">${user.CertYear || ''}</td>
-                <td class="border p-2">${user.CertID || ''}</td>
-                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
-                <td class="border p-2">
-                <button onclick="editUser('trainer', ${user.TrainerID})" class="text-blue-600">Edit</button>
-                <button onclick="deleteUser('trainer', ${user.TrainerID})" class="text-red-600">Delete</button>
-                </td>
-            </tr>`;
+                if (role === 'trainer') {
+                    row = `
+                        <tr class="border-b odd:bg-white even:bg-red-50">
+                            <td class="px-4 py-2">${user.TrainerID}</td>
+                            <td class="px-4 py-2">
+                                <img src="${profilePicSrc}" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/50?text=No+Pic';">
+                            </td>
+                            <td class="px-4 py-2">${user.FullName}</td>
+                            <td class="px-4 py-2">${user.Email}</td>
+                            <td class="px-4 py-2">${user.Phone || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Gender || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.DOB ? user.DOB.split('T')[0] : 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Address || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.City || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Country || 'N/A'}</td>
+                            <td class="px-4 py-2 w-48 whitespace-normal">${user.Qualifications || 'N/A'}</td>
+                            <td class="px-4 py-2 w-48 whitespace-normal">${user.Expertise || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.IntroVideoURL ? `<a href="${user.IntroVideoURL}" target="_blank" class="text-blue-600 hover:underline">Link</a>` : 'N/A'}</td>
+                            <td class="px-4 py-2">${user.CertTitle || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.CertIssuer || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.CertYear || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.CertID || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.DateJoined ? user.DateJoined.split('T')[0] : 'N/A'}</td>
+                            <td class="px-4 py-2">
+                                <button onclick="editUser('${role}', ${user.TrainerID})" class="text-blue-600 hover:text-blue-800 font-semibold mr-2">Edit</button>
+                                <button onclick="deleteUser('${role}', ${user.TrainerID})" class="text-red-600 hover:text-red-800 font-semibold">Delete</button>
+                            </td>
+                        </tr>`;
+                } else if (role === 'client') {
+                    row = `
+                        <tr class="border-b odd:bg-white even:bg-red-50">
+                            <td class="px-4 py-2">${user.ClientID}</td>
+                            <td class="px-4 py-2">
+                                <img src="${profilePicSrc}" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/50?text=No+Pic';">
+                            </td>
+                            <td class="px-4 py-2">${user.FullName}</td>
+                            <td class="px-4 py-2">${user.Email}</td>
+                            <td class="px-4 py-2">${user.Phone || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Gender || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.DOB ? user.DOB.split('T')[0] : 'N/A'}</td>
+                            <td class="px-4 py-2 w-48 whitespace-normal">${user.Address || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.City || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Country || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.DateJoined ? user.DateJoined.split('T')[0] : 'N/A'}</td>
+                            <td class="px-4 py-2">
+                                <button onclick="editUser('${role}', ${user.ClientID})" class="text-blue-600 hover:text-blue-800 font-semibold mr-2">Edit</button>
+                                <button onclick="deleteUser('${role}', ${user.ClientID})" class="text-red-600 hover:text-red-800 font-semibold">Delete</button>
+                            </td>
+                        </tr>`;
+                } else if (role === 'admin') {
+                    row = `
+                        <tr class="border-b odd:bg-white even:bg-red-50">
+                            <td class="px-4 py-2">${user.AdminID}</td>
+                            <td class="px-4 py-2">
+                                <img src="${profilePicSrc}" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/50?text=No+Pic';">
+                            </td>
+                            <td class="px-4 py-2">${user.FullName}</td>
+                            <td class="px-4 py-2">${user.Email}</td>
+                            <td class="px-4 py-2">${user.Phone || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.Role || 'N/A'}</td>
+                            <td class="px-4 py-2">${user.DateJoined ? user.DateJoined.split('T')[0] : 'N/A'}</td>
+                            <td class="px-4 py-2">
+                                <button onclick="editUser('${role}', ${user.AdminID})" class="text-blue-600 hover:text-blue-800 font-semibold mr-2">Edit</button>
+                                <button onclick="deleteUser('${role}', ${user.AdminID})" class="text-red-600 hover:text-red-800 font-semibold">Delete</button>
+                            </td>
+                        </tr>`;
+                }
+                tbody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error(`Failed to load ${role}s:`, error);
+            Swal.fire('Error', `Failed to load ${role} data. ${error.message}`, 'error'); // Show error message from backend
         }
-        else if(role === 'client') {
-            row = `
-            <tr>
-                <td class="border p-2">${user.ClientID}</td>
-                <td class="border p-2">
-                <img src="/profile-pic/client/${user.ClientID}" alt="Profile" class="w-12 h-12 rounded-full object-cover">
-                </td>
-                <td class="border p-2">${user.FullName}</td>
-                <td class="border p-2">${user.Email}</td>
-                <td class="border p-2">${user.Phone || ''}</td>
-                <td class="border p-2">${user.Gender || ''}</td>
-                <td class="border p-2">${user.DOB ? user.DOB.split('T')[0] : ''}</td>
-                <td class="border p-2">${user.City || ''}</td>
-                <td class="border p-2">${user.Country || ''}</td>
-                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
-                <td class="border p-2">
-                <button onclick="editUser('client', ${user.ClientID})" class="text-blue-600">Edit</button>
-                <button onclick="deleteUser('client', ${user.ClientID})" class="text-red-600">Delete</button>
-                </td>
-            </tr>`;
-        }
-        else if(role === 'admin') {
-            row = `
-            <tr>
-                <td class="border p-2">${user.AdminID}</td>
-                <td class="border p-2">${user.FullName}</td>
-                <td class="border p-2">${user.Email}</td>
-                <td class="border p-2">${user.Phone || ''}</td>
-                <td class="border p-2">${user.Role || ''}</td>
-                <td class="border p-2">${user.DateJoined ? user.DateJoined.split('T')[0] : ''}</td>
-                <td class="border p-2">
-                <button onclick="editUser('admin', ${user.AdminID})" class="text-blue-600">Edit</button>
-                <button onclick="deleteUser('admin', ${user.AdminID})" class="text-red-600">Delete</button>
-                </td>
-            </tr>`;
-        }
+    }
 
-        tbody.innerHTML += row;
+    // Function to handle Edit User
+    async function editUser(role, id) {
+        const modalId = `${role}Modal`;
+        const form = document.getElementById(`${role}Form`);
+        const modalTitle = document.getElementById(`${role}ModalTitle`);
+
+        // Fetch user data to populate the form
+        try {
+            // Use singular endpoint for fetching a single user
+            const response = await fetch(`/manage/profile/${role}/${id}`); 
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+            const user = await response.json();
+
+            // Populate the form fields - CRITICAL FIX HERE: Adjusted ID field name
+            // Assuming your hidden input ID fields are named 'trainerId', 'clientId', 'adminId' (camelCase)
+            const idFieldName = `${role}Id`; 
+            const idInput = form.querySelector(`input[name="${idFieldName}"]`);
+            if (idInput) {
+                idInput.value = user[`${role.charAt(0).toUpperCase() + role.slice(1)}ID`]; // Use PascalCase from backend
+            } else {
+                console.warn(`Hidden ID input for ${role} not found with name="${idFieldName}"`);
+            }
+            
+            form.querySelector('input[name="FullName"]').value = user.FullName;
+            form.querySelector('input[name="Email"]').value = user.Email;
+            
+            // Password field should be optional on edit
+            const passwordField = form.querySelector('input[name="PasswordHash"]');
+            if (passwordField) {
+                passwordField.value = ''; // Clear password field for security
+                passwordField.removeAttribute('required');
+                passwordField.placeholder = 'Password (leave blank to keep current)';
+            }
+
+            if (user.Phone)
+                form.querySelector('input[name="Phone"]').value = user.Phone;
+
+            if (role === 'trainer' || role === 'client') {
+                if (user.Gender) {
+                    const genderField = form.querySelector('select[name="Gender"]');
+                    if (genderField) genderField.value = user.Gender;
+                }
+                if (user.DOB) {
+                    const dobField = form.querySelector('input[name="DOB"]');
+                    if (dobField) dobField.value = user.DOB.split('T')[0]; // Format date for input type="date"
+                }
+                if (user.Address) {
+                    const addressField = form.querySelector('textarea[name="Address"]');
+                    if (addressField) addressField.value = user.Address;
+                }
+                if (user.City) {
+                    const cityField = form.querySelector('input[name="City"]');
+                    if (cityField) cityField.value = user.City;
+                }
+                if (user.Country) {
+                    const countryField = form.querySelector('input[name="Country"]');
+                    if (countryField) countryField.value = user.Country;
+                }
+            }
+
+            if (role === 'trainer') {
+                if (user.Qualifications) {
+                    const qField = form.querySelector('textarea[name="Qualifications"]');
+                    if (qField) qField.value = user.Qualifications;
+                }
+                if (user.Expertise) {
+                    const eField = form.querySelector('textarea[name="Expertise"]');
+                    if (eField) eField.value = user.Expertise;
+                }
+                if (user.IntroVideoURL) {
+                    const vField = form.querySelector('input[name="IntroVideoURL"]');
+                    if (vField) vField.value = user.IntroVideoURL;
+                }
+                if (user.CertTitle) {
+                    const tField = form.querySelector('input[name="CertTitle"]');
+                    if (tField) tField.value = user.CertTitle;
+                }
+                if (user.CertIssuer) {
+                    const iField = form.querySelector('input[name="CertIssuer"]');
+                    if (iField) iField.value = user.CertIssuer;
+                }
+                if (user.CertYear) {
+                    const yField = form.querySelector('input[name="CertYear"]');
+                    if (yField) yField.value = user.CertYear;
+                }
+                if (user.CertID) {
+                    const idCertField = form.querySelector('input[name="CertID"]');
+                    if (idCertField) idCertField.value = user.CertID;
+                }
+            }
+
+            if (role === 'admin') {
+                if (user.Role) {
+                    const roleField = form.querySelector('select[name="Role"]');
+                    if (roleField) roleField.value = user.Role;
+                }
+            }
+
+            modalTitle.textContent = `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+            openModal(modalId);
+        } catch (error) {
+            console.error(`Error fetching ${role} for edit:`, error);
+            Swal.fire('Error', `Failed to load ${role} data for editing. ${error.message}`, 'error'); // Show error message from backend
+        }
+    }
+
+    // Event listeners for form submissions (Create/Update)
+    document
+        .getElementById('trainerForm')
+        .addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleFormSubmission('trainer');
         });
 
-    } catch (error) {
-        console.error(`Failed to load ${role}s:`, error);
+    document
+        .getElementById('clientForm')
+        .addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleFormSubmission('client');
+        });
+
+    document
+        .getElementById('adminForm')
+        .addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await handleFormSubmission('admin');
+        });
+
+    async function handleFormSubmission(role) {
+        const form = document.getElementById(`${role}Form`);
+        const idInput = form.querySelector(`input[name="${role}Id"]`);
+        const userId = idInput ? idInput.value : ''; 
+        const isUpdate = userId !== ''; 
+
+        const formData = new FormData(form);
+        const passwordValue = formData.get('PasswordHash');
+
+        // Log formData content for debugging
+        console.log(`Submitting ${isUpdate ? 'update' : 'create'} request for ${role}. FormData:`);
+        for (let pair of formData.entries()) {
+            console.log(pair[0]+ ': ' + pair[1]); 
+        }
+
+        // Logic for PasswordHash
+        if (isUpdate) {
+            // For updates, password is optional. If left blank, remove it from formData
+            if (passwordValue === '') {
+                formData.delete('PasswordHash');
+            }
+        } else {
+            // For creation, password is required
+            if (passwordValue === '') {
+                Swal.fire('Error', 'Password is required for new user creation.', 'error');
+                return; // Stop the function if password is missing for creation
+            }
+        }
+
+        const url = isUpdate
+            ? `/manage/profile/${role}/${userId}`
+            : `/manage/profile/${role}s`; // POST to /trainers, /clients, /admins
+
+        const method = isUpdate ? 'PUT' : 'POST';
+
+        try {
+            const res = await fetch(url, {
+                method: method,
+                body: formData, // FormData handles multipart/form-data
+                credentials: 'include',
+            });
+
+            const result = await res.json();
+            if (!res.ok) throw new Error(result.error || `Operation failed with status: ${res.status}`);
+
+            await Swal.fire(
+                '✅ Success!',
+                `${role.charAt(0).toUpperCase() + role.slice(1)} ${
+                    isUpdate ? 'updated' : 'added'
+                } successfully.`,
+                'success'
+            );
+            closeModal(`${role}Modal`);
+            loadUsers(role); // Reload data to show changes
+        } catch (err) {
+            console.error(`Error during ${method} operation for ${role}:`, err);
+            Swal.fire('❌ Error', err.message, 'error');
+        }
     }
+
+    // Function to handle Delete User
+    async function deleteUser(role, id) {
+        const confirmResult = await Swal.fire({
+            title: `Delete ${role.charAt(0).toUpperCase() + role.slice(1)}?`,
+            text: `Are you sure you want to delete this ${role}? This action cannot be undone.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md mx-2',
+                cancelButton: 'bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md mx-2'
+            },
+            buttonsStyling: false
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        try {
+            const res = await fetch(`/manage/profile/${role}/${id}`, {
+                method: 'DELETE',
+                credentials: 'include',
+            });
+
+            const result = await res.json();
+            if (!res.ok) throw new Error(result.error || 'Delete failed');
+
+            await Swal.fire(
+                '✅ Deleted!',
+                `${role.charAt(0).toUpperCase() + role.slice(1)} was deleted successfully.`,
+                'success'
+            );
+            loadUsers(role); // Reload data to show changes
+        } catch (err) {
+            console.error(`Error during delete operation for ${role}:`, err);
+            Swal.fire('❌ Error', err.message, 'error');
+        }
     }
+
+
 </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script>
-async function editUser(role, id) {
-    const { value: formValues } = await Swal.fire({
-        title: `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}`,
-        html:
-            `<input id="swal-input1" class="swal2-input" placeholder="New name">` +
-            `<input id="swal-input2" class="swal2-input" placeholder="New email">` +
-            `<input id="swal-input3" class="swal2-input" placeholder="New phone">`,
-        focusConfirm: false,
-        showCancelButton: true,
-        preConfirm: () => {
-            return {
-                FullName: document.getElementById('swal-input1').value.trim(),
-                Email: document.getElementById('swal-input2').value.trim(),
-                Phone: document.getElementById('swal-input3').value.trim()
-            };
-        }
-    });
-
-    if (!formValues) return; // Cancel clicked
-
-    const payload = {};
-    if (formValues.FullName) payload.FullName = formValues.FullName;
-    if (formValues.Email) payload.Email = formValues.Email;
-    if (formValues.Phone) payload.Phone = formValues.Phone;
-
-    if (Object.keys(payload).length === 0) {
-        return Swal.fire('No changes', 'No fields were filled in.', 'info');
-    }
-
-    try {
-        // Use singular role to match backend route
-        const res = await fetch(`/manage/profile/${role}/${id}`, {
-            method: 'PUT',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.error || 'Update failed');
-
-        await Swal.fire('✅ Updated!', `${role} updated successfully.`, 'success');
-        loadUsers(role);
-    } catch (err) {
-        Swal.fire('❌ Error', err.message, 'error');
-    }
-}
-
-async function deleteUser(role, id) {
-    const confirmResult = await Swal.fire({
-        title: `Delete ${role}?`,
-        text: `Are you sure you want to delete this ${role}? This action cannot be undone.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'Cancel'
-    });
-
-    if (!confirmResult.isConfirmed) return;
-
-    try {
-        // Use singular role to match backend route
-        const res = await fetch(`/manage/profile/${role}/${id}`, {
-            method: 'DELETE',
-            credentials: 'include'
-        });
-
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.error || 'Delete failed');
-
-        await Swal.fire('✅ Deleted!', `${role} was deleted successfully.`, 'success');
-        loadUsers(role);
-    } catch (err) {
-        Swal.fire('❌ Error', err.message, 'error');
-    }
-}
-</script>
-
   </body>
 </html>

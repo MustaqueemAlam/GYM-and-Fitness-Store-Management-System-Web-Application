@@ -4,19 +4,14 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const path = require('path');
 const app = express();
-
 const session = require('express-session');
 const cors = require('cors');
-
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);
-
-
 const BD_OFFSET = 6 * 60; 
 
-// Middleware for CORS
-app.use(cors({
+app.use(cors({                       // Middleware for CORS  
   origin: 'http://localhost:4444',   // Frontend origin
   credentials: true
 }));
@@ -25,39 +20,484 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Session configuration (1 day validity)
-app.use(session({
+app.use(session({                                                 
   secret: 'your-secret-key-please-change-this-in-production', 
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 60 * 24 // 24 hours
+    maxAge: 1000 * 60 * 60 * 24 // 24 hours // Session configuration (1 day validity)
   }
 }));
 
 const PORT = process.env.PORT||4444;
 
-
-// Serve static files (e.g., if we store profile pictures publicly)
-app.use(express.static(path.join(__dirname, 'static')));
-
-// Multer setup for file uploads (using memory storage for profile pictures)
-const storage = multer.memoryStorage();
+app.use(express.static(path.join(__dirname, 'static')));     // Serve static files (e.g., if we store profile pictures publicly)
+const storage = multer.memoryStorage();                      // Multer setup for file uploads (using memory storage for profile pictures)
 const upload = multer({ storage });
 
-// MySQL connection pool setup
-const pool = mysql.createPool({
+const pool = mysql.createPool({                              // MySQL connection pool setup
   host: 'localhost',
   user: 'root',
   password: '', 
   database: 'gym',
+   connectionLimit: 10,
 });
 
-// Helper function to validate email format
-function validateEmail(email) {
+function validateEmail(email) {                                // Helper function to validate email format  
   const re = /\S+@\S+\.\S+/;
   return re.test(email);
 }
+
+/**
+ * Admin manage profiles:
+ */
+// --- GET All Profiles ---
+
+const saltRounds = 10; 
+
+app.get('/manage/profile/admins', async (req, res) => {
+    try {
+        const [results] = await pool.query(
+            'SELECT AdminID, FullName, Email, Phone, Role, DateJoined, ProfilePic FROM admins'
+        );
+        res.json(results);
+    } catch (err) {
+        console.error("Error fetching admins:", err);
+        res.status(500).json({ error: 'Failed to retrieve admins', details: err.message });
+    }
+});
+
+app.get('/manage/profile/clients', async (req, res) => {
+    try {
+        const [results] = await pool.query(
+            'SELECT ClientID, FullName, Email, Phone, Gender, DOB, Address, City, Country, DateJoined, ProfilePic FROM clients'
+        );
+        res.json(results);
+    } catch (err) {
+        console.error("Error fetching clients:", err);
+        res.status(500).json({ error: 'Failed to retrieve clients', details: err.message });
+    }
+});
+
+app.get('/manage/profile/trainers', async (req, res) => {
+    try {
+        const [results] = await pool.query(
+            `SELECT TrainerID, FullName, Email, Phone, Gender, DOB, Address, City, Country, 
+            Qualifications, Expertise, IntroVideoURL, DateJoined, CertTitle, CertIssuer, CertYear, CertID, ProfilePic
+            FROM trainers`
+        );
+        res.json(results);
+    } catch (err) {
+        console.error("Error fetching trainers:", err);
+        res.status(500).json({ error: 'Failed to retrieve trainers', details: err.message });
+    }
+});
+
+// --- GET Single Profile for Editing ---
+app.get('/manage/profile/trainer/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query('SELECT * FROM trainers WHERE TrainerID = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Trainer not found' });
+        }
+        const trainer = { ...rows[0] };
+        delete trainer.PasswordHash;
+        delete trainer.CertFile; 
+        delete trainer.ProfilePic; 
+        res.json(trainer);
+    } catch (err) {
+        console.error("Error fetching single trainer:", err);
+        res.status(500).json({ error: 'Failed to retrieve trainer details', details: err.message });
+    }
+});
+
+app.get('/manage/profile/client/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query('SELECT * FROM clients WHERE ClientID = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Client not found' });
+        }
+        const client = { ...rows[0] };
+        delete client.PasswordHash;
+        delete client.ProfilePic;
+        res.json(client);
+    } catch (err) {
+        console.error("Error fetching single client:", err);
+        res.status(500).json({ error: 'Failed to retrieve client details', details: err.message });
+    }
+});
+
+app.get('/manage/profile/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query('SELECT * FROM admins WHERE AdminID = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Admin not found' });
+        }
+        const admin = { ...rows[0] };
+        delete admin.PasswordHash;
+        delete admin.ProfilePic;
+        res.json(admin);
+    } catch (err) {
+        console.error("Error fetching single admin:", err);
+        res.status(500).json({ error: 'Failed to retrieve admin details', details: err.message });
+    }
+});
+
+// --- Profile Picture Serving Routes ---
+app.get('/profile-pic/trainer/:id', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT ProfilePic FROM trainers WHERE TrainerID = ?', [req.params.id]);
+        if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('No profile picture found.');
+        res.setHeader('Content-Type', 'image/jpeg'); 
+        res.send(rows[0].ProfilePic);
+    } catch (err) {
+        console.error("Error serving trainer profile pic:", err);
+        res.status(500).send('Failed to retrieve profile picture.');
+    }
+});
+
+app.get('/profile-pic/client/:id', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT ProfilePic FROM clients WHERE ClientID = ?', [req.params.id]);
+        if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('No profile picture found.');
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.send(rows[0].ProfilePic);
+    } catch (err) {
+        console.error("Error serving client profile pic:", err);
+        res.status(500).send('Failed to retrieve profile picture.');
+    }
+});
+
+app.get('/profile-pic/admin/:id', async (req, res) => {
+    try {
+        const [rows] = await pool.query('SELECT ProfilePic FROM admins WHERE AdminID = ?', [req.params.id]);
+        if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('No profile picture found.');
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.send(rows[0].ProfilePic);
+    } catch (err) {
+        console.error("Error serving admin profile pic:", err);
+        res.status(500).send('Failed to retrieve profile picture.');
+    }
+});
+
+// --- Create Routes (POST) ---
+app.post('/manage/profile/trainers', upload.fields([{ name: 'ProfilePic', maxCount: 1 }, { name: 'CertFile', maxCount: 1 }]), async (req, res) => {
+    const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, Qualifications, Expertise, IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID } = req.body;
+    const profilePic = req.files && req.files['ProfilePic'] ? req.files['ProfilePic'][0].buffer : null;
+    const certFile = req.files && req.files['CertFile'] ? req.files['CertFile'][0].buffer : null;
+
+    if (!FullName || !Email || !PasswordHash) {
+        return res.status(400).json({ error: 'Full Name, Email, and Password are required.' });
+    }
+    if (!validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+        const [result] = await pool.query(
+            `INSERT INTO trainers (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, 
+            ProfilePic, Qualifications, Expertise, IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID, CertFile) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [FullName, Email, hashedPassword, Phone, Gender, DOB, Address, City, Country,
+            profilePic, Qualifications, Expertise, IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID, certFile]
+        );
+        res.status(201).json({ message: 'Trainer created successfully', trainerId: result.insertId });
+    } catch (err) {
+        console.error("Error creating trainer:", err);
+        res.status(500).json({ error: 'Failed to create trainer', details: err.message });
+    }
+});
+
+app.post('/manage/profile/clients', upload.single('ProfilePic'), async (req, res) => {
+    const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
+    const profilePic = req.file ? req.file.buffer : null;
+
+    if (!FullName || !Email || !PasswordHash) {
+        return res.status(400).json({ error: 'Full Name, Email, and Password are required.' });
+    }
+    if (!validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+        const [result] = await pool.query(
+            `INSERT INTO clients (FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, ProfilePic) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [FullName, Email, hashedPassword, Phone, Gender, DOB, Address, City, Country, profilePic]
+        );
+        res.status(201).json({ message: 'Client created successfully', clientId: result.insertId });
+    } catch (err) {
+        console.error("Error creating client:", err);
+        res.status(500).json({ error: 'Failed to create client', details: err.message });
+    }
+});
+
+app.post('/manage/profile/admins', upload.single('ProfilePic'), async (req, res) => {
+    const { FullName, Email, PasswordHash, Phone, Role } = req.body;
+    const profilePic = req.file ? req.file.buffer : null;
+
+    if (!FullName || !Email || !PasswordHash || !Role) {
+        return res.status(400).json({ error: 'Full Name, Email, Password, and Role are required.' });
+    }
+    if (!validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+    if (!['SuperAdmin', 'Manager'].includes(Role)) {
+        return res.status(400).json({ error: 'Invalid role. Must be SuperAdmin or Manager.' });
+    }
+
+    try {
+        const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+        const [result] = await pool.query(
+            `INSERT INTO admins (FullName, Email, PasswordHash, Phone, Role, ProfilePic) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [FullName, Email, hashedPassword, Phone, Role, profilePic]
+        );
+        res.status(201).json({ message: 'Admin created successfully', adminId: result.insertId });
+    } catch (err) {
+        console.error("Error creating admin:", err);
+        res.status(500).json({ error: 'Failed to create admin', details: err.message });
+    }
+});
+
+// --- Update Routes (PUT) ---
+app.put('/manage/profile/admin/:id', upload.single('ProfilePic'), async (req, res) => {
+    const { id } = req.params;
+    const { FullName, Email, PasswordHash, Phone, Role } = req.body;
+    const profilePic = req.file ? req.file.buffer : undefined; 
+
+    if (!FullName || !Email) {
+        return res.status(400).json({ error: 'Full Name and Email are required.' });
+    }
+    if (Email && !validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+    if (Role && !['SuperAdmin', 'Manager'].includes(Role)) {
+        return res.status(400).json({ error: 'Invalid role. Must be SuperAdmin or Manager.' });
+    }
+
+    try {
+        let updateFields = [];
+        let queryParams = [];
+
+        updateFields.push('FullName = ?');
+        queryParams.push(FullName);
+        updateFields.push('Email = ?');
+        queryParams.push(Email);
+        updateFields.push('Phone = ?');
+        queryParams.push(Phone || null);
+        updateFields.push('Role = ?');
+        queryParams.push(Role || null);
+
+        if (PasswordHash) {
+            const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+            updateFields.push('PasswordHash = ?');
+            queryParams.push(hashedPassword);
+        }
+        if (profilePic !== undefined) { 
+            updateFields.push('ProfilePic = ?');
+            queryParams.push(profilePic);
+        }
+
+        const updateQuery = `UPDATE admins SET ${updateFields.join(', ')} WHERE AdminID = ?`;
+        queryParams.push(id);
+
+        const [result] = await pool.query(updateQuery, queryParams);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Admin not found or no changes made.' });
+        }
+        res.json({ message: 'Admin updated successfully' });
+    } catch (err) {
+        console.error("Error updating admin:", err);
+        res.status(500).json({ error: 'Failed to update admin', details: err.message });
+    }
+});
+
+app.put('/manage/profile/client/:id', upload.single('ProfilePic'), async (req, res) => {
+    const { id } = req.params;
+    const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country } = req.body;
+    const profilePic = req.file ? req.file.buffer : undefined;
+
+    if (!FullName || !Email) {
+        return res.status(400).json({ error: 'Full Name and Email are required.' });
+    }
+    if (Email && !validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+
+    try {
+        let updateFields = [];
+        let queryParams = [];
+
+        updateFields.push('FullName = ?');
+        queryParams.push(FullName);
+        updateFields.push('Email = ?');
+        queryParams.push(Email);
+        updateFields.push('Phone = ?');
+        queryParams.push(Phone || null);
+        updateFields.push('Gender = ?');
+        queryParams.push(Gender || null);
+        updateFields.push('DOB = ?');
+        queryParams.push(DOB || null);
+        updateFields.push('Address = ?');
+        queryParams.push(Address || null);
+        updateFields.push('City = ?');
+        queryParams.push(City || null);
+        updateFields.push('Country = ?');
+        queryParams.push(Country || null);
+
+        if (PasswordHash) {
+            const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+            updateFields.push('PasswordHash = ?');
+            queryParams.push(hashedPassword);
+        }
+        if (profilePic !== undefined) {
+            updateFields.push('ProfilePic = ?');
+            queryParams.push(profilePic);
+        }
+
+        const updateQuery = `UPDATE clients SET ${updateFields.join(', ')} WHERE ClientID = ?`;
+        queryParams.push(id);
+
+        const [result] = await pool.query(updateQuery, queryParams);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Client not found or no changes made.' });
+        }
+        res.json({ message: 'Client updated successfully' });
+    } catch (err) {
+        console.error("Error updating client:", err);
+        res.status(500).json({ error: 'Failed to update client', details: err.message });
+    }
+});
+
+app.put('/manage/profile/trainer/:id', upload.fields([{ name: 'ProfilePic', maxCount: 1 }, { name: 'CertFile', maxCount: 1 }]), async (req, res) => {
+    const { id } = req.params;
+    const { FullName, Email, PasswordHash, Phone, Gender, DOB, Address, City, Country, Qualifications, Expertise, IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID } = req.body;
+    const profilePic = req.files && req.files['ProfilePic'] ? req.files['ProfilePic'][0].buffer : undefined;
+    const certFile = req.files && req.files['CertFile'] ? req.files['CertFile'][0].buffer : undefined;
+
+    if (!FullName || !Email) {
+        return res.status(400).json({ error: 'Full Name and Email are required.' });
+    }
+    if (Email && !validateEmail(Email)) {
+        return res.status(400).json({ error: 'Invalid email format.' });
+    }
+
+    try {
+        let updateFields = [];
+        let queryParams = [];
+
+        updateFields.push('FullName = ?');
+        queryParams.push(FullName);
+        updateFields.push('Email = ?');
+        queryParams.push(Email);
+        updateFields.push('Phone = ?');
+        queryParams.push(Phone || null);
+        updateFields.push('Gender = ?');
+        queryParams.push(Gender || null);
+        updateFields.push('DOB = ?');
+        queryParams.push(DOB || null);
+        updateFields.push('Address = ?');
+        queryParams.push(Address || null);
+        updateFields.push('City = ?');
+        queryParams.push(City || null);
+        updateFields.push('Country = ?');
+        queryParams.push(Country || null);
+        updateFields.push('Qualifications = ?');
+        queryParams.push(Qualifications || null);
+        updateFields.push('Expertise = ?');
+        queryParams.push(Expertise || null);
+        updateFields.push('IntroVideoURL = ?');
+        queryParams.push(IntroVideoURL || null);
+        updateFields.push('CertTitle = ?');
+        queryParams.push(CertTitle || null);
+        updateFields.push('CertIssuer = ?');
+        queryParams.push(CertIssuer || null);
+        updateFields.push('CertYear = ?');
+        queryParams.push(CertYear || null);
+        updateFields.push('CertID = ?');
+        queryParams.push(CertID || null);
+
+
+        if (PasswordHash) {
+            const hashedPassword = await bcrypt.hash(PasswordHash, saltRounds);
+            updateFields.push('PasswordHash = ?');
+            queryParams.push(hashedPassword);
+        }
+        if (profilePic !== undefined) {
+            updateFields.push('ProfilePic = ?');
+            queryParams.push(profilePic);
+        }
+        if (certFile !== undefined) {
+            updateFields.push('CertFile = ?');
+            queryParams.push(certFile);
+        }
+
+        const updateQuery = `UPDATE trainers SET ${updateFields.join(', ')} WHERE TrainerID = ?`;
+        queryParams.push(id);
+
+        const [result] = await pool.query(updateQuery, queryParams);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Trainer not found or no changes made.' });
+        }
+        res.json({ message: 'Trainer updated successfully' });
+    } catch (err) {
+        console.error("Error updating trainer:", err);
+        res.status(500).json({ error: 'Failed to update trainer', details: err.message });
+    }
+});
+
+// --- Delete Routes (DELETE) ---
+app.delete('/manage/profile/admin/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await pool.query('DELETE FROM admins WHERE AdminID = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Admin not found.' });
+        }
+        res.json({ message: 'Admin deleted successfully' });
+    } catch (err) {
+        console.error("Error deleting admin:", err);
+        res.status(500).json({ error: 'Failed to delete admin', details: err.message });
+    }
+});
+
+app.delete('/manage/profile/trainer/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await pool.query('DELETE FROM trainers WHERE TrainerID = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Trainer not found.' });
+        }
+        res.json({ message: 'Trainer deleted successfully' });
+    } catch (err) {
+        console.error("Error deleting trainer:", err);
+        res.status(500).json({ error: 'Failed to delete trainer', details: err.message });
+    }
+});
+
+app.delete('/manage/profile/client/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await pool.query('DELETE FROM clients WHERE ClientID = ?', [id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Client not found.' });
+        }
+        res.json({ message: 'Client deleted successfully' });
+    } catch (err) {
+        console.error("Error deleting client:", err);
+        res.status(500).json({ error: 'Failed to delete client', details: err.message });
+    }
+});
+
 
 
 /**
@@ -66,14 +506,12 @@ function validateEmail(email) {
 app.post('/login', async (req, res) => {
   try {
     const { email, password, userType } = req.body;
-
     if (!email || !password || !userType) {
       return res.status(400).json({ success: false, message: 'Please fill in all fields.' });
     }
     if (!validateEmail(email)) {
       return res.status(400).json({ success: false, message: 'Invalid email format.' });
     }
-
     let tableName, idField;
     switch (userType.toLowerCase()) {
       case 'client': tableName = 'clients'; idField = 'ClientID'; break;
@@ -81,28 +519,22 @@ app.post('/login', async (req, res) => {
       case 'trainer': tableName = 'trainers'; idField = 'TrainerID'; break;
       default: return res.status(400).json({ success: false, message: 'Invalid user type.' });
     }
-
     const [rows] = await pool.execute(`SELECT * FROM ${tableName} WHERE Email = ?`, [email]);
     if (rows.length === 0) {
       return res.status(401).json({ success: false, message: 'User not found.' });
     }
-
     const user = rows[0];
     if (!user.PasswordHash) {
       return res.status(500).json({ success: false, message: 'Password not set for this account.' });
     }
-
     const match = await bcrypt.compare(password, user.PasswordHash.toString());
     if (!match) {
       return res.status(401).json({ success: false, message: 'Incorrect password.' });
     }
-
-    // Save session
-    req.session.userId = user[idField];
+    req.session.userId = user[idField];            // Save session   
     req.session.userName = user.FullName;
     req.session.userEmail = user.Email;
     req.session.userType = userType.toLowerCase(); // Store lowercase in session
-    
     const response = {
       success: true,
       message: `Welcome back, ${user.FullName}!`,
@@ -122,8 +554,19 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// API endpoint to get user session data
-app.get('/api/user-session', (req, res) => {
+
+
+
+
+
+
+
+
+
+/**
+ * API endpoint to get user session data
+ */
+app.get('/api/user-session', (req, res) => {         
   if (req.session.userId && req.session.userType) {
     res.json({
       userId: req.session.userId,
@@ -137,11 +580,18 @@ app.get('/api/user-session', (req, res) => {
 });
 
 
-/**
- * Client daily progress tracking
- */
 
-// Middleware to protect routes, ensuring only logged-in clients can access
+
+
+
+
+
+
+
+
+/**
+ * Middleware to protect routes, ensuring only logged-in clients can access
+ */
 const requireClientAuth = (req, res, next) => {
     // Check if client ID from session matches the one in URL params
     // This assumes the client ID in the URL is for the currently logged-in client.
@@ -151,6 +601,15 @@ const requireClientAuth = (req, res, next) => {
         res.status(403).json({ success: false, message: 'Access denied. Client authentication required to access this resource.' });
     }
 };
+
+
+
+
+
+
+
+
+
 
 /**
  * Client daily progress tracking API endpoints
@@ -190,11 +649,9 @@ app.post('/api/client/:clientId/progress-snapshots', requireClientAuth, upload.s
     const { dateTaken, weightKg, bodyFatPercent, bmi, notes } = req.body;
     const progressImageBuffer = req.file ? req.file.buffer : null; // Access the buffer directly
     // Removed progressImageMimeType as it's not in the provided DB schema
-
     if (!dateTaken || !weightKg || !bodyFatPercent || !bmi) {
         return res.status(400).json({ success: false, message: 'Missing required snapshot fields.' });
     }
-
     try {
         const [result] = await pool.execute(
             'INSERT INTO client_progress_snapshots (ClientID, DateTaken, WeightKg, BodyFatPercent, BMI, ProgressImage, Notes) VALUES (?, ?, ?, ?, ?, ?, ?)',
@@ -215,21 +672,16 @@ app.get('/api/client/:clientId/progress-snapshots/:snapshotId/image', requireCli
             'SELECT ProgressImage FROM client_progress_snapshots WHERE ClientID = ? AND SnapshotID = ?',
             [clientId, snapshotId]
         );
-
         if (rows.length === 0 || !rows[0].ProgressImage) {
             return res.status(404).json({ success: false, message: 'Image not found.' });
         }
-
         const imageData = rows[0].ProgressImage;
-        // Default to octet-stream as MimeType is not stored in DB based on provided schema
-        const imageMimeType = 'application/octet-stream'; 
-
+        const imageMimeType = 'application/octet-stream'; // Default to octet-stream as MimeType is not stored in DB based on provided schema
         res.writeHead(200, {
             'Content-Type': imageMimeType,
             'Content-Length': imageData.length
         });
         res.end(imageData);
-
     } catch (err) {
         console.error('Error serving progress image for snapshot', snapshotId, ':', err);
         res.status(500).json({ success: false, message: 'Server error serving progress image.' });
@@ -245,10 +697,10 @@ app.get('/api/client/:clientId/workouts', requireClientAuth, async (req, res) =>
             `SELECT cw.WorkoutLogID, cw.ClientID, cw.DatePerformed, cw.SetsDone, cw.RepsDone, cw.WeightUsedKg, 
                     cw.HeartRate, cw.CaloriesBurned, cw.FatigueLevel, cw.TrainerNotes, cw.ClientFeedback, 
                     e.ExerciseName
-             FROM client_workouts cw
-             JOIN exercises e ON cw.ExerciseID = e.ExerciseID
-             WHERE cw.ClientID = ?
-             ORDER BY cw.DatePerformed DESC`,
+                    FROM client_workouts cw
+                    JOIN exercises e ON cw.ExerciseID = e.ExerciseID
+                    WHERE cw.ClientID = ?
+                    ORDER BY cw.DatePerformed DESC`,
             [clientId]
         );
         // Do not send LONGBLOB directly, create a separate endpoint for attachment retrieval
@@ -313,9 +765,29 @@ app.get('/api/client/:clientId/workouts/:workoutLogId/attachment', requireClient
     }
 });
 
+
+
+
+
+
+
+
+
+
+
 /**
  * bcrypt.hash('12341234', 10).then(console.log); // for manually hashing pass
  */
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Signup POST handler  for clients
@@ -370,6 +842,12 @@ app.post('/signup', upload.single('ProfilePic'), async (req, res) => {
 
 
 
+
+
+
+
+
+
 /**
  * Client fetch their own data
  */
@@ -395,6 +873,16 @@ app.get('/profile', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Client update their own data
@@ -429,6 +917,16 @@ app.post('/update-profile', upload.single('ProfilePic'), async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Client logout session
  */
@@ -442,6 +940,16 @@ app.post('/logout', (req, res) => {
     res.json({ success: true, message: 'Logged out successfully' });
   });
 });
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Client fetch virtual class routines
@@ -460,6 +968,16 @@ app.get('/api/virtualclasses', async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Client fetch their attendance records
  */
@@ -474,6 +992,16 @@ app.get('/api/attendance', async (req, res) => {
 
   res.json({ success: true, records: rows });
 });
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Client check in and out their attendance records
@@ -552,6 +1080,16 @@ app.post('/api/attendance/checkout', async (req, res) => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Client update their health log records
  */
@@ -578,6 +1116,16 @@ app.post('/api/healthlog', express.json(), async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Client fetch their health log records
  */
@@ -603,6 +1151,16 @@ app.get('/api/healthlog', async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
 /**
  * fetch client daily goals
  */
@@ -625,6 +1183,16 @@ app.get('/goals/me', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch fitness goals.' });
   }
 });
+
+
+
+
+
+
+
+
+
+
 /**
  *  client update progress
  */
@@ -661,6 +1229,15 @@ app.put('/goals/update-status/:goalId', async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
 /**
 * Trainer manage client fitness goals
 * Get all clients with goals
@@ -684,6 +1261,15 @@ app.get('/trainer/goals', async (req, res) => {
 });
 
 
+
+
+
+
+
+
+
+
+
 /**
  * Trainer add new goal
  */
@@ -704,6 +1290,15 @@ app.post('/trainer/goals', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error adding goal' });
   }
 });
+
+
+
+
+
+
+
+
+
 
 /**
  * Trainer Update goal
@@ -726,6 +1321,17 @@ app.put('/trainer/goals/:goalId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error updating goal' });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Trainer Delete goal
  */
@@ -739,6 +1345,16 @@ app.delete('/trainer/goals/:goalId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Error deleting goal' });
   }
 });
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Trainer add new goals 
@@ -763,10 +1379,19 @@ app.post('/trainer/new/goals', async (req, res) => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Get trainer dashboard profile
  */
-
 app.get('/trainer/profile', async (req, res) => {
   if (!req.session.userId) {
     return res.status(401).json({ success: false, message: 'Unauthorized - not logged in' });
@@ -794,6 +1419,17 @@ app.get('/trainer/profile', async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error fetching trainer profile' });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
 // Update trainer profile
 const cpUpload = upload.fields([
   { name: 'ProfilePic', maxCount: 1 },
@@ -850,171 +1486,20 @@ app.post('/trainer/profile/update', cpUpload, async (req, res) => {
   }
 });
 
-/**
- * Admin manage profiles:
- */
-app.get('/manage/profile/admins', async (req, res) => {
-  try {
-    const [results] = await pool.query(
-      'SELECT AdminID, FullName, Email, Phone, DateJoined, Role FROM admins'
-    );
-    res.json(results);
-  } catch (err) {
-    res.status(500).json({ error: 'DB error', details: err });
-  }
-});
-app.get('/manage/profile/clients', async (req, res) => {
-  try {
-    const [results] = await pool.query(
-      'SELECT ClientID, FullName, Email, Phone, DateJoined, Gender, DOB, City, Country FROM clients'
-    );
-    res.json(results);
-  } catch (err) {
-    res.status(500).json({ error: 'DB error', details: err });
-  }
-});
-app.get('/manage/profile/trainers', async (req, res) => {
-  try {
-    const [results] = await pool.query(
-      `SELECT TrainerID, FullName, Email, Phone, DateJoined, Gender, DOB, City, Country, 
-      Qualifications, Expertise, IntroVideoURL as IntroVideoURL, CertTitle, CertIssuer, CertYear, CertID 
-      FROM trainers`
-    );
-    res.json(results);
-  } catch (err) {
-    res.status(500).json({ error: 'DB error', details: err });
-  }
-});
-
-// Trainer profile picture route
-app.get('/profile-pic/trainer/:id', async (req, res) => {
-  const [rows] = await pool.query('SELECT ProfilePic FROM trainers WHERE TrainerID = ?', [req.params.id]);
-  if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('Not found');
-  const picBuffer = rows[0].ProfilePic;
-  // Detect MIME type from buffer
-  const isPng = picBuffer.slice(0, 8).toString('hex') === '89504e470d0a1a0a';
-  const isJpeg = picBuffer.slice(0, 3).toString('hex') === 'ffd8ff';
-
-  if (isPng) {
-    res.setHeader('Content-Type', 'image/png');
-  } else if (isJpeg) {
-    res.setHeader('Content-Type', 'image/jpeg');
-  } else {
-    res.setHeader('Content-Type', 'application/octet-stream'); // fallback
-  }
-  res.send(picBuffer);
-});
-app.get('/profile-pic/client/:id', async (req, res) => {
-  const [rows] = await pool.query('SELECT ProfilePic FROM clients WHERE ClientID = ?', [req.params.id]);
-  if (!rows.length || !rows[0].ProfilePic) return res.status(404).send('Not found');
-
-  const picBuffer = rows[0].ProfilePic;
-
-  const isPng = picBuffer.slice(0, 8).toString('hex') === '89504e470d0a1a0a';
-  const isJpeg = picBuffer.slice(0, 3).toString('hex') === 'ffd8ff';
-
-  if (isPng) {
-    res.setHeader('Content-Type', 'image/png');
-  } else if (isJpeg) {
-    res.setHeader('Content-Type', 'image/jpeg');
-  } else {
-    res.setHeader('Content-Type', 'application/octet-stream');
-  }
-
-  res.send(picBuffer);
-});
-
-/**
- * Admin PUT (edit)
- */
-
-app.put('/manage/profile/admin/:id', async (req, res) => {
-  const { id } = req.params;
-  const { FullName, Email, Phone } = req.body;
-  try {
-    await pool.query(
-      'UPDATE admins SET FullName = ?, Email = ?, Phone = ? WHERE AdminID = ?',
-      [FullName || '', Email || '', Phone || '', id]
-    );
-    res.json({ message: 'Admin updated' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update admin', details: err });
-  }
-});
-
-/**
- * Admin DELETE
- */
-
-app.delete('/manage/profile/admin/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await pool.query('DELETE FROM admins WHERE AdminID = ?', [id]);
-    res.json({ message: 'Admin deleted' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete admin', details: err });
-  }
-});
-
-/**
- * Trainer PUT (edit)
- */
-
-app.put('/manage/profile/trainer/:id', async (req, res) => {
-  const { id } = req.params;
-  const { FullName, Email, Phone } = req.body;
-  try {
-    await pool.query(
-      'UPDATE trainers SET FullName = ?, Email = ?, Phone = ? WHERE TrainerID = ?',
-      [FullName || '', Email || '', Phone || '', id]
-    );
-    res.json({ message: 'Trainer updated' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update trainer', details: err });
-  }
-});
-
-// Trainer DELETE
-app.delete('/manage/profile/trainer/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await pool.query('DELETE FROM trainers WHERE TrainerID = ?', [id]);
-    res.json({ message: 'Trainer deleted' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete trainer', details: err });
-  }
-});
-
-// Client PUT (edit)
-app.put('/manage/profile/client/:id', async (req, res) => {
-  const { id } = req.params;
-  const { FullName, Email, Phone } = req.body;
-  try {
-    await pool.query(
-      'UPDATE clients SET FullName = ?, Email = ?, Phone = ? WHERE ClientID = ?',
-      [FullName || '', Email || '', Phone || '', id]
-    );
-    res.json({ message: 'Client updated' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update client', details: err });
-  }
-});
-
-// Client DELETE
-app.delete('/manage/profile/client/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await pool.query('DELETE FROM clients WHERE ClientID = ?', [id]);
-    res.json({ message: 'Client deleted' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete client', details: err });
-  }
-});
 
 
-/**
- * Trainer view attendance
- */
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Trainer view attendance and client profile
@@ -1038,8 +1523,6 @@ app.get('/trainer/attendance/count', async (req, res) => {
  */
 app.get('/trainer/view/attendance', async (req, res) => {
   try {
-    // You might want to include a verifyToken middleware here as well
-    // if attendance data is only for authenticated trainers.
     const [rows] = await pool.query('SELECT AttendanceID, ClientID, CheckInTime, CheckOutTime, Method FROM attendance ORDER BY CheckInTime DESC');
     res.json(rows);
   } catch (err) {
@@ -1075,11 +1558,6 @@ app.get('/trainer/client/:clientId', async (req, res) => {
  * Requires client ID as a URL parameter.
  */
 app.get('/trainer/client/:clientId/checkin-history', async (req, res) => {
-  // Need to Add authentication/authorization check if not handled by a global middleware
-  // if (!req.session.userId || req.session.userType !== 'trainer') {
-  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
-  // }
-
   const { clientId } = req.params;
   try {
     const [rows] = await pool.query(
@@ -1093,7 +1571,6 @@ app.get('/trainer/client/:clientId/checkin-history', async (req, res) => {
     if (rows.length > 0) {
       res.json({ success: true, records: rows });
     } else {
-      // It's not an error if no history is found, just an empty set.
       res.json({ success: true, records: [] });
     }
   } catch (err) {
@@ -1107,10 +1584,6 @@ app.get('/trainer/client/:clientId/checkin-history', async (req, res) => {
  * Requires client ID as a URL parameter.
  */
 app.get('/trainer/client/:clientId/checkout-history', async (req, res) => {
-  // Add authentication/authorization check if not handled by a global middleware
-  // if (!req.session.userId || req.session.userType !== 'trainer') {
-  //   return res.status(401).json({ success: false, message: 'Unauthorized' });
-  // }
 
   const { clientId } = req.params;
   try {
@@ -1425,7 +1898,7 @@ app.delete('/api/plans/:id', async (req, res) => {
 });
 
 /**
- * Client: View available subs plans (public)
+ * Client: View available subs plans 
  */
 app.get('/api/client/plans', async (req, res) => {
   try {
@@ -1678,10 +2151,6 @@ app.get('/api/clients/:clientId/details', async (req, res) => {  // API to get d
 });
 
 
-// =========================================================
-// WORKOUT PLAN MANAGEMENT ENDPOINTS FOR TRAINER DASHBOARD
-// =========================================================
-
 
 // Middleware to check if user is a logged-in trainer
 const isTrainer = (req, res, next) => {
@@ -1786,7 +2255,6 @@ app.delete('/trainer/workout-plans/:planId', isTrainer, async (req, res) => {
   }
 });
 
-// --- NEW: UNIVERSAL EXERCISE MANAGEMENT ---
 
 /**
  * GET All Universal Exercises
@@ -1947,9 +2415,7 @@ app.get('/client/trainer/:trainerId', isClient, async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).json({ success: false, message: 'Trainer not found.' });
     }
-
     const trainer = rows[0];
-    // Convert BLOB to base64 string for frontend
     if (trainer.ProfilePic) {
       trainer.ProfilePic = trainer.ProfilePic.toString('base64');
     }
