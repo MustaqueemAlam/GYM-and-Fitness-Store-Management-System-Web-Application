@@ -48,6 +48,16 @@ function validateEmail(email) {                                // Helper functio
   return re.test(email);
 }
 
+
+
+
+
+
+
+
+
+
+
 /**
  * Admin manage profiles:
  */

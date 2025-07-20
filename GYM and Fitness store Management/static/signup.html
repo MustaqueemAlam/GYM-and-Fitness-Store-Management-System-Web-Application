@@ -5,27 +5,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>E-Fitness Signup</title>
-    <link rel="shortcut icon"
+    <link
+      rel="shortcut icon"
       href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-      type="image/svg+xml" />
+      type="image/svg+xml"
+    />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap"
-      rel="stylesheet" />
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
     <style>
-    .input {
-      @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
-    }
-  </style>
+      .input {
+        @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
+      }
+
+      .signup-container {
+        max-width: 6xl; 
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 1.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        padding: 3rem; /* Increased padding */
+      }
+
+      .btn-primary {
+        background-color: #f94a4a;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #e03a3a; /* Darker red on hover */
+      }
+
+      .link {
+        color: #f94a4a;
+        transition: color 0.3s ease, text-decoration 0.3s ease;
+      }
+
+      .link:hover {
+        color: #e03a3a;
+        text-decoration: underline;
+      }
+
+      /* Ensure radio buttons and checkboxes are styled correctly */
+      input[type="radio"],
+      input[type="checkbox"] {
+        @apply appearance-none border border-gray-300 rounded-full w-5 h-5 checked:bg-[#f94a4a] checked:border-transparent focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
+      }
+      input[type="checkbox"] {
+        @apply rounded; /* Checkboxes are typically square */
+      }
+    </style>
   </head>
-  <body id="top"
-    class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col">
+  <body
+    id="top"
+    class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col"
+  >
     <header class="header" data-header>
       <div class="container">
         <a href="./index.html" class="logo">
@@ -33,14 +80,14 @@
           <span class="span">E- Fitness</span>
         </a>
         <nav class="navbar" data-navbar>
-          <button class="nav-close-btn" aria-label="close menu"
-            data-nav-toggler>
+          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
             <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
           </button>
           <ul class="navbar-list">
             <li>
-              <a href="index.html" class="navbar-link active"
-                data-nav-link>Home</a>
+              <a href="index.html" class="navbar-link active" data-nav-link
+                >Home</a
+              >
             </li>
             <li>
               <a href="login.html" class="navbar-link" data-nav-link>Login</a>
@@ -50,75 +97,92 @@
       </div>
     </header>
     <div class="absolute inset-0 -z-10">
-      <img src="./assets/images/GYMHOMEBD.jpg" alt="Gym Background GIF"
-        class="w-full h-full object-cover opacity-40" />
+      <img
+        src="assets/images/GYMHOMEBD.jpg"
+        alt="Gym Background GIF"
+        class="w-full h-full object-cover opacity-40"
+      />
       <div class="absolute inset-0 bg-black bg-opacity-40"></div>
     </div>
     <main class="flex-grow flex items-center justify-center px-4 py-12">
       <section
-        class="relative z-10 w-full max-w-4xl bg-white bg-opacity-95 rounded-3xl shadow-2xl p-10 sm:p-12 border-4 border-[#f94a4a] flex gap-8">
+        class="relative z-12 signup-container border-4 border-[#f94a4a]"
+      >
+        <h1
+          class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
+        >
+          E-Fitness Signup
+        </h1>
         <form
           id="signupForm"
-          class="space-y-6 flex-1"
+          class="space-y-6"
           enctype="multipart/form-data"
-          novalidate>
-          <h1
-            class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide">
-            E-Fitness Signup
-          </h1>
+          novalidate
+        >
           <div class="flex flex-col items-center tracking-wide">
             <div
               id="profilePreview"
-              class="w-40 h-40 rounded-full bg-gray-200 border-4 border-[#f94a4a] overflow-hidden mb-4 flex items-center justify-center">
+              class="w-40 h-40 rounded-full bg-gray-200 border-4 border-[#f94a4a] overflow-hidden mb-4 flex items-center justify-center"
+            >
               <span class="text-gray-400">No Image</span>
             </div>
             <label
               for="profilePic"
-              class="cursor-pointer text-[#f94a4a] font-semibold hover:underline text-center">
+              class="cursor-pointer text-[#f94a4a] font-semibold hover:underline text-center"
+            >
               Upload Profile Picture
             </label>
           </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <div>
-              <label for="fullname" class="font-semibold mb-1 block">Full
-                Name</label>
+              <label for="fullname" class="font-semibold mb-1 block"
+                >Full Name</label
+              >
               <input
                 id="fullname"
                 name="FullName"
                 type="text"
                 required
-                class="input" />
+                class="input"
+              />
             </div>
             <div>
               <label for="email" class="font-semibold mb-1 block">Email</label>
-              <input id="email" name="Email" type="email" required
-                class="input" />
+              <input
+                id="email"
+                name="Email"
+                type="email"
+                required
+                class="input"
+              />
             </div>
             <div>
-              <label for="password"
-                class="font-semibold mb-1 block">Password</label>
+              <label for="password" class="font-semibold mb-1 block"
+                >Password</label
+              >
               <input
                 id="password"
                 name="Password"
                 type="password"
                 required
-                class="input" />
+                class="input"
+              />
             </div>
             <div>
               <label for="phone" class="font-semibold mb-1 block">Phone</label>
-              <input id="phone" name="Phone" type="text" required
-                class="input" />
+              <input id="phone" name="Phone" type="text" required class="input" />
             </div>
             <div>
               <label class="font-semibold mb-1 block">Gender</label>
-              <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-4 h-full">
                 <label class="inline-flex items-center">
                   <input
                     type="radio"
                     name="Gender"
                     value="Male"
                     required
-                    class="mr-2" />
+                    class="mr-2"
+                  />
                   Male
                 </label>
                 <label class="inline-flex items-center">
@@ -126,32 +190,37 @@
                     type="radio"
                     name="Gender"
                     value="Female"
-                    class="mr-2" />
+                    class="mr-2"
+                  />
                   Female
                 </label>
               </div>
             </div>
             <div>
-              <label for="dob" class="font-semibold mb-1 block">Date of
-                Birth</label>
+              <label for="dob" class="font-semibold mb-1 block"
+                >Date of Birth</label
+              >
               <input
                 id="dob"
                 name="DOB"
                 type="text"
                 required
                 class="input"
-                placeholder="Select your DOB" />
+                placeholder="Select your DOB"
+              />
             </div>
             <div>
-              <label for="country"
-                class="font-semibold mb-1 block">Country</label>
+              <label for="country" class="font-semibold mb-1 block"
+                >Country</label
+              >
               <select
                 id="country"
                 name="Country"
                 class="input"
                 onchange="populateCities()"
-                required>
-                <option value>-- Select Country --</option>
+                required
+              >
+                <option value selected disabled>-- Select Country --</option>
                 <option value="Bangladesh">🇧🇩 Bangladesh</option>
                 <option value="India">🇮🇳 India</option>
                 <option value="Pakistan">🇵🇰 Pakistan</option>
@@ -166,18 +235,20 @@
             <div>
               <label for="city" class="font-semibold mb-1 block">City</label>
               <select id="city" name="City" class="input" required>
-                <option value>-- Select City --</option>
+                <option value selected disabled>-- Select City --</option>
               </select>
             </div>
-            <div class="sm:col-span-2">
-              <label for="address"
-                class="font-semibold mb-1 block">Address</label>
+            <div class="sm:col-span-2 lg:col-span-1">
+              <label for="address" class="font-semibold mb-1 block"
+                >Address</label
+              >
               <textarea
                 id="address"
                 name="Address"
                 rows="2"
                 required
-                class="input"></textarea>
+                class="input"
+              ></textarea>
             </div>
           </div>
           <div class="mt-4 space-y-4 text-base text-gray-800">
@@ -185,25 +256,30 @@
               <span>
                 I agree to the
                 <span
-                  class="text-[#f94a4a] underline hover:text-red-600 cursor-pointer"
-                  onclick="openModal('termsModal')">
+                  class="text-[#f94a4a] underline hover:text-red-600 cursor-pointer link"
+                  onclick="openModal('termsModal')"
+                >
                   Terms of Service
                 </span>
               </span>
-              <input type="checkbox" id="agreeTerms" required
-                class="w-5 h-5 ml-2" />
+              <input type="checkbox" id="agreeTerms" required class="w-5 h-5 ml-2" />
             </div>
             <div class="flex items-center justify-between flex-wrap">
               <span>
                 I agree to the
                 <span
-                  class="text-[#f94a4a] underline hover:text-red-600 cursor-pointer"
-                  onclick="openModal('privacyModal')">
+                  class="text-[#f94a4a] underline hover:text-red-600 cursor-pointer link"
+                  onclick="openModal('privacyModal')"
+                >
                   Privacy Policy
                 </span>
               </span>
-              <input type="checkbox" id="agreePrivacy" required
-                class="w-5 h-5 ml-2" />
+              <input
+                type="checkbox"
+                id="agreePrivacy"
+                required
+                class="w-5 h-5 ml-2"
+              />
             </div>
           </div>
           <input
@@ -212,24 +288,22 @@
             type="file"
             accept="image/*"
             class="hidden"
-            onchange="previewProfilePic(event)" />
-          <button
-            type="submit"
-            class="w-full py-3 mt-6 bg-[#f94a4a] hover:bg-red-600 text-white font-bold rounded transition">
+            onchange="previewProfilePic(event)"
+          />
+          <button type="submit" class="w-full py-3 mt-6 btn-primary">
             Sign Up
           </button>
           <div
-            class="text-center mt-6 text-lg text-gray-800 space-y-3 font-medium">
+            class="text-center mt-6 text-lg text-gray-800 space-y-3 font-medium"
+          >
             <p>
               Already have an account?
-              <a href="login.html"
-                class="text-[#f94a4a] font-semibold underline hover:text-red-600">
+              <a href="login.html" class="text-[#f94a4a] link font-semibold">
                 Log in
               </a>
             </p>
             <p>
-              <a href="index.html"
-                class="text-[#f94a4a] font-semibold underline hover:text-red-600">
+              <a href="index.html" class="text-[#f94a4a] link font-semibold">
                 ← Go back to Home
               </a>
             </p>
@@ -237,33 +311,34 @@
         </form>
       </section>
     </main>
-    <!-- Terms of Service Modal -->
-    <div id="termsModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div
+      id="termsModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
       <div
-        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto">
+        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto"
+      >
         <h2 class="text-2xl font-bold mb-4">Terms of Service</h2>
         <div class="text-gray-800 text-sm space-y-4">
           <p>
             By using our service, you agree to comply with and be bound by the
-            following terms and conditions.
-            Please review them carefully. If you do not agree to these terms,
-            you should not use our services.
+            following terms and conditions. Please review them carefully. If you
+            do not agree to these terms, you should not use our services.
           </p>
           <p>
             1. <strong>Usage:</strong> You may not use our platform for any
-            illegal or unauthorized purpose.
-            You must not violate any applicable laws.
+            illegal or unauthorized purpose. You must not violate any applicable
+            laws.
           </p>
           <p>
-            2. <strong>Accounts:</strong> You are responsible for maintaining
-            the confidentiality of your account
-            and password and for restricting access to your device.
+            2. <strong>Accounts:</strong> You are responsible for maintaining the
+            confidentiality of your account and password and for restricting
+            access to your device.
           </p>
           <p>
-            3. <strong>Modification:</strong> We reserve the right to change
-            these terms at any time. It is your
-            responsibility to review them regularly.
+            3. <strong>Modification:</strong> We reserve the right to change these
+            terms at any time. It is your responsibility to review them
+            regularly.
           </p>
           <p>
             For full details, please consult our legal department or official
@@ -273,39 +348,40 @@
         <button
           onclick="closeModal('termsModal')"
           class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
-          aria-label="Close Terms Modal">
+          aria-label="Close Terms Modal"
+        >
           &times;
         </button>
       </div>
     </div>
 
-    <!-- Privacy Policy Modal -->
-    <div id="privacyModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div
+      id="privacyModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
       <div
-        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto">
+        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto"
+      >
         <h2 class="text-2xl font-bold mb-4">Privacy Policy</h2>
         <div class="text-gray-800 text-sm space-y-4">
           <p>
-            We respect your privacy and are committed to protecting your
-            personal information.
-            This Privacy Policy explains how we collect, use, and disclose your
-            data.
+            We respect your privacy and are committed to protecting your personal
+            information. This Privacy Policy explains how we collect, use, and
+            disclose your data.
           </p>
           <p>
             1. <strong>Data Collection:</strong> We collect personal information
-            you provide to us such as
-            name, email address, and usage data.
+            you provide to us such as name, email address, and usage data.
           </p>
           <p>
             2. <strong>Usage of Data:</strong> The data is used to provide and
-            improve our services,
-            personalize user experience, and ensure system security.
+            improve our services, personalize user experience, and ensure system
+            security.
           </p>
           <p>
             3. <strong>Third-Party Sharing:</strong> We do not sell, trade, or
-            share your personal data
-            with third parties without your explicit consent.
+            share your personal data with third parties without your explicit
+            consent.
           </p>
           <p>
             For more details, you can contact our Data Protection Officer or
@@ -315,21 +391,27 @@
         <button
           onclick="closeModal('privacyModal')"
           class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
-          aria-label="Close Privacy Modal">
+          aria-label="Close Privacy Modal"
+        >
           &times;
         </button>
       </div>
     </div>
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="signup.js"></script>
     <link rel="stylesheet" href="css/signup.css" />
-    <script type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
   </body>
 </html>
