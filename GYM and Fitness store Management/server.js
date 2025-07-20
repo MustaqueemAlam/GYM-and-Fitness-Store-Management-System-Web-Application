@@ -1956,100 +1956,100 @@ app.delete('/trainer/virtual-classes/delete/:id', async (req, res) => {
 /**
  * GET all products with optional search and filter (including unavailable ones)
  */
-app.get('/api/admin/products', async (req, res) => {
-    try {
-        const { search = '', category = '' } = req.query;
-        let sql = `SELECT * FROM products WHERE 1`;
-        const params = [];
 
-        if (search) {
-            sql += ` AND (Name LIKE ? OR Description LIKE ? OR Brand LIKE ?)`;
-            params.push(`%${search}%`, `%${search}%`, `%${search}%`);
-        }
+app.get('/admin/products', async (req, res) => {
+  try {
+    const { search = '', category = '' } = req.query;
+    let sql = `SELECT * FROM products WHERE 1`; // always true, allows adding optional filters
+    const params = [];
 
-        if (category) {
-            sql += ` AND Category = ?`;
-            params.push(category);
-        }
-        const [rows] = await pool.query(sql, params);
-        rows.forEach(product => {
-            if (product.Image) {
-                product.Image = Buffer.from(product.Image).toString('base64');
-            }
-        });
-        res.json(rows);
-    } catch (err) {
-        console.error("Error in GET /api/admin/products:", err); // Log the server-side error
-        res.status(500).json({ error: err.message });
+    if (search) {
+      sql += ` AND (Name LIKE ? OR Description LIKE ? OR Brand LIKE ?)`;
+      params.push(`%${search}%`, `%${search}%`, `%${search}%`);
     }
+
+    if (category) {
+      sql += ` AND Category = ?`;
+      params.push(category);
+    }
+    const [rows] = await pool.query(sql, params);
+    // convert image to base64
+    rows.forEach(product => {
+      if (product.Image) {
+        product.Image = Buffer.from(product.Image).toString('base64');
+      }
+    });
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /**
  * Admin POST - Add product
  */
-app.post('/api/admin/products', upload.single('Image'), async (req, res) => {
-    try {
-        const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
-        const Image = req.file ? req.file.buffer : null;
 
-        const sql = `
-            INSERT INTO products (Name, Description, Category, Brand, Price, Stock, Image, IsActive)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-        await pool.query(sql, [Name, Description, Category, Brand, Price, Stock, Image, IsActive]);
+app.post('/admin/products', upload.single('Image'), async (req, res) => {
+  try {
+    const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
+    const Image = req.file ? req.file.buffer : null;
 
-        res.sendStatus(200);
-    } catch (err) {
-        console.error("Error in POST /api/admin/products:", err); // Log the server-side error
-        res.status(500).json({ error: err.message });
-    }
+    const sql = `
+      INSERT INTO products (Name, Description, Category, Brand, Price, Stock, Image, IsActive)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    await pool.query(sql, [Name, Description, Category, Brand, Price, Stock, Image, IsActive]);
+
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /**
  * Admin PUT - Update product
  */
-app.put('/api/admin/products/:id', upload.single('Image'), async (req, res) => {
-    try {
-        const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
-        const Image = req.file ? req.file.buffer : null;
-        const { id } = req.params;
+app.put('/admin/products/:id', upload.single('Image'), async (req, res) => {
+  try {
+    const { Name, Description, Category, Brand, Price, Stock, IsActive = 1 } = req.body;
+    const Image = req.file ? req.file.buffer : null;
+    const { id } = req.params;
 
-        const sql = Image
-            ? `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, Image=?, IsActive=? WHERE ProductID=?`
-            : `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, IsActive=? WHERE ProductID=?`;
+    const sql = Image
+      ? `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, Image=?, IsActive=? WHERE ProductID=?`
+      : `UPDATE products SET Name=?, Description=?, Category=?, Brand=?, Price=?, Stock=?, IsActive=? WHERE ProductID=?`;
 
-        const values = Image
-            ? [Name, Description, Category, Brand, Price, Stock, Image, IsActive, id]
-            : [Name, Description, Category, Brand, Price, Stock, IsActive, id];
+    const values = Image
+      ? [Name, Description, Category, Brand, Price, Stock, Image, IsActive, id]
+      : [Name, Description, Category, Brand, Price, Stock, IsActive, id];
 
-        await pool.query(sql, values);
-        res.sendStatus(200);
-    } catch (err) {
-        console.error("Error in PUT /api/admin/products/:id:", err); // Log the server-side error
-        res.status(500).json({ error: err.message });
-    }
+    await pool.query(sql, values);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 /**
  * Admin - del product
  */
-app.delete('/api/admin/products/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
 
-        const [result] = await pool.query(
-            'DELETE FROM products WHERE ProductID = ?',
-            [id]
-        );
+app.delete('/admin/products/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ error: 'Product not found' });
-        }
+    const [result] = await pool.query(
+      'DELETE FROM products WHERE ProductID = ?',
+      [id]
+    );
 
-        res.sendStatus(200);
-    } catch (err) {
-        console.error("Error in DELETE /api/admin/products/:id:", err); // Log the server-side error
-        res.status(500).json({ error: err.message });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Product not found' });
     }
+
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 
