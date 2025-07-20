@@ -7,22 +7,26 @@
     <title>Client Dashboard - E-Fitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
-  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100 font-sans">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg"
+    >
       <div>
-                <!-- Logo + Title -->
-                <a href="client-dashboard.html"
-                    class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
-                    <img
-                        src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                        alt="Gym Logo"
-                        class="w-10 h-10 rounded-full object-cover shadow-md" />
-                    <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                        Client</h2>
-                </a>
+        <!-- Logo + Title -->
+        <a
+          href="client-dashboard.html"
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition"
+        >
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md"
+          />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+        </a>
 
         <!-- Navigation -->
         <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
@@ -179,58 +183,530 @@
 
     <main class="flex-1 p-8 overflow-auto">
       <header class="mb-8 flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
+        <h1 class="text-3xl font-extrabold text-red-800">Welcome Back, Client!</h1>
+        <button
+          id="logoutBtn"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+        >
+          Logout
+        </button>
       </header>
 
-      <section class="bg-white p-6 rounded shadow border mb-6">
-        <h2 class="text-xl font-semibold text-red-600 mb-4">Fitness Store</h2>
-        <div id="productGrid" class="grid grid-cols-2 gap-4">
-          <!-- Each item: Name, Brand, Price, Stock, Add to cart -->
+      <section class="bg-white p-6 rounded-xl shadow-2xl border border-red-200 mb-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-red-700">Fitness Store</h2>
+          <button
+            id="viewCartBtn"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2 transform hover:scale-105"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.5 14 6.382 14H18a1 1 0 000-2H6.382c-.322 0-.64-.08-.9-.236l-.664-3.322a10.855 10.855 0 01.358-.59c.563-.845 1.127-1.69 1.69-2.535l-.266-.266C6.152 4.103 6.643 3 7.643 3h-.177a1 1 0 000 2h.177c.414 0 .799.206 1.052.53l.43 1.077c.365.91-.018 1.954-.954 2.21A3.998 3.998 0 009 10a1 1 0 00-.777.369L7.54 11.455a1 1 0 00-.305.719v.001c-.001.272.105.53.305.719l1.69 1.69a1 1 0 001.414 0l1.69-1.69c.2-.2.306-.447.305-.719v-.001a1 1 0 00-.305-.719l-1.69-1.69a1 1 0 00-1.414 0zM12 7.5a.5.5 0 011 0v.5h.5a.5.5 0 010 1H13v.5a.5.5 0 01-1 0v-.5h-.5a.5.5 0 010-1H12v-.5z"
+              />
+              <path
+                fill-rule="evenodd"
+                d="M5.474 10.428l-.342-1.366A1 1 0 015.658 8h10.684a1 1 0 01.526 1.96l-1.366.342c-.08.02-.16.03-.242.03-.497 0-.974-.216-1.309-.607l-1.69-2.09c-.2-.25-.49-.393-.79-.393H10.5c-.3 0-.59.143-.79.393L8.024 8.65c-.335.391-.812.607-1.309.607-.082 0-.162-.01-.242-.03z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            View Cart
+          </button>
+        </div>
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <!-- Products will be loaded here -->
         </div>
       </section>
-
     </main>
 
     <script>
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-      const res = await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
+      document.addEventListener('DOMContentLoaded', () => {
+        const productGrid = document.getElementById('productGrid');
+        const viewCartBtn = document.getElementById('viewCartBtn');
+        let currentCart = []; // To keep track of the cart on the frontend
 
-      const result = await res.json();
+        // Function to fetch products
+        async function fetchProducts() {
+          try {
+            console.log('Attempting to fetch products from /api/products');
+            const response = await fetch('/api/products', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include', // Important for sending cookies/session
+            });
 
-      if (result.success) {
-        await Swal.fire({
-          icon: 'success',
-          title: 'Logged out',
-          text: result.message,
-          timer: 2000,
-          showConfirmButton: false
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.error(
+                'Failed to fetch products:',
+                response.status,
+                errorData
+              );
+              throw new Error(
+                errorData.message || 'Failed to fetch products.'
+              );
+            }
+
+            const data = await response.json();
+            console.log('Products fetched successfully:', data);
+            displayProducts(data.products);
+          } catch (error) {
+            console.error('Error in fetchProducts:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error.message || 'Could not load products.',
+            });
+          }
+        }
+
+        // Function to display products
+        function displayProducts(products) {
+          productGrid.innerHTML = ''; // Clear existing products
+          if (products.length === 0) {
+            productGrid.innerHTML =
+              '<p class="col-span-full text-center text-gray-500 text-lg py-10">No products available at the moment. Please check back later!</p>';
+            return;
+          }
+
+          products.forEach((product) => {
+            // Ensure product.Price is a number before using toFixed
+            const displayPrice = typeof product.Price === 'number'
+              ? product.Price.toFixed(2)
+              : parseFloat(product.Price).toFixed(2); // Fallback conversion
+
+            console.log(`DEBUG: Product ${product.Name} - Price (before display): ${product.Price}, Type: ${typeof product.Price}, Displayed: ${displayPrice}`);
+
+
+            const productCard = document.createElement('div');
+            productCard.className =
+              'bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center border border-red-100 transform hover:-translate-y-1';
+            productCard.innerHTML = `
+              <img src="${
+                product.Image || 'https://placehold.co/300x200/FEE2E2/B91C1C?text=Product+Image'
+              }" alt="${
+              product.Name
+            }" class="w-full h-40 object-cover rounded-lg mb-4 border border-red-200 shadow-sm" />
+              <h3 class="text-xl font-bold text-red-800 mb-1">${
+                product.Name
+              }</h3>
+              <p class="text-gray-600 text-sm mb-2">Brand: <span class="font-semibold">${
+                product.Brand
+              }</span></p>
+              <p class="text-red-700 font-extrabold text-2xl mb-3">BDT ${displayPrice}</p>
+              <p class="text-gray-500 text-sm mb-4">Stock: <span class="font-bold ${
+                product.Stock > 0 ? 'text-green-600' : 'text-red-600'
+              }">${product.Stock}</span> available</p>
+              <button data-product-id="${
+                product.ProductID
+              }" data-product-name="${
+              product.Name
+            }" data-product-price="${
+              parseFloat(product.Price) // Ensure this is a number when stored in data-attribute
+            }" data-product-stock="${
+              product.Stock
+            }" class="add-to-cart-btn bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300 transform hover:scale-105 shadow-md ${
+              product.Stock === 0 ? 'opacity-50 cursor-not-allowed' : ''
+            }" ${product.Stock === 0 ? 'disabled' : ''}>
+                Add to Cart
+              </button>
+            `;
+            productGrid.appendChild(productCard);
+          });
+
+          // Add event listeners to "Add to Cart" buttons
+          document.querySelectorAll('.add-to-cart-btn').forEach((button) => {
+            button.addEventListener('click', handleAddToCart);
+          });
+        }
+
+        // Function to add product to cart
+        async function handleAddToCart(event) {
+          const button = event.target;
+          const productId = parseInt(button.dataset.productId);
+          const productName = button.dataset.productName;
+          const productPrice = parseFloat(button.dataset.productPrice); // Ensure it's parsed as float
+          const productStock = parseInt(button.dataset.productStock);
+
+          // Prompt for quantity
+          const { value: quantityInput } = await Swal.fire({
+            title: `Add "${productName}" to cart`,
+            input: 'number',
+            inputValue: 1, // Default quantity
+            inputLabel: 'Quantity',
+            inputPlaceholder: 'Enter quantity',
+            showCancelButton: true,
+            confirmButtonText: 'Add',
+            cancelButtonText: 'Cancel',
+            inputValidator: (value) => {
+              if (!value || parseInt(value) <= 0) {
+                return 'Please enter a valid quantity.';
+              }
+              if (parseInt(value) > productStock) {
+                return `Only ${productStock} in stock.`;
+              }
+            },
+          });
+
+          if (quantityInput) {
+            const quantity = parseInt(quantityInput);
+            try {
+              console.log(
+                `Attempting to add product ${productId} (Qty: ${quantity}) to cart.`
+              );
+              const response = await fetch('/api/cart/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ productId, quantity }),
+              });
+
+              const data = await response.json();
+
+              if (data.success) {
+                console.log('Product added to cart successfully:', data.cart);
+                currentCart = data.cart; // Update frontend cart
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Added to Cart!',
+                  text: `${quantity} x ${productName} added to your cart.`,
+                  timer: 1500,
+                  showConfirmButton: false,
+                });
+                fetchProducts(); // Refresh product list to show updated stock
+              } else {
+                console.error('Failed to add to cart:', data);
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: data.message || 'Failed to add product to cart.',
+                });
+              }
+            } catch (error) {
+              console.error('Error adding to cart:', error);
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Network error or server unavailable.',
+              });
+            }
+          }
+        }
+
+        // Function to fetch and display cart in a modal
+        viewCartBtn.addEventListener('click', async () => {
+          try {
+            console.log('Attempting to fetch cart contents.');
+            const response = await fetch('/api/cart', {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+            });
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              console.error(
+                'Failed to fetch cart:',
+                response.status,
+                errorData
+              );
+              throw new Error(errorData.message || 'Failed to fetch cart.');
+            }
+
+            const data = await response.json();
+            currentCart = data.cart; // Update frontend cart
+            console.log('Cart fetched successfully:', currentCart);
+            displayCartModal(currentCart);
+          } catch (error) {
+            console.error('Error fetching cart:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: error.message || 'Could not load cart.',
+            });
+          }
         });
 
-        window.location.href = 'login.html';
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Logout Failed',
-          text: result.message || 'Something went wrong!'
+        function displayCartModal(cart) {
+          let cartContentHtml = '<div class="text-left">';
+          let totalAmount = 0;
+
+          if (cart.length === 0) {
+            cartContentHtml += '<p class="text-center text-gray-500 text-lg py-5">Your cart is empty. Start shopping!</p>';
+          } else {
+            cartContentHtml += `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qty</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subtotal</th>
+                            <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+            `;
+            cart.forEach((item) => {
+              // Ensure item.price is a number before using toFixed
+              const itemPrice = typeof item.price === 'number'
+                ? item.price
+                : parseFloat(item.price); // Fallback conversion
+
+              const itemSubtotal = item.quantity * itemPrice;
+
+              console.log(`DEBUG: Cart Item ${item.name} - Price (before display): ${item.price}, Type: ${typeof item.price}, Converted: ${itemPrice}`);
+
+              totalAmount += itemSubtotal;
+              cartContentHtml += `
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${
+                          item.name
+                        }</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${
+                          item.quantity
+                        }</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BDT ${itemPrice.toFixed(2)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">BDT ${itemSubtotal.toFixed(
+                          2
+                        )}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <button data-product-id="${
+                              item.productId
+                            }" class="remove-from-cart-btn text-red-600 hover:text-red-900 transition duration-200">Remove</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            cartContentHtml += `
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="px-6 py-4 text-right text-base font-extrabold text-gray-900">Total:</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-base font-extrabold text-red-700">BDT ${totalAmount.toFixed(
+                              2
+                            )}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            `;
+          }
+          cartContentHtml += '</div>';
+
+          Swal.fire({
+            title: 'Your Shopping Cart',
+            html: cartContentHtml,
+            width: '800px',
+            showCancelButton: cart.length > 0,
+            confirmButtonText: cart.length > 0 ? 'Proceed to Payment' : 'OK',
+            cancelButtonText: 'Continue Shopping',
+            customClass: {
+              container: 'swal2-container-custom', // Custom class for styling
+            },
+            didOpen: () => {
+              document.querySelectorAll('.remove-from-cart-btn').forEach(btn => {
+                btn.addEventListener('click', async (event) => {
+                  const productId = parseInt(event.target.dataset.productId);
+                  await handleRemoveFromCart(productId);
+                  // After removal, re-fetch and re-display cart to reflect changes
+                  const response = await fetch('/api/cart', { method: 'GET', headers: { 'Content-Type': 'application/json' }, credentials: 'include' });
+                  const data = await response.json();
+                  currentCart = data.cart;
+                  displayCartModal(currentCart); // Re-open the modal with updated cart
+                });
+              });
+            }
+          }).then((result) => {
+            if (result.isConfirmed && cart.length > 0) {
+              displayPaymentModal(totalAmount);
+            }
+          });
+        }
+
+        // Function to remove item from cart
+        async function handleRemoveFromCart(productId) {
+          try {
+            console.log(`Attempting to remove product ${productId} from cart.`);
+            const response = await fetch('/api/cart/remove', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify({ productId }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              console.log('Product removed successfully:', data.cart);
+              currentCart = data.cart; // Update frontend cart
+              Swal.fire({
+                icon: 'success',
+                title: 'Removed!',
+                text: 'Product removed from cart.',
+                timer: 1000,
+                showConfirmButton: false,
+              });
+            } else {
+              console.error('Failed to remove from cart:', data);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: data.message || 'Failed to remove product from cart.',
+              });
+            }
+          } catch (error) {
+            console.error('Error removing from cart:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Network error or server unavailable.',
+            });
+          }
+        }
+
+
+        // Function to display payment modal
+        function displayPaymentModal(totalAmount) {
+          Swal.fire({
+            title: 'Proceed to Payment',
+            html: `
+                <div class="text-left">
+                    <p class="text-lg font-bold mb-4">Total Amount: <span class="text-red-600">BDT ${totalAmount.toFixed(
+                      2
+                    )}</span></p>
+                    <label for="paymentMethod" class="block text-gray-700 text-sm font-bold mb-2">Select Payment Method:</label>
+                    <select id="paymentMethod" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">-- Select --</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Card">Card</option>
+                        <option value="Bkash">Bkash</option>
+                        <option value="Nagad">Nagad</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            `,
+            confirmButtonText: 'Pay Now',
+            showCancelButton: true,
+            cancelButtonText: 'Go Back to Cart',
+            focusConfirm: false,
+            preConfirm: () => {
+              const paymentMethod =
+                Swal.getPopup().querySelector('#paymentMethod').value;
+              if (!paymentMethod) {
+                Swal.showValidationMessage('Please select a payment method.');
+              }
+              return { paymentMethod: paymentMethod };
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+              handlePurchase(result.value.paymentMethod);
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+              displayCartModal(currentCart); // Go back to cart modal
+            }
+          });
+        }
+
+        // Function to handle purchase
+        async function handlePurchase(paymentMethod) {
+          try {
+            console.log(`Attempting to complete purchase with ${paymentMethod}.`);
+            const response = await fetch('/api/purchase', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+              body: JSON.stringify({ paymentMethod }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              console.log('Purchase successful:', data);
+              currentCart = []; // Clear frontend cart
+              Swal.fire({
+                icon: 'success',
+                title: 'Order Placed!',
+                html: `
+                  <p>Your order (ID: <strong>${data.orderId}</strong>) has been placed successfully!</p>
+                  <p>Total Paid: <strong>BDT ${data.totalAmount}</strong></p>
+                  <p class="mt-2 text-sm text-gray-600">Thank you for your purchase!</p>
+                `,
+                confirmButtonText: 'Great!',
+              });
+              fetchProducts(); // Refresh product list to show updated stock
+            } else {
+              console.error('Purchase failed:', data);
+              Swal.fire({
+                icon: 'error',
+                title: 'Purchase Failed',
+                text: data.message || 'Something went wrong during purchase.',
+              });
+            }
+          } catch (error) {
+            console.error('Error during purchase:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'Network error or server unavailable during purchase.',
+            });
+          }
+        }
+
+        // Initial fetch of products when the page loads
+        fetchProducts();
+
+        // Logout functionality (from original HTML)
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+          try {
+            const res = await fetch('/logout', {
+              method: 'POST',
+              credentials: 'include',
+              headers: { 'Content-Type': 'application/json' },
+            });
+
+            const result = await res.json();
+
+            if (result.success) {
+              await Swal.fire({
+                icon: 'success',
+                title: 'Logged out',
+                text: result.message,
+                timer: 2000,
+                showConfirmButton: false,
+              });
+
+              window.location.href = 'login.html';
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Logout Failed',
+                text: result.message || 'Something went wrong!',
+              });
+            }
+          } catch (err) {
+            console.error('Logout failed:', err);
+            Swal.fire({
+              icon: 'error',
+              title: 'Logout Error',
+              text: 'Logout request failed.',
+            });
+          }
         });
-      }
-    } catch (err) {
-      console.error('Logout failed:', err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Logout Error',
-        text: 'Logout request failed.'
       });
-    }
-  });
-</script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    </script>
   </body>
 </html>
