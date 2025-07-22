@@ -10,163 +10,101 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
     />
+    <style>
+      /* Custom CSS for table borders and hover effects */
+      #attendanceTable td, #attendanceTable th {
+        border-right: 1px solid #e5e7eb; /* Light gray border for columns */
+      }
+      #attendanceTable tr:last-child td {
+        border-bottom: 1px solid #e5e7eb; /* Bottom border for the last row */
+      }
+      #attendanceTable tr:hover {
+        background-color: #fef2f2; /* Light red background on hover */
+      }
+    </style>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between"
-    >
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
       <div>
         <a href="trainer-dashboard.html" class="block">
           <div
-            class="flex items-center gap-3 mb-8 hover:opacity-80 transition"
-          >
+            class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
             <img
               src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
               alt="Trainer Logo"
-              class="w-10 h-10 rounded-full object-cover shadow-md"
-            />
-            <h2 class="text-2xl font-bold text-red-700">E-Fitness Trainer</h2>
+              class="w-10 h-10 rounded-full object-cover shadow-md" />
+            <h2 class="text-2xl font-bold text-red-700">E-Fitness
+              Trainer</h2>
           </div>
         </a>
 
         <nav class="flex flex-col space-y-3">
-          <a
-            href="trainer-reg-and-profile.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-reg-and-profile.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"
-              />
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
             Profile Management
           </a>
-          <a
-            href="trainer-Diet-Plan-Management.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-Diet-Plan-Management.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 17v-2a4 4 0 014-4h4"
-              />
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
             </svg>
             Diet Plan Management
           </a>
-          <a
-            href="trainer-Workout-Plan-Management.html"
-            class="flex items-center gap-3 text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-Workout-Plan-Management.html"
+            class="flex items-center gap-3 text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 17v-2a4 4 0 014-4h4"
-              />
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
             </svg>
             Workout Plan Management
           </a>
-          <a
-            href="trainer-client-management.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-client-management.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M7 8h10M7 12h8m-8 4h6"
-              />
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
             </svg>
             Client Overview & Management
           </a>
-          <a
-            href="trainer-attendance-monitor.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-host-virtualclass.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
-                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01"
-              />
-            </svg>
-            Attendance and Progress Monitoring
-          </a>
-          <a
-            href="trainer-host-virtualclass.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01"
-              />
+                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
             </svg>
             Virtual Classes
           </a>
-          <a
-            href="trainer-feedback.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+          <a href="trainer-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
-                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z"
-              />
+                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
             </svg>
             Feedback
           </a>
@@ -175,21 +113,14 @@
 
       <button
         onclick="window.location.href='../login.html';"
-        class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="inline w-5 h-5 mr-2 -mb-1"
-          fill="none"
+        class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
           viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round"
             stroke-width="2"
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"
-          />
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
         </svg>
         Logout
       </button>
@@ -197,524 +128,937 @@
 
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
       <header class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
+        <h1 class="text-3xl font-bold text-red-800">Client
+          attendance records, progress and personalized goal management</h1>
         <div class="flex items-center gap-4">
-          <button
-            id="notifBtn"
+          <button id="notifBtn"
             onclick="window.location.href='trainer-noti.html';"
-            class="relative text-gray-700 hover:text-red-600"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-6 w-6"
+            class="relative text-gray-700 hover:text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
               fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
-                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2"
-              />
+                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
             </svg>
             <span
-              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"
-            ></span>
+              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
           </button>
         </div>
       </header>
 
       <div class="bg-white shadow-md rounded-lg p-6">
-        <h2 class="text-2xl font-bold text-red-700 mb-4">Client Fitness Goals</h2>
+        <h2 class="text-2xl font-bold text-red-700 mb-4"></h2>
 
-        <div class="mb-6 flex justify-between items-center">
-          <input
-            id="searchInput"
-            type="number"
-            placeholder="Search by Client ID..."
-            class="border p-2 rounded-md w-1/3 focus:outline-none focus:ring-2 focus:ring-red-300"
-          />
-          <button
-            onclick="openAddGoalModal()"
-            class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
-          >
-            Send New Goal (Global)
-          </button>
+        <div class="mb-4 flex justify-between items-center">
+          <input id="searchInput" type="text"
+            placeholder="Search by Client ID, Name or Email..."
+            class="border p-2 rounded-md w-1/3 focus:outline-none focus:ring-2 focus:ring-red-300">
+            <button
+                id="sendUniversalGoalBtn"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
+            >
+                Send Universal Goal to All Clients
+            </button>
         </div>
 
-        <div id="clientsGoalsContainer" class="flex flex-col gap-4">
-          <div class="flex-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <h3 class="text-xl font-bold text-red-600 mb-4">Male Clients</h3>
-            <div id="maleClientsGoals" class="flex flex-col gap-4">
-            </div>
-          </div>
-
-          <div class="flex-1 bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <h3 class="text-xl font-bold text-red-600 mb-4">Female Clients</h3>
-            <div id="femaleClientsGoals" class="flex flex-col gap-4">
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-red-100 text-red-800">
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">ID</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Profile</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Full
+                  Name</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last Check-In</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last Check-Out</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Method</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Attendance
+                  Count</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">History</th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Goals & Progress</th>
+              </tr>
+            </thead>
+            <tbody id="attendanceTable"
+              class="bg-white divide-y divide-gray-100 text-sm">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="clientModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
+          <button onclick="closeModal('clientModal')"
+            class="absolute top-2 right-2 text-gray-600 hover:text-red-600">&times;</button>
+          <h2 class="text-xl font-semibold text-red-700 mb-4">Client
+            Details</h2>
+          <div class="flex gap-4 items-start">
+            <img id="modalProfilePic" src alt="Profile Picture"
+              class="w-24 h-24 rounded-full object-cover border">
+            <div>
+              <p><strong>ID:</strong> <span
+                  id="modalClientID"></span></p>
+              <p><strong>Name:</strong> <span
+                  id="modalFullName"></span></p>
+              <p><strong>Email:</strong> <span
+                  id="modalEmail"></span></p>
+              <p><strong>Phone:</strong> <span
+                  id="modalPhone"></span></p>
+              <p><strong>Gender:</strong> <span
+                  id="modalGender"></span></p>
+              <p><strong>DOB:</strong> <span
+                  id="modalDOB"></span></p>
+              <p><strong>Address:</strong> <span
+                  id="modalAddress"></span></p>
+              <p><strong>City:</strong> <span
+                  id="modalCity"></span></p>
+              <p><strong>Country:</strong> <span
+                  id="modalCountry"></span></p>
+              <p><strong>Date Joined:</strong> <span
+                  id="modalDateJoined"></span></p>
             </div>
           </div>
         </div>
       </div>
 
-      <div
-        id="clientModal"
-        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 p-4"
-      >
+      <div id="checkInHistoryModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
+          <button onclick="closeModal('checkInHistoryModal')"
+            class="absolute top-2 right-2 text-gray-600 hover:text-red-600">&times;</button>
+          <h2 class="text-xl font-semibold text-red-700 mb-4">Check-In History
+            for <span id="checkInClientName" class="font-bold"></span></h2>
+          <div class="overflow-y-auto max-h-80">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-red-100 text-red-800">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Time</th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Method</th>
+                </tr>
+              </thead>
+              <tbody id="checkInHistoryTableBody"
+                class="bg-white divide-y divide-gray-100 text-sm">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="checkOutHistoryModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+        <div class="bg-white rounded-xl shadow-lg w-full max-w-lg p-6 relative">
+          <button onclick="closeModal('checkOutHistoryModal')"
+            class="absolute top-2 right-2 text-gray-600 hover:text-red-600">&times;</button>
+          <h2 class="text-xl font-semibold text-red-700 mb-4">Check-Out History
+            for <span id="checkOutClientName" class="font-bold"></span></h2>
+          <div class="overflow-y-auto max-h-80">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-red-100 text-red-800">
+                <tr>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Time</th>
+                  <th
+                    class="px-6 py-3 text-left text-xs font-semibold uppercase">Method</th>
+                </tr>
+              </thead>
+              <tbody id="checkOutHistoryTableBody"
+                class="bg-white divide-y divide-gray-100 text-sm">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Goal Details Modal (Re-introduced as a separate modal) -->
+      <div id="viewGoalsModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50 p-4">
         <div
-          class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative transform transition-all scale-100 opacity-100"
-        >
+          class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 relative transform transition-all scale-100 opacity-100">
           <button
-            onclick="closeModal()"
+            onclick="closeModal('viewGoalsModal')"
             class="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-3xl font-semibold leading-none"
           >
             &times;
           </button>
-
           <h2 class="text-3xl font-bold text-red-700 mb-6 border-b pb-3">
-            Client Profile
+            Goals for <span id="viewGoalsClientName"></span>
           </h2>
+          <div id="clientGoalsContainer" class="overflow-x-auto max-h-[60vh]">
+            <p id="noGoalsMessage" class="text-center text-gray-500 py-4 hidden">No goals set for this client.</p>
+            <table class="min-w-full divide-y divide-gray-200" id="goalsTable">
+              <thead class="bg-red-100 text-red-800">
+                <tr>
+                  <th class="px-4 py-2 text-left">Goal</th>
+                  <th class="px-4 py-2 text-left">Description</th>
+                  <th class="px-4 py-2 text-left">Target Date</th>
+                  <th class="px-4 py-2 text-left">Progress</th>
+                  <th class="px-4 py-2 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-100 text-sm" id="goalsTableBody">
+                <!-- Goals will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="text-right mt-6">
+            <button onclick="openAddGoalModal(currentViewedClientId)" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+                Send New Goal to This Client
+            </button>
+          </div>
+        </div>
+      </div>
 
-          <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
-            <div class="flex-shrink-0">
-              <img
-                id="modalProfilePic"
-                src="https://via.placeholder.com/150"
-                alt="Profile Picture"
-                class="w-32 h-32 rounded-full object-cover border-4 border-red-200 shadow-md"
-              />
+
+      <div id="clientDetailsModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-70 hidden flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div
+          class="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 ease-out">
+          <div
+            class="flex justify-between items-center p-6 border-b border-gray-200 bg-red-50">
+            <h3 class="text-2xl font-bold text-red-700"
+              id="modalClientName"></h3>
+            <button id="closeModalBtn"
+              class="text-gray-500 hover:text-gray-800 transition-colors duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7"
+                fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div
+              class="bg-red-50 p-5 rounded-lg shadow-sm border border-red-100">
+              <h4
+                class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Client Information
+              </h4>
+              <div class="flex items-center mb-5">
+                <img id="modalClientDetailsProfilePic"
+                  src="https://via.placeholder.com/150"
+                  alt="Profile"
+                  class="w-24 h-24 rounded-full object-cover mr-4 border-4 border-red-300 shadow-md">
+                <div>
+                  <p class="text-gray-800 text-xl font-extrabold"
+                    id="modalClientDetailsFullName"></p>
+                  <p class="text-gray-600 text-md"
+                    id="modalClientDetailsEmail"></p>
+                </div>
+              </div>
+              <div class="space-y-2 text-gray-700">
+                <p><strong>Gender:</strong> <span
+                    id="modalClientDetailsGender"></span></p>
+                <p><strong>Date of Birth:</strong> <span
+                    id="modalClientDetailsDOB"></span></p>
+                <p><strong>Address:</strong> <span
+                    id="modalClientDetailsAddress"></span>,
+                  <span id="modalClientDetailsCity"></span>, <span
+                    id="modalClientDetailsCountry"></span></p>
+                <p><strong>Phone:</strong> <span
+                    id="modalClientDetailsPhone"></span></p>
+                <p><strong>Joined:</strong> <span
+                    id="modalClientDetailsDateJoined"></span></p>
+              </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-lg flex-grow">
-              <p><strong>Client ID:</strong> <span id="modalClientID" class="text-gray-700"></span></p>
-              <p><strong>Full Name:</strong> <span id="modalFullName" class="text-gray-700"></span></p>
-              <p><strong>Email:</strong> <span id="modalEmail" class="text-gray-700"></span></p>
-              <p><strong>Phone:</strong> <span id="modalPhone" class="text-gray-700"></span></p>
-              <p><strong>Gender:</strong> <span id="modalGender" class="text-gray-700"></span></p>
-              <p><strong>Date of Birth:</strong> <span id="modalDOB" class="text-gray-700"></span></p>
-              <p class="col-span-1 sm:col-span-2">
-                <strong>Address:</strong> <span id="modalAddress" class="text-gray-700"></span>
-              </p>
-              <p><strong>City:</strong> <span id="modalCity" class="text-gray-700"></span></p>
-              <p><strong>Country:</strong> <span id="modalCountry" class="text-gray-700"></span></p>
-              <p><strong>Date Joined:</strong> <span id="modalDateJoined" class="text-gray-700"></span></p>
+            <div
+              class="bg-red-50 p-5 rounded-lg shadow-sm border border-red-100 max-h-[350px] overflow-y-auto">
+              <h4
+                class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Recent Workouts
+              </h4>
+              <div id="modalClientWorkouts" class="space-y-4">
+                <p class="text-gray-500 text-center py-4">No workout records
+                  found.</p>
+              </div>
+            </div>
+
+            <div
+              class="bg-red-50 p-5 rounded-lg shadow-sm border border-red-100 lg:col-span-2 max-h-[400px] overflow-y-auto">
+              <h4
+                class="text-xl font-bold text-red-600 mb-4 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
+                  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Progress Snapshots
+              </h4>
+              <div id="modalClientProgress"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <p class="text-gray-500 text-center col-span-full py-4">No
+                  progress snapshots found.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      let allClients = []; // all data loaded on page load
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+        let allClients = []; // Stores all client data
+        let allGoals = []; // Stores all goals for all clients
+        let currentViewedClientId = null; // To keep track of the client whose goals are currently viewed
 
-      // Define your base URL for profile pictures.
-      // IMPORTANT: Replace this with the actual base URL where your client profile pictures are stored.
-      // If your backend already returns full absolute URLs, you can set this to an empty string or null.
-      const BASE_PROFILE_PIC_URL = 'http://localhost:3000'; // Example: 'https://yourdomain.com/uploads/profile_pics' or 'http://yourbackend.com'
+        document.addEventListener("DOMContentLoaded", () => {
+            // Initial data fetch
+            fetchAttendanceAndGoals();
 
-      // Fetch all clients + goals once
-      async function fetchAllGoals() {
-        try {
-          const res = await fetch('/trainer/goals', { credentials: 'include' });
-          const json = await res.json();
+            // Search filter
+            document.getElementById("searchInput").addEventListener("input", function () {
+                const value = this.value.toLowerCase();
+                const rows = document.querySelectorAll("#attendanceTable tr");
+                rows.forEach(row => {
+                    const clientId = row.cells[0]?.textContent.toLowerCase() || '';
+                    const fullName = row.cells[2]?.textContent.toLowerCase() || '';
+                    const matches = clientId.includes(value) || fullName.includes(value);
+                    row.style.display = matches ? "" : "none";
+                });
+            });
 
-          if (!json.success) {
-            Swal.fire('Error', json.message, 'error');
-            return;
-          }
+            // Universal Goal Button Event Listener
+            document.getElementById('sendUniversalGoalBtn').addEventListener('click', () => {
+                openAddGoalModal(null); // Call with null clientId for universal goal
+            });
 
-          allClients = json.data;
-          displayGoals(allClients);
-        } catch (err) {
-          console.error(err);
-          Swal.fire('Error', 'Failed to fetch goals.', 'error');
-        }
-      }
+            // Close modal event listeners (existing)
+            const clientDetailsModal = document.getElementById('clientDetailsModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
 
-      // Display filtered clients + goals
-      function displayGoals(clients) {
-        const maleContainer = document.getElementById('maleClientsGoals');
-        const femaleContainer = document.getElementById('femaleClientsGoals');
-        maleContainer.innerHTML = '';
-        femaleContainer.innerHTML = '';
+            closeModalBtn.addEventListener('click', () => {
+                closeModal('clientDetailsModal');
+            });
 
-        if (clients.length === 0) {
-          maleContainer.innerHTML = `<p class="text-center text-gray-500 col-span-full">No male clients or goals found.</p>`;
-          femaleContainer.innerHTML = `<p class="text-center text-gray-500 col-span-full">No female clients or goals found.</p>`;
-          return;
-        }
-
-        clients.forEach((client) => {
-          const clientCard = document.createElement('div');
-          clientCard.className = 'bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200';
-          clientCard.id = `client-${client.ClientID}`;
-
-          const hasGoals = client.goals && client.goals.length > 0;
-          const defaultProfilePic = 'https://via.placeholder.com/100'; // Default placeholder
-
-          // Construct the image source URL.
-          // If client.ProfilePic is a relative path, prepend BASE_PROFILE_PIC_URL.
-          // If client.ProfilePic is already a full URL, this concatenation will still work.
-          const profilePicSrc = client.ProfilePic
-            ? BASE_PROFILE_PIC_URL + client.ProfilePic // This line is fixed
-            : defaultProfilePic;
-
-
-          clientCard.innerHTML = `
-            <div class="flex items-center justify-between cursor-pointer py-2" >
-                <div class="flex items-center gap-3" onclick="toggleGoalsVisibility(${client.ClientID})">
-                    <img src="${profilePicSrc}" alt="Profile Picture" class="w-16 h-16 rounded-full object-cover border-2 border-red-300">
-                    <div>
-                        <h3 class="text-xl font-semibold text-red-700">
-                            ${client.FullName || 'N/A'}
-                            <span class="text-gray-500 text-sm">(ID: ${client.ClientID})</span>
-                        </h3>
-                        <p class="text-gray-600">${client.Email || 'N/A'}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="openAddGoalModal(${
-                      client.ClientID
-                    })" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-sm">
-                        Send Goal
-                    </button>
-                    <button class="text-gray-500 hover:text-red-600 focus:outline-none" onclick="toggleGoalsVisibility(${
-                      client.ClientID
-                    })">
-                        <svg class="w-6 h-6 transform transition-transform" id="arrow-${
-                          client.ClientID
-                        }" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                </div>
-            </div>
-            <div id="goals-${client.ClientID}" class="mt-4 overflow-x-auto hidden">
-                ${
-                  hasGoals
-                    ? `
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-red-100 text-red-800">
-                            <tr>
-                                <th class="px-4 py-2 text-left">Goal</th>
-                                <th class="px-4 py-2 text-left">Description</th>
-                                <th class="px-4 py-2 text-left">Target Date</th>
-                                <th class="px-4 py-2 text-left">Progress</th>
-                                <th class="px-4 py-2 text-left">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-100 text-sm">
-                            ${client.goals
-                              .map(
-                                (goal) => `
-                                <tr>
-                                    <td class="px-4 py-2">${goal.GoalTitle}</td>
-                                    <td class="px-4 py-2">${
-                                      goal.GoalDescription || '-'
-                                    }</td>
-                                    <td class="px-4 py-2">${
-                                      goal.TargetDate
-                                        ? new Date(
-                                              goal.TargetDate,
-                                            ).toLocaleDateString()
-                                        : '-'
-                                    }</td>
-                                    <td class="px-4 py-2">
-                                        ${
-                                          goal.IsAchieved === 1
-                                            ? `<span class="text-green-600 font-semibold">Completed</span>`
-                                            : `<div class="w-full bg-gray-200 rounded-full h-4">
-                                                    <div class="bg-yellow-400 h-4 rounded-full animate-pulse" style="width: 100%"></div>
-                                                </div>`
-                                        }
-                                    </td>
-                                    <td class="px-4 py-2">
-                                        <button class="text-blue-600 hover:underline" onclick="editGoal(${
-                                          goal.GoalID
-                                        })">Edit</button>
-                                        <button class="text-red-600 hover:underline ml-2" onclick="deleteGoal(${
-                                          goal.GoalID
-                                        })">Delete</button>
-                                    </td>
-                                </tr>
-                                `,
-                              )
-                              .join('')}
-                        </tbody>
-                    </table>`
-                    : `<p class="px-4 py-2 text-center text-gray-500">No goals set for this client.</p>`
+            clientDetailsModal.addEventListener('click', (event) => {
+                if (event.target === clientDetailsModal) {
+                    closeModal('clientDetailsModal');
                 }
-                <div class="text-right mt-4">
-                    <button onclick="openClientModal(${client.ClientID})" class="text-sm bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600">View Client Details</button>
-                </div>
-            </div>
-          `;
-          if (client.Gender && client.Gender.toLowerCase() === 'male') {
-            maleContainer.appendChild(clientCard);
-          } else if (client.Gender && client.Gender.toLowerCase() === 'female') {
-            femaleContainer.appendChild(clientCard);
-          }
+            });
+
+            // Close viewGoalsModal
+            const viewGoalsModal = document.getElementById('viewGoalsModal');
+            viewGoalsModal.addEventListener('click', (event) => {
+                if (event.target === viewGoalsModal) {
+                    closeModal('viewGoalsModal');
+                }
+            });
         });
 
-        if (maleContainer.children.length === 0) {
-            maleContainer.innerHTML = `<p class="text-center text-gray-500">No male clients or goals found.</p>`;
-        }
-        if (femaleContainer.children.length === 0) {
-            femaleContainer.innerHTML = `<p class="text-center text-gray-500">No female clients or goals found.</p>`;
-        }
-      }
-
-      function toggleGoalsVisibility(clientId) {
-        const goalsDiv = document.getElementById(`goals-${clientId}`);
-        const arrowIcon = document.getElementById(`arrow-${clientId}`);
-        if (goalsDiv.classList.contains('hidden')) {
-          goalsDiv.classList.remove('hidden');
-          arrowIcon.classList.add('rotate-180');
-        } else {
-          goalsDiv.classList.add('hidden');
-          arrowIcon.classList.remove('rotate-180');
-        }
-      }
-
-      // Live search filter by ClientID
-      document.getElementById('searchInput').addEventListener('input', function () {
-        const filterVal = this.value.trim();
-
-        if (filterVal === '') {
-          displayGoals(allClients);
-          return;
-        }
-
-        // Filter clients by ClientID startsWith or equals (number)
-        const filtered = allClients.filter((client) =>
-          client.ClientID.toString().startsWith(filterVal),
-        );
-        displayGoals(filtered);
-      });
-
-      // Open modal with client details (professionally designed)
-      function openClientModal(clientId) {
-        const client = allClients.find((c) => c.ClientID === clientId);
-        if (!client) {
-          Swal.fire('Error', 'Client not found.', 'error');
-          return;
-        }
-
-        const defaultProfilePic = 'https://via.placeholder.com/150'; // Larger default placeholder
-
-        // Construct the image source URL for the modal.
-        // If client.ProfilePic is a relative path, prepend BASE_PROFILE_PIC_URL.
-        const modalProfilePicSrc = client.ProfilePic
-          ? BASE_PROFILE_PIC_URL + client.ProfilePic // This line is fixed
-          : defaultProfilePic;
-
-        document.getElementById('modalProfilePic').src = modalProfilePicSrc;
-        document.getElementById('modalClientID').textContent = client.ClientID || 'N/A';
-        document.getElementById('modalFullName').textContent =
-          client.FullName || 'N/A';
-        document.getElementById('modalEmail').textContent = client.Email || 'N/A';
-        document.getElementById('modalPhone').textContent = client.Phone || 'N/A';
-        document.getElementById('modalGender').textContent = client.Gender || 'N/A';
-        document.getElementById('modalDOB').textContent = client.DOB
-          ? new Date(client.DOB).toLocaleDateString()
-          : 'N/A';
-        document.getElementById('modalAddress').textContent =
-          client.Address || 'N/A';
-        document.getElementById('modalCity').textContent = client.City || 'N/A';
-        document.getElementById('modalCountry').textContent =
-          client.Country || 'N/A';
-        document.getElementById('modalDateJoined').textContent = client.DateJoined
-          ? new Date(client.DateJoined).toLocaleDateString()
-          : 'N/A';
-
-        document.getElementById('clientModal').classList.remove('hidden');
-        document.getElementById('clientModal').classList.add('flex');
-      }
-
-      function closeModal() {
-        document.getElementById('clientModal').classList.add('hidden');
-        document.getElementById('clientModal').classList.remove('flex');
-      }
-
-      async function editGoal(goalId) {
-        const goal = allClients
-          .flatMap((c) => c.goals)
-          .find((g) => g.GoalID === goalId);
-        if (!goal) return Swal.fire('Error', 'Goal not found', 'error');
-
-        const { value: formValues } = await Swal.fire({
-          title: 'Edit Goal',
-          html:
-            `<input id="swal-title" class="swal2-input" placeholder="Title" value="${
-              goal.GoalTitle || ''
-            }">` +
-            `<textarea id="swal-desc" class="swal2-textarea" placeholder="Description">${
-              goal.GoalDescription || ''
-            }</textarea>` +
-            `<input id="swal-start" type="date" class="swal2-input" value="${
-              goal.TargetDate?.split('T')[0] || ''
-            }">` +
-            `<label style="display:block;margin-top:10px;">Is Achieved?</label>` +
-            `<select id="swal-achieved" class="swal2-input">
-                <option value="0" ${goal.IsAchieved == 0 ? 'selected' : ''}>No</option>
-                <option value="1" ${goal.IsAchieved == 1 ? 'selected' : ''}>Yes</option>
-            </select>`,
-          focusConfirm: false,
-          showCancelButton: true, // Add cancel button
-          confirmButtonText: 'Save Changes',
-          cancelButtonText: 'Cancel',
-          preConfirm: () => {
-            const title = document.getElementById('swal-title').value;
-            const date = document.getElementById('swal-start').value;
-
-            if (!title) {
-              Swal.showValidationMessage('Goal Title cannot be empty.');
-              return false;
+        // Helper function to find a goal by ID across all clients' nested goals
+        function findGoalById(goalId) {
+            for (const clientWithGoals of allGoals) { // allGoals contains client objects with nested goals
+                const foundGoal = clientWithGoals.goals.find(goal => goal.GoalID === goalId);
+                if (foundGoal) {
+                    return foundGoal;
+                }
             }
-            if (!date) {
-              Swal.showValidationMessage('Target Date cannot be empty.');
-              return false;
+            return null;
+        }
+
+        // Fetches all attendance records, client details, and all goals
+        async function fetchAttendanceAndGoals() {
+            try {
+                const [attendanceResponse, clientsResponse, attendanceCountResponse, goalsResponse] = await Promise.all([
+                    fetch('/trainer/view/attendance', { method: 'GET', credentials: 'include' }),
+                    fetch('/api/clients', { method: 'GET', credentials: 'include' }),
+                    fetch('/trainer/attendance/count', { method: 'GET', credentials: 'include' }),
+                    fetch('/trainer/goals', { method: 'GET', credentials: 'include' }) // Fetch all clients with their nested goals
+                ]);
+
+                const attendanceData = await attendanceResponse.json();
+                const clientsData = await clientsResponse.json();
+                const attendanceCountData = await attendanceCountResponse.json();
+                const goalsData = await goalsResponse.json(); // This now contains clientsWithGoals
+
+                if (!attendanceResponse.ok || !clientsResponse.ok || !attendanceCountResponse.ok || !goalsResponse.ok) {
+                    throw new Error('Failed to fetch required data');
+                }
+
+                const clientMap = new Map();
+                if (clientsData.success && clientsData.clients) {
+                    clientsData.clients.forEach(client => {
+                        clientMap.set(client.ClientID, client);
+                    });
+                }
+                allClients = Array.from(clientMap.values()); // Store all clients globally
+
+                const attendanceCountMap = new Map();
+                if (attendanceCountData.success && attendanceCountData.counts) {
+                    attendanceCountData.counts.forEach(item => {
+                        attendanceCountMap.set(item.ClientID, item.AttendanceCount);
+                    });
+                }
+
+                // Store all goals as the clientsWithGoals structure
+                if (goalsData.success && goalsData.data) {
+                    allGoals = goalsData.data; // allGoals now holds the array of client objects, each with a 'goals' array
+                }
+
+                renderAttendance(attendanceData, clientMap, attendanceCountMap);
+
+            } catch (error) {
+                console.error("Failed to fetch attendance, client, or goal data:", error);
+                Swal.fire('Error', 'Failed to load data. Please check network and server status.', 'error');
             }
-            if (new Date(date) < new Date()) {
-              Swal.showValidationMessage('Target Date cannot be in the past.');
-              return false;
+        }
+
+        function renderAttendance(attendanceRecords, clientMap, attendanceCountMap) {
+            const tableBody = document.getElementById("attendanceTable");
+            tableBody.innerHTML = "";
+
+            // Create a map for latest attendance records for quick lookup
+            const latestAttendanceMap = new Map();
+            attendanceRecords.sort((a, b) => new Date(b.CheckInTime) - new Date(a.CheckInTime)); // Sort to get latest first
+            attendanceRecords.forEach(record => {
+                if (!latestAttendanceMap.has(record.ClientID)) {
+                    latestAttendanceMap.set(record.ClientID, record);
+                }
+            });
+
+            if (clientMap.size === 0) {
+                tableBody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-gray-500">No client records found.</td></tr>`;
+                return;
             }
 
-            return {
-              GoalTitle: title,
-              GoalDescription: document.getElementById('swal-desc').value,
-              TargetDate: date,
-              IsAchieved: parseInt(document.getElementById('swal-achieved').value),
+            // Iterate over all clients, even those without attendance records
+            Array.from(clientMap.values()).sort((a, b) => a.ClientID - b.ClientID).forEach(client => {
+                const record = latestAttendanceMap.get(client.ClientID);
+
+                const profilePicSrc = client && client.ProfilePic
+                                    ? `data:image/jpeg;base64,${client.ProfilePic}`
+                                    : 'https://via.placeholder.com/40';
+
+                const fullName = client.FullName;
+                const attendanceCount = attendanceCountMap.get(client.ClientID) || 0;
+
+                const checkInTime = record ? formatDateTime(record.CheckInTime) : '-';
+                const checkOutTime = record ? formatDateTime(record.CheckOutTime) : '-';
+                const method = record ? record.Method : '-';
+
+                const row = document.createElement("tr");
+                row.className = "hover:bg-red-50"; 
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-red-600">${client.ClientID}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap cursor-pointer" onclick="fetchClientDetails(${client.ClientID})">
+                        <img src="${profilePicSrc}" alt="Profile" class="w-10 h-10 rounded-full object-cover border border-red-200">
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-gray-800 cursor-pointer" onclick="fetchClientDetails(${client.ClientID})">${fullName}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${checkInTime}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${checkOutTime}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${method}</td>
+                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-red-700">${attendanceCount}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <button onclick="viewCheckInHistory(${client.ClientID}, '${fullName}')" class="text-blue-600 hover:underline text-xs mr-2">Check-In</button>
+                        <button onclick="viewCheckOutHistory(${client.ClientID}, '${fullName}')" class="text-green-600 hover:underline text-xs">Check-Out</button>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                        <div class="flex flex-col space-y-2 items-center">
+                            <button onclick="openAddGoalModal(${client.ClientID})" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded text-xs w-full">Send Goal</button>
+                            <button onclick="openViewGoalsModal(${client.ClientID}, '${fullName}')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded text-xs w-full">View Goals</button>
+                            <button onclick="fetchClientDetails(${client.ClientID})" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-1 px-3 rounded text-xs w-full">Goal Progress</button>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function formatDateTime(datetime) {
+            if (!datetime) return '-';
+            const date = new Date(datetime);
+            const options = {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: true,
+                timeZone: 'Asia/Dhaka'
             };
-          },
-        });
-
-        if (!formValues) return; // User clicked cancel or dismissed
-
-        try {
-          const res = await fetch(`/trainer/goals/${goalId}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            credentials: 'include',
-            body: JSON.stringify(formValues),
-          });
-
-          const result = await res.json();
-          if (result.success) {
-            Swal.fire('Updated!', result.message, 'success');
-            fetchAllGoals();
-          } else {
-            Swal.fire('Error', result.message, 'error');
-          }
-        } catch (err) {
-          console.error(err);
-          Swal.fire('Error', 'Failed to update goal', 'error');
+            return date.toLocaleString('en-US', options);
         }
-      }
 
-      async function deleteGoal(goalId) {
-        const confirmResult = await Swal.fire({
-          title: 'Are you sure?',
-          text: 'This goal will be permanently deleted!',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonText: 'Yes, delete it!',
-          cancelButtonText: 'Cancel',
-        });
-
-        if (!confirmResult.isConfirmed) return;
-
-        try {
-          const res = await fetch(`/trainer/goals/${goalId}`, {
-            method: 'DELETE',
-            credentials: 'include',
-          });
-
-          const result = await res.json();
-          if (result.success) {
-            Swal.fire('Deleted!', result.message, 'success');
-            fetchAllGoals();
-          } else {
-            Swal.fire('Error', result.message, 'error');
-          }
-        } catch (err) {
-          console.error(err);
-          Swal.fire('Error', 'Failed to delete goal', 'error');
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modalId === 'clientDetailsModal') {
+                modal.querySelector('div.transform').classList.remove('scale-100');
+                modal.querySelector('div.transform').classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                }, 300);
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
-      }
 
-      async function openAddGoalModal(clientId = null) {
-        const { value: formValues } = await Swal.fire({
-          title: 'Send New Goal',
-          html:
-            `<input id="swal-client" type="number" class="swal2-input" placeholder="Client ID" value="${
-              clientId || ''
-            }" ${clientId ? 'readonly' : ''}>` + // Pre-fill if clientId is provided
-            `<input id="swal-title" class="swal2-input" placeholder="Goal Title">` +
-            `<textarea id="swal-desc" class="swal2-textarea" placeholder="Goal Description"></textarea>` +
-            `<input id="swal-date" type="date" class="swal2-input" placeholder="Target Date">`,
-          focusConfirm: false,
-          showCancelButton: true, // Add cancel button
-          confirmButtonText: 'Send Goal',
-          cancelButtonText: 'Cancel',
-          preConfirm: () => {
-            const clientID = parseInt(document.getElementById('swal-client').value);
-            const title = document.getElementById('swal-title').value;
-            const date = document.getElementById('swal-date').value;
+        async function fetchClientDetails(clientId) {
+            console.log(`Attempting to view client details for Client ID: ${clientId}`);
+            currentViewedClientId = clientId; // Set the current viewed client ID
 
-            if (isNaN(clientID) || clientID <= 0) {
-              Swal.showValidationMessage('Please enter a valid Client ID.');
-              return false;
+            try {
+                const response = await fetch(`/api/clients/${clientId}/details`, { credentials: 'include' });
+                const result = await response.json();
+
+                console.log('Client details fetch result:', result);
+
+                if (result.success) {
+                    const client = result.client;
+                    document.getElementById('modalClientName').textContent = client.FullName;
+                    document.getElementById('modalClientDetailsProfilePic').src = client.ProfilePic ? `data:image/jpeg;base64,${client.ProfilePic}` : 'https://via.placeholder.com/150';
+                    document.getElementById('modalClientDetailsFullName').textContent = client.FullName;
+                    document.getElementById('modalClientDetailsEmail').textContent = client.Email;
+                    document.getElementById('modalClientDetailsGender').textContent = client.Gender;
+                    document.getElementById('modalClientDetailsDOB').textContent = client.DOB ? new Date(client.DOB).toLocaleDateString() : '';
+                    document.getElementById('modalClientDetailsAddress').textContent = client.Address;
+                    document.getElementById('modalClientDetailsCity').textContent = client.City;
+                    document.getElementById('modalClientDetailsCountry').textContent = client.Country;
+                    document.getElementById('modalClientDetailsPhone').textContent = client.Phone;
+                    document.getElementById('modalClientDetailsDateJoined').textContent = client.DateJoined ? new Date(client.DateJoined).toLocaleDateString() : '';
+
+                    // Populate workouts
+                    const modalClientWorkouts = document.getElementById('modalClientWorkouts');
+                    modalClientWorkouts.innerHTML = '';
+                    if (result.workouts && result.workouts.length > 0) {
+                        result.workouts.forEach(workout => {
+                            const workoutDiv = document.createElement('div');
+                            workoutDiv.className = 'bg-white p-3 rounded-md shadow-sm border border-red-100 last:border-b-0';
+                            workoutDiv.innerHTML = `
+                                <p class="font-semibold text-gray-800">Workout on ${new Date(workout.DatePerformed).toLocaleDateString()}</p>
+                                <p class="text-sm text-gray-600">Sets: ${workout.SetsDone}, Reps: ${workout.RepsDone}, Weight: ${workout.WeightUsedKg} kg</p>
+                                <p class="text-sm text-gray-600">Notes: ${workout.TrainerNotes}</p>
+                            `;
+                            modalClientWorkouts.appendChild(workoutDiv);
+                        });
+                    } else {
+                        modalClientWorkouts.innerHTML = '<p class="text-gray-500 text-center py-4">No workout records found.</p>';
+                    }
+
+                    // Populate progress snapshots
+                    const modalClientProgress = document.getElementById('modalClientProgress');
+                    modalClientProgress.innerHTML = '';
+                    if (result.progressSnapshots && result.progressSnapshots.length > 0) {
+                        result.progressSnapshots.forEach(snapshot => {
+                            const snapshotDiv = document.createElement('div');
+                            snapshotDiv.className = 'bg-white rounded-lg shadow-sm p-4 flex flex-col items-center text-center border border-red-100';
+                            snapshotDiv.innerHTML = `
+                                <div class="w-full h-48 mb-3 overflow-hidden rounded-md flex items-center justify-center bg-gray-100 border border-gray-200">
+                                    <img src="${snapshot.ProgressImage ? `data:image/jpeg;base64,${snapshot.ProgressImage}` : 'https://via.placeholder.com/200x150?text=No+Image'}"
+                                        alt="Progress Image" class="object-contain h-full w-full">
+                                </div>
+                                <p class="font-semibold text-gray-800">Date: ${new Date(snapshot.DateTaken).toLocaleDateString()}</p>
+                                <p class="text-sm text-gray-600">Weight: ${snapshot.WeightKg} kg, Body Fat: ${snapshot.BodyFatPercent}%</p>
+                                <p class="text-sm text-gray-600">BMI: ${snapshot.BMI}</p>
+                                <p class="text-sm text-gray-600">Notes: ${snapshot.Notes}</p>
+                            `;
+                            modalClientProgress.appendChild(snapshotDiv);
+                        });
+                    } else {
+                        modalClientProgress.innerHTML = '<p class="text-gray-500 text-center col-span-full py-4">No progress snapshots found.</p>';
+                    }
+
+                    console.log('Opening clientDetailsModal...');
+                    document.getElementById('clientDetailsModal').classList.add('flex');
+                    document.getElementById('clientDetailsModal').classList.remove('hidden');
+                    document.getElementById('clientDetailsModal').querySelector('div.transform').classList.add('scale-100');
+                    document.getElementById('clientDetailsModal').querySelector('div.transform').classList.remove('scale-95');
+                    console.log('clientDetailsModal opened.');
+
+                } else {
+                    console.error('API response indicated failure:', result.message);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: result.message || 'Failed to fetch client details.',
+                        confirmButtonColor: '#ef4444'
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching client details:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Failed to fetch client details. Please try again later.',
+                    confirmButtonColor: '#ef4444'
+                });
             }
-            if (!title.trim()) {
-              Swal.showValidationMessage('Goal Title cannot be empty.');
-              return false;
+        };
+
+        async function viewCheckInHistory(clientId, clientName) {
+            try {
+                const res = await fetch(`/trainer/client/${clientId}/checkin-history`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const historyData = await res.json();
+
+                if (!res.ok || historyData.error) {
+                    throw new Error(historyData.error || 'Failed to fetch check-in history');
+                }
+
+                const tableBody = document.getElementById('checkInHistoryTableBody');
+                tableBody.innerHTML = '';
+                document.getElementById('checkInClientName').textContent = clientName;
+
+                if (historyData.success && historyData.records.length > 0) {
+                    historyData.records.sort((a, b) => new Date(b.CheckInTime) - new Date(a.CheckInTime));
+
+                    historyData.records.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.className = "hover:bg-red-50";
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap">${formatDateTime(record.CheckInTime)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${record.Method}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-4 text-gray-500">No check-in history found.</td></tr>`;
+                }
+
+                document.getElementById('checkInHistoryModal').classList.remove('hidden');
+                document.getElementById('checkInHistoryModal').classList.add('flex');
+            } catch (error) {
+                console.error("Failed to fetch check-in history:", error);
+                Swal.fire('Error', `Could not fetch check-in history for ${clientName}.`, 'error');
             }
-            if (!date) {
-              Swal.showValidationMessage('Target Date cannot be empty.');
-              return false;
-            }
-            if (new Date(date) < new Date()) {
-              Swal.showValidationMessage('Target Date cannot be in the past.');
-              return false;
-            }
-
-            return {
-              ClientID: clientID,
-              GoalTitle: title,
-              GoalDescription: document.getElementById('swal-desc').value,
-              TargetDate: date,
-              IsAchieved: 0,
-            };
-          },
-        });
-
-        if (!formValues) return; // User clicked cancel or dismissed
-
-        try {
-          const res = await fetch('/trainer/new/goals', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(formValues),
-          });
-
-          const result = await res.json();
-          if (result.success) {
-            Swal.fire('Success', result.message, 'success');
-            fetchAllGoals();
-          } else {
-            Swal.fire('Error', result.message, 'error');
-          }
-        } catch (err) {
-          console.error(err);
-          Swal.fire('Error', 'Failed to send goal', 'error');
         }
-      }
 
-      window.addEventListener('DOMContentLoaded', fetchAllGoals);
-    </script>
-  </body>
-</html>
+        async function viewCheckOutHistory(clientId, clientName) {
+            try {
+                const res = await fetch(`/trainer/client/${clientId}/checkout-history`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const historyData = await res.json();
+
+                if (!res.ok || historyData.error) {
+                    throw new Error(historyData.error || 'Failed to fetch check-out history');
+                }
+
+                const tableBody = document.getElementById('checkOutHistoryTableBody');
+                tableBody.innerHTML = '';
+                document.getElementById('checkOutClientName').textContent = clientName;
+
+                if (historyData.success && historyData.records.length > 0) {
+                     historyData.records.sort((a, b) => new Date(b.CheckOutTime) - new Date(a.CheckOutTime));
+
+                    historyData.records.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.className = "hover:bg-red-50";
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap">${formatDateTime(record.CheckOutTime)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${record.Method}</td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="2" class="text-center py-4 text-gray-500">No check-out history found.</td></tr>`;
+                }
+
+                document.getElementById('checkOutHistoryModal').classList.remove('hidden');
+                document.getElementById('checkOutHistoryModal').classList.add('flex');
+            } catch (error) {
+                console.error("Failed to fetch check-out history:", error);
+                Swal.fire('Error', `Could not fetch check-out history for ${clientName}.`, 'error');
+            }
+        }
+
+        // --- Goal Management Functions (Adapted from trainer-client-management.html) ---
+
+        async function openAddGoalModal(clientId = null) {
+            const isUniversal = clientId === null;
+            const titleText = isUniversal ? 'Send Universal Goal' : 'Send New Goal';
+            // Conditionally include client ID input based on whether it's a universal goal
+            const clientInputHtml = isUniversal
+                ? `` // No client ID input for universal goal
+                : `<input id="swal-client" type="number" class="swal2-input" value="${clientId}" readonly>`;
+
+            const { value: formValues } = await Swal.fire({
+                title: titleText,
+                html:
+                    clientInputHtml +
+                    `<input id="swal-title" class="swal2-input" placeholder="Goal Title">` +
+                    `<textarea id="swal-desc" class="swal2-textarea" placeholder="Goal Description"></textarea>` +
+                    `<input id="swal-date" type="date" class="swal2-input" placeholder="Target Date">`,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Send Goal',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    // For universal goals, ClientID is not taken from input
+                    const clientID = isUniversal ? null : parseInt(document.getElementById('swal-client').value);
+                    const title = document.getElementById('swal-title').value;
+                    const date = document.getElementById('swal-date').value;
+
+                    if (!isUniversal && (isNaN(clientID) || clientID <= 0)) {
+                        Swal.showValidationMessage('Please enter a valid Client ID.');
+                        return false;
+                    }
+                    if (!title.trim()) {
+                        Swal.showValidationMessage('Goal Title cannot be empty.');
+                        return false;
+                    }
+                    if (!date) {
+                        Swal.showValidationMessage('Target Date cannot be empty.');
+                        return false;
+                    }
+                    if (new Date(date) < new Date()) {
+                        Swal.showValidationMessage('Target Date cannot be in the past.');
+                        return false;
+                    }
+
+                    return {
+                        ClientID: clientID, // Will be null for universal, handled in the next step
+                        GoalTitle: title,
+                        GoalDescription: document.getElementById('swal-desc').value,
+                        TargetDate: date,
+                        IsAchieved: 0,
+                    };
+                },
+            });
+
+            if (!formValues) return;
+
+            if (isUniversal) {
+                // Send universal goal to all clients
+                try {
+                    const allClientIds = allClients.map(client => client.ClientID);
+                    let successCount = 0;
+                    let errorCount = 0;
+
+                    for (const clientID of allClientIds) {
+                        const payload = { ...formValues, ClientID: clientID }; // Assign ClientID for each client
+                        const res = await fetch('/trainer/new/goals', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify(payload),
+                        });
+                        const result = await res.json();
+                        if (result.success) {
+                            successCount++;
+                        } else {
+                            errorCount++;
+                            console.error(`Failed to send goal to Client ID ${clientID}: ${result.message}`);
+                        }
+                    }
+                    Swal.fire('Universal Goal Sent!', `Successfully sent to ${successCount} clients. Failed for ${errorCount} clients.`, 'success');
+                    fetchAttendanceAndGoals(); // Re-fetch all data to update UI
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire('Error', 'Failed to send universal goal.', 'error');
+                }
+            } else {
+                // Send individual goal
+                try {
+                    const res = await fetch('/trainer/new/goals', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify(formValues),
+                    });
+
+                    const result = await res.json();
+                    if (result.success) {
+                        Swal.fire('Success', result.message, 'success');
+                        fetchAttendanceAndGoals(); // Re-fetch all data to update UI
+                        // If the client details modal is open for this client, refresh its goal section
+                        if (currentViewedClientId === formValues.ClientID) {
+                            openViewGoalsModal(currentViewedClientId, allClients.find(c => c.ClientID === currentViewedClientId)?.FullName || 'Client');
+                        }
+                    } else {
+                        Swal.fire('Error', result.message, 'error');
+                    }
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire('Error', 'Failed to send goal', 'error');
+                }
+            }
+        }
+
+        async function openViewGoalsModal(clientId, clientName) {
+            currentViewedClientId = clientId; // Store the client ID
+            document.getElementById('viewGoalsClientName').textContent = clientName;
+            const goalsTableBody = document.getElementById('goalsTableBody');
+            const noGoalsMessage = document.getElementById('noGoalsMessage');
+            goalsTableBody.innerHTML = ''; // Clear previous goals
+
+            // Find the client object that contains the goals for the current clientId
+            const clientDataWithGoals = allGoals.find(client => client.ClientID === clientId);
+
+            if (clientDataWithGoals && clientDataWithGoals.goals && clientDataWithGoals.goals.length > 0) {
+                noGoalsMessage.classList.add('hidden');
+                document.getElementById('goalsTable').classList.remove('hidden');
+                clientDataWithGoals.goals.forEach(goal => { // Iterate over the found client's goals
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-4 py-2">${goal.GoalTitle}</td>
+                        <td class="px-4 py-2">${goal.GoalDescription || '-'}</td>
+                        <td class="px-4 py-2">${goal.TargetDate ? new Date(goal.TargetDate).toLocaleDateString() : '-'}</td>
+                        <td class="px-4 py-2">
+                            ${goal.IsAchieved === 1
+                                ? `<span class="text-green-600 font-semibold">Completed</span>`
+                                : `<div class="w-full bg-gray-200 rounded-full h-4">
+                                        <div class="bg-yellow-400 h-4 rounded-full animate-pulse" style="width: 100%"></div>
+                                    </div>`
+                            }
+                        </td>
+                        <td class="px-4 py-2">
+                            <button class="text-blue-600 hover:underline mr-2" onclick="editGoal(${goal.GoalID})">Edit</button>
+                            <button class="text-red-600 hover:underline" onclick="deleteGoal(${goal.GoalID})">Delete</button>
+                        </td>
+                    `;
+                    goalsTableBody.appendChild(row);
+                });
+            } else {
+                noGoalsMessage.classList.remove('hidden');
+                document.getElementById('goalsTable').classList.add('hidden');
+            }
+
+            document.getElementById('viewGoalsModal').classList.remove('hidden');
+            document.getElementById('viewGoalsModal').classList.add('flex');
+        }
+
+        async function editGoal(goalId) {
+            const goal = findGoalById(goalId); // Use the helper function to find the goal
+            if (!goal) return Swal.fire('Error', 'Goal not found', 'error');
+
+            const { value: formValues } = await Swal.fire({
+                title: 'Edit Goal',
+                html:
+                    `<input id="swal-title" class="swal2-input" placeholder="Title" value="${
+                        goal.GoalTitle || ''
+                    }">` +
+                    `<textarea id="swal-desc" class="swal2-textarea" placeholder="Description">${
+                        goal.GoalDescription || ''
+                    }</textarea>` +
+                    `<input id="swal-date" type="date" class="swal2-input" value="${
+                        goal.TargetDate?.split('T')[0] || ''
+                    }">` +
+                    `<label style="display:block;margin-top:10px;">Is Achieved?</label>` +
+                    `<select id="swal-achieved" class="swal2-input">
+                        <option value="0" ${goal.IsAchieved == 0 ? 'selected' : ''}>No</option>
+                        <option value="1" ${goal.IsAchieved == 1 ? 'selected' : ''}>Yes</option>
+                    </select>`,
+                focusConfirm: false,
+                showCancelButton: true,
+                confirmButtonText: 'Save Changes',
+                cancelButtonText: 'Cancel',
+                preConfirm: () => {
+                    const title = document.getElementById('swal-title').value;
+                    const date = document.getElementById('swal-date').value;
+
+                    if (!title) {
+                        Swal.showValidationMessage('Goal Title cannot be empty.');
+                        return false;
+                    }
+                    if (!date) {
+                        Swal.showValidationMessage('Target Date cannot be empty.');
+                        return false;
+                    }
+                    if (new Date(date) < new Date()) {
+                        Swal.showValidationMessage('Target Date cannot be in the past.');
+                        return false;
+                    }
+
+                    return {
+                        GoalTitle: title,
+                        GoalDescription: document.getElementById('swal-desc').value,
+                        TargetDate: date,
+                        IsAchieved: parseInt(document.getElementById('swal-achieved').value),
+                    };
+                },
+            });
+
+            if (!formValues) return;
+
+            try {
+                const res = await fetch(`/trainer/goals/${goalId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(formValues),
+                });
+
+                const result = await res.json();
+                if (result.success) {
+                    Swal.fire('Updated!', result.message, 'success');
+                    fetchAttendanceAndGoals(); // Re-fetch all data to update UI
+                    if (currentViewedClientId) {
+                        // Refresh the view goals modal if it's open for the same client
+                        openViewGoalsModal(currentViewedClientId, allClients.find(c => c.ClientID === currentViewedClientId)?.FullName || 'Client');
+                    }
+                } else {
+                    Swal.fire('Error', result.message, 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Failed to update goal', 'error');
+            }
+        }
+
+        async function deleteGoal(goalId) {
+            const confirmResult = await Swal.fire({
+                title: 'Are you sure?',
+                text: 'This goal will be permanently deleted!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+            });
+
+            if (!confirmResult.isConfirmed) return;
+
+            try {
+                const res = await fetch(`/trainer/goals/${goalId}`, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                });
+
+                const result = await res.json();
+                if (result.success) {
+                    Swal.fire('Deleted!', result.message, 'success');
+                    fetchAttendanceAndGoals(); // Re-fetch all data to update UI
+                    if (currentViewedClientId) {
+                        // Refresh the view goals modal if it's open for the same client
+                        openViewGoalsModal(currentViewedClientId, allClients.find(c => c.ClientID === currentViewedClientId)?.FullName || 'Client');
+                    }
+                } else {
+                    Swal.fire('Error', result.message, 'error');
+                }
+            } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Failed to delete goal', 'error');
+            }
+        }
+      </script>
+    </body>
+  </html>
