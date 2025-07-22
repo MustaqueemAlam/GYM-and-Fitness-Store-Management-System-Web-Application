@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Client Dashboard - E-Fitness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between"
+    >
+      <div>
+        <!-- Logo + Title -->
+        <a
+          href="client-dashboard.html"
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition"
+        >
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md"
+          />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+        </a>
+
+        <!-- Navigation -->
+        <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
+          <a
+            href="client-reg-and-prof.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: User -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
+              />
+            </svg>
+            Registration & Profile
+          </a>
+          <a
+            href="client-regular-prog-tracker.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Credit Card -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                width="20"
+                height="12"
+                x="2"
+                y="6"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="2"
+                y1="10"
+                x2="22"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Progress Tracker
+          </a>
+          <a
+            href="client-diet-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Calendar -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="18"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="16"
+                y1="2"
+                x2="16"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="8"
+                y1="2"
+                x2="8"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="3"
+                y1="10"
+                x2="21"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Diet Management
+          </a>
+          <a
+            href="client-daily-progress.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Chart Line -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <polyline
+                points="3 17 9 11 13 15 21 7"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></polyline>
+              <circle
+                cx="3"
+                cy="17"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="9"
+                cy="11"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="13"
+                cy="15"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="21"
+                cy="7"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+            </svg>
+            Daily Metrics and Attendance
+          </a>
+          <a
+            href="client-fitness-store.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Shopping Cart -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <circle
+                cx="7"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="17"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+            </svg>
+            Fitness Store
+          </a>
+          <a
+            href="client-subscription-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Document Text -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M9 12h6M9 16h6M13 8h-2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M4 4h16v16H4z"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            Subscription Management
+          </a>
+          <a
+            href="client-fitness-goals.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Target -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+            </svg>
+            Fitness Goals
+          </a>
+          <a
+            href="client-workout-sessions.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Heart -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+            </svg>
+            Workout and sessions
+          </a>
+          <a
+            href="client-virtual-classes.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Newspaper -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Virtual classes
+          </a>
+          <a
+            href="client-Feedback.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Newspaper -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Feedback
+          </a>
+          <a
+            href="client-order-payment.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Newspaper -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Order and Purchase History
+          </a>
+          <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Logout
+          </a>
+        </nav>
+      </div>
+
+      <div class="text-center text-xs text-gray-400 mt-6">
+        &copy; 2025 E-Fitness. All rights reserved.
+      </div>
+    </aside>
+
+    <main class="flex-1 p-8 overflow-auto">
+      <h1 class="text-4xl font-extrabold text-gray-800 mb-8 text-center">
+        Your Order & Payment History
+      </h1>
+
+      <!-- Order History Section -->
+      <section class="bg-white p-6 rounded-xl shadow-lg mb-8">
+        <h2 class="text-2xl font-bold text-red-700 mb-6">Order History</h2>
+        <div id="orderHistoryContainer" class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead class="bg-red-100 text-red-800">
+              <tr>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg"
+                >
+                  Order ID
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Order Date
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Total Amount
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody" class="divide-y divide-gray-200">
+              <!-- Order rows will be inserted here by JavaScript -->
+              <tr>
+                <td colspan="5" class="py-4 px-6 text-center text-gray-500">
+                  Loading orders...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Subscription Payment History Section -->
+      <section class="bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold text-red-700 mb-6">
+          Subscription Payment History
+        </h2>
+        <div id="paymentHistoryContainer" class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead class="bg-red-100 text-red-800">
+              <tr>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg"
+                >
+                  Payment ID
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Subscription ID
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Amount
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Payment Date
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Method
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider"
+                >
+                  Transaction Ref
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTableBody" class="divide-y divide-gray-200">
+              <!-- Payment rows will be inserted here by JavaScript -->
+              <tr>
+                <td colspan="8" class="py-4 px-6 text-center text-gray-500">
+                  Loading payments...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Product Details Modal -->
+      <div id="productDetailsModal" class="modal hidden">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeModal()">&times;</span>
+          <h3 class="text-2xl font-bold text-red-700 mb-4">
+            Product Details for Order <span id="modalOrderId"></span>
+          </h3>
+          <div id="modalProductDetails" class="overflow-x-auto mb-4">
+            <table class="min-w-full bg-white rounded-lg overflow-hidden">
+              <thead class="bg-gray-100 text-gray-700">
+                <tr>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Product Name
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Category
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Brand
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Unit Price
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Quantity
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Subtotal
+                  </th>
+                  <th
+                    class="py-2 px-3 text-left text-xs font-semibold uppercase tracking-wider"
+                  >
+                    Image
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="modalProductTableBody"
+                class="divide-y divide-gray-200"
+              >
+                <!-- Product details will be inserted here -->
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-end">
+            <button
+              onclick="downloadOrderReceipt(document.getElementById('modalOrderId').textContent)"
+              class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-md shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75"
+            >
+              Download Order Receipt (PDF)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div
+        id="loadingSpinner"
+        class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden z-[1001]"
+      >
+        <div
+          class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-red-500"
+        ></div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // Utility functions for UI feedback
+      const showLoading = () =>
+        document.getElementById("loadingSpinner").classList.remove("hidden");
+      const hideLoading = () =>
+        document.getElementById("loadingSpinner").classList.add("hidden");
+
+      const showErrorAlert = (message) => {
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: message,
+          confirmButtonColor: "#dc2626",
+        });
+      };
+
+      const showSuccessAlert = (message) => {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: message,
+          confirmButtonColor: "#10b981",
+        });
+      };
+
+      // Function to format date
+      const formatDate = (dateString) => {
+        if (!dateString) return "N/A";
+        const options = {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+      };
+
+      let currentClientId = null; // Store client ID from session
+
+      // Fetch client session data
+      const fetchClientSession = async () => {
+        try {
+          const response = await fetch("/api/user-session");
+          if (!response.ok) {
+            throw new Error("Failed to fetch session data. Please log in.");
+          }
+          const data = await response.json();
+          if (data.userId && data.userType === "client") {
+            currentClientId = data.userId;
+            console.log("Client ID from session:", currentClientId);
+            // Once client ID is available, fetch orders and payments
+            fetchOrders();
+            fetchPaymentHistory();
+          } else {
+            showErrorAlert("Client session not found. Please log in.");
+            // Redirect to login or handle unauthenticated state
+            window.location.href = "/client-login.html"; // Example redirect
+          }
+        } catch (error) {
+          console.error("Error fetching client session:", error);
+          showErrorAlert(error.message);
+          window.location.href = "/client-login.html"; // Example redirect
+        }
+      };
+
+      // Fetch Order History
+      const fetchOrders = async () => {
+        showLoading();
+        const ordersTableBody = document.getElementById("ordersTableBody");
+        ordersTableBody.innerHTML =
+          '<tr><td colspan="5" class="py-4 px-6 text-center text-gray-500">Loading orders...</td></tr>';
+        try {
+          const response = await fetch(`/api/client/orders`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const orders = await response.json();
+          console.log("Fetched orders:", orders);
+
+          if (orders.length === 0) {
+            ordersTableBody.innerHTML =
+              '<tr><td colspan="5" class="py-4 px-6 text-center text-gray-500">No orders found.</td></tr>';
+            return;
+          }
+
+          ordersTableBody.innerHTML = ""; // Clear loading message
+          orders.forEach((order) => {
+            const row = `
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="py-3 px-4 text-sm text-gray-700">${
+                                  order.OrderID
+                                }</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">${formatDate(
+                                  order.OrderDate
+                                )}</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">$${parseFloat(
+                                  order.TotalAmount
+                                ).toFixed(2)}</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">
+                                    <span class="px-2 py-1 rounded-full text-xs font-semibold
+                                        ${
+                                          order.Status === "Delivered"
+                                            ? "bg-green-100 text-green-800"
+                                            : order.Status === "Shipped"
+                                            ? "bg-blue-100 text-blue-800"
+                                            : order.Status === "Pending"
+                                            ? "bg-yellow-100 text-yellow-800"
+                                            : "bg-red-100 text-red-800"
+                                        }">
+                                        ${order.Status}
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-700">
+                                    <button onclick="showProductDetailsModal(${
+                                      order.OrderID
+                                    })"
+                                            class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-md shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-75">
+                                        View Details
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+            ordersTableBody.innerHTML += row;
+          });
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+          ordersTableBody.innerHTML =
+            '<tr><td colspan="5" class="py-4 px-6 text-center text-red-500">Failed to load orders.</td></tr>';
+          showErrorAlert("Failed to load order history: " + error.message);
+        } finally {
+          hideLoading();
+        }
+      };
+
+      // Show Product Details Modal
+      const showProductDetailsModal = async (orderId) => {
+        showLoading();
+        const modal = document.getElementById("productDetailsModal");
+        const modalOrderId = document.getElementById("modalOrderId");
+        const modalProductTableBody = document.getElementById(
+          "modalProductTableBody"
+        );
+
+        modalOrderId.textContent = orderId;
+        modalProductTableBody.innerHTML =
+          '<tr><td colspan="7" class="py-4 px-6 text-center text-gray-500">Loading product details...</td></tr>';
+        modal.classList.remove("hidden");
+
+        try {
+          const response = await fetch(`/api/client/orders/${orderId}/details`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const products = await response.json();
+          console.log("Fetched product details:", products);
+
+          if (products.length === 0) {
+            modalProductTableBody.innerHTML =
+              '<tr><td colspan="7" class="py-4 px-6 text-center text-gray-500">No products found for this order.</td></tr>';
+            return;
+          }
+
+          modalProductTableBody.innerHTML = ""; // Clear loading message
+          products.forEach((item) => {
+            const subtotal = (
+              parseFloat(item.UnitPrice) * parseInt(item.Quantity)
+            ).toFixed(2);
+            // Determine image source: if base64 image exists, use it; otherwise, use a placeholder
+            const imgSrc = item.Image
+              ? `data:image/jpeg;base64,${item.Image}`
+              : "https://placehold.co/50x50/cccccc/ffffff?text=No+Image";
+            const row = `
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="py-2 px-3 text-sm text-gray-700">${
+                                  item.Name || "N/A"
+                                }</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">${
+                                  item.Category || "N/A"
+                                }</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">${
+                                  item.Brand || "N/A"
+                                }</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">$${parseFloat(
+                                  item.UnitPrice
+                                ).toFixed(2)}</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">${
+                                  item.Quantity
+                                }</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">$${subtotal}</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">
+                                    <img src="${imgSrc}" alt="${
+              item.Name || "Product"
+            } Image" class="w-12 h-12 object-cover rounded-md">
+                                </td>
+                            </tr>
+                        `;
+            modalProductTableBody.innerHTML += row;
+          });
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+          modalProductTableBody.innerHTML =
+            '<tr><td colspan="7" class="py-4 px-6 text-center text-red-500">Failed to load product details.</td></tr>';
+          showErrorAlert("Failed to load product details: " + error.message);
+        } finally {
+          hideLoading();
+        }
+      };
+
+      // Close Product Details Modal
+      const closeModal = () => {
+        document.getElementById("productDetailsModal").classList.add("hidden");
+      };
+
+      // Fetch Subscription Payment History
+      const fetchPaymentHistory = async () => {
+        showLoading();
+        const paymentsTableBody = document.getElementById("paymentsTableBody");
+        paymentsTableBody.innerHTML =
+          '<tr><td colspan="8" class="py-4 px-6 text-center text-gray-500">Loading payments...</td></tr>';
+        try {
+          const response = await fetch(`/api/client/payments`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const payments = await response.json();
+          console.log("Fetched payments:", payments);
+
+          if (payments.length === 0) {
+            paymentsTableBody.innerHTML =
+              '<tr><td colspan="8" class="py-4 px-6 text-center text-gray-500">No subscription payments found.</td></tr>';
+            return;
+          }
+
+          paymentsTableBody.innerHTML = ""; // Clear loading message
+          payments.forEach((payment) => {
+            const row = `
+                            <tr class="hover:bg-gray-50 transition-colors">
+                                <td class="py-3 px-4 text-sm text-gray-700">${
+                                  payment.PaymentID
+                                }</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">${
+                                  payment.SubscriptionID || "N/A"
+                                }</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">$${parseFloat(
+                                  payment.Amount
+                                ).toFixed(2)}</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">${formatDate(
+                                  payment.PaymentDate
+                                )}</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">${
+                                  payment.Method || "N/A"
+                                }</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">
+                                    <span class="px-2 py-1 rounded-full text-xs font-semibold
+                                        ${
+                                          payment.Status === "Completed"
+                                            ? "bg-green-100 text-green-800"
+                                            : payment.Status === "Failed"
+                                            ? "bg-red-100 text-red-800"
+                                            : "bg-yellow-100 text-yellow-800"
+                                        }">
+                                        ${payment.Status}
+                                    </span>
+                                </td>
+                                <td class="py-3 px-4 text-sm text-gray-700">${
+                                  payment.TransactionRef || "N/A"
+                                }</td>
+                                <td class="py-3 px-4 text-sm text-gray-700">
+                                    <button onclick="downloadReceipt(${
+                                      payment.PaymentID
+                                    })"
+                                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-md shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                                        Download Receipt (PDF)
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+            paymentsTableBody.innerHTML += row;
+          });
+        } catch (error) {
+          console.error("Error fetching payments:", error);
+          paymentsTableBody.innerHTML =
+            '<tr><td colspan="8" class="py-4 px-6 text-center text-red-500">Failed to load payments.</td></tr>';
+          showErrorAlert("Failed to load payment history: " + error.message);
+        } finally {
+          hideLoading();
+        }
+      };
+
+      // Download Subscription Receipt as PDF
+      const downloadReceipt = async (paymentId) => {
+        showLoading();
+        try {
+          const response = await fetch(
+            `/api/client/payments/${paymentId}/receipt`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const receiptData = await response.json();
+          console.log("Receipt data:", receiptData);
+
+          if (!receiptData.receiptContent) {
+            showErrorAlert("Receipt content not available.");
+            return;
+          }
+
+          // Initialize jsPDF
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+
+          // Add content to PDF
+          doc.setFontSize(12);
+          const lines = receiptData.receiptContent.split("\n");
+          let y = 20; // Starting Y position
+          const lineHeight = 10;
+
+          lines.forEach((line) => {
+            doc.text(line, 10, y);
+            y += lineHeight;
+          });
+
+          // Save the PDF
+          doc.save(`receipt_payment_${paymentId}.pdf`);
+
+          showSuccessAlert("Receipt downloaded successfully!");
+        } catch (error) {
+          console.error("Error downloading receipt:", error);
+          showErrorAlert("Failed to download receipt: " + error.message);
+        } finally {
+          hideLoading();
+        }
+      };
+
+      // Download Order Receipt as PDF
+      const downloadOrderReceipt = async (orderId) => {
+        showLoading();
+        try {
+          const response = await fetch(`/api/client/orders/${orderId}/receipt`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const receiptData = await response.json();
+          console.log("Order Receipt data:", receiptData);
+
+          if (!receiptData.receiptContent) {
+            showErrorAlert("Order receipt content not available.");
+            return;
+          }
+
+          // Initialize jsPDF
+          const { jsPDF } = window.jspdf;
+          const doc = new jsPDF();
+
+          // Add content to PDF
+          doc.setFontSize(12);
+          const lines = receiptData.receiptContent.split("\n");
+          let y = 20; // Starting Y position
+          const lineHeight = 10;
+
+          lines.forEach((line) => {
+            doc.text(line, 10, y);
+            y += lineHeight;
+          });
+
+          // Save the PDF
+          doc.save(`receipt_order_${orderId}.pdf`);
+
+          showSuccessAlert("Order receipt downloaded successfully!");
+        } catch (error) {
+          console.error("Error downloading order receipt:", error);
+          showErrorAlert("Failed to download order receipt: " + error.message);
+        } finally {
+          hideLoading();
+        }
+      };
+
+      // Event listener for modal close when clicking outside
+      window.onclick = function (event) {
+        const modal = document.getElementById("productDetailsModal");
+        if (event.target == modal) {
+          closeModal();
+        }
+      };
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", fetchClientSession);
+    </script>
+    <script src="client-logout.js"></script>
+  </body>
+</html>

@@ -169,6 +169,76 @@
             </svg>
             Feedback
           </a>
+                    <a href="client-order-payment.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+            <!-- Icon: Newspaper -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
+                stroke-width="2" stroke-linejoin="round"
+                stroke-linecap="round"></rect>
+              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+            </svg>
+            Order and Purchase History
+          </a>
+                    <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Logout
+          </a>
         </nav>
       </div>
 
@@ -206,12 +276,6 @@
     <main class="flex-1 p-8 overflow-auto">
       <header class="mb-8 flex justify-between items-center ">
         <h1 class="text-4xl font-extrabold text-red-700">Subscription Management Dashboard</h1>
-        <button
-          id="logoutBtn"
-          class="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-all duration-300 transform hover:scale-105"
-        >
-          Logout
-        </button>
       </header>
 
       <section class="mt-10">
@@ -493,44 +557,6 @@
         loadPlans();
       });
     </script>
-
-    <script>
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        try {
-          const res = await fetch('/logout', {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-          });
-
-          const result = await res.json();
-
-          if (result.success) {
-            await Swal.fire({
-              icon: 'success',
-              title: 'Logged out',
-              text: result.message,
-              timer: 2000,
-              showConfirmButton: false,
-            });
-
-            window.location.href = '../login.html';
-          } else {
-            Swal.fire({
-              icon: 'error',
-              title: 'Logout Failed',
-              text: result.message || 'Something went wrong!',
-            });
-          }
-        } catch (err) {
-          console.error('Logout failed:', err);
-          Swal.fire({
-            icon: 'error',
-            title: 'Logout Error',
-            text: 'Logout request failed.',
-          });
-        }
-      });
-    </script>
+    <script src="client-logout.js"></script>
   </body>
 </html>

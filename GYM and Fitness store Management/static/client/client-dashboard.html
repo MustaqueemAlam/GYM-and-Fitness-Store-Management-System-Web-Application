@@ -11,162 +11,521 @@
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between"
+    >
       <div>
         <!-- Logo + Title -->
-        <a href="client-dashboard.html"
-          class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
+        <a
+          href="client-dashboard.html"
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition"
+        >
           <img
             src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
             alt="Gym Logo"
-            class="w-10 h-10 rounded-full object-cover shadow-md" />
+            class="w-10 h-10 rounded-full object-cover shadow-md"
+          />
           <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
         </a>
 
         <!-- Navigation -->
         <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-          <a href="client-reg-and-prof.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-reg-and-prof.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: User -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
-                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
+              />
             </svg>
             Registration & Profile
           </a>
-          <a href="client-regular-prog-tracker.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-regular-prog-tracker.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Credit Card -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect width="20" height="12" x="2" y="6" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="2" y1="10" x2="22" y2="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                width="20"
+                height="12"
+                x="2"
+                y="6"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="2"
+                y1="10"
+                x2="22"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Progress Tracker
           </a>
-          <a href="client-diet-management.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-diet-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Calendar -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="18"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="16"
+                y1="2"
+                x2="16"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="8"
+                y1="2"
+                x2="8"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="3"
+                y1="10"
+                x2="21"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Diet Management
           </a>
-          <a href="client-daily-progress.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-daily-progress.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Chart Line -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <polyline points="3 17 9 11 13 15 21 7" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></polyline>
-              <circle cx="3" cy="17" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="9" cy="11" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="13" cy="15" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="21" cy="7" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <polyline
+                points="3 17 9 11 13 15 21 7"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></polyline>
+              <circle
+                cx="3"
+                cy="17"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="9"
+                cy="11"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="13"
+                cy="15"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="21"
+                cy="7"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Daily Metrics and Attendance
           </a>
-          <a href="client-fitness-store.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-fitness-store.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Shopping Cart -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
-              <circle cx="7" cy="21" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="17" cy="21" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <circle
+                cx="7"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="17"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Fitness Store
           </a>
-          <a href="client-subscription-management.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-subscription-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Document Text -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
-              <path d="M4 4h16v16H4z" stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M9 12h6M9 16h6M13 8h-2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M4 4h16v16H4z"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
             </svg>
             Subscription Management
           </a>
-          <a href="client-fitness-goals.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-fitness-goals.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Target -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <circle cx="12" cy="12" r="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="12" cy="12" r="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="12" cy="12" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Fitness Goals
           </a>
-          <a href="client-workout-sessions.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-workout-sessions.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Heart -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
             </svg>
             Workout and sessions
           </a>
-          <a href="client-virtual-classes.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-virtual-classes.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Newspaper -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Virtual classes
           </a>
-          <a href="client-Feedback.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-Feedback.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Newspaper -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Feedback
+          </a>
+          <a
+            href="client-order-payment.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Newspaper -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Order and Purchase History
+          </a>
+          <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Logout
           </a>
         </nav>
       </div>
@@ -183,47 +542,57 @@
         <!-- Notification and Logout Buttons -->
         <div class="flex items-center space-x-4">
           <!-- Notification Button -->
-          <a href="client-noti.html"
-            class="relative p-2 rounded-full bg-white shadow-md hover:bg-red-100 transition">
+          <a
+            href="client-noti.html"
+            class="relative p-2 rounded-full bg-white shadow-md hover:bg-red-100 transition"
+          >
             <!-- Bell Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-600"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-6 h-6 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
                 d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 
               00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 
               .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 
-              11-6 0v-1m6 0H9" />
+              11-6 0v-1m6 0H9"
+              />
             </svg>
 
             <!-- Red Badge -->
             <span
-              class="absolute top-0 right-0 inline-flex items-center justify-center 
-                      w-4 h-4 text-xs font-bold leading-none text-white bg-red-600 
-                      rounded-full transform translate-x-1/2 -translate-y-1/2">
+              class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold leading-none text-white bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2"
+            >
               3
             </span>
           </a>
-          <button id="logoutBtn"
-            class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition">
-            Logout
-          </button>
         </div>
       </header>
 
       <!-- Identity Card -->
       <section
-        class="mb-10 bg-white p-6 rounded shadow-md border border-gray-300 max-w-md">
-        <h2 class="text-xl font-semibold mb-4 text-red-700">Your Identity
-          Card</h2>
+        class="mb-10 bg-white p-6 rounded shadow-md border border-gray-300 max-w-md"
+      >
+        <h2 class="text-xl font-semibold mb-4 text-red-700">
+          Your Identity Card
+        </h2>
         <div class="flex items-center gap-4">
-          <img id="profilePic"
+          <img
+            id="profilePic"
             src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
             alt="User Avatar"
-            class="w-20 h-20 rounded-full border border-red-600" />
+            class="w-20 h-20 rounded-full border border-red-600"
+          />
           <div>
-            <p class="text-lg font-semibold text-gray-800"
-              id="userName">Loading...</p>
+            <p class="text-lg font-semibold text-gray-800" id="userName">
+              Loading...
+            </p>
             <p class="text-gray-600" id="userEmail">Loading email...</p>
             <p class="text-gray-600" id="userId">ID: Loading...</p>
           </div>
@@ -233,16 +602,24 @@
       <!-- Dashboard stats -->
       <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
+        >
           <div class="flex items-center gap-4">
             <div class="p-3 bg-red-100 rounded-full">
               <!-- Icon: User -->
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
-                  stroke-width="2" stroke-linejoin="round"
-                  stroke-linecap="round"></path>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-8 h-8 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></path>
               </svg>
             </div>
             <div>
@@ -255,29 +632,62 @@
             momentum!
           </p>
           <div class="w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-red-600 h-2 rounded-full" style="width: 60%;"></div>
+            <div class="bg-red-600 h-2 rounded-full" style="width: 60%"></div>
           </div>
           <p class="text-xs text-gray-400">60% of weekly goal completed</p>
         </div>
 
         <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
+        >
           <div class="flex items-center gap-4">
             <div class="p-3 bg-red-100 rounded-full">
               <!-- Icon: Chart Line -->
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <polyline points="3 17 9 11 13 15 21 7" stroke-width="2"
-                  stroke-linejoin="round" stroke-linecap="round"></polyline>
-                <circle cx="3" cy="17" r="2" stroke-width="2"
-                  stroke-linejoin="round" stroke-linecap="round"></circle>
-                <circle cx="9" cy="11" r="2" stroke-width="2"
-                  stroke-linejoin="round" stroke-linecap="round"></circle>
-                <circle cx="13" cy="15" r="2" stroke-width="2"
-                  stroke-linejoin="round" stroke-linecap="round"></circle>
-                <circle cx="21" cy="7" r="2" stroke-width="2"
-                  stroke-linejoin="round" stroke-linecap="round"></circle>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-8 h-8 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <polyline
+                  points="3 17 9 11 13 15 21 7"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></polyline>
+                <circle
+                  cx="3"
+                  cy="17"
+                  r="2"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></circle>
+                <circle
+                  cx="9"
+                  cy="11"
+                  r="2"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></circle>
+                <circle
+                  cx="13"
+                  cy="15"
+                  r="2"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></circle>
+                <circle
+                  cx="21"
+                  cy="7"
+                  r="2"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></circle>
               </svg>
             </div>
             <div>
@@ -297,17 +707,24 @@
         </div>
 
         <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300">
+          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
+        >
           <div class="flex items-center gap-4">
             <div class="p-3 bg-red-100 rounded-full">
               <!-- Icon: Bell -->
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-8 h-8 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2"
-                  stroke-width="2" stroke-linejoin="round"
-                  stroke-linecap="round"></path>
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"
+                ></path>
               </svg>
             </div>
             <div>
@@ -325,164 +742,131 @@
             <li>Message from your coach</li>
           </ul>
           <button
-            class="mt-2 px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition">
+            class="mt-2 px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
+          >
             View All
           </button>
         </div>
       </section>
 
       <section class="bg-white p-6 rounded shadow-md mb-10">
-        <h2 class="text-xl font-semibold mb-4 text-red-700">Daily Progress
-          Chart</h2>
+        <h2 class="text-xl font-semibold mb-4 text-red-700">
+          Daily Progress Chart
+        </h2>
         <canvas id="dailyProgressChart" height="150"></canvas>
       </section>
-
     </main>
 
     <script>
-
-    
-    fetch('/profile', {
-      method: 'GET',
-      credentials: 'include'  // 🔥 REQUIRED to send session cookie
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Not authorized or session expired');
-      return res.json();
-    })
-    .then(data => {
-      if (data.success) {
-        const user = data.user;
-        document.getElementById('userName').textContent = user.FullName;
-        document.getElementById('userEmail').textContent = user.Email;
-        document.getElementById('userId').textContent = `ID: ${user.ClientID}`;
-        document.getElementById('welcomeMsg').textContent = `Welcome Back, ${user.FullName}!`;
-      } else {
-        alert(data.message);
-      }
-    })
-  
-
-
-    const ctx = document.getElementById('dailyProgressChart').getContext('2d');
-    const dailyProgressChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-          label: 'Workout Minutes',
-          data: [30, 45, 60, 40, 70, 80, 50],
-          borderColor: '#dc2626',
-          backgroundColor: 'rgba(220, 38, 38, 0.2)',
-          fill: true,
-          tension: 0.3,
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
+      fetch("/profile", {
+        method: "GET",
+        credentials: "include", // 🔥 REQUIRED to send session cookie
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Not authorized or session expired");
+          return res.json();
+        })
+        .then((data) => {
+          if (data.success) {
+            const user = data.user;
+            document.getElementById("userName").textContent = user.FullName;
+            document.getElementById("userEmail").textContent = user.Email;
+            document.getElementById(
+              "userId"
+            ).textContent = `ID: ${user.ClientID}`;
+            document.getElementById(
+              "welcomeMsg"
+            ).textContent = `Welcome Back, ${user.FullName}!`;
+          } else {
+            alert(data.message);
           }
+        });
+
+      const ctx = document
+        .getElementById("dailyProgressChart")
+        .getContext("2d");
+      const dailyProgressChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          datasets: [
+            {
+              label: "Workout Minutes",
+              data: [30, 45, 60, 40, 70, 80, 50],
+              borderColor: "#dc2626",
+              backgroundColor: "rgba(220, 38, 38, 0.2)",
+              fill: true,
+              tension: 0.3,
+            },
+          ],
         },
-        plugins: {
-          legend: {
-            labels: {
-              color: '#b91c1c'
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: "#b91c1c",
+              },
+            },
+          },
+        },
+      });
+    </script>
+    <script>
+      fetch("/profile")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            const user = data.user;
+
+            // Fill form inputs
+            for (const key in user) {
+              const input = document.getElementById(key);
+              if (input && key !== "ProfilePic") {
+                input.value = user[key] ?? "";
+              }
             }
+
+            // Identity Card
+            document.getElementById("userName").textContent =
+              user.FullName ?? "N/A";
+            document.getElementById("userEmail").textContent =
+              user.Email ?? "N/A";
+            document.getElementById("userId").textContent = `ID: ${
+              user.ClientID ?? "N/A"
+            }`;
+
+            // Profile Picture
+            const base64Image = user.ProfilePic;
+            if (base64Image) {
+              const imageSrc = `data:image/jpeg;base64,${base64Image}`;
+              const profilePreview = document.getElementById("profilePreview");
+              const identityPic = document.getElementById("profilePic");
+              if (profilePreview) profilePreview.src = imageSrc;
+              if (identityPic) identityPic.src = imageSrc;
+            }
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: data.message || "Failed to load profile",
+            });
           }
-        }
-      }
-
-
-      
-    });
-  </script>
-    <script>
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-      const res = await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      const result = await res.json();
-
-      if (result.success) {
-        await Swal.fire({
-          icon: 'success',
-          title: 'Logged out',
-          text: result.message,
-          timer: 2000,
-          showConfirmButton: false
+        })
+        .catch((err) => {
+          console.error("Profile fetch error:", err);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Could not load profile data.",
+          });
         });
-
-        window.location.href = '../login.html';
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Logout Failed',
-          text: result.message || 'Something went wrong!'
-        });
-      }
-    } catch (err) {
-      console.error('Logout failed:', err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Logout Error',
-        text: 'Logout request failed.'
-      });
-    }
-  });
-</script>
-    <script>
-fetch('/profile')
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      const user = data.user;
-
-      // Fill form inputs
-      for (const key in user) {
-        const input = document.getElementById(key);
-        if (input && key !== 'ProfilePic') {
-          input.value = user[key] ?? '';
-        }
-      }
-
-      // Identity Card
-      document.getElementById('userName').textContent = user.FullName ?? 'N/A';
-      document.getElementById('userEmail').textContent = user.Email ?? 'N/A';
-      document.getElementById('userId').textContent = `ID: ${user.ClientID ?? 'N/A'}`;
-
-      // Profile Picture
-      const base64Image = user.ProfilePic;
-      if (base64Image) {
-        const imageSrc = `data:image/jpeg;base64,${base64Image}`;
-        const profilePreview = document.getElementById('profilePreview');
-        const identityPic = document.getElementById('profilePic');
-        if (profilePreview) profilePreview.src = imageSrc;
-        if (identityPic) identityPic.src = imageSrc;
-      }
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: data.message || 'Failed to load profile'
-      });
-    }
-  })
-  .catch(err => {
-    console.error('Profile fetch error:', err);
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'Could not load profile data.'
-    });
-  });
-</script>
-
+    </script>
+    <script src="client-logout.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   </body>
 </html>

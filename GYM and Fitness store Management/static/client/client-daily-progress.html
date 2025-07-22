@@ -11,163 +11,521 @@
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between"
+    >
       <div>
-                <!-- Logo + Title -->
-                <a href="client-dashboard.html"
-                    class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
-                    <img
-                        src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                        alt="Gym Logo"
-                        class="w-10 h-10 rounded-full object-cover shadow-md" />
-                    <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                        Client</h2>
-                </a>
+        <!-- Logo + Title -->
+        <a
+          href="client-dashboard.html"
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition"
+        >
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md"
+          />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+        </a>
 
         <!-- Navigation -->
         <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-          <a href="client-reg-and-prof.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-reg-and-prof.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: User -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
-                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
+              />
             </svg>
             Registration & Profile
           </a>
-          <a href="client-regular-prog-tracker.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-regular-prog-tracker.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Credit Card -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect width="20" height="12" x="2" y="6" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="2" y1="10" x2="22" y2="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                width="20"
+                height="12"
+                x="2"
+                y="6"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="2"
+                y1="10"
+                x2="22"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Progress Tracker
           </a>
-          <a href="client-diet-management.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-diet-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Calendar -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="18"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="16"
+                y1="2"
+                x2="16"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="8"
+                y1="2"
+                x2="8"
+                y2="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="3"
+                y1="10"
+                x2="21"
+                y2="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Diet Management
           </a>
-          <a href="client-daily-progress.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-daily-progress.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Chart Line -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <polyline points="3 17 9 11 13 15 21 7" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></polyline>
-              <circle cx="3" cy="17" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="9" cy="11" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="13" cy="15" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="21" cy="7" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <polyline
+                points="3 17 9 11 13 15 21 7"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></polyline>
+              <circle
+                cx="3"
+                cy="17"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="9"
+                cy="11"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="13"
+                cy="15"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="21"
+                cy="7"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Daily Metrics and Attendance
           </a>
-          <a href="client-fitness-store.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-fitness-store.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Shopping Cart -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
-              <circle cx="7" cy="21" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="17" cy="21" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <circle
+                cx="7"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="17"
+                cy="21"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Fitness Store
           </a>
-          <a href="client-subscription-management.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-subscription-management.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Document Text -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
-              <path d="M4 4h16v16H4z" stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M9 12h6M9 16h6M13 8h-2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
+              <path
+                d="M4 4h16v16H4z"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
             </svg>
             Subscription Management
           </a>
-          <a href="client-fitness-goals.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-fitness-goals.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Target -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <circle cx="12" cy="12" r="10" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="12" cy="12" r="6" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
-              <circle cx="12" cy="12" r="2" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></circle>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="6"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
+              <circle
+                cx="12"
+                cy="12"
+                r="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></circle>
             </svg>
             Fitness Goals
           </a>
-          <a href="client-workout-sessions.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-workout-sessions.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Heart -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></path>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></path>
             </svg>
             Workout and sessions
           </a>
-          <a href="client-virtual-classes.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-virtual-classes.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Newspaper -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Virtual classes
           </a>
-          <a href="client-Feedback.html"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+          <a
+            href="client-Feedback.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
             <!-- Icon: Newspaper -->
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
-                stroke-width="2" stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
-              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
-                stroke-linejoin="round" stroke-linecap="round"></line>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
             </svg>
             Feedback
+          </a>
+          <a
+            href="client-order-payment.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <!-- Icon: Newspaper -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Order and Purchase History
+          </a>
+                    <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Logout
           </a>
         </nav>
       </div>
@@ -176,382 +534,470 @@
         &copy; 2025 E-Fitness. All rights reserved.
       </div>
     </aside>
-        <main class="flex-1 p-8 overflow-auto">
-  <header class="mb-8 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-gray-800">Daily Metrics and Attendance</h1>
+    <main class="flex-1 p-8 overflow-auto">
+      <header class="mb-8 flex justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">
+          Daily Metrics and Attendance
+        </h1>
+      </header>
+
+      <div class="flex flex-col lg:flex-row gap-8">
+        <section class="flex-1 bg-white p-6 rounded shadow border mb-10">
+          <h2
+            class="text-2xl font-semibold text-red-600 mb-6 flex items-center"
+          >
+            Daily Metrics
+          </h2>
+
+          <div class="mb-4">
             <button
-          id="logoutBtn"
-          class="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-all duration-300 transform hover:scale-105"
-        >
-          Logout
-        </button>
-  </header>
+              onclick="document.getElementById('progressModal').classList.remove('hidden')"
+              class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+            >
+              Add Daily Log
+            </button>
+          </div>
 
-  <div class="flex flex-col lg:flex-row gap-8">
-    <section class="flex-1 bg-white p-6 rounded shadow border mb-10">
-      <h2 class="text-2xl font-semibold text-red-600 mb-6 flex items-center">
-        Daily Metrics
-      </h2>
+          <div class="overflow-x-auto mb-6">
+            <table class="min-w-full text-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="py-2 px-4 text-left">Date</th>
+                  <th class="py-2 px-4 text-left">Weight (kg)</th>
+                  <th class="py-2 px-4 text-left">Calories Consumed</th>
+                  <th class="py-2 px-4 text-left">Water (L)</th>
+                  <th class="py-2 px-4 text-left">Sleep (hrs)</th>
+                </tr>
+              </thead>
+              <tbody id="logTable" class="divide-y">
+                <tr>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <div class="mb-4">
-        <button onclick="document.getElementById('progressModal').classList.remove('hidden')"
-          class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">
-          Add Daily Log
-        </button>
-      </div>
+          <h3 class="text-lg font-semibold text-red-600 mb-4">
+            Daily Live Input
+          </h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div
+              class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6 mb-1 text-gray-700"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <p class="text-2xl font-bold text-blue-600" id="weight">--</p>
+              <p class="text-sm text-gray-600">Weight (kg)</p>
+            </div>
+            <div
+              class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6 mb-1 text-gray-700"
+              >
+                <path
+                  d="M6.105 5.342a1.875 1.875 0 0 0-1.442 2.001l1.107 4.175a3 3 0 0 0 .825 1.879l1.496 1.496c1.267.857 2.535 1.715 3.845 2.65a3.75 3.75 0 0 0 3.963 0l1.496-1.496a3 3 0 0 0 .825-1.879l1.107-4.175a1.875 1.875 0 0 0-1.442-2.001H6.105ZM3.75 7.5a.75.75 0 0 1 .75-.75h.008v.008H4.5A.75.75 0 0 1 3.75 7.5ZM12 1.5a.75.75 0 0 1 .75.75V3a.75.75 0 0 1-1.5 0V2.25A.75.75 0 0 1 12 1.5Z"
+                />
+                <path
+                  d="M12.91 19.43a3.75 3.75 0 0 1-5.82 1.55l-.001-.001-.001-.001A3.75 3.75 0 0 1 10.25 17.5h3.5a3.75 3.75 0 0 1 2.56 3.48l-.001.001-.001.001a3.75 3.75 0 0 1-5.82-1.55Z"
+                />
+              </svg>
+              <p class="text-2xl font-bold text-blue-600" id="calories">--</p>
+              <p class="text-sm text-gray-600">Calories Consumed</p>
+              <a
+                href="https://www.calculator.net/calorie-calculator.html"
+                class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-600 transition-colors mt-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                  />
+                </svg>
+                Calorie Calculator
+              </a>
+            </div>
+            <div
+              class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6 mb-1 text-gray-700"
+              >
+                <path
+                  d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 .75-.75V9Z"
+                />
+              </svg>
+              <p class="text-2xl font-bold text-blue-600" id="water">--</p>
+              <p class="text-sm text-gray-600">Water (L)</p>
+            </div>
+            <div
+              class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                class="w-6 h-6 mb-1 text-gray-700"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2.25 6a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V6Zm18 0a.75.75 0 0 0-.75-.75H5.25a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 .75.75h13.5a.75.75 0 0 0 .75-.75V6ZM1.5 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H1.5ZM5.25 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H5.25ZM9 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H9ZM12.75 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM16.5 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM20.25 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <p class="text-2xl font-bold text-blue-600" id="sleep">--</p>
+              <p class="text-sm text-gray-600">Sleep (hrs)</p>
+            </div>
+          </div>
+        </section>
 
-      <div class="overflow-x-auto mb-6">
-        <table class="min-w-full text-sm">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="py-2 px-4 text-left">Date</th>
-              <th class="py-2 px-4 text-left">Weight (kg)</th>
-              <th class="py-2 px-4 text-left">Calories Consumed</th>
-              <th class="py-2 px-4 text-left">Water (L)</th>
-              <th class="py-2 px-4 text-left">Sleep (hrs)</th>
-            </tr>
-          </thead>
-          <tbody id="logTable" class="divide-y">
-            <tr>
-              <td class="py-2 px-4">2025-07-19</td>
-              <td class="py-2 px-4">70.5</td>
-              <td class="py-2 px-4">2000</td>
-              <td class="py-2 px-4">3.0</td>
-              <td class="py-2 px-4">7.5</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3 class="text-lg font-semibold text-red-600 mb-4">Daily Live Input</h3>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-        <div class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mb-1 text-gray-700">
-            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
-          </svg>
-          <p class="text-2xl font-bold text-blue-600" id="weight">--</p>
-          <p class="text-sm text-gray-600">Weight (kg)</p>
-        </div>
-        <div class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mb-1 text-gray-700">
-            <path d="M6.105 5.342a1.875 1.875 0 0 0-1.442 2.001l1.107 4.175a3 3 0 0 0 .825 1.879l1.496 1.496c1.267.857 2.535 1.715 3.845 2.65a3.75 3.75 0 0 0 3.963 0l1.496-1.496a3 3 0 0 0 .825-1.879l1.107-4.175a1.875 1.875 0 0 0-1.442-2.001H6.105ZM3.75 7.5a.75.75 0 0 1 .75-.75h.008v.008H4.5A.75.75 0 0 1 3.75 7.5ZM12 1.5a.75.75 0 0 1 .75.75V3a.75.75 0 0 1-1.5 0V2.25A.75.75 0 0 1 12 1.5Z" />
-            <path d="M12.91 19.43a3.75 3.75 0 0 1-5.82 1.55l-.001-.001-.001-.001A3.75 3.75 0 0 1 10.25 17.5h3.5a3.75 3.75 0 0 1 2.56 3.48l-.001.001-.001.001a3.75 3.75 0 0 1-5.82-1.55Z" />
-          </svg>
-          <p class="text-2xl font-bold text-blue-600" id="calories">--</p>
-          <p class="text-sm text-gray-600">Calories Consumed</p>
-          <a href="https://www.calculator.net/calorie-calculator.html"
-            class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-600 transition-colors mt-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        <section class="flex-1 bg-white p-6 rounded shadow border mb-10">
+          <h3
+            class="text-2xl font-semibold text-red-600 mb-6 flex items-center"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6 mr-2 text-red-500"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M18.685 19.02a1.75 1.75 0 0 0 1.054.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483l-1.04-3.007a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027Zm-7.141-9.927a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027a1.75 1.75 0 0 0 1.054-.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483Zm-4.991 1.474a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027a1.75 1.75 0 0 0 1.054-.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483Z"
+                clip-rule="evenodd"
+              />
             </svg>
-            Calorie Calculator
-          </a>
-        </div>
-        <div class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mb-1 text-gray-700">
-            <path d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h3.75a.75.75 0 0 0 .75-.75V9Z" />
-          </svg>
-          <p class="text-2xl font-bold text-blue-600" id="water">--</p>
-          <p class="text-sm text-gray-600">Water (L)</p>
-        </div>
-        <div class="p-4 border rounded bg-gray-50 flex flex-col items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mb-1 text-gray-700">
-            <path fill-rule="evenodd" d="M2.25 6a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V6Zm18 0a.75.75 0 0 0-.75-.75H5.25a.75.75 0 0 0-.75.75v6a.75.75 0 0 0 .75.75h13.5a.75.75 0 0 0 .75-.75V6ZM1.5 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H1.5ZM5.25 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H5.25ZM9 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5H9ZM12.75 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM16.5 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75ZM20.25 18a.75.75 0 0 0 0 1.5h.75a.75.75 0 0 0 0-1.5h-.75Z" clip-rule="evenodd" />
-          </svg>
-          <p class="text-2xl font-bold text-blue-600" id="sleep">--</p>
-          <p class="text-sm text-gray-600">Sleep (hrs)</p>
+            Gym Attendance
+          </h3>
+
+          <div
+            class="mb-4 p-4 bg-gray-50 rounded border flex items-center justify-between"
+          >
+            <div>
+              <p class="text-sm text-gray-700">Today's Status</p>
+              <p class="text-lg font-semibold text-green-600" id="todayStatus">
+                Loading...
+              </p>
+            </div>
+            <div>
+              <button
+                id="checkInBtn"
+                class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+              >
+                Check In
+              </button>
+              <button
+                id="checkOutBtn"
+                class="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+              >
+                Check Out
+              </button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead>
+                <tr class="bg-gray-100 text-left">
+                  <th class="py-2 px-4">Date</th>
+                  <th class="py-2 px-4">Check-In</th>
+                  <th class="py-2 px-4">Check-Out</th>
+                  <th class="py-2 px-4">Method</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTable" class="divide-y">
+                <tr>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                  <td class="py-2 px-4"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div
+        id="progressModal"
+        class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
+      >
+        <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
+          <h2 class="text-xl font-semibold text-red-600 mb-4">
+            Log Daily Progress
+          </h2>
+          <form id="progressForm" class="space-y-4">
+            <input
+              type="number"
+              name="Weight"
+              step="0.01"
+              placeholder="Weight (kg)"
+              class="w-full border rounded px-3 py-2"
+              required
+            />
+            <input
+              type="number"
+              name="Calories"
+              placeholder="Calories"
+              class="w-full border rounded px-3 py-2"
+              required
+            />
+            <input
+              type="number"
+              name="WaterIntakeLitres"
+              step="0.01"
+              placeholder="Water Intake (L)"
+              class="w-full border rounded px-3 py-2"
+              required
+            />
+            <input
+              type="number"
+              name="SleepHours"
+              step="0.1"
+              placeholder="Sleep Hours"
+              class="w-full border rounded px-3 py-2"
+              required
+            />
+            <textarea
+              name="WorkoutDescription"
+              placeholder="Workout Notes"
+              rows="3"
+              class="w-full border rounded px-3 py-2"
+            ></textarea>
+            <div class="text-right">
+              <button
+                type="button"
+                onclick="document.getElementById('progressModal').classList.add('hidden')"
+                class="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </section>
+    </main>
 
-    <section class="flex-1 bg-white p-6 rounded shadow border mb-10">
-      <h3 class="text-2xl font-semibold text-red-600 mb-6 flex items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-2 text-red-500">
-          <path fill-rule="evenodd" d="M18.685 19.02a1.75 1.75 0 0 0 1.054.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483l-1.04-3.007a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027Zm-7.141-9.927a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027a1.75 1.75 0 0 0 1.054-.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483Zm-4.991 1.474a.75.75 0 0 0-.44-.44l-3.007-1.04a3.765 3.765 0 0 0-3.483 1.054c-.482.432-.482 1.056 0 1.488a1.75 1.75 0 0 0 .48 1.054l3.007 1.04c.05.018.101.027.152.027a1.75 1.75 0 0 0 1.054-.48c.548 0 1.056-.164 1.488-.48a3.765 3.765 0 0 0 1.054-3.483Z" clip-rule="evenodd" />
-        </svg>
-        Gym Attendance
-      </h3>
-
-      <div class="mb-4 p-4 bg-gray-50 rounded border flex items-center justify-between">
-        <div>
-          <p class="text-sm text-gray-700">Today's Status</p>
-          <p class="text-lg font-semibold text-green-600" id="todayStatus">Loading...</p>
-        </div>
-        <div>
-          <button id="checkInBtn"
-            class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors">Check
-            In</button>
-          <button id="checkOutBtn"
-            class="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors">Check
-            Out</button>
-        </div>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
-          <thead>
-            <tr class="bg-gray-100 text-left">
-              <th class="py-2 px-4">Date</th>
-              <th class="py-2 px-4">Check-In</th>
-              <th class="py-2 px-4">Check-Out</th>
-              <th class="py-2 px-4">Method</th>
-            </tr>
-          </thead>
-          <tbody id="attendanceTable" class="divide-y">
-            <tr>
-              <td class="py-2 px-4">2025-07-19</td>
-              <td class="py-2 px-4">08:00 AM</td>
-              <td class="py-2 px-4">10:00 AM</td>
-              <td class="py-2 px-4">Manual</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-  </div>
-
-  <div id="progressModal" class="hidden fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded shadow-md w-full max-w-md">
-      <h2 class="text-xl font-semibold text-red-600 mb-4">Log Daily Progress</h2>
-      <form id="progressForm" class="space-y-4">
-        <input type="number" name="Weight" step="0.01" placeholder="Weight (kg)"
-          class="w-full border rounded px-3 py-2" required>
-        <input type="number" name="Calories" placeholder="Calories" class="w-full border rounded px-3 py-2" required>
-        <input type="number" name="WaterIntakeLitres" step="0.01" placeholder="Water Intake (L)"
-          class="w-full border rounded px-3 py-2" required>
-        <input type="number" name="SleepHours" step="0.1" placeholder="Sleep Hours"
-          class="w-full border rounded px-3 py-2" required>
-        <textarea name="WorkoutDescription" placeholder="Workout Notes" rows="3"
-          class="w-full border rounded px-3 py-2"></textarea>
-        <div class="text-right">
-          <button type="button" onclick="document.getElementById('progressModal').classList.add('hidden')"
-            class="mr-2 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 transition-colors">Cancel</button>
-          <button type="submit"
-            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</main>
-
-<style>
-  /* General hover effect for buttons */
-  button:hover {
-    filter: brightness(110%);
-  }
-
-  /* Specific hover for the calorie calculator link */
-  a.hover\:text-red-600:hover {
-    color: #dc2626; /* Tailwind's red-600 */
-  }
-
-  /* Hover effect for table rows */
-  tbody tr:hover {
-    background-color: #f3f4f6; /* Tailwind's gray-100 */
-    cursor: pointer;
-  }
-</style>
-
-      <script>
-  document.getElementById('logoutBtn').addEventListener('click', async () => {
-    try {
-      const res = await fetch('/logout', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' }
-      });
-
-      const result = await res.json();
-
-      if (result.success) {
-        await Swal.fire({
-          icon: 'success',
-          title: 'Logged out',
-          text: result.message,
-          timer: 2000,
-          showConfirmButton: false
-        });
-
-        window.location.href = '../login.html';
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Logout Failed',
-          text: result.message || 'Something went wrong!'
-        });
+    <style>
+      /* General hover effect for buttons */
+      button:hover {
+        filter: brightness(110%);
       }
-    } catch (err) {
-      console.error('Logout failed:', err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Logout Error',
-        text: 'Logout request failed.'
-      });
-    }
-  });
-</script>
 
-      <script>
-  async function loadProgressAndAttendance() {
-    try {
-      const [logRes, attRes] = await Promise.all([
-        fetch('/api/healthlog'),
-        fetch('/api/attendance')
-      ]);
+      /* Specific hover for the calorie calculator link */
+      a.hover\:text-red-600:hover {
+        color: #dc2626; /* Tailwind's red-600 */
+      }
 
-      const logData = await logRes.json();
-      const attData = await attRes.json();
+      /* Hover effect for table rows */
+      tbody tr:hover {
+        background-color: #f3f4f6; /* Tailwind's gray-100 */
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      async function loadProgressAndAttendance() {
+        try {
+          const [logRes, attRes] = await Promise.all([
+            fetch("/api/healthlog"),
+            fetch("/api/attendance"),
+          ]);
 
-      // ✅ Render Health Log Table
-      if (logData.success && Array.isArray(logData.logs)) {
-        const logTable = document.getElementById('logTable');
-        logTable.innerHTML = ''; // Clear table
+          const logData = await logRes.json();
+          const attData = await attRes.json();
 
-        logData.logs.forEach(log => {
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="px-4 py-2">${log.LogDate || '-'}</td>
-            <td class="px-4 py-2">${log.Weight ?? '--'}</td>
-            <td class="px-4 py-2">${log.Calories ?? '--'}</td>
-            <td class="px-4 py-2">${log.WaterIntakeLitres ?? '--'}</td>
-            <td class="px-4 py-2">${log.SleepHours ?? '--'}</td>
+          // ✅ Render Health Log Table
+          if (logData.success && Array.isArray(logData.logs)) {
+            const logTable = document.getElementById("logTable");
+            logTable.innerHTML = ""; // Clear table
+
+            logData.logs.forEach((log) => {
+              const tr = document.createElement("tr");
+              tr.innerHTML = `
+            <td class="px-4 py-2">${log.LogDate || "-"}</td>
+            <td class="px-4 py-2">${log.Weight ?? "--"}</td>
+            <td class="px-4 py-2">${log.Calories ?? "--"}</td>
+            <td class="px-4 py-2">${log.WaterIntakeLitres ?? "--"}</td>
+            <td class="px-4 py-2">${log.SleepHours ?? "--"}</td>
           `;
-          logTable.appendChild(tr);
-        });
+              logTable.appendChild(tr);
+            });
 
-        // ✅ Show latest log summary
-        const latest = logData.logs[0];
-        if (latest) {
-          document.getElementById('weight').textContent = latest.Weight ?? '--';
-          document.getElementById('calories').textContent = latest.Calories ?? '--';
-          document.getElementById('water').textContent = latest.WaterIntakeLitres ?? '--';
-          document.getElementById('sleep').textContent = latest.SleepHours ?? '--';
+            // ✅ Show latest log summary
+            const latest = logData.logs[0];
+            if (latest) {
+              document.getElementById("weight").textContent =
+                latest.Weight ?? "--";
+              document.getElementById("calories").textContent =
+                latest.Calories ?? "--";
+              document.getElementById("water").textContent =
+                latest.WaterIntakeLitres ?? "--";
+              document.getElementById("sleep").textContent =
+                latest.SleepHours ?? "--";
+            }
+          }
+
+          // ✅ Render Attendance
+          if (attData.success && attData.records) {
+            const table = document.getElementById("attendanceTable");
+            table.innerHTML = "";
+            let todayStatus = "Not checked in";
+            const today = new Date().toISOString().slice(0, 10);
+
+            attData.records.forEach((row) => {
+              const checkInDate = row.CheckInTime?.slice(0, 10);
+              const isToday = checkInDate === today;
+              const tr = document.createElement("tr");
+              tr.innerHTML = `
+            <td class="px-4 py-2">${checkInDate}</td>
+            <td class="px-4 py-2">${row.CheckInTime?.slice(11, 16) || "-"}</td>
+            <td class="px-4 py-2">${row.CheckOutTime?.slice(11, 16) || "-"}</td>
+            <td class="px-4 py-2">${row.Method}</td>
+          `;
+              table.appendChild(tr);
+
+              if (isToday) {
+                todayStatus = row.CheckOutTime ? "Checked Out" : "Checked In";
+              }
+            });
+
+            document.getElementById("todayStatus").textContent = todayStatus;
+          }
+        } catch (err) {
+          console.error("Error loading data:", err);
         }
       }
 
-      // ✅ Render Attendance
-      if (attData.success && attData.records) {
-        const table = document.getElementById('attendanceTable');
-        table.innerHTML = '';
-        let todayStatus = 'Not checked in';
-        const today = new Date().toISOString().slice(0, 10);
+      loadProgressAndAttendance();
+    </script>
 
-        attData.records.forEach(row => {
-          const checkInDate = row.CheckInTime?.slice(0, 10);
-          const isToday = checkInDate === today;
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td class="px-4 py-2">${checkInDate}</td>
-            <td class="px-4 py-2">${row.CheckInTime?.slice(11, 16) || '-'}</td>
-            <td class="px-4 py-2">${row.CheckOutTime?.slice(11, 16) || '-'}</td>
-            <td class="px-4 py-2">${row.Method}</td>
-          `;
-          table.appendChild(tr);
+    <script>
+      document
+        .getElementById("progressForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const form = e.target;
+          const formData = new FormData(form);
+          const body = Object.fromEntries(formData.entries());
 
-          if (isToday) {
-            todayStatus = row.CheckOutTime ? 'Checked Out' : 'Checked In';
+          try {
+            const res = await fetch("/api/healthlog", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(body),
+            });
+            const result = await res.json();
+
+            if (result.success) {
+              form.reset();
+              document.getElementById("progressModal").classList.add("hidden");
+              await loadProgressAndAttendance();
+
+              Swal.fire({
+                icon: "success",
+                title: "Progress Saved",
+                text:
+                  result.message ||
+                  "Your daily progress was saved successfully.",
+              });
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: result.message || "Could not save progress.",
+              });
+            }
+          } catch (err) {
+            console.error("Submit error:", err);
+            Swal.fire({
+              icon: "error",
+              title: "Server Error",
+              text: "An error occurred while saving your progress.",
+            });
           }
         });
+    </script>
 
-        document.getElementById('todayStatus').textContent = todayStatus;
-      }
-    } catch (err) {
-      console.error('Error loading data:', err);
-    }
-  }
+    <script>
+      async function checkIn() {
+        const now = new Date();
+        const localTime = now.toISOString().slice(0, 19).replace("T", " ");
 
-  loadProgressAndAttendance();
-</script>
-
-      <script>
-  document.getElementById('progressForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const formData = new FormData(form);
-    const body = Object.fromEntries(formData.entries());
-
-    try {
-      const res = await fetch('/api/healthlog', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      const result = await res.json();
-
-      if (result.success) {
-        form.reset();
-        document.getElementById('progressModal').classList.add('hidden');
-        await loadProgressAndAttendance();
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Progress Saved',
-          text: result.message || 'Your daily progress was saved successfully.'
+        const res = await fetch("/api/attendance/checkin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ checkInTime: localTime }),
         });
-      } else {
+
+        const result = await res.json();
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: result.message || 'Could not save progress.'
+          icon: result.success ? "success" : "warning",
+          title: result.success ? "Checked In" : "Oops...",
+          text: result.message,
         });
+        if (result.success) loadProgressAndAttendance();
       }
-    } catch (err) {
-      console.error('Submit error:', err);
-      Swal.fire({
-        icon: 'error',
-        title: 'Server Error',
-        text: 'An error occurred while saving your progress.'
-      });
-    }
-  });
-</script>
 
-      <script>
-  async function checkIn() {
-    const now = new Date();
-    const localTime = now.toISOString().slice(0, 19).replace('T', ' ');
+      async function checkOut() {
+        const now = new Date();
+        const localTime = now.toISOString().slice(0, 19).replace("T", " ");
 
-    const res = await fetch('/api/attendance/checkin', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ checkInTime: localTime })
-    });
+        const res = await fetch("/api/attendance/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ checkOutTime: localTime }),
+        });
 
-    const result = await res.json();
-    Swal.fire({
-      icon: result.success ? 'success' : 'warning',
-      title: result.success ? 'Checked In' : 'Oops...',
-      text: result.message
-    });
-    if (result.success) loadProgressAndAttendance();
-  }
+        const result = await res.json();
+        Swal.fire({
+          icon: result.success ? "success" : "warning",
+          title: result.success ? "Checked Out" : "Oops...",
+          text: result.message,
+        });
+        if (result.success) loadProgressAndAttendance();
+      }
 
-  async function checkOut() {
-    const now = new Date();
-    const localTime = now.toISOString().slice(0, 19).replace('T', ' ');
+      document.getElementById("checkInBtn").addEventListener("click", checkIn);
+      document
+        .getElementById("checkOutBtn")
+        .addEventListener("click", checkOut);
+    </script>
 
-    const res = await fetch('/api/attendance/checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ checkOutTime: localTime })
-    });
-
-    const result = await res.json();
-    Swal.fire({
-      icon: result.success ? 'success' : 'warning',
-      title: result.success ? 'Checked Out' : 'Oops...',
-      text: result.message
-    });
-    if (result.success) loadProgressAndAttendance();
-  }
-
-  document.getElementById('checkInBtn').addEventListener('click', checkIn);
-  document.getElementById('checkOutBtn').addEventListener('click', checkOut);
-</script>
-
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    </body>
-  </html>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="client-logout.js"></script>
+  </body>
+</html>

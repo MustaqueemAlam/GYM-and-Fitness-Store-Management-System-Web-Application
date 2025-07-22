@@ -3,31 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin Dashboard - User Management</title>
+    <title>Admin Dashboard - Red Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-      /* Custom scrollbar for modals */
-      .max-h-[90vh]::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .max-h-[90vh]::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 10px;
-      }
-
-      .max-h-[90vh]::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 10px;
-      }
-
-      .max-h-[90vh]::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-    </style>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
     <aside
       class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
       <div>
@@ -39,10 +20,11 @@
           <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
         </a>
 
+        <!-- Navigation -->
         <nav class="flex flex-col space-y-3">
           <a
             href="admin-manage-users.html"
-            class="flex items-center gap-3 text-red-600 font-medium transition-colors bg-red-100 py-2 px-3 rounded-md">
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
@@ -135,7 +117,6 @@
             </svg>
             Reports
           </a>
-
           <a
             href="admin-noti-feedback.html"
             class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
@@ -153,27 +134,57 @@
             </svg>
             Feedback and Notifications
           </a>
+          <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"></line>
+            </svg>
+            Logout
+          </a>
         </nav>
       </div>
-
-      <a
-        href="../login.html"
-        class="mt-10 inline-flex items-center bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="inline w-5 h-5 mr-2 -mb-1"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-        </svg>
-        Logout
-      </a>
     </aside>
+
 
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
       <div class="flex gap-4">
@@ -1072,6 +1083,6 @@
     }
 
 
-</script>
+</script><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script src="admin-logout.js"></script>
   </body>
 </html>

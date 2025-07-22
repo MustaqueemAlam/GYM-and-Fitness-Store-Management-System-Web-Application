@@ -12,19 +12,16 @@
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100 font-sans">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg"
-    >
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg">
       <div>
         <!-- Logo + Title -->
         <a
           href="client-dashboard.html"
-          class="flex items-center gap-3 mb-8 hover:opacity-90 transition"
-        >
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
           <img
             src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
             alt="Gym Logo"
-            class="w-10 h-10 rounded-full object-cover shadow-md"
-          />
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
           <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
         </a>
 
@@ -173,6 +170,76 @@
             </svg>
             Feedback
           </a>
+          <a href="client-order-payment.html"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+            <!-- Icon: Newspaper -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <rect x="3" y="4" width="18" height="16" rx="2" ry="2"
+                stroke-width="2" stroke-linejoin="round"
+                stroke-linecap="round"></rect>
+              <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+              <line x1="7" y1="12" x2="17" y2="12" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+              <line x1="7" y1="16" x2="17" y2="16" stroke-width="2"
+                stroke-linejoin="round" stroke-linecap="round"></line>
+            </svg>
+            Order and Purchase History
+          </a>
+                    <a
+            href="#"
+            id="logoutButton"
+            class="flex items-center gap-3 hover:text-red-600 transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <rect
+                x="3"
+                y="4"
+                width="18"
+                height="16"
+                rx="2"
+                ry="2"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></rect>
+              <line
+                x1="7"
+                y1="8"
+                x2="17"
+                y2="8"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="12"
+                x2="17"
+                y2="12"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+              <line
+                x1="7"
+                y1="16"
+                x2="17"
+                y2="16"
+                stroke-width="2"
+                stroke-linejoin="round"
+                stroke-linecap="round"
+              ></line>
+            </svg>
+            Logout
+          </a>
         </nav>
       </div>
 
@@ -183,41 +250,60 @@
 
     <main class="flex-1 p-8 overflow-auto">
       <header class="mb-8 flex justify-between items-center">
-        <h1 class="text-3xl font-extrabold text-red-800">Welcome Back, Client!</h1>
-        <button
-          id="logoutBtn"
-          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-        >
-          Logout
-        </button>
+        <h1 class="text-3xl font-extrabold text-red-800">E-Fitness Store</h1>
       </header>
 
-      <section class="bg-white p-6 rounded-xl shadow-2xl border border-red-200 mb-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold text-red-700">Fitness Store</h2>
-          <button
-            id="viewCartBtn"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2 transform hover:scale-105"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.5 14 6.382 14H18a1 1 0 000-2H6.382c-.322 0-.64-.08-.9-.236l-.664-3.322a10.855 10.855 0 01.358-.59c.563-.845 1.127-1.69 1.69-2.535l-.266-.266C6.152 4.103 6.643 3 7.643 3h-.177a1 1 0 000 2h.177c.414 0 .799.206 1.052.53l.43 1.077c.365.91-.018 1.954-.954 2.21A3.998 3.998 0 009 10a1 1 0 00-.777.369L7.54 11.455a1 1 0 00-.305.719v.001c-.001.272.105.53.305.719l1.69 1.69a1 1 0 001.414 0l1.69-1.69c.2-.2.306-.447.305-.719v-.001a1 1 0 00-.305-.719l-1.69-1.69a1 1 0 00-1.414 0zM12 7.5a.5.5 0 011 0v.5h.5a.5.5 0 010 1H13v.5a.5.5 0 01-1 0v-.5h-.5a.5.5 0 010-1H12v-.5z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M5.474 10.428l-.342-1.366A1 1 0 015.658 8h10.684a1 1 0 01.526 1.96l-1.366.342c-.08.02-.16.03-.242.03-.497 0-.974-.216-1.309-.607l-1.69-2.09c-.2-.25-.49-.393-.79-.393H10.5c-.3 0-.59.143-.79.393L8.024 8.65c-.335.391-.812.607-1.309.607-.082 0-.162-.01-.242-.03z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            View Cart
-          </button>
+      <section
+        class="bg-white p-6 rounded-xl shadow-2xl border border-red-200 mb-6">
+        <div
+          class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <h2 class="text-2xl font-bold text-red-700">Start shopping and add
+            items to card!</h2>
+          <div class="flex items-center gap-4 w-full sm:w-auto">
+            <!-- Price Range Filter -->
+            <select id="priceRangeFilter"
+              class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+              <option value="all">All Prices</option>
+              <option value="0-499">BDT 0-499</option>
+              <option value="500-999">BDT 500-999</option>
+              <option value="1000-1499">BDT 1000-1499</option>
+              <option value="1500-1999">BDT 1500-1999</option>
+              <option value="2000-2999">BDT 2000-2999</option>
+              <option value="3000-4999">BDT 3000-4999</option>
+              <option value="5000-7499">BDT 5000-7499</option>
+              <option value="7500-9999">BDT 7500-9999</option>
+              <option value="10000-14999">BDT 10000-14999</option>
+              <option value="15000+">BDT 15000+</option>
+            </select>
+
+            <!-- Search Bar -->
+            <input
+              type="text"
+              id="productSearch"
+              placeholder="Search products..."
+              class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent w-full sm:w-64" />
+
+            <button
+              id="viewCartBtn"
+              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2 transform hover:scale-105 whitespace-nowrap">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor">
+                <path
+                  d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.5 14 6.382 14H18a1 1 0 000-2H6.382c-.322 0-.64-.08-.9-.236l-.664-3.322a10.855 10.855 0 01.358-.59c.563-.845 1.127-1.69 1.69-2.535l-.266-.266C6.152 4.103 6.643 3 7.643 3h-.177a1 1 0 000 2h.177c.414 0 .799.206 1.052.53l.43 1.077c.365.91-.018 1.954-.954 2.21A3.998 3.998 0 009 10a1 1 0 00-.777.369L7.54 11.455a1 1 0 00-.305.719v.001c-.001.272.105.53.305.719l1.69 1.69a1 1 0 001.414 0l1.69-1.69c.2-.2.306-.447.305-.719v-.001a1 1 0 00-.305-.719l-1.69-1.69a1 1 0 00-1.414 0zM12 7.5a.5.5 0 011 0v.5h.5a.5.5 0 010 1H13v.5a.5.5 0 01-1 0v-.5h-.5a.5.5 0 010-1H12v-.5z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M5.474 10.428l-.342-1.366A1 1 0 015.658 8h10.684a1 1 0 01.526 1.96l-1.366.342c-.08.02-.16.03-.242.03-.497 0-.974-.216-1.309-.607l-1.69-2.09c-.2-.25-.49-.393-.79-.393H10.5c-.3 0-.59.143-.79.393L8.024 8.65c-.335.391-.812.607-1.309.607-.082 0-.162-.01-.242-.03z"
+                  clip-rule="evenodd" />
+              </svg>
+              View Cart
+            </button>
+          </div>
         </div>
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div id="productGrid"
+          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           <!-- Products will be loaded here -->
         </div>
       </section>
@@ -227,6 +313,9 @@
       document.addEventListener('DOMContentLoaded', () => {
         const productGrid = document.getElementById('productGrid');
         const viewCartBtn = document.getElementById('viewCartBtn');
+        const priceRangeFilter = document.getElementById('priceRangeFilter');
+        const productSearch = document.getElementById('productSearch');
+        let allProducts = []; // Store all fetched products
         let currentCart = []; // To keep track of the cart on the frontend
 
         // Function to fetch products
@@ -255,7 +344,8 @@
 
             const data = await response.json();
             console.log('Products fetched successfully:', data);
-            displayProducts(data.products);
+            allProducts = data.products; // Store all products
+            filterAndDisplayProducts(); // Initial display with filters applied
           } catch (error) {
             console.error('Error in fetchProducts:', error);
             Swal.fire({
@@ -266,12 +356,43 @@
           }
         }
 
+        // Function to filter and display products
+        function filterAndDisplayProducts() {
+          const selectedRange = priceRangeFilter.value;
+          const searchTerm = productSearch.value.toLowerCase();
+
+          let filteredProducts = allProducts.filter(product => {
+            const productPrice = parseFloat(product.Price);
+            const productName = product.Name.toLowerCase();
+
+            // Apply price range filter
+            let passesPriceFilter = true;
+            if (selectedRange !== 'all') {
+              const [minStr, maxStr] = selectedRange.split('-');
+              const minPrice = parseFloat(minStr);
+              const maxPrice = maxStr === '' ? Infinity : parseFloat(maxStr); // For "15000+"
+
+              passesPriceFilter = (productPrice >= minPrice && productPrice <= maxPrice);
+            }
+
+            // Apply search filter
+            let passesSearchFilter = true;
+            if (searchTerm) {
+              passesSearchFilter = productName.includes(searchTerm);
+            }
+
+            return passesPriceFilter && passesSearchFilter;
+          });
+
+          displayProducts(filteredProducts);
+        }
+
         // Function to display products
         function displayProducts(products) {
           productGrid.innerHTML = ''; // Clear existing products
           if (products.length === 0) {
             productGrid.innerHTML =
-              '<p class="col-span-full text-center text-gray-500 text-lg py-10">No products available at the moment. Please check back later!</p>';
+              '<p class="col-span-full text-center text-gray-500 text-lg py-10">No products available matching your criteria.</p>';
             return;
           }
 
@@ -325,6 +446,11 @@
             button.addEventListener('click', handleAddToCart);
           });
         }
+
+        // Event listeners for filters and search
+        priceRangeFilter.addEventListener('change', filterAndDisplayProducts);
+        productSearch.addEventListener('input', filterAndDisplayProducts);
+
 
         // Function to add product to cart
         async function handleAddToCart(event) {
@@ -668,45 +794,9 @@
 
         // Initial fetch of products when the page loads
         fetchProducts();
-
-        // Logout functionality (from original HTML)
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-          try {
-            const res = await fetch('/logout', {
-              method: 'POST',
-              credentials: 'include',
-              headers: { 'Content-Type': 'application/json' },
-            });
-
-            const result = await res.json();
-
-            if (result.success) {
-              await Swal.fire({
-                icon: 'success',
-                title: 'Logged out',
-                text: result.message,
-                timer: 2000,
-                showConfirmButton: false,
-              });
-
-              window.location.href = 'login.html';
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Logout Failed',
-                text: result.message || 'Something went wrong!',
-              });
-            }
-          } catch (err) {
-            console.error('Logout failed:', err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Logout Error',
-              text: 'Logout request failed.',
-            });
-          }
-        });
-      });
+      }
+    );
     </script>
+    <script src="client-logout.js"></script>
   </body>
 </html>
