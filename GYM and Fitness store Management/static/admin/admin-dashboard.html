@@ -6,11 +6,92 @@
     <title>Admin Dashboard - Red Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      /* Custom scrollbar for main content */
+      main::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      main::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+      }
+
+      main::-webkit-scrollbar-thumb {
+        background: #ef4444;
+        border-radius: 10px;
+      }
+
+      main::-webkit-scrollbar-thumb:hover {
+        background: #dc2626;
+      }
+
+      /* Chart container styles */
+      .chart-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 300px;
+      }
+
+      .chart-wrapper {
+        background: white;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chart-wrapper h2 {
+        margin-bottom: 1rem;
+        color: #1f2937;
+      }
+
+      .chart-inner {
+        flex-grow: 1;
+        position: relative;
+        min-height: 250px;
+      }
+
+      canvas {
+        max-height: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .chart-container {
+          min-height: 250px;
+        }
+        
+        .chart-wrapper {
+          padding: 1rem;
+        }
+        
+        .chart-inner {
+          min-height: 200px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .chart-container {
+          min-height: 200px;
+        }
+        
+        .chart-wrapper h2 {
+          font-size: 1rem;
+        }
+        
+        .chart-inner {
+          min-height: 180px;
+        }
+      }
+    </style>
   </head>
-  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100 font-sans">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg">
       <div>
         <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
           <img
@@ -22,64 +103,132 @@
 
         <!-- Navigation -->
         <nav class="flex flex-col space-y-3">
-
-          <a href="admin-manage-users.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+          <a
+            href="admin-dashboard.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-white bg-red-600 font-semibold transition-colors shadow-md">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+            </svg>
+            Dashboard
+          </a>
+          <a
+            href="admin-manage-users.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
             </svg>
             Users
           </a>
-          <a href="admin-manage-products.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+          <a
+            href="admin-manage-products.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
                 d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M12 12v8" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 12v8" />
             </svg>
             Products
           </a>
-          <a href="admin-subs-plan.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
+          <a
+            href="admin-subs-plan.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
                 stroke-width="2"
                 d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M12 12v8" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 12v8" />
             </svg>
             Subscription Plans
           </a>
-          <a href="admin-payments.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M9 14l-2-2 4-4 6 6-2 2" />
+          <a
+            href="admin-payments.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 14l-2-2 4-4 6 6-2 2" />
             </svg>
             Payments
           </a>
-          <a href="admin-reports.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+          <a
+            href="admin-reports.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 17v-2a4 4 0 014-4h4" />
             </svg>
             Reports
           </a>
-          <a href="admin-noti-feedback.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+          <a
+            href="admin-noti-feedback.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
             </svg>
             Feedback and Notifications
           </a>
@@ -87,47 +236,18 @@
           <a
             href="#"
             id="logoutButton"
-            class="flex items-center gap-3 hover:text-red-600 transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor">
-              <rect
-                x="3"
-                y="4"
-                width="18"
-                height="16"
-                rx="2"
-                ry="2"
-                stroke-width="2"
+              <path
+                stroke-linecap="round"
                 stroke-linejoin="round"
-                stroke-linecap="round"></rect>
-              <line
-                x1="7"
-                y1="8"
-                x2="17"
-                y2="8"
                 stroke-width="2"
-                stroke-linejoin="round"
-                stroke-linecap="round"></line>
-              <line
-                x1="7"
-                y1="12"
-                x2="17"
-                y2="12"
-                stroke-width="2"
-                stroke-linejoin="round"
-                stroke-linecap="round"></line>
-              <line
-                x1="7"
-                y1="16"
-                x2="17"
-                y2="16"
-                stroke-width="2"
-                stroke-linejoin="round"
-                stroke-linecap="round"></line>
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V7a3 3 0 013-3h5a3 3 0 013 3v1" />
             </svg>
             Logout
           </a>
@@ -137,131 +257,461 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-      <!-- Header -->
-      <header class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-800">Welcome, Admin</h1>
+      <header class="flex items-center justify-between pb-4 border-b border-gray-200">
+        <h1 class="text-3xl font-extrabold text-gray-800">Admin Dashboard</h1>
         <div class="flex items-center gap-4">
-          <button id="notifBtn"
-            class="relative text-gray-700 hover:text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
-            </svg>
-            <span
-              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-          </button>
-          <button id="chatBtn" class="text-gray-700 hover:text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8-1.66 0-3.212-.41-4.5-1.12L3 20l1.12-4.5A8.96 8.96 0 013 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-          </button>
+          <span id="adminName" class="text-lg font-medium text-gray-700"></span>
+          <img
+            src="https://placehold.co/40x40/FF0000/FFFFFF?text=AD"
+            alt="Admin Avatar"
+            class="w-10 h-10 rounded-full object-cover border-2 border-red-500" />
         </div>
       </header>
 
-      <!-- Stats Cards -->
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div
-          class="bg-gradient-to-br from-red-100 to-red-200 p-4 rounded-lg shadow text-red-800">
-          Users<br><strong class="text-xl">235</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-lg shadow text-green-800">
-          Revenue<br><strong class="text-xl">$12,340</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-lg shadow text-yellow-800">
-          Active Plans<br><strong class="text-xl">78</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-lg shadow text-pink-800">
-          Messages<br><strong class="text-xl">45</strong>
-        </div>
+      <!-- Loading Indicator -->
+      <div
+        id="loadingIndicator"
+        class="flex justify-center items-center h-full text-red-600 text-xl font-semibold hidden">
+        <svg
+          class="animate-spin h-8 w-8 mr-3 text-red-500"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24">
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        Loading Dashboard Data...
+      </div>
+
+      <!-- KPI Cards Section -->
+      <section id="kpi-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Cards will be dynamically inserted here -->
       </section>
 
       <!-- Charts Section -->
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div class="bg-white p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 text-red-700">User Growth</h2>
-          <canvas id="userGrowthChart" height="200"></canvas>
+      <section id="charts-section" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="chart-container">
+          <div class="chart-wrapper">
+            <h2 class="text-xl font-semibold text-gray-800">Revenue Overview</h2>
+            <div class="chart-inner">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
         </div>
-        <div class="bg-white p-4 rounded-lg shadow">
-          <h2 class="text-lg font-bold mb-2 text-red-700">Revenue Breakdown</h2>
-          <canvas id="revenueChart" height="200"></canvas>
+
+        <div class="chart-container">
+          <div class="chart-wrapper">
+            <h2 class="text-xl font-semibold text-gray-800">User Distribution</h2>
+            <div class="chart-inner">
+              <canvas id="userDistributionChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container lg:col-span-2">
+          <div class="chart-wrapper">
+            <h2 class="text-xl font-semibold text-gray-800">Recent Activity (Last 30 Days)</h2>
+            <div class="chart-inner">
+              <canvas id="recentActivityChart"></canvas>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Activity Table -->
-      <section class="bg-white p-6 rounded-lg shadow overflow-x-auto">
-        <h2 class="text-lg font-bold mb-4 text-red-700">Recent Activities</h2>
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="text-gray-600 uppercase text-sm">
-              <th class="p-2 border-b">Date</th>
-              <th class="p-2 border-b">Activity</th>
-              <th class="p-2 border-b">User</th>
-              <th class="p-2 border-b">Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="hover:bg-red-50">
-              <td class="p-2 border-b">2025-06-01</td>
-              <td class="p-2 border-b">New subscription</td>
-              <td class="p-2 border-b">Jane Smith</td>
-              <td class="p-2 border-b">Client</td>
-            </tr>
-            <tr class="hover:bg-red-50">
-              <td class="p-2 border-b">2025-06-02</td>
-              <td class="p-2 border-b">Class Added</td>
-              <td class="p-2 border-b">Trainer A</td>
-              <td class="p-2 border-b">Trainer</td>
-            </tr>
-            <tr class="hover:bg-red-50">
-              <td class="p-2 border-b">2025-06-03</td>
-              <td class="p-2 border-b">Message sent</td>
-              <td class="p-2 border-b">Mike Johnson</td>
-              <td class="p-2 border-b">Client</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Table Section -->
+      <section id="table-section" class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Other Key Metrics & Pending Items</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-red-50">
+              <tr>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">
+                  Metric
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Description
+                </th>
+                <th
+                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tr-lg">
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody id="pendingDataTable" class="bg-white divide-y divide-gray-200">
+              <!-- Table rows will be dynamically inserted here -->
+            </tbody>
+          </table>
+        </div>
       </section>
     </main>
 
     <script>
-    document.getElementById('notifBtn').onclick = () => alert('Notification Center Coming Soon');
-    document.getElementById('chatBtn').onclick = () => alert('Chat Panel Coming Soon');
+      document.addEventListener("DOMContentLoaded", async () => {
+        const loadingIndicator = document.getElementById("loadingIndicator");
+        const kpiCardsSection = document.getElementById("kpi-cards");
+        const revenueChartCanvas = document.getElementById("revenueChart");
+        const userDistributionChartCanvas = document.getElementById("userDistributionChart");
+        const recentActivityChartCanvas = document.getElementById("recentActivityChart");
+        const pendingDataTableBody = document.getElementById("pendingDataTable");
+        const adminNameSpan = document.getElementById("adminName");
 
-    const userGrowthChart = new Chart(document.getElementById('userGrowthChart'), {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Users',
-          data: [50, 75, 150, 200, 235, 250],
-          borderColor: 'rgb(220 38 38)', // Tailwind red-600 in RGB
-          backgroundColor: 'rgba(220,38,38,0.2)',
-          tension: 0.4
-        }]
-      }
-    });
+        // Function to fetch user session
+        const fetchUserSession = async () => {
+          try {
+            // Use relative path for API endpoint
+            const response = await fetch("/api/user-session");
+            if (response.ok) {
+              const data = await response.json();
+              if (data.userType === "admin") {
+                adminNameSpan.textContent = `Welcome, ${data.userName || 'Admin'}!`;
+              } else {
+                // Redirect if not admin or session invalid
+                window.location.href = "admin-login.html";
+              }
+            } else {
+              window.location.href = "admin-login.html";
+            }
+          } catch (error) {
+            console.error("Error fetching user session:", error);
+            window.location.href = "admin-login.html";
+          }
+        };
 
-    const revenueChart = new Chart(document.getElementById('revenueChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Basic', 'Standard', 'Premium', 'Gold'],
-        datasets: [{
-          label: 'Revenue ($)',
-          data: [3000, 4500, 6000, 8000],
-          backgroundColor: ['#ef4444', '#fca5a5', '#b91c1c', '#f87171'] // different reds
-        }]
-      }
-    });
-  </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script
-      src="admin-logout.js"></script>
+        // Fetch user session on page load
+        await fetchUserSession();
+
+
+        // Show loading indicator
+        loadingIndicator.classList.remove("hidden");
+
+        try {
+          // Fetch KPI data from the backend using relative path
+          const response = await fetch("/api/admin-dashboard-kpis");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const kpiData = await response.json();
+
+          // Define KPI card data with icons and colors (limited to 8)
+          const kpiCardDefinitions = [
+            {
+              title: "Total Clients",
+              value: kpiData.TotalClients || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857M12 11V4a3 3 0 013-3h2a3 3 0 013 3v7m-3 0v4m-6-4v4m-6-4v4"></path></svg>`,
+              color: "bg-red-50",
+            },
+            {
+              title: "Total Trainers",
+              value: kpiData.TotalTrainers || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 10a6 6 0 00-12 0v2H2.812A2 2 0 001 14.812V20a2 2 0 002 2h18a2 2 0 002-2v-5.188A2 2 0 0021.188 12H18v-2z"></path></svg>`,
+              color: "bg-blue-50",
+            },
+            {
+              title: "Total Admins",
+              value: kpiData.TotalAdmins || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>`,
+              color: "bg-green-50",
+            },
+            {
+              title: "Active Subscriptions",
+              value: kpiData.ActiveSubscriptions || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
+              color: "bg-purple-50",
+            },
+            {
+              title: "New Clients (Last 30 Days)",
+              value: kpiData.NewClientsLast30Days || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354l.707-.707a1 1 0 011.414 0l.707.707m-2.828 0l-.707-.707a1 1 0 00-1.414 0l-.707.707M12 4.354V15m0 0l-3.293 3.293a1 1 0 001.414 1.414L12 17.414l1.879 1.879a1 1 0 001.414-1.414L12 15z"></path></svg>`,
+              color: "bg-yellow-50",
+            },
+            {
+              title: "Total Active Clients",
+              value: kpiData.TotalActiveClients || 0,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>`,
+              color: "bg-pink-50",
+            },
+            {
+              title: "Total Subscription Revenue",
+              value: `BDT ${Number(kpiData.TotalSubscriptionRevenue || 0).toFixed(2)}`,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.592 1L19 10m-3.408 2.592c-.512.512-1.482.908-2.592.908m-4.5 3.5a2 2 0 100-4 2 2 0 000 4z"></path></svg>`,
+              color: "bg-green-100",
+            },
+            {
+              title: "Total Product Sales Revenue",
+              value: `BDT ${Number(kpiData.TotalProductSalesRevenue || 0).toFixed(2)}`,
+              icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>`,
+              color: "bg-purple-100",
+            },
+          ];
+
+          // Populate KPI cards
+          kpiCardsSection.innerHTML = kpiCardDefinitions
+            .map(
+              (kpi) => `
+            <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 ${kpi.color} flex items-center justify-between transform transition-transform hover:scale-105">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold text-gray-700">${kpi.title}</h3>
+                <p class="text-3xl font-bold text-gray-900 mt-2">${kpi.value}</p>
+              </div>
+              <div class="ml-4 p-3 rounded-full bg-white bg-opacity-70 shadow-inner">
+                ${kpi.icon}
+              </div>
+            </div>
+            `
+            )
+            .join("");
+
+          // Render Charts
+          // Revenue Overview Chart (Bar Chart)
+          new Chart(revenueChartCanvas, {
+            type: "bar",
+            data: {
+              labels: ["Subscription Revenue", "Product Sales Revenue", "Last 30 Days Revenue"],
+              datasets: [
+                {
+                  label: "Revenue (BDT)",
+                  data: [
+                    Number(kpiData.TotalSubscriptionRevenue || 0),
+                    Number(kpiData.TotalProductSalesRevenue || 0),
+                    Number(kpiData.TotalRevenueLast30Days || 0),
+                  ],
+                  backgroundColor: ["#EF4444", "#8B5CF6", "#F59E0B"],
+                  borderColor: ["#DC2626", "#7C3AED", "#D97706"],
+                  borderWidth: 1,
+                  borderRadius: 8,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow chart to fill container height
+              plugins: {
+                legend: {
+                  display: false,
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      return `${context.dataset.label}: BDT ${Number(context.raw || 0).toFixed(2)}`;
+                    },
+                  },
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: {
+                    display: false,
+                  },
+                  ticks: {
+                    // Make Y-axis labels dynamic and currency formatted
+                    callback: function(value, index, ticks) {
+                        return 'BDT ' + value;
+                    }
+                  }
+                },
+                x: {
+                  grid: {
+                    display: false,
+                  },
+                },
+              },
+            },
+          });
+
+          // User Distribution Chart (Doughnut Chart)
+          new Chart(userDistributionChartCanvas, {
+            type: "doughnut",
+            data: {
+              labels: ["Clients", "Trainers", "Admins"],
+              datasets: [
+                {
+                  label: "Users",
+                  data: [kpiData.TotalClients || 0, kpiData.TotalTrainers || 0, kpiData.TotalAdmins || 0],
+                  backgroundColor: ["#EF4444", "#3B82F6", "#10B981"],
+                  hoverOffset: 4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow chart to fill container height
+              plugins: {
+                legend: {
+                  position: "right",
+                  labels: {
+                    boxWidth: 20,
+                    padding: 15,
+                    // Custom label generation to include count
+                    generateLabels: function(chart) {
+                      const data = chart.data;
+                      if (data.labels.length && data.datasets.length) {
+                        return data.labels.map(function(label, i) {
+                          const value = data.datasets[0].data[i];
+                          const backgroundColor = data.datasets[0].backgroundColor[i];
+                          const borderColor = data.datasets[0].borderColor ? data.datasets[0].borderColor[i] : backgroundColor;
+
+                          return {
+                            text: `${label}: ${value}`, // Label with count
+                            fillStyle: backgroundColor,
+                            strokeStyle: borderColor,
+                            lineWidth: data.datasets[0].borderWidth || 0,
+                            hidden: chart.getDatasetMeta(0).data[i].hidden,
+                            index: i
+                          };
+                        });
+                      }
+                      return [];
+                    }
+                  },
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const label = context.label || "";
+                      const value = context.raw || 0;
+                      return `${label}: ${value}`;
+                    },
+                  },
+                },
+              },
+            },
+          });
+
+          // Recent Activity Chart (Line Chart)
+          new Chart(recentActivityChartCanvas, {
+            type: "line",
+            data: {
+              labels: [
+                "New Clients",
+                "Booked Sessions",
+                "Workouts Logged",
+                "Diet Logs Submitted",
+                "Feedback Received",
+              ],
+              datasets: [
+                {
+                  label: "Count (Last 30 Days)",
+                  data: [
+                    kpiData.NewClientsLast30Days || 0,
+                    kpiData.TotalBookedSessionsLast30Days || 0,
+                    kpiData.TotalWorkoutsLoggedLast30Days || 0,
+                    kpiData.TotalDietLogsSubmittedLast30Days || 0,
+                    kpiData.TotalFeedbackReceivedLast30Days || 0,
+                  ],
+                  fill: true,
+                  borderColor: "#EF4444",
+                  backgroundColor: "rgba(239, 68, 68, 0.1)",
+                  tension: 0.3,
+                  pointBackgroundColor: "#EF4444",
+                  pointBorderColor: "#fff",
+                  pointHoverBackgroundColor: "#fff",
+                  pointHoverBorderColor: "#EF4444",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false, // Allow chart to fill container height
+              plugins: {
+                legend: {
+                  display: false,
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  grid: {
+                    color: "#e5e7eb",
+                  },
+                },
+                x: {
+                  grid: {
+                    display: false,
+                  },
+                },
+              },
+            },
+          });
+
+          // Populate Other Key Metrics & Pending Items Table
+          const tableData = [
+            {
+              metric: "Pending Diet Requests",
+              description: "Total pending diet plan requests from clients.",
+              value: kpiData.TotalPendingDietRequests || 0,
+            },
+            {
+              metric: "Pending Product Orders",
+              description: "Total pending product orders awaiting fulfillment.",
+              value: kpiData.PendingProductOrders || 0,
+            },
+            {
+              metric: "Upcoming Virtual Classes",
+              description: "Virtual classes scheduled for the future.",
+              value: kpiData.UpcomingVirtualClasses || 0,
+            },
+            {
+              metric: "Unread Admin Notifications",
+              description: "Notifications specifically for the admin role that are unread.",
+              value: kpiData.UnreadAdminNotifications || 0,
+            },
+            {
+              metric: "Clients With Unachieved Goals",
+              description: "Clients who have not yet achieved their fitness goals.",
+              value: kpiData.ClientsWithUnachievedGoals || 0,
+            },
+            {
+              metric: "Average Subscription Price",
+              description: "Average price across all subscription plans.",
+              value: `BDT ${Number(kpiData.AverageSubscriptionPrice || 0).toFixed(2)}`,
+            },
+            {
+              metric: "Average Overall Feedback Rating",
+              description: "Average rating from client feedback submissions.",
+              value: (kpiData.AverageOverallFeedbackRating !== null && kpiData.AverageOverallFeedbackRating !== undefined) ? Number(kpiData.AverageOverallFeedbackRating).toFixed(1) : 'N/A',
+            },
+          ];
+
+          pendingDataTableBody.innerHTML = tableData
+            .map(
+              (item) => `
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.metric}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.description}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-semibold">${item.value}</td>
+            </tr>
+            `
+            )
+            .join("");
+        } catch (error) {
+          console.error("Failed to fetch KPI data:", error);
+          // Display an error message to the user
+          kpiCardsSection.innerHTML = `<div class="col-span-full text-center text-red-600 text-lg">
+            Failed to load dashboard data. Please try again later.
+          </div>`;
+          revenueChartCanvas.style.display = 'none';
+          userDistributionChartCanvas.style.display = 'none';
+          recentActivityChartCanvas.style.display = 'none';
+          pendingDataTableBody.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">No data available or failed to load.</td></tr>`;
+        } finally {
+          // Hide loading indicator
+          loadingIndicator.classList.add("hidden");
+        }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="admin-logout.js"></script>
   </body>
 </html>

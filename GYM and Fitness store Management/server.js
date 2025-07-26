@@ -71,6 +71,49 @@ app.get("/api/user-session", (req, res) => {
   }
 });
 
+
+/**
+ * Admin Dashboard KPIs Middleware
+ */ 
+
+const isAdmin = (req, res, next) => {
+  if (req.session.userId && req.session.userType === "admin") {
+    next(); // User is an admin, proceed to the next middleware/route handler
+  } else {
+    res.status(403).json({ message: "Access denied. Admin privileges required." });
+  }
+};
+
+/**
+ * API endpoint to fetch KPI data for the admin dashboard.
+ * This endpoint requires admin authentication.
+ */
+app.get("/api/admin-dashboard-kpis", isAdmin, async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    // Fetch data from the pre-defined view
+    const [rows] = await connection.execute("SELECT * FROM admin_dashboard_kpis_vw");
+
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "No KPI data found." });
+    }
+
+    // The view should return a single row with all the KPI columns
+    res.json(rows[0]);
+  } catch (error) {
+    console.error("Error fetching admin dashboard KPIs:", error);
+    res.status(500).json({ message: "Server error while fetching KPIs." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+
+
+
+
+
 /**
  * Middleware to protect routes, ensuring only logged-in clients can access
  */
