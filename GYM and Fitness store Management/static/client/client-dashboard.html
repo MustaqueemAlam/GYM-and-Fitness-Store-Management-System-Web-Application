@@ -7,8 +7,57 @@
     <title>Client Dashboard - E-Fitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      
+      /* Custom Scrollbar Styles */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      
+      ::-webkit-scrollbar-track {
+        background: #fee2e2;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background: #ef4444;
+        border-radius: 4px;
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background: #dc2626;
+      }
+      .card {
+        /* Updated border for cards */
+        @apply bg-white p-6 rounded-xl shadow-lg border-2 border-red-500 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl;
+      }
+      .card-title {
+        @apply text-lg font-semibold mb-2 text-red-700;
+      }
+      .card-value {
+        @apply text-3xl font-bold text-gray-900;
+      }
+      .table-header {
+        @apply px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+      }
+      .table-cell {
+        @apply px-6 py-4 whitespace-nowrap text-sm text-gray-800;
+      }
+      /* Enhanced styles for section containers */
+      .section-container {
+        @apply bg-white p-8 rounded-xl shadow-lg mb-10 border-2 border-red-500;
+      }
+    </style>
   </head>
-  <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+  <body class="flex h-screen overflow-hidden bg-gradient-to-r from-red-50 to-red-100">
     <!-- Sidebar -->
     <aside
       class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between"
@@ -132,7 +181,6 @@
                 x2="21"
                 y2="10"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
               ></line>
             </svg>
@@ -153,40 +201,40 @@
               <polyline
                 points="3 17 9 11 13 15 21 7"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></polyline>
               <circle
                 cx="3"
                 cy="17"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="9"
                 cy="11"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="13"
                 cy="15"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="21"
                 cy="7"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
             </svg>
             Daily Metrics and Attendance
@@ -206,24 +254,24 @@
               <path
                 d="M3 3h2l.4 2M7 13h10l4-8H5.4"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></path>
               <circle
                 cx="7"
                 cy="21"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="17"
                 cy="21"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
             </svg>
             Fitness Store
@@ -243,14 +291,14 @@
               <path
                 d="M9 12h6M9 16h6M13 8h-2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></path>
               <path
                 d="M4 4h16v16H4z"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></path>
             </svg>
             Subscription Management
@@ -272,24 +320,24 @@
                 cy="12"
                 r="10"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="12"
                 cy="12"
                 r="6"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
               <circle
                 cx="12"
                 cy="12"
                 r="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></circle>
             </svg>
             Fitness Goals
@@ -309,8 +357,8 @@
               <path
                 d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></path>
             </svg>
             Workout and sessions
@@ -335,8 +383,8 @@
                 rx="2"
                 ry="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></rect>
               <line
                 x1="7"
@@ -344,8 +392,8 @@
                 x2="17"
                 y2="8"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -353,8 +401,8 @@
                 x2="17"
                 y2="12"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -362,8 +410,8 @@
                 x2="17"
                 y2="16"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
             </svg>
             Virtual classes
@@ -388,8 +436,8 @@
                 rx="2"
                 ry="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></rect>
               <line
                 x1="7"
@@ -397,8 +445,8 @@
                 x2="17"
                 y2="8"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -406,8 +454,8 @@
                 x2="17"
                 y2="12"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -415,8 +463,8 @@
                 x2="17"
                 y2="16"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
             </svg>
             Feedback
@@ -441,8 +489,8 @@
                 rx="2"
                 ry="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></rect>
               <line
                 x1="7"
@@ -450,8 +498,8 @@
                 x2="17"
                 y2="8"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -459,8 +507,8 @@
                 x2="17"
                 y2="12"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -468,8 +516,8 @@
                 x2="17"
                 y2="16"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
             </svg>
             Order and Purchase History
@@ -494,8 +542,8 @@
                 rx="2"
                 ry="2"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></rect>
               <line
                 x1="7"
@@ -503,8 +551,8 @@
                 x2="17"
                 y2="8"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -512,8 +560,8 @@
                 x2="17"
                 y2="12"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
               <line
                 x1="7"
@@ -521,8 +569,8 @@
                 x2="17"
                 y2="16"
                 stroke-width="2"
-                stroke-linejoin="round"
                 stroke-linecap="round"
+                stroke-linejoin="round"
               ></line>
             </svg>
             Logout
@@ -535,8 +583,9 @@
       </div>
     </aside>
 
-    <main class="flex-1 p-8 overflow-auto">
-      <header class="mb-8 flex justify-between items-center">
+    <main class="flex-1 overflow-y-auto">
+      <div class="p-8 max-w-7xl mx-auto">
+        <header class="mb-8 flex justify-between items-center">
         <h1 class="text-3xl font-bold text-red-700">Welcome Back, Client!</h1>
 
         <!-- Notification and Logout Buttons -->
@@ -567,271 +616,198 @@
 
             <!-- Red Badge -->
             <span
+              id="unreadNotificationsBadge"
               class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold leading-none text-white bg-red-600 rounded-full transform translate-x-1/2 -translate-y-1/2"
             >
-              3
+              0
             </span>
           </a>
         </div>
       </header>
 
-      <!-- Identity Card -->
-      <section
-        class="mb-10 bg-white p-6 rounded shadow-md border border-gray-300 max-w-md"
-      >
-        <h2 class="text-xl font-semibold mb-4 text-red-700">
-          Your Identity Card
-        </h2>
-        <div class="flex items-center gap-4">
-          <img
-            id="profilePic"
-            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
-            alt="User Avatar"
-            class="w-20 h-20 rounded-full border border-red-600"
-          />
-          <div>
-            <p class="text-lg font-semibold text-gray-800" id="userName">
-              Loading...
-            </p>
-            <p class="text-gray-600" id="userEmail">Loading email...</p>
-            <p class="text-gray-600" id="userId">ID: Loading...</p>
+      <!-- Section for KPI Cards -->
+      <div class="p-6">
+        <div class="grid grid-cols-12 gap-6">
+          <!-- Identity Card -->
+          <div class="col-span-12 md:col-span-3 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <h2 class="text-lg font-semibold text-red-700 mb-4">Your Profile</h2>
+            <div class="flex flex-col items-center gap-4">
+              <div class="relative">
+                <img
+                  id="profilePic"
+                  src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                  alt="User Avatar"
+                  class="w-24 h-24 rounded-xl border-2 border-red-200 object-cover"
+                />
+                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
+              </div>
+              <div class="text-center">
+                <p class="text-lg font-semibold text-gray-800" id="userName">Loading...</p>
+                <p class="text-sm text-gray-600" id="userEmail">Loading email...</p>
+                <p class="text-sm text-gray-600" id="userId">ID: Loading...</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Latest Weight Card -->
+          <div class="col-span-6 md:col-span-3 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg font-semibold text-red-700">Weight</h2>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                </svg>
+              </div>
+            </div>
+            <p class="text-3xl font-bold text-gray-900" id="latestWeightKg">-- kg</p>
+            <p class="text-sm text-gray-500 mt-2">Last updated today</p>
+          </div>
+
+          <!-- Latest Body Fat Card -->
+          <div class="col-span-6 md:col-span-3 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-2">
+              <h2 class="text-lg font-semibold text-red-700">Body Fat</h2>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <p class="text-3xl font-bold text-gray-900" id="latestBodyFatPercent">-- %</p>
+            <p class="text-sm text-gray-500 mt-2">Target: 15-20%</p>
+          </div>
+
+          <!-- Latest BMI Card - Full Width -->
+          <div class="col-span-12 md:col-span-6 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h2 class="text-lg font-semibold text-red-700">BMI</h2>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="latestBMI">--</p>
+              </div>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-green-600 font-medium">Normal</span>
+                <span class="text-gray-500">18.5 - 24.9</span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-2">
+                <div class="bg-green-500 rounded-full h-2 w-3/4"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Calories Burned Card - Full Width -->
+          <div class="col-span-12 md:col-span-6 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-2">
+              <div>
+                <h2 class="text-lg font-semibold text-red-700">Calories Burned</h2>
+                <p class="text-3xl font-bold text-gray-900 mt-2" id="totalCaloriesBurned">-- kcal</p>
+              </div>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                </svg>
+              </div>
+            </div>
+            <div class="mt-4">
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-orange-600 font-medium">Today's Goal: 500 kcal</span>
+                <span class="text-green-600">+12.5%</span>
+              </div>
+              <div class="w-full bg-gray-100 rounded-full h-2">
+                <div class="bg-orange-500 rounded-full h-2 w-5/6"></div>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- Dashboard stats -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
-        >
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-red-100 rounded-full">
-              <!-- Icon: User -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></path>
-              </svg>
+      <!-- Section for Chart and Table -->
+      <div class="p-6">
+        <div class="grid grid-cols-12 gap-6">
+          <!-- Donut Chart Section -->
+          <div class="col-span-12 md:col-span-6 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold text-red-700">Workouts & Diet Logs</h2>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
             </div>
-            <div>
-              <p class="text-sm text-gray-500">Active Sessions</p>
-              <p class="text-2xl font-semibold">12</p>
+            <div class="flex flex-col items-center">
+              <div class="relative h-64 w-64 md:h-80 md:w-80">
+                <canvas id="workoutDietChart"></canvas>
+              </div>
+              <div id="chartLegends" class="mt-6 grid grid-cols-2 gap-4 text-sm">
+                <!-- Legends will be dynamically added here with consistent styling -->
+              </div>
             </div>
           </div>
-          <p class="text-gray-600 text-sm">
-            You’ve completed 12 workout sessions this week. Keep up the
-            momentum!
-          </p>
-          <div class="w-full bg-gray-200 rounded-full h-2">
-            <div class="bg-red-600 h-2 rounded-full" style="width: 60%"></div>
+
+          <!-- Table Section -->
+          <div class="col-span-12 md:col-span-6 bg-white p-6 rounded-2xl border-2 border-red-200">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-semibold text-red-700">Important Updates</h2>
+              <div class="p-2 bg-red-50 rounded-lg">
+                <svg class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+              </div>
+            </div>
+            <div class="overflow-hidden rounded-xl border border-red-100">
+              <table class="min-w-full divide-y divide-red-100">
+                <thead class="bg-red-50">
+                  <tr>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-red-700 uppercase tracking-wider">Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-semibold text-red-700 uppercase tracking-wider">Details</th>
+                  </tr>
+                </thead>
+                <tbody id="updatesTableBody" class="bg-white divide-y divide-red-100">
+                  <!-- Data will be populated here by JavaScript with consistent styling -->
+                </tbody>
+              </table>
+            </div>
           </div>
-          <p class="text-xs text-gray-400">60% of weekly goal completed</p>
         </div>
-
-        <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
-        >
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-red-100 rounded-full">
-              <!-- Icon: Chart Line -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <polyline
-                  points="3 17 9 11 13 15 21 7"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></polyline>
-                <circle
-                  cx="3"
-                  cy="17"
-                  r="2"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></circle>
-                <circle
-                  cx="9"
-                  cy="11"
-                  r="2"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></circle>
-                <circle
-                  cx="13"
-                  cy="15"
-                  r="2"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></circle>
-                <circle
-                  cx="21"
-                  cy="7"
-                  r="2"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></circle>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Goals Achieved</p>
-              <p class="text-2xl font-semibold">7</p>
-            </div>
-          </div>
-          <p class="text-gray-600 text-sm">
-            You have achieved 7 fitness goals so far. Great job reaching
-            milestones!
-          </p>
-          <ul class="list-disc list-inside text-gray-500 text-xs">
-            <li>Run 5km in under 30 minutes</li>
-            <li>Workout 4 times a week</li>
-            <li>Complete yoga sessions</li>
-          </ul>
-        </div>
-
-        <div
-          class="bg-white p-6 rounded shadow-md flex flex-col gap-4 border border-gray-300"
-        >
-          <div class="flex items-center gap-4">
-            <div class="p-3 bg-red-100 rounded-full">
-              <!-- Icon: Bell -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-8 h-8 text-red-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2"
-                  stroke-width="2"
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                ></path>
-              </svg>
-            </div>
-            <div>
-              <p class="text-sm text-gray-500">Unread Notifications</p>
-              <p class="text-2xl font-semibold">3</p>
-            </div>
-          </div>
-          <p class="text-gray-600 text-sm">
-            You have 3 unread notifications related to your workout plans and
-            progress.
-          </p>
-          <ul class="text-xs text-gray-500">
-            <li>New workout plan available</li>
-            <li>Reminder: Hydration check</li>
-            <li>Message from your coach</li>
-          </ul>
-          <button
-            class="mt-2 px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
-          >
-            View All
-          </button>
-        </div>
-      </section>
-
-      <section class="bg-white p-6 rounded shadow-md mb-10">
-        <h2 class="text-xl font-semibold mb-4 text-red-700">
-          Daily Progress Chart
-        </h2>
-        <canvas id="dailyProgressChart" height="150"></canvas>
-      </section>
+      </div>
+      </div>
     </main>
 
+    <script src="client-logout.js"></script>
     <script>
-      fetch("/profile", {
-        method: "GET",
-        credentials: "include", // 🔥 REQUIRED to send session cookie
-      })
-        .then((res) => {
-          if (!res.ok) throw new Error("Not authorized or session expired");
-          return res.json();
-        })
-        .then((data) => {
-          if (data.success) {
-            const user = data.user;
-            document.getElementById("userName").textContent = user.FullName;
-            document.getElementById("userEmail").textContent = user.Email;
-            document.getElementById(
-              "userId"
-            ).textContent = `ID: ${user.ClientID}`;
-            document.getElementById(
-              "welcomeMsg"
-            ).textContent = `Welcome Back, ${user.FullName}!`;
-          } else {
-            alert(data.message);
+      // Function to safely format a number, returning a fallback if not a number
+      function formatNumber(value, decimals, suffix = '') {
+          // Check if value is a number and not NaN
+          if (typeof value === 'number' && !isNaN(value)) {
+              return `${value.toFixed(decimals)}${suffix}`;
           }
-        });
+          return `--${suffix}`; // Fallback string
+      }
 
-      const ctx = document
-        .getElementById("dailyProgressChart")
-        .getContext("2d");
-      const dailyProgressChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          datasets: [
-            {
-              label: "Workout Minutes",
-              data: [30, 45, 60, 40, 70, 80, 50],
-              borderColor: "#dc2626",
-              backgroundColor: "rgba(220, 38, 38, 0.2)",
-              fill: true,
-              tension: 0.3,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: "#b91c1c",
-              },
-            },
-          },
-        },
-      });
-    </script>
-    <script>
-      fetch("/profile")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            const user = data.user;
+      // Function to fetch and render dashboard data
+      async function fetchAndRenderDashboardData() {
+        try {
+          // Fetch user profile data
+          const profileRes = await fetch("/profile", {
+            method: "GET",
+            credentials: "include", // REQUIRED to send session cookie
+          });
+          if (!profileRes.ok) {
+            // If profile fetch fails, it's likely an authentication issue
+            throw new Error("Not authorized or session expired for profile");
+          }
+          const profileData = await profileRes.json();
 
-            // Fill form inputs
-            for (const key in user) {
-              const input = document.getElementById(key);
-              if (input && key !== "ProfilePic") {
-                input.value = user[key] ?? "";
-              }
-            }
+          if (profileData.success) {
+            const user = profileData.user;
 
-            // Identity Card
+            // Populate Identity Card
             document.getElementById("userName").textContent =
               user.FullName ?? "N/A";
             document.getElementById("userEmail").textContent =
@@ -840,33 +816,187 @@
               user.ClientID ?? "N/A"
             }`;
 
-            // Profile Picture
             const base64Image = user.ProfilePic;
             if (base64Image) {
               const imageSrc = `data:image/jpeg;base64,${base64Image}`;
-              const profilePreview = document.getElementById("profilePreview");
-              const identityPic = document.getElementById("profilePic");
-              if (profilePreview) profilePreview.src = imageSrc;
-              if (identityPic) identityPic.src = imageSrc;
+              const profilePic = document.getElementById("profilePic");
+              if (profilePic) profilePic.src = imageSrc;
             }
           } else {
             Swal.fire({
               icon: "error",
-              title: "Error",
-              text: data.message || "Failed to load profile",
+              title: "Profile Error",
+              text: profileData.message || "Failed to load profile",
             });
           }
-        })
-        .catch((err) => {
-          console.error("Profile fetch error:", err);
+
+          // Fetch KPI data
+          const kpiRes = await fetch("/api/client-dashboard-kpis", {
+            method: "GET",
+            credentials: "include", // REQUIRED to send session cookie
+          });
+          if (!kpiRes.ok) {
+            // If KPI fetch fails, also likely an authentication issue
+            throw new Error("Not authorized or session expired for KPIs");
+          }
+          const kpiData = await kpiRes.json();
+
+          // Ensure kpiData is an object, even if empty, to prevent errors
+          const safeKpiData = kpiData || {};
+
+          // Populate KPI Cards
+          document.getElementById("latestWeightKg").textContent = formatNumber(safeKpiData.LatestWeightKg, 1, ' kg');
+          document.getElementById("latestBodyFatPercent").textContent = formatNumber(safeKpiData.LatestBodyFatPercent, 1, ' %');
+          document.getElementById("latestBMI").textContent = formatNumber(safeKpiData.LatestBMI, 1);
+          document.getElementById("totalCaloriesBurned").textContent = formatNumber(safeKpiData.TotalCaloriesBurnedWorkouts, 0, ' kcal');
+
+
+          // Render Donut Chart
+          const ctx = document.getElementById("workoutDietChart").getContext("2d");
+          // Destroy existing chart instance if it exists to prevent re-initialization issues
+          if (window.myWorkoutDietChart instanceof Chart) {
+            window.myWorkoutDietChart.destroy();
+          }
+
+          // Removed TotalCaloriesBurnedWorkouts from chart data
+          const chartDataValues = [
+            safeKpiData.TotalWorkoutsLogged || 0,
+            safeKpiData.TotalDietLogsSubmitted || 0,
+          ];
+
+          const chartLabels = [
+            "Total Workouts Logged",
+            "Total Diet Logs Submitted",
+          ];
+
+          const chartColors = [
+            "rgba(255, 99, 132, 0.7)", // Red
+            "rgba(75, 192, 192, 0.7)", // Green
+          ];
+
+          window.myWorkoutDietChart = new Chart(ctx, {
+            type: "doughnut", // Changed to doughnut
+            data: {
+              labels: chartLabels,
+              datasets: [
+                {
+                  label: "Client Activity",
+                  data: chartDataValues,
+                  backgroundColor: chartColors,
+                  borderColor: [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(75, 192, 192, 1)",
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: false, // Hide default legend to create custom one
+                },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      let label = context.label || '';
+                      if (label) {
+                        label += ': ';
+                      }
+                      if (context.parsed !== null) {
+                        label += context.parsed;
+                      }
+                      return label;
+                    }
+                  }
+                }
+              },
+            },
+          });
+
+          // Custom Legend Generation
+          const chartLegendsContainer = document.getElementById("chartLegends");
+          chartLegendsContainer.innerHTML = ''; // Clear previous legends
+          chartLabels.forEach((label, index) => {
+            const legendItem = document.createElement('div');
+            legendItem.className = 'flex items-center space-x-2';
+            const colorBox = document.createElement('span');
+            colorBox.className = 'w-4 h-4 rounded-full';
+            colorBox.style.backgroundColor = chartColors[index];
+            const text = document.createElement('span');
+            text.textContent = `${label}: ${chartDataValues[index]}`;
+            legendItem.appendChild(colorBox);
+            legendItem.appendChild(text);
+            chartLegendsContainer.appendChild(legendItem);
+          });
+
+
+          // Populate Table
+          const updatesTableBody = document.getElementById("updatesTableBody");
+          updatesTableBody.innerHTML = ""; // Clear previous content
+
+          // Use || 0 to ensure numerical comparison
+          const unachievedGoals = safeKpiData.UnachievedFitnessGoals || 0;
+          const upcomingBookings = safeKpiData.UpcomingBookings || 0;
+          const unreadNotifications = safeKpiData.UnreadNotificationsClient || 0;
+
+          // Always add rows for these, showing 0 if applicable
+          // Add Unachieved Fitness Goals row
+          const goalsRow = updatesTableBody.insertRow();
+          goalsRow.innerHTML = `
+            <td class="table-cell font-medium text-red-600 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Unachieved Fitness Goals
+            </td>
+            <td class="table-cell">${unachievedGoals} goals unachieved.</td>
+          `;
+
+          // Add Upcoming Bookings row
+          const bookingsRow = updatesTableBody.insertRow();
+          bookingsRow.innerHTML = `
+            <td class="table-cell font-medium text-blue-600 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Upcoming Bookings
+            </td>
+            <td class="table-cell">${upcomingBookings} sessions booked.</td>
+          `;
+
+          // Add Unread Notifications row
+          const notificationsRow = updatesTableBody.insertRow();
+          notificationsRow.innerHTML = `
+            <td class="table-cell font-medium text-green-600 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+              Unread Notifications
+            </td>
+            <td class="table-cell">${unreadNotifications} new notifications.</td>
+          `;
+
+          // The "No new updates or goals!" message should only appear if all are zero.
+          if (unachievedGoals === 0 && upcomingBookings === 0 && unreadNotifications === 0) {
+              const row = updatesTableBody.insertRow();
+              row.innerHTML = `<td class="table-cell text-center text-gray-500" colspan="2">No new updates or goals!</td>`;
+          }
+
+        } catch (err) {
+          console.error("Dashboard fetch error:", err);
           Swal.fire({
             icon: "error",
             title: "Error",
-            text: "Could not load profile data.",
+            text: "Could not load dashboard data. Please ensure you are logged in and the server is running. " + err.message,
           });
-        });
+        }
+      }
+
+      // Call the function when the DOM is fully loaded
+      document.addEventListener("DOMContentLoaded", fetchAndRenderDashboardData);
     </script>
-    <script src="client-logout.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>

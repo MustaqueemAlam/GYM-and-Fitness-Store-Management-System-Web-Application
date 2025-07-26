@@ -84,6 +84,93 @@ const isAdmin = (req, res, next) => {
   }
 };
 
+
+/**
+ * Login POST handler for all users (Client, Admin, Trainer)
+ */
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password, userType } = req.body;
+    if (!email || !password || !userType) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Please fill in all fields." });
+    }
+    if (!validateEmail(email)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email format." });
+    }
+    let tableName, idField;
+    switch (userType.toLowerCase()) {
+      case "client":
+        tableName = "clients";
+        idField = "ClientID";
+        break;
+      case "admin":
+        tableName = "admins";
+        idField = "AdminID";
+        break;
+      case "trainer":
+        tableName = "trainers";
+        idField = "TrainerID";
+        break;
+      default:
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid user type." });
+    }
+    const [rows] = await pool.execute(
+      `SELECT * FROM ${tableName} WHERE Email = ?`,
+      [email]
+    );
+    if (rows.length === 0) {
+      return res
+        .status(401)
+        .json({ success: false, message: "User not found." });
+    }
+    const user = rows[0];
+    if (!user.PasswordHash) {
+      return res
+        .status(500)
+        .json({
+          success: false,
+          message: "Password not set for this account.",
+        });
+    }
+    const match = await bcrypt.compare(password, user.PasswordHash.toString());
+    if (!match) {
+      return res
+        .status(401)
+        .json({ success: false, message: "Incorrect password." });
+    }
+    req.session.userId = user[idField]; // Save session
+    req.session.userName = user.FullName;
+    req.session.userEmail = user.Email;
+    req.session.userType = userType.toLowerCase(); // Store lowercase in session
+    const response = {
+      success: true,
+      message: `Welcome back, ${user.FullName}!`,
+      userType: userType.toLowerCase(),
+    };
+    if (userType.toLowerCase() === "admin") {
+      response.adminId = user[idField];
+    } else if (userType.toLowerCase() === "trainer") {
+      response.trainerId = user[idField];
+    } else {
+      response.clientId = user[idField];
+    }
+    res.json(response);
+  } catch (err) {
+    console.error("Login error:", err);
+    res
+      .status(500)
+      .json({ success: false, message: "Server error during login." });
+  }
+});
+
+
+
 /**
  * API endpoint to fetch KPI data for the admin dashboard.
  * This endpoint requires admin authentication.
@@ -109,11 +196,6 @@ app.get("/api/admin-dashboard-kpis", isAdmin, async (req, res) => {
   }
 });
 
-
-
-
-
-
 /**
  * Middleware to protect routes, ensuring only logged-in clients can access
  */
@@ -134,6 +216,61 @@ const requireClientAuth = (req, res, next) => {
       });
   }
 };
+
+
+/**
+ * API endpoint to fetch KPI data for the client dashboard.
+ * This endpoint requires client authentication.
+ */
+app.get("/api/client-dashboard-kpis", requireClientAuth, async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const clientId = req.session.userId; // Get ClientID from session
+
+    if (!clientId) {
+      return res.status(401).json({ message: "Client ID not found in session." });
+    }
+
+    // Fetch data from the client_dashboard_kpis_vw view for the specific client
+    const [rows] = await connection.execute(
+      "SELECT * FROM client_dashboard_kpis_vw WHERE ClientID = ?",
+      [clientId]
+    );
+
+    if (rows.length === 0) {
+      // It's possible for a client to exist but have no KPI data yet
+      return res.status(200).json({}); // Return an empty object instead of 404
+    }
+
+    const kpis = rows[0];
+
+    // Explicitly convert relevant fields to numbers
+    kpis.LatestWeightKg = parseFloat(kpis.LatestWeightKg);
+    kpis.LatestBodyFatPercent = parseFloat(kpis.LatestBodyFatPercent);
+    kpis.LatestBMI = parseFloat(kpis.LatestBMI);
+    kpis.TotalWorkoutsLogged = parseInt(kpis.TotalWorkoutsLogged) || 0;
+    kpis.TotalCaloriesBurnedWorkouts = parseInt(kpis.TotalCaloriesBurnedWorkouts) || 0;
+    kpis.TotalDietLogsSubmitted = parseInt(kpis.TotalDietLogsSubmitted) || 0;
+    kpis.UnachievedFitnessGoals = parseInt(kpis.UnachievedFitnessGoals) || 0;
+    kpis.UpcomingBookings = parseInt(kpis.UpcomingBookings) || 0;
+    kpis.UnreadNotificationsClient = parseInt(kpis.UnreadNotificationsClient) || 0;
+
+
+    res.json(kpis);
+  } catch (error) {
+    console.error("Error fetching client dashboard KPIs:", error);
+    res.status(500).json({ message: "Server error while fetching client KPIs." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+
+/**
+ * API endpoint to fetch Client orders
+ * This endpoint requires client authentication.
+ */
 
 app.get("/api/client/orders", requireClientAuth, async (req, res) => {
   const clientId = req.session.userId;
@@ -1506,89 +1643,6 @@ app.delete("/manage/profile/client/:id", async (req, res) => {
   }
 });
 
-/**
- * Login POST handler for all users (Client, Admin, Trainer)
- */
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password, userType } = req.body;
-    if (!email || !password || !userType) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Please fill in all fields." });
-    }
-    if (!validateEmail(email)) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid email format." });
-    }
-    let tableName, idField;
-    switch (userType.toLowerCase()) {
-      case "client":
-        tableName = "clients";
-        idField = "ClientID";
-        break;
-      case "admin":
-        tableName = "admins";
-        idField = "AdminID";
-        break;
-      case "trainer":
-        tableName = "trainers";
-        idField = "TrainerID";
-        break;
-      default:
-        return res
-          .status(400)
-          .json({ success: false, message: "Invalid user type." });
-    }
-    const [rows] = await pool.execute(
-      `SELECT * FROM ${tableName} WHERE Email = ?`,
-      [email]
-    );
-    if (rows.length === 0) {
-      return res
-        .status(401)
-        .json({ success: false, message: "User not found." });
-    }
-    const user = rows[0];
-    if (!user.PasswordHash) {
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Password not set for this account.",
-        });
-    }
-    const match = await bcrypt.compare(password, user.PasswordHash.toString());
-    if (!match) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Incorrect password." });
-    }
-    req.session.userId = user[idField]; // Save session
-    req.session.userName = user.FullName;
-    req.session.userEmail = user.Email;
-    req.session.userType = userType.toLowerCase(); // Store lowercase in session
-    const response = {
-      success: true,
-      message: `Welcome back, ${user.FullName}!`,
-      userType: userType.toLowerCase(),
-    };
-    if (userType.toLowerCase() === "admin") {
-      response.adminId = user[idField];
-    } else if (userType.toLowerCase() === "trainer") {
-      response.trainerId = user[idField];
-    } else {
-      response.clientId = user[idField];
-    }
-    res.json(response);
-  } catch (err) {
-    console.error("Login error:", err);
-    res
-      .status(500)
-      .json({ success: false, message: "Server error during login." });
-  }
-});
 
 /**
  * Client daily progress tracking API endpoints

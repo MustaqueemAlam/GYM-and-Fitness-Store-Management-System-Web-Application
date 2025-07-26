@@ -22,7 +22,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('addSnapshotBtn').addEventListener('click', addProgressSnapshot);
     document.getElementById('addWorkoutBtn').addEventListener('click', addWorkoutLog);
 
+    // Event listener for weightKg and heightMeters to calculate BMI
     document.getElementById('weightKg').addEventListener('input', calculateBMI);
+    document.getElementById('heightMeters').addEventListener('input', calculateBMI);
 });
 
 async function fetchSession() {
@@ -52,7 +54,7 @@ async function fetchSession() {
 
 function calculateBMI() {
     const weightKg = parseFloat(document.getElementById('weightKg').value);
-    const heightMeters = 1.75; // Example height: 175 cm = 1.75 meters
+    const heightMeters = parseFloat(document.getElementById('heightMeters').value); // Get height from input
 
     if (weightKg > 0 && heightMeters > 0) {
         const bmi = weightKg / (heightMeters * heightMeters);
@@ -92,19 +94,21 @@ async function addProgressSnapshot() {
 
     const dateTaken = document.getElementById('snapshotDate').value;
     const weightKg = parseFloat(document.getElementById('weightKg').value);
+    const heightMeters = parseFloat(document.getElementById('heightMeters').value); // Get height
     const bodyFatPercent = parseFloat(document.getElementById('bodyFatPercent').value);
-    const bmi = parseFloat(document.getElementById('bmi').value);
+    const bmi = parseFloat(document.getElementById('bmi').value); // BMI is now calculated
     const notes = document.getElementById('snapshotNotes').value;
     const progressImageFile = document.getElementById('progressImage').files[0];
 
-    if (!dateTaken || isNaN(weightKg) || isNaN(bodyFatPercent) || isNaN(bmi)) {
-        Swal.fire('Validation Error', 'Please fill in all required snapshot fields with valid numbers.', 'warning');
+    if (!dateTaken || isNaN(weightKg) || isNaN(heightMeters) || isNaN(bodyFatPercent) || isNaN(bmi)) {
+        Swal.fire('Validation Error', 'Please fill in all required snapshot fields with valid numbers (including Height).', 'warning');
         return;
     }
 
     const formData = new FormData();
     formData.append('dateTaken', dateTaken);
     formData.append('weightKg', weightKg);
+    formData.append('heightMeters', heightMeters); // Append height to form data
     formData.append('bodyFatPercent', bodyFatPercent);
     formData.append('bmi', bmi);
     formData.append('notes', notes);
@@ -126,6 +130,7 @@ async function addProgressSnapshot() {
             // Clear form fields
             document.getElementById('snapshotDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('weightKg').value = '';
+            document.getElementById('heightMeters').value = ''; // Clear height field
             document.getElementById('bodyFatPercent').value = '';
             document.getElementById('bmi').value = '';
             document.getElementById('snapshotNotes').value = '';
