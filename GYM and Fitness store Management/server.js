@@ -3773,6 +3773,328 @@ app.get("/client/trainer/:trainerId", isClient, async (req, res) => {
 });
 
 
+
+
+
+
+/**
+ * GET /api/admin/orders
+ * Fetches all orders with client details and associated order items.
+ */
+app.get("/api/admin/orders", isAdmin, async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [orders] = await connection.execute(`
+      SELECT
+        o.OrderID,
+        o.ClientID,
+        c.FullName AS ClientName,
+        o.OrderDate,
+        o.TotalAmount,
+        o.Status,
+        o.PaymentID
+      FROM orders o
+      JOIN clients c ON o.ClientID = c.ClientID
+      ORDER BY o.OrderDate DESC
+    `);
+
+    // For each order, fetch its items and product names (using 'Name' column)
+    for (const order of orders) {
+      const [items] = await connection.execute(
+        `SELECT oi.OrderItemID, oi.ProductID, p.Name AS ProductName, oi.Quantity, oi.UnitPrice
+         FROM orderitems oi
+         LEFT JOIN products p ON oi.ProductID = p.ProductID
+         WHERE oi.OrderID = ?`,
+        [order.OrderID]
+      );
+      order.OrderItems = items;
+    }
+
+    res.json(orders);
+  } catch (error) {
+    console.error("Error fetching orders:", error);
+    res.status(500).json({ message: "Failed to fetch orders." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * PUT /api/admin/orders/:orderId
+ * Updates an existing order's details.
+ * Now specifically handles partial updates for status or other fields.
+ */
+app.put("/api/admin/orders/:orderId", isAdmin, async (req, res) => {
+  const { orderId } = req.params;
+  const { OrderDate, TotalAmount, Status } = req.body; // Only expecting these editable fields
+
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    let updateFields = [];
+    let updateValues = [];
+
+    if (OrderDate !== undefined) {
+      updateFields.push("OrderDate = ?");
+      updateValues.push(OrderDate);
+    }
+    if (TotalAmount !== undefined) {
+      updateFields.push("TotalAmount = ?");
+      updateValues.push(TotalAmount);
+    }
+    if (Status !== undefined) {
+      updateFields.push("Status = ?");
+      updateValues.push(Status);
+    }
+
+    if (updateFields.length === 0) {
+      return res.status(400).json({ message: "No fields provided for update." });
+    }
+
+    const query = `UPDATE orders SET ${updateFields.join(", ")} WHERE OrderID = ?`;
+    const [result] = await connection.execute(query, [...updateValues, orderId]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Order not found." });
+    }
+    res.json({ message: "Order updated successfully." });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({ message: "Failed to update order." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * DELETE /api/admin/orders/:orderId
+ * Deletes an order and its associated order items.
+ */
+app.delete("/api/admin/orders/:orderId", isAdmin, async (req, res) => {
+  const { orderId } = req.params;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    await connection.beginTransaction(); // Start transaction
+
+    // Delete associated order items first
+    await connection.execute(`DELETE FROM orderitems WHERE OrderID = ?`, [orderId]);
+
+    // Then delete the order
+    const [result] = await connection.execute(`DELETE FROM orders WHERE OrderID = ?`, [orderId]);
+
+    if (result.affectedRows === 0) {
+      await connection.rollback(); // Rollback if order not found
+      return res.status(404).json({ message: "Order not found." });
+    }
+
+    await connection.commit(); // Commit transaction
+    res.json({ message: "Order and associated items deleted successfully." });
+  } catch (error) {
+    await connection.rollback(); // Rollback on error
+    console.error("Error deleting order:", error);
+    res.status(500).json({ message: "Failed to delete order." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * GET /api/admin/feedbacks
+ * Fetches all feedback with sender details.
+ */
+app.get("/api/admin/feedbacks", isAdmin, async (req, res) => {
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [feedbacks] = await connection.execute(`
+      SELECT
+        f.FeedbackID,
+        f.SenderID,
+        f.SenderRole,
+        CASE
+          WHEN f.SenderRole = 'Client' THEN c.FullName
+          -- Add other roles (Trainer, Admin) if their names are in other tables
+          ELSE 'Unknown'
+        END AS SenderName,
+        f.FeedbackType,
+        f.Subject,
+        f.Message,
+        f.Rating,
+        f.SubmittedAt
+      FROM feedbacks f
+      LEFT JOIN clients c ON f.SenderID = c.ClientID AND f.SenderRole = 'Client'
+      -- LEFT JOIN trainers t ON f.SenderID = t.TrainerID AND f.SenderRole = 'Trainer'
+      -- LEFT JOIN admins a ON f.SenderID = a.AdminID AND f.SenderRole = 'Admin'
+      ORDER BY f.SubmittedAt DESC
+    `);
+    res.json(feedbacks);
+  } catch (error) {
+    console.error("Error fetching feedbacks:", error);
+    res.status(500).json({ message: "Failed to fetch feedbacks." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * DELETE /api/admin/feedbacks/:feedbackId
+ * Deletes a specific feedback entry.
+ */
+app.delete("/api/admin/feedbacks/:feedbackId", isAdmin, async (req, res) => {
+  const { feedbackId } = req.params;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [result] = await connection.execute(`DELETE FROM feedbacks WHERE FeedbackID = ?`, [
+      feedbackId,
+    ]);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "Feedback not found." });
+    }
+    res.json({ message: "Feedback deleted successfully." });
+  } catch (error) {
+    console.error("Error deleting feedback:", error);
+    res.status(500).json({ message: "Failed to delete feedback." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * POST /api/admin/notifications
+ * Sends a custom notification to a client.
+ */
+app.post("/api/admin/notifications", isAdmin, async (req, res) => {
+  const { receiverId, title, message, type, actionLink } = req.body;
+  const senderId = req.session.userId; // Admin's ID
+  const senderRole = req.session.userType; // Should be 'admin'
+
+  if (!receiverId || !title || !message) {
+    return res.status(400).json({ message: "Receiver ID, title, and message are required." });
+  }
+
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    // Verify receiver exists and is a client
+    const [client] = await connection.execute(`SELECT ClientID FROM clients WHERE ClientID = ?`, [receiverId]);
+    if (client.length === 0) {
+        return res.status(404).json({ message: "Receiver client not found." });
+    }
+
+    const [result] = await connection.execute(
+      `
+      INSERT INTO notifications (SenderID, SenderRole, ReceiverID, ReceiverRole, Title, Message, Type, ActionLink)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      `,
+      [senderId, senderRole, receiverId, 'Client', title, message, type || 'System', actionLink || null]
+    );
+    res.status(201).json({ message: "Notification sent successfully.", notificationId: result.insertId });
+  } catch (error) {
+    console.error("Error sending notification:", error);
+    res.status(500).json({ message: "Failed to send notification." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * GET /api/admin/clients/:clientId
+ * Fetches details of a specific client.
+ */
+app.get("/api/admin/clients/:clientId", isAdmin, async (req, res) => {
+    const { clientId } = req.params;
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        const [client] = await connection.execute(
+            `SELECT ClientID, FullName, Email, Phone, Address, City, Country FROM clients WHERE ClientID = ?`,
+            [clientId]
+        );
+        if (client.length === 0) {
+            return res.status(404).json({ message: "Client not found." });
+        }
+        res.json(client[0]);
+    } catch (error) {
+        console.error("Error fetching client details:", error);
+        res.status(500).json({ message: "Failed to fetch client details." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+/**
+ * GET /api/admin/clients/:clientId/profile-pic
+ * Fetches the profile picture of a specific client, encoded in Base64.
+ */
+app.get("/api/admin/clients/:clientId/profile-pic", isAdmin, async (req, res) => {
+  const { clientId } = req.params;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    const [rows] = await connection.execute(
+      `SELECT ProfilePic FROM clients WHERE ClientID = ?`,
+      [clientId]
+    );
+
+    if (rows.length === 0 || !rows[0].ProfilePic) {
+      // Return a 404 with a message if no profile picture is found
+      return res.status(404).json({ message: "Profile picture not found." });
+    }
+
+    const profilePicBuffer = rows[0].ProfilePic;
+    // Assuming JPEG for profile pictures. Adjust 'image/jpeg' if your stored format is different (e.g., 'image/png').
+    const mimeType = 'image/jpeg'; // Or 'image/png', 'image/gif' based on your stored image type
+    const base64Image = profilePicBuffer.toString('base64');
+
+    res.json({ mimeType: mimeType, data: base64Image });
+
+  } catch (error) {
+    console.error("Error fetching client profile picture:", error);
+    res.status(500).json({ message: "Failed to fetch client profile picture." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
+/**
+ * GET /api/admin/products/:productId/image
+ * Fetches the image of a specific product, encoded in Base64.
+ */
+app.get("/api/admin/products/:productId/image", isAdmin, async (req, res) => {
+  const { productId } = req.params;
+  let connection;
+  try {
+    connection = await pool.getConnection();
+    // Changed from ProductPic to Image based on your provided schema
+    const [rows] = await connection.execute(
+      `SELECT Image, ImageMimeType FROM products WHERE ProductID = ?`,
+      [productId]
+    );
+
+    if (rows.length === 0 || !rows[0].Image) {
+      // Return a 404 with a message if no product picture is found
+      return res.status(404).json({ message: "Product picture not found." });
+    }
+
+    const productPicBuffer = rows[0].Image;
+    // Dynamically use ImageMimeType from the database, or default to 'image/jpeg'
+    const mimeType = rows[0].ImageMimeType || 'image/jpeg';
+    const base64Image = productPicBuffer.toString('base64');
+
+    res.json({ mimeType: mimeType, data: base64Image });
+
+  } catch (error) {
+    console.error("Error fetching product image:", error);
+    res.status(500).json({ message: "Failed to fetch product image." });
+  } finally {
+    if (connection) connection.release();
+  }
+});
+
 /**
  * logout session
  */

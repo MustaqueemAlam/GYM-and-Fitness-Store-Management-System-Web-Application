@@ -6,7 +6,12 @@
     <title>Admin Dashboard - Red Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <style>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
       /* Custom scrollbar for main content */
       main::-webkit-scrollbar {
         width: 8px;
@@ -25,18 +30,75 @@
       main::-webkit-scrollbar-thumb:hover {
         background: #dc2626;
       }
+
+      /* Modal styles */
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1000; /* Sit on top */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 700px;
+        position: relative;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .close-button {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+      }
+
+      .close-button:hover,
+      .close-button:focus {
+        color: #ef4444;
+        text-decoration: none;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100 font-sans">
     <!-- Sidebar -->
     <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg">
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg"
+    >
       <div>
         <a href="admin-dashboard.html" class="flex items-center gap-3 mb-8">
           <img
             src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
             alt="Gym Logo"
-            class="w-10 h-10 rounded-full object-cover shadow-md" />
+            class="w-10 h-10 rounded-full object-cover shadow-md"
+          />
           <h2 class="text-2xl font-bold text-red-700">E-Fitness Admin</h2>
         </a>
 
@@ -44,166 +106,1259 @@
         <nav class="flex flex-col space-y-3">
           <a
             href="admin-dashboard.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
+                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6"
+              />
             </svg>
             Dashboard
           </a>
           <a
             href="admin-manage-users.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7" />
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14v7"
+              />
             </svg>
             Users
           </a>
           <a
             href="admin-manage-products.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z"
+              />
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M12 12v8" />
+                d="M12 12v8"
+              />
             </svg>
             Products
           </a>
           <a
             href="admin-subs-plan.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z" />
+                d="M12 8c-3.333 0-6 2-6 4s2.667 4 6 4 6-2 6-4-2.667-4-6-4z"
+              />
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M12 12v8" />
+                d="M12 12v8"
+              />
             </svg>
             Subscription Plans
           </a>
           <a
             href="admin-payments.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M9 14l-2-2 4-4 6 6-2 2" />
+                d="M9 14l-2-2 4-4 6 6-2 2"
+              />
             </svg>
             Payments
           </a>
           <a
-            href="admin-reports.html"
-                        class="flex items-center gap-3 py-2 px-3 rounded-lg text-white bg-red-600 font-semibold transition-colors shadow-md">
+            href="#"
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-white bg-red-600 font-semibold transition-colors shadow-md"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5 text-red-500"
+              class="w-5 h-5"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M9 17v-2a4 4 0 014-4h4" />
+                d="M9 17v-2a4 4 0 014-4h4"
+              />
             </svg>
-            Reports
-          </a>
-          <a
-            href="admin-noti-feedback.html"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5 text-red-500"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6" />
-            </svg>
-            Feedback and Notifications
+            Orders & Feedback
           </a>
 
           <a
             href="#"
             id="logoutButton"
-            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-gray-700 hover:bg-red-100 hover:text-red-600 font-medium transition-colors"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor">
+              stroke="currentColor"
+            >
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V7a3 3 0 013-3h5a3 3 0 013 3v1" />
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H5a3 3 0 01-3-3V7a3 3 0 013-3h5a3 3 0 013 3v1"
+              />
             </svg>
             Logout
           </a>
         </nav>
       </div>
     </aside>
-        <main>
 
-        </main>
-        
-        
-        <script
-            src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
-        </script>
-        <script
-            src="admin-logout.js">
-        </script>
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+      <h1 class="text-3xl font-bold text-gray-800 mb-6">Orders & Feedback Management</h1>
 
-    </body>
+      <!-- Order Filters Section -->
+      <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Filter Orders</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+          <!-- Amount Filter -->
+          <div>
+            <label for="amountFilter" class="block text-gray-700 font-semibold mb-1"
+              >Filter by Amount:</label
+            >
+            <select
+              id="amountFilter"
+              class="w-full p-2 border border-gray-300 rounded-md"
+            >
+              <option value="all">All Amounts</option>
+              <option value="under1000">Under BDT 1000</option>
+              <option value="1000-5000">BDT 1000 - 5000</option>
+              <option value="over5000">Over BDT 5000</option>
+            </select>
+          </div>
+
+          <!-- Date Filter -->
+          <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label for="fromDateFilter" class="block text-gray-700 font-semibold mb-1"
+                >From Date:</label
+              >
+              <input
+                type="date"
+                id="fromDateFilter"
+                class="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+            <div>
+              <label for="toDateFilter" class="block text-gray-700 font-semibold mb-1"
+                >To Date:</label
+              >
+              <input
+                type="date"
+                id="toDateFilter"
+                class="w-full p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="mb-6">
+          <label class="block text-gray-700 font-semibold mb-2"
+            >Filter by Status:</label
+          >
+          <div class="flex flex-wrap gap-4">
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="statusFilter"
+                value="all"
+                class="form-radio text-red-600"
+                checked
+              />
+              <span class="ml-2 text-gray-700">All</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="statusFilter"
+                value="Pending"
+                class="form-radio text-yellow-600"
+              />
+              <span class="ml-2 text-gray-700">Pending</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="statusFilter"
+                value="Shipped"
+                class="form-radio text-blue-600"
+              />
+              <span class="ml-2 text-gray-700">Shipped</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="statusFilter"
+                value="Delivered"
+                class="form-radio text-green-600"
+              />
+              <span class="ml-2 text-gray-700">Delivered</span>
+            </label>
+            <label class="inline-flex items-center">
+              <input
+                type="radio"
+                name="statusFilter"
+                value="Cancelled"
+                class="form-radio text-red-600"
+              />
+              <span class="ml-2 text-gray-700">Cancelled</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <button
+            id="applyFiltersBtn"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+          >
+            <i class="fas fa-filter mr-2"></i>Apply Filters
+          </button>
+          <button
+            id="clearFiltersBtn"
+            class="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+          >
+            <i class="fas fa-undo mr-2"></i>Clear Filters
+          </button>
+        </div>
+      </section>
+
+      <!-- Orders Section -->
+      <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-semibold text-gray-700">Recent Orders</h2>
+          <button
+            id="exportOrdersBtn"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+          >
+            <i class="fas fa-file-export mr-2"></i>Export Orders
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead class="bg-red-100">
+              <tr>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Order ID
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Client
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Order Date
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Total Amount
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Status
+                </th>
+                <th
+                  class="py-3 px-4 text-center text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
+                <th
+                  class="py-3 px-4 text-center text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Status Update
+                </th>
+                <th
+                  class="py-3 px-4 text-center text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Notifications
+                </th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody" class="divide-y divide-gray-200">
+              <!-- Order rows will be populated here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Feedback Section -->
+      <section class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Client Feedback</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead class="bg-red-100">
+              <tr>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Feedback ID
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Sender
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Subject
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Message
+                </th>
+                <th
+                  class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Rating
+                </th>
+                <th
+                  class="py-3 px-4 text-center text-sm font-medium text-gray-600 uppercase tracking-wider"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody id="feedbackTableBody" class="divide-y divide-gray-200">
+              <!-- Feedback rows will be populated here by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modals -->
+
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal('orderDetailsModal')">&times;</span>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Order Details</h3>
+        <div id="orderDetailsContent" class="text-gray-700">
+          <!-- Details will be loaded here -->
+        </div>
+        <button
+          id="editOrderDetailsBtn"
+          class="mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+        >
+          <i class="fas fa-edit mr-2"></i>Edit Order
+        </button>
+      </div>
+    </div>
+
+    <!-- Edit Order Modal -->
+    <div id="editOrderModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal('editOrderModal')">&times;</span>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Edit Order Details</h3>
+        <form id="editOrderForm" class="space-y-4">
+          <div>
+            <label for="editOrderId" class="block text-gray-700 font-semibold mb-1"
+              >Order ID:</label
+            >
+            <input
+              type="text"
+              id="editOrderId"
+              class="w-full p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+              readonly
+            />
+          </div>
+          <div>
+            <label for="editOrderClient" class="block text-gray-700 font-semibold mb-1"
+              >Client ID:</label
+            >
+            <input
+              type="text"
+              id="editOrderClient"
+              class="w-full p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+              readonly
+            />
+          </div>
+          <div>
+            <label for="editOrderDate" class="block text-gray-700 font-semibold mb-1"
+              >Order Date:</label
+            >
+            <input
+              type="datetime-local"
+              id="editOrderDate"
+              class="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <div>
+            <label for="editTotalAmount" class="block text-gray-700 font-semibold mb-1"
+              >Total Amount:</label
+            >
+            <input
+              type="number"
+              step="0.01"
+              id="editTotalAmount"
+              class="w-full p-2 border border-gray-300 rounded-md"
+            />
+          </div>
+          <!-- Removed Status from this modal for dedicated status buttons -->
+          <div>
+            <label for="editPaymentId" class="block text-gray-700 font-semibold mb-1"
+              >Payment ID:</label
+            >
+            <input
+              type="text"
+              id="editPaymentId"
+              class="w-full p-2 border border-gray-300 rounded-md bg-gray-100 cursor-not-allowed"
+              readonly
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+          >
+            <i class="fas fa-save mr-2"></i>Save Changes
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Send Notification Modal -->
+    <div id="sendNotificationModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal('sendNotificationModal')"
+          >&times;</span
+        >
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Send Custom Notification</h3>
+        <form id="sendNotificationForm" class="space-y-4">
+          <input type="hidden" id="notificationOrderId" />
+          <input type="hidden" id="notificationClientId" />
+          <div>
+            <label for="notificationTitle" class="block text-gray-700 font-semibold mb-1"
+              >Title:</label
+            >
+            <input
+              type="text"
+              id="notificationTitle"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              placeholder="e.g., Your order has been delivered!"
+              required
+            />
+          </div>
+          <div>
+            <label for="notificationMessage" class="block text-gray-700 font-semibold mb-1"
+              >Message:</label
+            >
+            <textarea
+              id="notificationMessage"
+              rows="4"
+              class="w-full p-2 border border-gray-300 rounded-md"
+              placeholder="Enter your custom message here..."
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg shadow-md transition-colors duration-300"
+          >
+            <i class="fas fa-paper-plane mr-2"></i>Send Notification
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Client Info Modal -->
+    <div id="clientInfoModal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closeModal('clientInfoModal')">&times;</span>
+        <h3 class="text-2xl font-bold text-gray-800 mb-4">Client Information</h3>
+        <div id="clientInfoContent" class="text-gray-700 flex flex-col items-center">
+          <!-- Client profile pic and details will be loaded here -->
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // Global variables to store fetched data
+      let allOrders = [];
+      let allFeedbacks = [];
+
+      // Function to open a modal
+      function openModal(modalId) {
+        document.getElementById(modalId).style.display = "flex";
+      }
+
+      // Function to close a modal
+      function closeModal(modalId) {
+        document.getElementById(modalId).style.display = "none";
+      }
+
+      /**
+       * Fetches orders from the backend API.
+       */
+      async function fetchOrders() {
+        try {
+          const response = await fetch("/api/admin/orders", {
+            credentials: "include", // Important for sending cookies/session
+          });
+          if (!response.ok) {
+            if (response.status === 403) {
+              Swal.fire({
+                icon: "error",
+                title: "Access Denied",
+                text: "You do not have administrative privileges to view orders.",
+              }).then(() => {
+                window.location.href = 'login.html'; // Redirect to login or appropriate page
+              });
+            } else {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+          }
+          allOrders = await response.json();
+          applyFilters(); // Apply filters after fetching all orders
+        } catch (error) {
+          console.error("Error fetching orders:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to load orders. Please try again later.",
+          });
+        }
+      }
+
+      /**
+       * Filters the orders based on current filter selections.
+       * This function is called after fetching orders and when filters are applied/cleared.
+       */
+      function applyFilters() {
+        const amountFilter = document.getElementById('amountFilter').value;
+        const fromDateFilter = document.getElementById('fromDateFilter').value;
+        const toDateFilter = document.getElementById('toDateFilter').value;
+        const statusFilter = document.querySelector('input[name="statusFilter"]:checked').value;
+
+        let filteredOrders = allOrders.filter(order => {
+          // Amount Filter
+          const totalAmount = parseFloat(order.TotalAmount);
+          if (amountFilter === 'under1000' && totalAmount >= 1000) return false;
+          if (amountFilter === '1000-5000' && (totalAmount < 1000 || totalAmount > 5000)) return false;
+          if (amountFilter === 'over5000' && totalAmount <= 5000) return false;
+
+          // Date Filter
+          const orderDate = new Date(order.OrderDate);
+          if (fromDateFilter) {
+            const fromDate = new Date(fromDateFilter);
+            if (orderDate < fromDate) return false;
+          }
+          if (toDateFilter) {
+            const toDate = new Date(toDateFilter);
+            // Add one day to toDate to include orders on that specific day
+            toDate.setDate(toDate.getDate() + 1);
+            if (orderDate >= toDate) return false;
+          }
+
+          // Status Filter
+          if (statusFilter !== 'all' && order.Status !== statusFilter) return false;
+
+          return true;
+        });
+
+        populateOrdersTable(filteredOrders);
+      }
+
+      /**
+       * Clears all filter selections and reapplies them.
+       */
+      function clearFilters() {
+        document.getElementById('amountFilter').value = 'all';
+        document.getElementById('fromDateFilter').value = '';
+        document.getElementById('toDateFilter').value = '';
+        document.querySelector('input[name="statusFilter"][value="all"]').checked = true;
+        applyFilters(); // Reapply filters to show all orders
+      }
+
+
+      /**
+       * Populates the orders table with fetched data.
+       * @param {Array} ordersToDisplay - The array of orders to display (can be filtered).
+       */
+      function populateOrdersTable(ordersToDisplay) {
+        const ordersTableBody = document.getElementById("ordersTableBody");
+        ordersTableBody.innerHTML = ""; // Clear existing rows
+
+        ordersToDisplay.forEach((order) => {
+          const row = ordersTableBody.insertRow();
+          row.className = "hover:bg-gray-50";
+
+          // Format OrderDate to a readable string
+          const orderDate = new Date(order.OrderDate).toLocaleString();
+
+          row.innerHTML = `
+            <td class="py-3 px-4 text-sm text-gray-800">${order.OrderID}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">
+              <a href="#" class="text-blue-600 hover:underline" onclick="viewClientInfo(${order.ClientID})">
+                ${order.ClientName || 'N/A'}
+              </a>
+            </td>
+            <td class="py-3 px-4 text-sm text-gray-800">${orderDate}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">BDT ${parseFloat(order.TotalAmount).toFixed(2)}</td>
+            <td class="py-3 px-4 text-sm font-semibold">
+              <span class="${
+                order.Status === "Delivered"
+                  ? "text-green-600"
+                  : order.Status === "Pending"
+                  ? "text-yellow-600"
+                  : order.Status === "Shipped"
+                  ? "text-blue-600"
+                  : "text-red-600"
+              }">
+                ${order.Status}
+              </span>
+            </td>
+            <td class="py-3 px-4 text-center">
+              <button
+                onclick="viewOrderDetails(${order.OrderID})"
+                class="bg-indigo-500 hover:bg-indigo-600 text-white py-1 px-3 rounded-md text-xs font-medium mr-2 transition-colors duration-300"
+              >
+                <i class="fas fa-info-circle"></i> Details
+              </button>
+              <button
+                onclick="openEditOrderModal(${order.OrderID})"
+                class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md text-xs font-medium mr-2 transition-colors duration-300"
+              >
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              <button
+                onclick="deleteOrder(${order.OrderID})"
+                class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-xs font-medium transition-colors duration-300"
+              >
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </td>
+            <td class="py-3 px-4 text-center">
+              ${order.Status === 'Pending' ? `
+                <button
+                  onclick="updateOrderStatus(${order.OrderID}, 'Shipped')"
+                  class="bg-orange-500 hover:bg-orange-600 text-white py-1 px-3 rounded-md text-xs font-medium mb-1 transition-colors duration-300"
+                >
+                  <i class="fas fa-truck"></i> Mark Shipped
+                </button>
+              ` : ''}
+              ${order.Status === 'Shipped' ? `
+                <button
+                  onclick="updateOrderStatus(${order.OrderID}, 'Delivered')"
+                  class="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md text-xs font-medium transition-colors duration-300"
+                >
+                  <i class="fas fa-check-circle"></i> Mark Delivered
+                </button>
+              ` : ''}
+              ${order.Status === 'Delivered' ? `
+                <span class="text-green-600 text-xs font-semibold">Delivered</span>
+              ` : ''}
+              ${order.Status === 'Cancelled' ? `
+                <span class="text-red-600 text-xs font-semibold">Cancelled</span>
+              ` : ''}
+            </td>
+            <td class="py-3 px-4 text-center">
+              <button
+                onclick="openSendNotificationModal(${order.OrderID}, ${order.ClientID})"
+                class="${
+                  order.Status === 'Delivered'
+                    ? 'bg-purple-500 hover:bg-purple-600'
+                    : 'bg-gray-400 cursor-not-allowed'
+                } text-white py-1 px-3 rounded-md text-xs font-medium transition-colors duration-300"
+                ${order.Status !== 'Delivered' ? 'disabled' : ''}
+              >
+                <i class="fas fa-bell"></i> Send
+              </button>
+            </td>
+          `;
+        });
+      }
+
+      /**
+       * Fetches feedback from the backend API.
+       */
+      async function fetchFeedbacks() {
+        try {
+          const response = await fetch("/api/admin/feedbacks", {
+            credentials: "include",
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          allFeedbacks = await response.json();
+          populateFeedbackTable();
+        } catch (error) {
+          console.error("Error fetching feedbacks:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Failed to load feedback. Please try again later.",
+          });
+        }
+      }
+
+      /**
+       * Populates the feedback table with fetched data.
+       */
+      function populateFeedbackTable() {
+        const feedbackTableBody = document.getElementById("feedbackTableBody");
+        feedbackTableBody.innerHTML = ""; // Clear existing rows
+
+        allFeedbacks.forEach((feedback) => {
+          const row = feedbackTableBody.insertRow();
+          row.className = "hover:bg-gray-50";
+
+          row.innerHTML = `
+            <td class="py-3 px-4 text-sm text-gray-800">${feedback.FeedbackID}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">${feedback.SenderName || 'N/A'} (ID: ${feedback.SenderID})</td>
+            <td class="py-3 px-4 text-sm text-gray-800">${feedback.Subject}</td>
+            <td class="py-3 px-4 text-sm text-gray-800 max-w-xs overflow-hidden truncate" title="${feedback.Message}">${feedback.Message}</td>
+            <td class="py-3 px-4 text-sm text-gray-800">${"⭐".repeat(feedback.Rating)}</td>
+            <td class="py-3 px-4 text-center">
+              <button
+                onclick="deleteFeedback(${feedback.FeedbackID})"
+                class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md text-xs font-medium transition-colors duration-300"
+              >
+                <i class="fas fa-trash-alt"></i> Delete
+              </button>
+            </td>
+          `;
+        });
+      }
+
+      /**
+       * Displays order details in a modal.
+       * @param {number} orderId - The ID of the order to display.
+       */
+      async function viewOrderDetails(orderId) {
+        const order = allOrders.find((o) => o.OrderID === orderId);
+        if (order) {
+          let itemsHtml = '';
+          if (order.OrderItems && order.OrderItems.length > 0) {
+              const itemPromises = order.OrderItems.map(async (item) => {
+                  let productImgSrc = "https://placehold.co/50x50/e0e0e0/000000?text=No+Img";
+                  try {
+                      const imgResponse = await fetch(`/api/admin/products/${item.ProductID}/image`, {
+                          credentials: "include",
+                      });
+                      if (imgResponse.ok) {
+                          const imgData = await imgResponse.json();
+                          if (imgData && imgData.data && imgData.mimeType) {
+                              productImgSrc = `data:${imgData.mimeType};base64,${imgData.data}`;
+                          }
+                      } else if (imgResponse.status === 404) {
+                          // Specific handling for 404 on image, keep placeholder
+                          console.warn(`Product image not found for Product ID: ${item.ProductID}`);
+                      } else {
+                          throw new Error(`HTTP error! status: ${imgResponse.status}`);
+                      }
+                  } catch (imgError) {
+                      console.error(`Error fetching image for Product ID ${item.ProductID}:`, imgError);
+                  }
+
+                  return `
+                      <li class="mb-2 flex items-center gap-3 p-2 bg-gray-50 rounded-md">
+                        <img src="${productImgSrc}" alt="Product Image" class="w-12 h-12 rounded-md object-cover border border-gray-200" onerror="this.onerror=null;this.src='https://placehold.co/50x50/e0e0e0/000000?text=No+Img';">
+                        <div>
+                          <strong>${item.ProductName || `Product ID: ${item.ProductID}`}</strong><br>
+                          Quantity: ${item.Quantity} x Unit Price: BDT ${parseFloat(item.UnitPrice).toFixed(2)}
+                        </div>
+                      </li>
+                  `;
+              });
+              itemsHtml = (await Promise.all(itemPromises)).join("");
+          } else {
+              itemsHtml = '<li>No items found.</li>';
+          }
+
+          document.getElementById("orderDetailsContent").innerHTML = `
+            <p><strong>Order ID:</strong> ${order.OrderID}</p>
+            <p><strong>Client:</strong> ${order.ClientName || 'N/A'} (ID: ${order.ClientID})</p>
+            <p><strong>Order Date:</strong> ${new Date(order.OrderDate).toLocaleString()}</p>
+            <p><strong>Total Amount:</strong> BDT ${parseFloat(order.TotalAmount).toFixed(2)}</p>
+            <p><strong>Status:</strong> ${order.Status}</p>
+            <p><strong>Payment ID:</strong> ${order.PaymentID || 'N/A'}</p>
+            <h4 class="font-semibold mt-4 mb-2">Order Items:</h4>
+            <ul class="list-none p-0">${itemsHtml}</ul>
+          `;
+          // Attach event listener to the "Edit Order" button within the details modal
+          document.getElementById('editOrderDetailsBtn').onclick = () => {
+            closeModal('orderDetailsModal'); // Close details modal first
+            openEditOrderModal(orderId); // Open edit modal
+          };
+          openModal("orderDetailsModal");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Order Not Found",
+            text: `No details found for Order ID: ${orderId}`,
+          });
+        }
+      }
+
+      /**
+       * Opens the edit order modal and populates it with order data.
+       * @param {number} orderId - The ID of the order to edit.
+       */
+      function openEditOrderModal(orderId) {
+        const order = allOrders.find((o) => o.OrderID === orderId);
+        if (order) {
+          document.getElementById("editOrderId").value = order.OrderID;
+          document.getElementById("editOrderClient").value = order.ClientID; // Now readonly
+          // Format date for datetime-local input
+          const orderDate = new Date(order.OrderDate);
+          const formattedDate = orderDate.toISOString().slice(0, 16); // YYYY-MM-DDTHH:MM
+          document.getElementById("editOrderDate").value = formattedDate;
+          document.getElementById("editTotalAmount").value = parseFloat(order.TotalAmount);
+          document.getElementById("editPaymentId").value = order.PaymentID || ''; // Now readonly, handle null PaymentID
+          openModal("editOrderModal");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Order Not Found",
+            text: `Could not find order with ID: ${orderId} for editing.`,
+          });
+        }
+      }
+
+      // Handle Edit Order Form Submission (for non-status fields)
+      document.getElementById("editOrderForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const orderId = parseInt(document.getElementById("editOrderId").value);
+        const updatedData = {
+          // ClientID and PaymentID are read-only and not sent in this update payload
+          OrderDate: document.getElementById("editOrderDate").value,
+          TotalAmount: parseFloat(document.getElementById("editTotalAmount").value),
+          // Status is updated separately via updateOrderStatus
+        };
+
+        try {
+          const response = await fetch(`/api/admin/orders/${orderId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatedData),
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          Swal.fire({
+            icon: "success",
+            title: "Order Updated!",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          closeModal("editOrderModal");
+          await fetchOrders(); // Re-fetch and refresh the table
+        } catch (error) {
+          console.error("Error updating order:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Update Failed",
+            text: "Failed to update order. Please check your input and try again.",
+          });
+        }
+      });
+
+      /**
+       * Updates the status of an order directly from the table.
+       * @param {number} orderId - The ID of the order to update.
+       * @param {string} newStatus - The new status to set (e.g., 'Shipped', 'Delivered').
+       */
+      async function updateOrderStatus(orderId, newStatus) {
+        try {
+          const response = await fetch(`/api/admin/orders/${orderId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ Status: newStatus }), // Only send Status for this update
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          Swal.fire({
+            icon: "success",
+            title: "Status Updated!",
+            text: `Order ${orderId} status changed to ${newStatus}.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          await fetchOrders(); // Re-fetch and refresh the table
+        } catch (error) {
+          console.error("Error updating order status:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Status Update Failed",
+            text: "Failed to update order status. Please try again.",
+          });
+        }
+      }
+
+      /**
+       * Deletes an order after confirmation.
+       * @param {number} orderId - The ID of the order to delete.
+       */
+      function deleteOrder(orderId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: `You are about to delete Order ID: ${orderId}. This cannot be undone!`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#EF4444",
+          cancelButtonColor: "#6B7280",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const response = await fetch(`/api/admin/orders/${orderId}`, {
+                method: "DELETE",
+                credentials: "include",
+              });
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+
+              const resultData = await response.json();
+              Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                text: resultData.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              await fetchOrders(); // Re-fetch and refresh the table
+            } catch (error) {
+              console.error("Error deleting order:", error);
+              Swal.fire({
+                icon: "error",
+                title: "Deletion Failed",
+                text: "Failed to delete order. Please try again.",
+              });
+            }
+          }
+        });
+      }
+
+      // Export Orders to CSV
+      document.getElementById("exportOrdersBtn").addEventListener("click", function () {
+        const headers = [
+          "OrderID",
+          "ClientID",
+          "ClientName",
+          "OrderDate",
+          "TotalAmount",
+          "Status",
+          "PaymentID",
+        ];
+        // Ensure allOrders is available and populated
+        const rows = allOrders.map((order) => [
+          order.OrderID,
+          order.ClientID,
+          order.ClientName,
+          new Date(order.OrderDate).toLocaleString(), // Format date for CSV
+          parseFloat(order.TotalAmount).toFixed(2),
+          order.Status,
+          order.PaymentID,
+        ]);
+
+        let csvContent = "data:text/csv;charset=utf-8," + headers.join(",") + "\n";
+        rows.forEach(function (rowArray) {
+          let row = rowArray.map(item => `"${String(item).replace(/"/g, '""')}"`).join(","); // Handle commas and quotes in data
+          csvContent += row + "\n";
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "orders_report.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        Swal.fire({
+          icon: "success",
+          title: "Exported!",
+          text: "Orders data exported to orders_report.csv",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+
+      /**
+       * Opens the send notification modal and pre-fills relevant data.
+       * @param {number} orderId - The ID of the order related to the notification.
+       * @param {number} clientId - The ID of the client to send the notification to.
+       */
+      function openSendNotificationModal(orderId, clientId) {
+        document.getElementById("notificationOrderId").value = orderId;
+        document.getElementById("notificationClientId").value = clientId;
+        document.getElementById("notificationTitle").value = `Order ${orderId} Delivered!`;
+        document.getElementById("notificationMessage").value = `Dear client, your order #${orderId} has been successfully delivered! We hope you enjoy your purchase.`;
+        openModal("sendNotificationModal");
+      }
+
+      // Handle Send Notification Form Submission
+      document.getElementById("sendNotificationForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const orderId = document.getElementById("notificationOrderId").value;
+        const clientId = document.getElementById("notificationClientId").value;
+        const title = document.getElementById("notificationTitle").value;
+        const message = document.getElementById("notificationMessage").value;
+
+        try {
+          const response = await fetch("/api/admin/notifications", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              receiverId: parseInt(clientId),
+              title: title,
+              message: message,
+              type: "Delivery", // Assuming this type for delivery notifications
+              actionLink: `/client/order-history/${orderId}` // Example action link
+            }),
+            credentials: "include",
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const result = await response.json();
+          Swal.fire({
+            icon: "success",
+            title: "Notification Sent!",
+            text: result.message,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          closeModal("sendNotificationModal");
+        } catch (error) {
+          console.error("Error sending notification:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Notification Failed",
+            text: "Failed to send notification. Please try again.",
+          });
+        }
+      });
+
+      /**
+       * Fetches and displays client information in a modal.
+       * @param {number} clientId - The ID of the client to display.
+       */
+      async function viewClientInfo(clientId) {
+        try {
+          const clientResponse = await fetch(`/api/admin/clients/${clientId}`, {
+            credentials: "include",
+          });
+          if (!clientResponse.ok) {
+            throw new Error(`HTTP error! status: ${clientResponse.status}`);
+          }
+          const client = await clientResponse.json();
+
+          let profilePicHtml = `<img src="https://placehold.co/100x100/e0e0e0/000000?text=No+Profile" alt="Profile Picture" class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-red-300">`;
+          try {
+            const profilePicResponse = await fetch(`/api/admin/clients/${clientId}/profile-pic`, {
+              credentials: "include",
+            });
+            if (profilePicResponse.ok) {
+              const imageData = await profilePicResponse.json(); // Expect JSON with mimeType and data
+              if (imageData && imageData.data && imageData.mimeType) {
+                profilePicHtml = `<img src="data:${imageData.mimeType};base64,${imageData.data}" alt="Profile Picture" class="w-24 h-24 rounded-full object-cover mb-4 border-2 border-red-300" onerror="this.onerror=null;this.src='https://placehold.co/100x100/e0e0e0/000000?text=No+Profile';">`;
+              }
+            } else if (profilePicResponse.status === 404) {
+                console.warn(`Profile picture not found for client ${clientId}.`);
+            } else {
+              throw new Error(`HTTP error! status: ${profilePicResponse.status}`);
+            }
+          } catch (picError) {
+            console.error("Error fetching profile picture:", picError);
+          }
+
+
+          document.getElementById("clientInfoContent").innerHTML = `
+            ${profilePicHtml}
+            <div class="text-left w-full">
+                <p class="mb-1"><strong>Client ID:</strong> ${client.ClientID}</p>
+                <p class="mb-1"><strong>Full Name:</strong> ${client.FullName}</p>
+                <p class="mb-1"><strong>Email:</strong> ${client.Email}</p>
+                <p class="mb-1"><strong>Phone:</strong> ${client.Phone || 'N/A'}</p>
+                <p class="mb-1"><strong>Address:</strong> ${client.Address || 'N/A'}</p>
+                <p class="mb-1"><strong>City:</strong> ${client.City || 'N/A'}</p>
+                <p class="mb-1"><strong>Country:</strong> ${client.Country || 'N/A'}</p>
+            </div>
+          `;
+          openModal("clientInfoModal");
+        } catch (error) {
+          console.error("Error fetching client info:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Client Not Found",
+            text: `Failed to fetch client details for ID: ${clientId}.`,
+          });
+        }
+      }
+
+      /**
+       * Deletes a feedback entry after confirmation.
+       * @param {number} feedbackId - The ID of the feedback to delete.
+       */
+      function deleteFeedback(feedbackId) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: `You are about to delete Feedback ID: ${feedbackId}. This cannot be undone!`,
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#EF4444",
+          cancelButtonColor: "#6B7280",
+          confirmButtonText: "Yes, delete it!",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const response = await fetch(`/api/admin/feedbacks/${feedbackId}`, {
+                method: "DELETE",
+                credentials: "include",
+              });
+
+              if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+              }
+
+              const resultData = await response.json();
+              Swal.fire({
+                icon: "success",
+                title: "Deleted!",
+                text: resultData.message,
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              await fetchFeedbacks(); // Re-fetch and refresh the table
+            } catch (error) {
+              console.error("Error deleting feedback:", error);
+              Swal.fire({
+                icon: "error",
+                title: "Deletion Failed",
+                text: "Failed to delete feedback. Please try again.",
+              });
+            }
+          }
+        });
+      }
+
+      // Event listeners for filter controls
+      document.getElementById('applyFiltersBtn').addEventListener('click', applyFilters);
+      document.getElementById('clearFiltersBtn').addEventListener('click', clearFilters);
+
+      // Initial population of tables on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchOrders();
+        fetchFeedbacks();
+      });
+
+      // admin-logout.js content (assuming it handles logout logic)
+      document.getElementById('logoutButton').addEventListener('click', function(event) {
+          event.preventDefault();
+          Swal.fire({
+              title: 'Are you sure?',
+              text: "You will be logged out from the admin panel.",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#EF4444',
+              cancelButtonColor: '#6B7280',
+              confirmButtonText: 'Yes, log me out!'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  // Simulate logout (in a real app, redirect to login page or clear session)
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Logged Out!',
+                      text: 'You have been successfully logged out.',
+                      showConfirmButton: false,
+                      timer: 1500
+                  }).then(() => {
+                      // In a real application, you'd typically clear session/cookies on the backend
+                      // and then redirect. For this example, we'll just redirect.
+                      window.location.href = 'login.html'; // Example redirect
+                  });
+              }
+          });
+      });
+    </script>
+  </body>
 </html>
