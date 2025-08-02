@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Fitness Trainer - Diet Management</title>
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="trainer-logout.js"></script>
-    <!-- SweetAlert2 for enhanced alerts and modals -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>E-Fitness Trainer - Diet Management</title>
+        <!-- Tailwind CSS for styling -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="trainer-logout.js"></script>
+        <!-- SweetAlert2 for enhanced alerts and modals -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
@@ -19,284 +19,368 @@
             z-index: 50;
         }
     </style>
-</head>
-<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-      <div>
-        <a href="trainer-dashboard.html" class="block">
-          <div class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-            <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Trainer Logo"
-              class="w-10 h-10 rounded-full object-cover shadow-md" />
-            <h2 class="text-2xl font-bold text-red-700">E-Fitness Trainer</h2>
-          </div>
-        </a>
-
-        <nav class="flex flex-col space-y-3">
-          <a href="trainer-reg-and-profile.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            Profile Management
-          </a>
-          <a href="trainer-Diet-Plan-Management.html"
-            class="flex items-center gap-3 text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-            </svg>
-            Diet Plan Management
-          </a>
-          <a href="trainer-Workout-Plan-Management.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-            </svg>
-            Workout Plan Management
-          </a>
-          <a href="trainer-client-management.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
-            </svg>
-            Client Overview & Management
-          </a>
-          <a href="trainer-host-virtualclass.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
-            </svg>
-            Virtual Classes
-          </a>
-          <a href="trainer-feedback.html"
-            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
-            </svg>
-            Feedback
-          </a>
-        </nav>
-      </div>
-
-      <button id="logoutButton"
-        class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
-        </svg>
-        Logout
-      </button>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-        <!-- Header -->
-        <header class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
-        </header>
-
-        <!-- Loading indicator -->
-        <div id="loading" class="text-center text-gray-500 hidden">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
-            <p class="mt-2">Loading data...</p>
-        </div>
-
-        <!-- Diet Requests Section -->
-        <section class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold text-red-800 mb-4">Diet Requests</h2>
-            <!-- Filter Controls -->
-            <div class="flex flex-col sm:flex-row gap-4 mb-4">
-                <input type="text" id="searchClient" placeholder="Search by client name..."
-                    class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 flex-1">
-                <select id="filterStatus"
-                    class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full sm:w-auto">
-                    <option value="All">All Statuses</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
-                    <option value="Archived">Archived</option>
-                </select>
-            </div>
-            <!-- Requests Table -->
-            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Request ID
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Client
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Goal
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="requestsTableBody" class="bg-white divide-y divide-gray-200">
-                        <!-- Request rows will be rendered here -->
-                    </tbody>
-                </table>
-            </div>
-            <div id="noRequestsMessage" class="text-center text-gray-500 py-4 hidden">
-                No requests found.
-            </div>
-        </section>
-
-        <!-- Diet Plan Management Section -->
-        <section class="bg-white rounded-xl shadow p-6">
-            <h2 class="text-xl font-semibold text-red-800 mb-4">Diet Plan Management</h2>
-            <form id="dietPlanForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                <input type="hidden" id="dietPlanId">
-                <input type="text" id="planTitle" placeholder="Plan Title" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="text" id="planGoal" placeholder="Goal (e.g., Weight Loss)" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="number" id="calories" placeholder="Calories per Day" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="text" id="macros" placeholder="Macronutrient Ratio (e.g., 40/30/30)" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <textarea id="instructions" placeholder="Special Instructions" rows="2"
-                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
-                <button type="submit" id="saveDietPlanBtn"
-                    class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Create
-                    Diet Plan</button>
-            </form>
-
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">Existing Plans</h3>
-            <div id="dietPlansContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <!-- Diet plan cards will be rendered here -->
-            </div>
-        </section>
-    </main>
-
-    <!-- Modal for Client Details -->
-    <div id="clientModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-auto">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-2xl font-bold text-red-800">Client Profile</h3>
-                <button id="closeClientModal" class="text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            <div id="clientModalContent" class="text-center">
-                <img id="profilePic" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-                    src="https://placehold.co/128x128/e2e8f0/64748b?text=P" alt="Profile Picture">
-                <h4 id="clientName" class="text-xl font-semibold mb-1"></h4>
-                <p id="clientDOB" class="text-gray-600 text-sm mb-1"></p>
-                <p id="clientCountry" class="text-gray-600 text-sm"></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Client Diet Logs -->
-    <div id="dietLogsModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-xl mx-auto">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-2xl font-bold text-red-800">Client Diet Logs</h3>
-                <button id="closeDietLogsModal" class="text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            <div id="dietLogsContent" class="overflow-y-auto max-h-96">
-                <!-- Diet logs will be rendered here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Meal Management -->
-    <div id="mealManagementModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-auto">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-2xl font-bold text-red-800">Manage Meals for Plan: <span id="currentPlanTitle"></span>
-                </h3>
-                <button id="closeMealManagementModal" class="text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            <!-- Meal Form -->
-            <form id="mealForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 border rounded-lg bg-gray-50">
-                <input type="hidden" id="mealId">
-                <input type="hidden" id="mealDietPlanId">
-                <select id="mealType" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                    <option value="" disabled selected>Select Meal Type</option>
-                    <option value="Breakfast">Breakfast</option>
-                    <option value="Lunch">Lunch</option>
-                    <option value="Dinner">Dinner</option>
-                    <option value="Snack">Snack</option>
-                </select>
-                <input type="time" id="mealTime" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="text" id="foodItems" placeholder="Food Items (e.g., Scrambled eggs, toast)" required
-                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="number" id="mealCalories" placeholder="Total Calories" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <input type="text" id="mealMacros" placeholder="Macros (e.g., 30/40/30)" required
-                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
-                <textarea id="mealNotes" placeholder="Notes (optional)" rows="2"
-                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
-                <button type="submit" id="saveMealBtn"
-                    class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Add
-                    Meal</button>
-            </form>
-
-            <h4 class="text-xl font-semibold text-gray-800 mb-2">Meals for this Plan</h4>
-            <div id="mealsContainer" class="space-y-4 max-h-80 overflow-y-auto">
-                <!-- Meals will be rendered here -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for Diet Request Details -->
-    <div id="dietRequestDetailsModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
-        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-auto">
-            <div class="flex justify-between items-center mb-4 border-b pb-2">
-                <h3 class="text-2xl font-bold text-red-800">Diet Request Details</h3>
-                <button id="closeDietRequestDetailsModal" class="text-gray-500 hover:text-gray-800">&times;</button>
-            </div>
-            <div id="dietRequestDetailsContent" class="space-y-4 text-gray-700">
-                <!-- Details will be rendered here -->
-            </div>
-            <div class="mt-6 pt-4 border-t border-gray-200">
-                <h4 class="text-xl font-semibold text-red-800 mb-2">Review Request</h4>
-                <form id="dietRequestReviewForm" class="space-y-4">
-                    <input type="hidden" id="reviewRequestId">
-                    <textarea id="responseNotes" placeholder="Add your response notes here..." rows="3"
-                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
-                    <div class="flex gap-2">
-                        <button type="button" id="approveRequestBtn"
-                            class="flex-1 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition hidden">
-                            Approve
-                        </button>
-                        <button type="button" id="rejectRequestBtn"
-                            class="flex-1 bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-700 transition hidden">
-                            Reject
-                        </button>
-                        <button type="button" id="archiveRequestBtn"
-                            class="flex-1 bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-500 transition hidden">
-                            Archive
-                        </button>
+    </head>
+    <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+        <!-- Sidebar -->
+        <aside
+            class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+            <div>
+                <a href="trainer-dashboard.html" class="block">
+                    <div
+                        class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
+                        <img
+                            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+                            alt="Trainer Logo"
+                            class="w-10 h-10 rounded-full object-cover shadow-md" />
+                        <h2 class="text-2xl font-bold text-red-700">E-Fitness
+                            Trainer</h2>
                     </div>
+                </a>
+
+                <nav class="flex flex-col space-y-3">
+                    <a href="trainer-reg-and-profile.html"
+                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Profile Management
+                    </a>
+                    <a href="trainer-Diet-Plan-Management.html"
+                        class="flex items-center gap-3 text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+                        </svg>
+                        Diet Plan Management
+                    </a>
+                    <a href="trainer-Workout-Plan-Management.html"
+                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+                        </svg>
+                        Workout Plan Management
+                    </a>
+                    <a href="trainer-client-management.html"
+                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+                        </svg>
+                        Client Overview & Management
+                    </a>
+                    <a href="trainer-host-virtualclass.html"
+                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+                        </svg>
+                        Virtual Classes
+                    </a>
+                    <a href="trainer-feedback.html"
+                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 text-red-500" fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                        </svg>
+                        Feedback
+                    </a>
+                </nav>
+            </div>
+
+            <button id="logoutButton"
+                class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="inline w-5 h-5 mr-2 -mb-1" fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
+                </svg>
+                Logout
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+            <!-- Header -->
+            <header class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-red-800">Welcome,
+                    Trainer</h1>
+            </header>
+
+            <!-- Loading indicator -->
+            <div id="loading" class="text-center text-gray-500 hidden">
+                <div
+                    class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
+                <p class="mt-2">Loading data...</p>
+            </div>
+
+            <!-- Diet Requests Section -->
+            <section class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-xl font-semibold text-red-800 mb-4">Diet
+                    Requests</h2>
+                <!-- Filter Controls -->
+                <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                    <input type="text" id="searchClient"
+                        placeholder="Search by client name..."
+                        class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 flex-1">
+                    <select id="filterStatus"
+                        class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full sm:w-auto">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <!-- Requests Table -->
+                <div
+                    class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Request ID
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Client
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Goal
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody"
+                            class="bg-white divide-y divide-gray-200">
+                            <!-- Request rows will be rendered here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="noRequestsMessage"
+                    class="text-center text-gray-500 py-4 hidden">
+                    No requests found.
+                </div>
+            </section>
+
+            <!-- Diet Plan Management Section -->
+            <section class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-xl font-semibold text-red-800 mb-4">Diet Plan
+                    Management</h2>
+                <form id="dietPlanForm"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <input type="hidden" id="dietPlanId">
+                    <input type="text" id="planTitle" placeholder="Plan Title"
+                        required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="text" id="planGoal"
+                        placeholder="Goal (e.g., Weight Loss)" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="number" id="calories"
+                        placeholder="Calories per Day" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="text" id="macros"
+                        placeholder="Macronutrient Ratio (e.g., 40/30/30)"
+                        required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <textarea id="instructions"
+                        placeholder="Special Instructions" rows="2"
+                        class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                    <button type="submit" id="saveDietPlanBtn"
+                        class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Create
+                        Diet Plan</button>
                 </form>
+
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Existing
+                    Plans</h3>
+                <div id="dietPlansContainer"
+                    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Diet plan cards will be rendered here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Modal for Client Details -->
+        <div id="clientModal"
+            class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+            <div
+                class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-auto">
+                <div
+                    class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-2xl font-bold text-red-800">Client
+                        Profile</h3>
+                    <button id="closeClientModal"
+                        class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <div id="clientModalContent" class="text-center">
+                    <img id="profilePic"
+                        class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                        src="https://placehold.co/128x128/e2e8f0/64748b?text=P"
+                        alt="Profile Picture">
+                    <h4 id="clientName" class="text-xl font-semibold mb-1"></h4>
+                    <p id="clientDOB" class="text-gray-600 text-sm mb-1"></p>
+                    <p id="clientCountry" class="text-gray-600 text-sm"></p>
+                </div>
             </div>
         </div>
-    </div>
 
-    <script>
+        <!-- Modal for Client Diet Logs -->
+        <div id="dietLogsModal"
+            class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+            <div
+                class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-xl mx-auto">
+                <div
+                    class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-2xl font-bold text-red-800">Client Diet
+                        Logs</h3>
+                    <button id="closeDietLogsModal"
+                        class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <div id="dietLogsContent" class="overflow-y-auto max-h-96">
+                    <!-- Diet logs will be rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Meal Management -->
+        <div id="mealManagementModal"
+            class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+            <div
+                class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-auto">
+                <div
+                    class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-2xl font-bold text-red-800">Manage Meals for
+                        Plan: <span id="currentPlanTitle"></span>
+                    </h3>
+                    <button id="closeMealManagementModal"
+                        class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <!-- Meal Form -->
+                <form id="mealForm"
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 border rounded-lg bg-gray-50">
+                    <input type="hidden" id="mealId">
+                    <input type="hidden" id="mealDietPlanId">
+                    <select id="mealType" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value disabled selected>Select Meal
+                            Type</option>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Snack">Snack</option>
+                    </select>
+                    <input type="time" id="mealTime" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="text" id="foodItems"
+                        placeholder="Food Items (e.g., Scrambled eggs, toast)"
+                        required
+                        class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="number" id="mealCalories"
+                        placeholder="Total Calories" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <input type="text" id="mealMacros"
+                        placeholder="Macros (e.g., 30/40/30)" required
+                        class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <textarea id="mealNotes" placeholder="Notes (optional)"
+                        rows="2"
+                        class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                    <button type="submit" id="saveMealBtn"
+                        class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Add
+                        Meal</button>
+                </form>
+
+                <h4 class="text-xl font-semibold text-gray-800 mb-2">Meals for
+                    this Plan</h4>
+                <div id="mealsContainer"
+                    class="space-y-4 max-h-80 overflow-y-auto">
+                    <!-- Meals will be rendered here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Diet Request Details -->
+        <div id="dietRequestDetailsModal"
+            class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+            <div
+                class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-auto">
+                <div
+                    class="flex justify-between items-center mb-4 border-b pb-2">
+                    <h3 class="text-2xl font-bold text-red-800">Diet Request
+                        Details</h3>
+                    <button id="closeDietRequestDetailsModal"
+                        class="text-gray-500 hover:text-gray-800">&times;</button>
+                </div>
+                <div id="dietRequestDetailsContent"
+                    class="space-y-4 text-gray-700">
+                    <!-- Details will be rendered here -->
+                </div>
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <h4 class="text-xl font-semibold text-red-800 mb-2">Review
+                        Request</h4>
+                    <form id="dietRequestReviewForm" class="space-y-4">
+                        <input type="hidden" id="reviewRequestId">
+                        <textarea id="responseNotes"
+                            placeholder="Add your response notes here..."
+                            rows="3"
+                            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                        <div class="flex gap-2">
+                            <button type="button" id="approveRequestBtn"
+                                class="flex-1 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition hidden">
+                                Approve
+                            </button>
+                            <button type="button" id="rejectRequestBtn"
+                                class="flex-1 bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-700 transition hidden">
+                                Reject
+                            </button>
+                            <button type="button" id="archiveRequestBtn"
+                                class="flex-1 bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-500 transition hidden">
+                                Archive
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
         let modalState = {
             currentRequest: null,
             currentDietPlan: null
         };
+        
         document.addEventListener('DOMContentLoaded', () => {
             const loading = document.getElementById('loading');
             const requestsTableBody = document.getElementById('requestsTableBody');
@@ -1092,5 +1176,5 @@
             fetchDietPlans();
         });
     </script>
-</body>
+    </body>
 </html>
