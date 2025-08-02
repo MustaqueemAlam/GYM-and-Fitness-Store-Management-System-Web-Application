@@ -1,140 +1,1096 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src ="trainer-logout.js"></script>
-    </head>
-    <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-        <aside
-            class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
-            <div>
-                <a href="trainer-dashboard.html" class="block">
-                    <div
-                        class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-                        <img
-                            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                            alt="Trainer Logo"
-                            class="w-10 h-10 rounded-full object-cover shadow-md" />
-                        <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                            Trainer</h2>
-                    </div>
-                </a>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Fitness Trainer - Diet Management</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="trainer-logout.js"></script>
+    <!-- SweetAlert2 for enhanced alerts and modals -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+      <div>
+        <a href="trainer-dashboard.html" class="block">
+          <div class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
+            <img src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png" alt="Trainer Logo"
+              class="w-10 h-10 rounded-full object-cover shadow-md" />
+            <h2 class="text-2xl font-bold text-red-700">E-Fitness Trainer</h2>
+          </div>
+        </a>
 
-                <nav class="flex flex-col space-y-3">
-                    <a href="trainer-reg-and-profile.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        Profile Management
-                    </a>
-                    <a href="trainer-Diet-Plan-Management.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-                        </svg>
-                        Diet Plan Management
-                    </a>
-                    <a href="trainer-Workout-Plan-Management.html"
-                        class="flex items-center gap-3 text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
-                        </svg>
-                        Workout Plan Management
-                    </a>
-                    <a href="trainer-client-management.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
-                        </svg>
-                        Client Overview & Management
-                    </a>
-                    <a href="trainer-host-virtualclass.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
-                        </svg>
-                        Virtual Classes
-                    </a>
-                    <a href="trainer-feedback.html"
-                        class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                        </svg>
-                        Feedback
-                    </a>
-                </nav>
-            </div>
+        <nav class="flex flex-col space-y-3">
+          <a href="trainer-reg-and-profile.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            Profile Management
+          </a>
+          <a href="trainer-Diet-Plan-Management.html"
+            class="flex items-center gap-3 text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Diet Plan Management
+          </a>
+          <a href="trainer-Workout-Plan-Management.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            </svg>
+            Workout Plan Management
+          </a>
+          <a href="trainer-client-management.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+            </svg>
+            Client Overview & Management
+          </a>
+          <a href="trainer-host-virtualclass.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
+            </svg>
+            Virtual Classes
+          </a>
+          <a href="trainer-feedback.html"
+            class="flex items-center gap-3 text-gray-700 hover:text-red-600 font-medium transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
+            </svg>
+            Feedback
+          </a>
+        </nav>
+      </div>
 
-       <button
-        id="logoutButton"
+      <button id="logoutButton"
         class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
-        <svg xmlns="http://www.w3.org/2000/svg"
-          class="inline w-5 h-5 mr-2 -mb-1" fill="none"
-          viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" class="inline w-5 h-5 mr-2 -mb-1" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            stroke-width="2"
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
         </svg>
         Logout
       </button>
     </aside>
-        <!-- Main Content -->
-        <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-            <!-- Header -->
-            <header class="flex justify-between items-center">
-                <h1 class="text-3xl font-bold text-red-800">Welcome,
-                    Trainer</h1>
-                <div class="flex items-center gap-4">
-                    <button id="notifBtn"
-                        onclick="window.location.href='trainer-noti.html';"
-                        class="relative text-gray-700 hover:text-red-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
-                            fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
-                        </svg>
-                        <span
-                            class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-                    </button>
-                </div>
-            </header>
-        </main>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Main Content -->
+    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
+        </header>
 
-    </body>
+        <!-- Loading indicator -->
+        <div id="loading" class="text-center text-gray-500 hidden">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
+            <p class="mt-2">Loading data...</p>
+        </div>
+
+        <!-- Diet Requests Section -->
+        <section class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold text-red-800 mb-4">Diet Requests</h2>
+            <!-- Filter Controls -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                <input type="text" id="searchClient" placeholder="Search by client name..."
+                    class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 flex-1">
+                <select id="filterStatus"
+                    class="p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 w-full sm:w-auto">
+                    <option value="All">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Archived">Archived</option>
+                </select>
+            </div>
+            <!-- Requests Table -->
+            <div class="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Request ID
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Client
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Goal
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestsTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Request rows will be rendered here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noRequestsMessage" class="text-center text-gray-500 py-4 hidden">
+                No requests found.
+            </div>
+        </section>
+
+        <!-- Diet Plan Management Section -->
+        <section class="bg-white rounded-xl shadow p-6">
+            <h2 class="text-xl font-semibold text-red-800 mb-4">Diet Plan Management</h2>
+            <form id="dietPlanForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <input type="hidden" id="dietPlanId">
+                <input type="text" id="planTitle" placeholder="Plan Title" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="text" id="planGoal" placeholder="Goal (e.g., Weight Loss)" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="number" id="calories" placeholder="Calories per Day" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="text" id="macros" placeholder="Macronutrient Ratio (e.g., 40/30/30)" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <textarea id="instructions" placeholder="Special Instructions" rows="2"
+                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                <button type="submit" id="saveDietPlanBtn"
+                    class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Create
+                    Diet Plan</button>
+            </form>
+
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Existing Plans</h3>
+            <div id="dietPlansContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Diet plan cards will be rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Client Details -->
+    <div id="clientModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-2xl font-bold text-red-800">Client Profile</h3>
+                <button id="closeClientModal" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="clientModalContent" class="text-center">
+                <img id="profilePic" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                    src="https://placehold.co/128x128/e2e8f0/64748b?text=P" alt="Profile Picture">
+                <h4 id="clientName" class="text-xl font-semibold mb-1"></h4>
+                <p id="clientDOB" class="text-gray-600 text-sm mb-1"></p>
+                <p id="clientCountry" class="text-gray-600 text-sm"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Client Diet Logs -->
+    <div id="dietLogsModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-xl mx-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-2xl font-bold text-red-800">Client Diet Logs</h3>
+                <button id="closeDietLogsModal" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="dietLogsContent" class="overflow-y-auto max-h-96">
+                <!-- Diet logs will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Meal Management -->
+    <div id="mealManagementModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-2xl mx-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-2xl font-bold text-red-800">Manage Meals for Plan: <span id="currentPlanTitle"></span>
+                </h3>
+                <button id="closeMealManagementModal" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <!-- Meal Form -->
+            <form id="mealForm" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 p-4 border rounded-lg bg-gray-50">
+                <input type="hidden" id="mealId">
+                <input type="hidden" id="mealDietPlanId">
+                <select id="mealType" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <option value="" disabled selected>Select Meal Type</option>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Lunch">Lunch</option>
+                    <option value="Dinner">Dinner</option>
+                    <option value="Snack">Snack</option>
+                </select>
+                <input type="time" id="mealTime" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="text" id="foodItems" placeholder="Food Items (e.g., Scrambled eggs, toast)" required
+                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="number" id="mealCalories" placeholder="Total Calories" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <input type="text" id="mealMacros" placeholder="Macros (e.g., 30/40/30)" required
+                    class="p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                <textarea id="mealNotes" placeholder="Notes (optional)" rows="2"
+                    class="md:col-span-2 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                <button type="submit" id="saveMealBtn"
+                    class="md:col-span-2 bg-red-600 text-white font-semibold py-3 rounded-lg hover:bg-red-700 transition">Add
+                    Meal</button>
+            </form>
+
+            <h4 class="text-xl font-semibold text-gray-800 mb-2">Meals for this Plan</h4>
+            <div id="mealsContainer" class="space-y-4 max-h-80 overflow-y-auto">
+                <!-- Meals will be rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Diet Request Details -->
+    <div id="dietRequestDetailsModal" class="fixed inset-0 hidden items-center justify-center p-4 modal-overlay">
+        <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg mx-auto">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="text-2xl font-bold text-red-800">Diet Request Details</h3>
+                <button id="closeDietRequestDetailsModal" class="text-gray-500 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="dietRequestDetailsContent" class="space-y-4 text-gray-700">
+                <!-- Details will be rendered here -->
+            </div>
+            <div class="mt-6 pt-4 border-t border-gray-200">
+                <h4 class="text-xl font-semibold text-red-800 mb-2">Review Request</h4>
+                <form id="dietRequestReviewForm" class="space-y-4">
+                    <input type="hidden" id="reviewRequestId">
+                    <textarea id="responseNotes" placeholder="Add your response notes here..." rows="3"
+                        class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                    <div class="flex gap-2">
+                        <button type="button" id="approveRequestBtn"
+                            class="flex-1 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition hidden">
+                            Approve
+                        </button>
+                        <button type="button" id="rejectRequestBtn"
+                            class="flex-1 bg-yellow-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-yellow-700 transition hidden">
+                            Reject
+                        </button>
+                        <button type="button" id="archiveRequestBtn"
+                            class="flex-1 bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-500 transition hidden">
+                            Archive
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let modalState = {
+            currentRequest: null,
+            currentDietPlan: null
+        };
+        document.addEventListener('DOMContentLoaded', () => {
+            const loading = document.getElementById('loading');
+            const requestsTableBody = document.getElementById('requestsTableBody');
+            const noRequestsMessage = document.getElementById('noRequestsMessage');
+            const searchClientInput = document.getElementById('searchClient');
+            const filterStatusSelect = document.getElementById('filterStatus');
+            const dietPlansContainer = document.getElementById('dietPlansContainer');
+            const dietPlanForm = document.getElementById('dietPlanForm');
+            const dietPlanIdInput = document.getElementById('dietPlanId');
+            const planTitleInput = document.getElementById('planTitle');
+            const planGoalInput = document.getElementById('planGoal');
+            const caloriesInput = document.getElementById('calories');
+            const macrosInput = document.getElementById('macros');
+            const instructionsInput = document.getElementById('instructions');
+            const saveDietPlanBtn = document.getElementById('saveDietPlanBtn');
+
+            // Modals and their elements
+            const clientModal = document.getElementById('clientModal');
+            const closeClientModalBtn = document.getElementById('closeClientModal');
+            const clientModalContent = document.getElementById('clientModalContent');
+            const profilePic = document.getElementById('profilePic');
+            const clientName = document.getElementById('clientName');
+            const clientDOB = document.getElementById('clientDOB');
+            const clientCountry = document.getElementById('clientCountry');
+
+            const dietLogsModal = document.getElementById('dietLogsModal');
+            const closeDietLogsModalBtn = document.getElementById('closeDietLogsModal');
+            const dietLogsContent = document.getElementById('dietLogsContent');
+
+            const mealManagementModal = document.getElementById('mealManagementModal');
+            const closeMealManagementModalBtn = document.getElementById('closeMealManagementModal');
+            const currentPlanTitleSpan = document.getElementById('currentPlanTitle');
+            const mealForm = document.getElementById('mealForm');
+            const mealDietPlanIdInput = document.getElementById('mealDietPlanId');
+            const mealIdInput = document.getElementById('mealId');
+            const mealTypeInput = document.getElementById('mealType');
+            const mealTimeInput = document.getElementById('mealTime');
+            const foodItemsInput = document.getElementById('foodItems');
+            const mealCaloriesInput = document.getElementById('mealCalories');
+            const mealMacrosInput = document.getElementById('mealMacros');
+            const mealNotesInput = document.getElementById('mealNotes');
+            const mealsContainer = document.getElementById('mealsContainer');
+            const saveMealBtn = document.getElementById('saveMealBtn');
+
+            const dietRequestDetailsModal = document.getElementById('dietRequestDetailsModal');
+            const closeDietRequestDetailsModalBtn = document.getElementById('closeDietRequestDetailsModal');
+            const dietRequestDetailsContent = document.getElementById('dietRequestDetailsContent');
+            const dietRequestReviewForm = document.getElementById('dietRequestReviewForm');
+            const reviewRequestIdInput = document.getElementById('reviewRequestId');
+            const responseNotesInput = document.getElementById('responseNotes');
+            const approveRequestBtn = document.getElementById('approveRequestBtn');
+            const rejectRequestBtn = document.getElementById('rejectRequestBtn');
+            const archiveRequestBtn = document.getElementById('archiveRequestBtn');
+
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', () => {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You will be logged out!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, log me out!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            try {
+                                await fetch('/api/logout', { method: 'POST' });
+                            } catch (error) {
+                                console.error('Logout failed:', error);
+                            } finally {
+                                localStorage.removeItem('authToken');
+                                window.location.href = 'trainer-login.html';
+                            }
+                        }
+                    });
+                });
+            }
+
+            const getAuthToken = () => localStorage.getItem('authToken');
+
+            let allDietRequests = [];
+
+            // --- API Calls and Rendering Functions ---
+
+            /**
+             * Fetches all diet requests from the backend and stores them locally.
+             */
+            const fetchDietRequests = async () => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch('/api/trainer/diet-requests', {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        allDietRequests = await response.json();
+                        filterAndRenderRequests();
+                    } else {
+                        throw new Error('Failed to fetch diet requests');
+                    }
+                } catch (error) {
+                    console.error('Error fetching diet requests:', error);
+                    Swal.fire('Error', 'Failed to load diet requests.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            /**
+             * Filters the local list of requests based on search and status and renders the table.
+             */
+            const filterAndRenderRequests = () => {
+                const searchTerm = searchClientInput.value.toLowerCase();
+                const statusFilter = filterStatusSelect.value;
+
+                const filteredRequests = allDietRequests.filter(request => {
+                    const matchesSearch = request.FullName.toLowerCase().includes(searchTerm);
+                    const matchesStatus = statusFilter === 'All' || request.Status === statusFilter;
+                    return matchesSearch && matchesStatus;
+                });
+
+                renderRequestsTable(filteredRequests);
+            };
+
+            /**
+             * Renders a list of requests into the main table.
+             * @param {Array<Object>} requests - The list of requests to render.
+             */
+            const renderRequestsTable = (requests) => {
+                requestsTableBody.innerHTML = '';
+                if (requests.length === 0) {
+                    noRequestsMessage.classList.remove('hidden');
+                } else {
+                    noRequestsMessage.classList.add('hidden');
+                    requests.forEach(request => {
+                        const row = document.createElement('tr');
+                        row.className = 'hover:bg-gray-50 transition';
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${request.RequestID}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center gap-3">
+                                    <img src="${request.ProfilePic || 'https://placehold.co/40x40/e2e8f0/64748b?text=P'}" alt="Client Profile Picture" class="w-10 h-10 rounded-full object-cover">
+                                    <span class="text-sm text-gray-900">${request.FullName}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">${request.GoalDescription}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-${
+                                    request.Status === 'Approved' ? 'green' : (
+                                        request.Status === 'Pending' ? 'yellow' : (
+                                            request.Status === 'Rejected' ? 'red' : 'gray'
+                                        )
+                                    )
+                                }-100 text-${
+                                    request.Status === 'Approved' ? 'green' : (
+                                        request.Status === 'Pending' ? 'yellow' : (
+                                            request.Status === 'Rejected' ? 'red' : 'gray'
+                                        )
+                                    )
+                                }-800">
+                                    ${request.Status}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <button class="view-details-btn text-red-600 hover:text-red-900 transition" data-request-id="${request.RequestID}">
+                                    View Details
+                                </button>
+                            </td>
+                        `;
+                        requestsTableBody.appendChild(row);
+                    });
+                }
+            };
+
+            // Event listeners for filtering
+            searchClientInput.addEventListener('input', filterAndRenderRequests);
+            filterStatusSelect.addEventListener('change', filterAndRenderRequests);
+            
+            // Event listener for the "View Details" button on the requests table
+            requestsTableBody.addEventListener('click', (e) => {
+                if (e.target.classList.contains('view-details-btn')) {
+                    const requestId = e.target.dataset.requestId;
+                    const request = allDietRequests.find(r => r.RequestID == requestId);
+                    if (request) {
+                        showDietRequestDetailsModal(request);
+                    }
+                }
+            });
+
+            /**
+             * Fetches and displays all details for a specific diet request in a modal.
+             * @param {Object} request - The diet request object.
+             */
+            const showDietRequestDetailsModal = (request) => {
+                dietRequestDetailsContent.innerHTML = `
+                    <p><strong>Client:</strong> ${request.FullName}</p>
+                    <p><strong>Request Date:</strong> ${new Date(request.RequestDate).toLocaleDateString()}</p>
+                    <p><strong>Goal:</strong> ${request.GoalDescription}</p>
+                    <p><strong>Allergies:</strong> ${request.Allergies}</p>
+                    <p><strong>Preferences:</strong> ${request.Preferences}</p>
+                    <p><strong>Medical Conditions:</strong> ${request.MedicalConditions}</p>
+                    <p class="mt-4"><strong>Current Status:</strong> <span class="px-2 py-1 text-xs font-semibold text-white rounded-full bg-${request.Status === 'Approved' ? 'green' : (request.Status === 'Pending' ? 'yellow' : (request.Status === 'Rejected' ? 'red' : 'gray'))}-500">${request.Status}</span></p>
+                `;
+                reviewRequestIdInput.value = request.RequestID;
+                responseNotesInput.value = request.ResponseNotes || '';
+                
+                // Show/hide action buttons based on request status
+                if (request.Status === 'Pending') {
+                    approveRequestBtn.classList.remove('hidden');
+                    rejectRequestBtn.classList.remove('hidden');
+                    archiveRequestBtn.classList.add('hidden');
+                } else if (request.Status === 'Approved' || request.Status === 'Rejected') {
+                    approveRequestBtn.classList.add('hidden');
+                    rejectRequestBtn.classList.add('hidden');
+                    archiveRequestBtn.classList.remove('hidden');
+                } else {
+                    approveRequestBtn.classList.add('hidden');
+                    rejectRequestBtn.classList.add('hidden');
+                    archiveRequestBtn.classList.add('hidden');
+                }
+
+                dietRequestDetailsModal.classList.remove('hidden');
+                dietRequestDetailsModal.classList.add('flex');
+            };
+
+            /**
+             * Fetches a specific client's details and displays them in a modal.
+             * @param {number} clientId - The ID of the client.
+             */
+            const showClientModal = async (clientId) => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch(`/api/trainer/clients/${clientId}`, {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const client = await response.json();
+                        profilePic.src = client.ProfilePic || 'https://placehold.co/128x128/e2e8f0/64748b?text=P';
+                        clientName.textContent = client.FullName;
+                        clientDOB.textContent = `DOB: ${new Date(client.DOB).toLocaleDateString()}`;
+                        clientCountry.textContent = `Country: ${client.Country}`;
+                        clientModal.classList.remove('hidden');
+                        clientModal.classList.add('flex');
+                    } else {
+                        throw new Error('Failed to fetch client details');
+                    }
+                } catch (error) {
+                    console.error('Error fetching client details:', error);
+                    Swal.fire('Error', 'Failed to load client details.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            /**
+             * Fetches and displays a client's diet logs.
+             * @param {number} clientId - The ID of the client.
+             */
+            const fetchClientDietLogs = async (clientId) => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch(`/api/trainer/client-diet-logs/${clientId}`, {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const logs = await response.json();
+                        renderDietLogs(logs);
+                        dietLogsModal.classList.remove('hidden');
+                        dietLogsModal.classList.add('flex');
+                    } else {
+                        throw new Error('Failed to fetch client diet logs');
+                    }
+                } catch (error) {
+                    console.error('Error fetching client diet logs:', error);
+                    Swal.fire('Error', 'Failed to load client diet logs.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            /**
+             * Renders a client's diet logs into the modal.
+             * @param {Array<Object>} logs - The list of diet logs.
+             */
+            const renderDietLogs = (logs) => {
+                dietLogsContent.innerHTML = '';
+                if (logs.length === 0) {
+                    dietLogsContent.innerHTML = '<p class="text-gray-500 text-center py-4">No diet logs found for this client.</p>';
+                    return;
+                }
+                logs.forEach(log => {
+                    const logCard = document.createElement('div');
+                    logCard.className = 'bg-gray-50 p-4 rounded-lg border border-gray-200 mb-4';
+                    logCard.dataset.logId = log.LogID;
+                    logCard.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-bold text-gray-900">Log Date: ${new Date(log.LogDate).toLocaleDateString()}</h4>
+                            <button class="delete-log-btn text-red-500 hover:text-red-700 transition" data-log-id="${log.LogID}">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                        <p><strong>Meal Details:</strong> ${log.MealDetails || 'N/A'}</p>
+                        <p><strong>Calories Intake:</strong> ${log.CaloriesIntake || 'N/A'}</p>
+                        <p><strong>Water Intake:</strong> ${log.WaterIntakeLitres ? `${log.WaterIntakeLitres} L` : 'N/A'}</p>
+                        <p><strong>Supplements:</strong> ${log.SupplementsTaken || 'N/A'}</p>
+                        <p><strong>Mood:</strong> ${log.Mood || 'N/A'}</p>
+                        <p><strong>Digestion Status:</strong> ${log.DigestionStatus || 'N/A'}</p>
+                        <form class="update-comment-form mt-4" data-log-id="${log.LogID}">
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Trainer Comments:</label>
+                            <textarea class="trainer-comments-textarea w-full p-2 border rounded-lg" rows="2" placeholder="Add or edit your comments">${log.TrainerComments || ''}</textarea>
+                            <button type="submit" class="mt-2 text-sm bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition">Save Comments</button>
+                        </form>
+                    `;
+                    dietLogsContent.appendChild(logCard);
+                });
+
+                dietLogsContent.querySelectorAll('.delete-log-btn').forEach(button => {
+                    button.addEventListener('click', handleDeleteLog);
+                });
+                dietLogsContent.querySelectorAll('.update-comment-form').forEach(form => {
+                    form.addEventListener('submit', handleUpdateLogComments);
+                });
+            };
+
+            const handleDeleteLog = async (e) => {
+                const logId = e.currentTarget.dataset.logId;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        try {
+                            const response = await fetch(`/api/trainer/client-diet-logs/${logId}`, {
+                                method: 'DELETE',
+                                headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                            });
+                            const result = await response.json();
+                            if (response.ok) {
+                                Swal.fire('Deleted!', result.message, 'success');
+                                const clientId = e.currentTarget.closest('.bg-gray-50').dataset.clientId;
+                                await fetchClientDietLogs(clientId);
+                            } else {
+                                throw new Error(result.message);
+                            }
+                        } catch (error) {
+                            console.error('Error deleting log:', error);
+                            Swal.fire('Error', 'Failed to delete diet log.', 'error');
+                        }
+                    }
+                });
+            };
+
+            const handleUpdateLogComments = async (e) => {
+                e.preventDefault();
+                const form = e.currentTarget;
+                const logId = form.dataset.logId;
+                const trainerComments = form.querySelector('.trainer-comments-textarea').value;
+                loading.classList.remove('hidden');
+
+                try {
+                    const response = await fetch(`/api/trainer/client-diet-logs/${logId}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${getAuthToken()}`
+                        },
+                        body: JSON.stringify({ TrainerComments: trainerComments })
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        Swal.fire('Success!', result.message, 'success');
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    console.error('Error updating comments:', error);
+                    Swal.fire('Error', 'Failed to save comments.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            const fetchDietPlans = async () => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch('/api/trainer/diet-plans', {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const plans = await response.json();
+                        renderDietPlans(plans);
+                    } else {
+                        throw new Error('Failed to fetch diet plans');
+                    }
+                } catch (error) {
+                    console.error('Error fetching diet plans:', error);
+                    Swal.fire('Error', 'Failed to load your diet plans.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            const renderDietPlans = (plans) => {
+                dietPlansContainer.innerHTML = '';
+                if (plans.length === 0) {
+                    dietPlansContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full py-4">You have not created any diet plans yet.</p>';
+                    return;
+                }
+                plans.forEach(plan => {
+                    const planCard = document.createElement('div');
+                    planCard.className = 'bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col justify-between';
+                    planCard.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-gray-900">${plan.Title}</h4>
+                            <p class="text-sm text-gray-500">Goal: ${plan.Goal}</p>
+                            <p class="text-sm text-gray-500">Calories: ${plan.CaloriesPerDay} kcal</p>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <button class="edit-plan-btn text-sm bg-blue-500 text-white font-semibold py-2 px-3 rounded-lg hover:bg-blue-600 transition" data-plan-id="${plan.DietPlanID}">Edit</button>
+                            <button class="delete-plan-btn text-sm bg-red-500 text-white font-semibold py-2 px-3 rounded-lg hover:bg-red-600 transition" data-plan-id="${plan.DietPlanID}">Delete</button>
+                            <button class="manage-meals-btn text-sm bg-gray-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-gray-700 transition" data-plan-id="${plan.DietPlanID}" data-plan-title="${plan.Title}">Manage Meals</button>
+                        </div>
+                    `;
+                    dietPlansContainer.appendChild(planCard);
+                });
+            };
+
+            const fetchAndPopulateDietPlan = async (planId) => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch(`/api/trainer/diet-plans/${planId}`, {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const plan = await response.json();
+                        dietPlanIdInput.value = plan.DietPlanID;
+                        planTitleInput.value = plan.Title;
+                        planGoalInput.value = plan.Goal;
+                        caloriesInput.value = plan.CaloriesPerDay;
+                        macrosInput.value = plan.MacronutrientRatio;
+                        instructionsInput.value = plan.SpecialInstructions;
+                        saveDietPlanBtn.textContent = 'Update Diet Plan';
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        throw new Error('Failed to fetch diet plan details.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching diet plan details:', error);
+                    Swal.fire('Error', 'Failed to load diet plan for editing.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+            dietPlanForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loading.classList.remove('hidden');
+
+                const planId = dietPlanIdInput.value;
+                const planData = {
+                    title: planTitleInput.value,
+                    goal: planGoalInput.value,
+                    caloriesPerDay: caloriesInput.value,
+                    macros: macrosInput.value,
+                    instructions: instructionsInput.value
+                };
+
+                try {
+                    const method = planId ? 'PUT' : 'POST';
+                    const url = planId ? `/api/trainer/diet-plans/${planId}` : '/api/trainer/diet-plans';
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${getAuthToken()}`
+                        },
+                        body: JSON.stringify(planData)
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        Swal.fire('Success!', result.message, 'success');
+                        dietPlanForm.reset();
+                        dietPlanIdInput.value = '';
+                        saveDietPlanBtn.textContent = 'Create Diet Plan';
+                        fetchDietPlans();
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    console.error('Error saving diet plan:', error);
+                    Swal.fire('Error', error.message, 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            });
+
+            dietPlansContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-plan-btn')) {
+                    const planId = e.target.dataset.planId;
+                    fetchAndPopulateDietPlan(planId);
+                } else if (e.target.classList.contains('delete-plan-btn')) {
+                    const planId = e.target.dataset.planId;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            try {
+                                const response = await fetch(`/api/trainer/diet-plans/${planId}`, {
+                                    method: 'DELETE',
+                                    headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                                });
+                                const result = await response.json();
+                                if (response.ok) {
+                                    Swal.fire('Deleted!', result.message, 'success');
+                                    fetchDietPlans();
+                                } else {
+                                    throw new Error(result.message);
+                                }
+                            } catch (error) {
+                                console.error('Error deleting diet plan:', error);
+                                Swal.fire('Error', 'Failed to delete diet plan.', 'error');
+                            }
+                        }
+                    });
+                } else if (e.target.classList.contains('manage-meals-btn')) {
+                    const planId = e.target.dataset.planId;
+                    const planTitle = e.target.dataset.planTitle;
+                    showMealManagementModal(planId, planTitle);
+                }
+            });
+
+            // Meal Management Handlers
+            const showMealManagementModal = async (planId, planTitle) => {
+                currentPlanTitleSpan.textContent = planTitle;
+                mealDietPlanIdInput.value = planId;
+                mealIdInput.value = '';
+                mealForm.reset();
+                saveMealBtn.textContent = 'Add Meal';
+                await fetchMealsForPlan(planId);
+                mealManagementModal.classList.remove('hidden');
+                mealManagementModal.classList.add('flex');
+            };
+
+            const fetchMealsForPlan = async (planId) => {
+                try {
+                    const response = await fetch(`/api/trainer/diet-plans/${planId}/meals`, {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const meals = await response.json();
+                        renderMeals(meals);
+                    } else {
+                        throw new Error('Failed to fetch meals.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching meals:', error);
+                    Swal.fire('Error', 'Failed to load meals for this plan.', 'error');
+                }
+            };
+
+            const renderMeals = (meals) => {
+                mealsContainer.innerHTML = '';
+                if (meals.length === 0) {
+                    mealsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">No meals added to this plan yet.</p>';
+                    return;
+                }
+                meals.forEach(meal => {
+                    const mealDiv = document.createElement('div');
+                    mealDiv.className = 'bg-white p-4 rounded-lg shadow-sm border border-gray-200';
+                    mealDiv.innerHTML = `
+                        <div class="flex justify-between items-center mb-2">
+                            <h5 class="font-bold text-gray-900">${meal.MealType} at ${meal.MealTime.substring(0, 5)}</h5>
+                            <div>
+                                <button class="edit-meal-btn text-blue-500 hover:text-blue-700 mr-2 transition" data-meal-id="${meal.MealID}">Edit</button>
+                                <button class="delete-meal-btn text-red-500 hover:text-red-700 transition" data-meal-id="${meal.MealID}">Delete</button>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-700"><strong>Food:</strong> ${meal.FoodItems}</p>
+                        <p class="text-sm text-gray-700"><strong>Calories:</strong> ${meal.Calories} kcal</p>
+                        <p class="text-sm text-gray-700"><strong>Macros:</strong> ${meal.Macros}</p>
+                        <p class="text-sm text-gray-700 mt-2"><strong>Notes:</strong> ${meal.Notes || 'N/A'}</p>
+                    `;
+                    mealsContainer.appendChild(mealDiv);
+                });
+            };
+
+            const fetchAndPopulateMeal = async (mealId) => {
+                loading.classList.remove('hidden');
+                try {
+                    const response = await fetch(`/api/trainer/diet-plans/meals/${mealId}`, {
+                        headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                    });
+                    if (response.ok) {
+                        const meal = await response.json();
+                        mealIdInput.value = meal.MealID;
+                        mealTypeInput.value = meal.MealType;
+                        mealTimeInput.value = meal.MealTime;
+                        foodItemsInput.value = meal.FoodItems;
+                        mealCaloriesInput.value = meal.Calories;
+                        mealMacrosInput.value = meal.Macros;
+                        mealNotesInput.value = meal.Notes;
+                        saveMealBtn.textContent = 'Update Meal';
+                    } else {
+                        throw new Error('Failed to fetch meal details.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching meal details:', error);
+                    Swal.fire('Error', 'Failed to load meal for editing.', 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            };
+
+
+            mealForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loading.classList.remove('hidden');
+
+                const mealData = {
+                    mealType: mealTypeInput.value,
+                    mealTime: mealTimeInput.value,
+                    foodItems: foodItemsInput.value,
+                    calories: mealCaloriesInput.value,
+                    macros: mealMacrosInput.value,
+                    notes: mealNotesInput.value,
+                };
+                const mealId = mealIdInput.value;
+                const planId = mealDietPlanIdInput.value;
+
+                try {
+                    const method = mealId ? 'PUT' : 'POST';
+                    const url = mealId ? `/api/trainer/diet-plans/meals/${mealId}` : `/api/trainer/diet-plans/${planId}/meals`;
+                    const response = await fetch(url, {
+                        method: method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${getAuthToken()}`
+                        },
+                        body: JSON.stringify(mealData)
+                    });
+                    const result = await response.json();
+                    if (response.ok) {
+                        Swal.fire('Success!', result.message, 'success');
+                        mealForm.reset();
+                        mealIdInput.value = '';
+                        saveMealBtn.textContent = 'Add Meal';
+                        await fetchMealsForPlan(planId);
+                    } else {
+                        throw new Error(result.message);
+                    }
+                } catch (error) {
+                    console.error('Error saving meal:', error);
+                    Swal.fire('Error', error.message, 'error');
+                } finally {
+                    loading.classList.add('hidden');
+                }
+            });
+
+            mealsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-meal-btn')) {
+                    const mealId = e.target.dataset.mealId;
+                    fetchAndPopulateMeal(mealId);
+                } else if (e.target.classList.contains('delete-meal-btn')) {
+                    const mealId = e.target.dataset.mealId;
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            try {
+                                const response = await fetch(`/api/trainer/diet-plans/meals/${mealId}`, {
+                                    method: 'DELETE',
+                                    headers: { 'Authorization': `Bearer ${getAuthToken()}` }
+                                });
+                                const result = await response.json();
+                                if (response.ok) {
+                                    Swal.fire('Deleted!', result.message, 'success');
+                                    const planId = mealDietPlanIdInput.value;
+                                    await fetchMealsForPlan(planId);
+                                } else {
+                                    throw new Error(result.message);
+                                }
+                            } catch (error) {
+                                console.error('Error deleting meal:', error);
+                                Swal.fire('Error', 'Failed to delete meal.', 'error');
+                            }
+                        }
+                    });
+                }
+            });
+
+            // --- Diet Request Review Handlers ---
+            const handleRequestUpdate = async (status) => {
+                const requestId = reviewRequestIdInput.value;
+                const responseNotes = responseNotesInput.value;
+                
+                let title, text, confirmButtonColor;
+                if (status === 'Approved') {
+                    title = 'Approve Request?';
+                    text = 'The client will be notified.';
+                    confirmButtonColor = '#38a169';
+                } else if (status === 'Rejected') {
+                    title = 'Reject Request?';
+                    text = 'The client will be notified.';
+                    confirmButtonColor = '#f56565';
+                } else if (status === 'Archived') {
+                    title = 'Archive Request?';
+                    text = 'This request will be hidden from your main view.';
+                    confirmButtonColor = '#4a5568';
+                }
+
+                Swal.fire({
+                    title: title,
+                    text: text,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: confirmButtonColor,
+                    cancelButtonColor: '#718096',
+                    confirmButtonText: 'Yes'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        try {
+                            const response = await fetch(`/api/trainer/diet-requests/${requestId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${getAuthToken()}`
+                                },
+                                body: JSON.stringify({ Status: status, ResponseNotes: responseNotes })
+                            });
+                            const resultData = await response.json();
+                            if (response.ok) {
+                                Swal.fire('Success!', resultData.message, 'success');
+                                dietRequestDetailsModal.classList.add('hidden');
+                                fetchDietRequests(); // Refresh the list
+                            } else {
+                                throw new Error(resultData.message);
+                            }
+                        } catch (error) {
+                            console.error(`Error updating request status to ${status}:`, error);
+                            Swal.fire('Error', 'Failed to update request status.', 'error');
+                        }
+                    }
+                });
+            };
+
+            approveRequestBtn.addEventListener('click', () => handleRequestUpdate('Approved'));
+            rejectRequestBtn.addEventListener('click', () => handleRequestUpdate('Rejected'));
+            archiveRequestBtn.addEventListener('click', () => handleRequestUpdate('Archived'));
+
+            // --- Modal Close Listeners ---
+            closeClientModalBtn.addEventListener('click', () => clientModal.classList.add('hidden'));
+            clientModal.addEventListener('click', (e) => {
+                if (e.target === clientModal) clientModal.classList.add('hidden');
+            });
+
+            closeDietLogsModalBtn.addEventListener('click', () => dietLogsModal.classList.add('hidden'));
+            dietLogsModal.addEventListener('click', (e) => {
+                if (e.target === dietLogsModal) dietLogsModal.classList.add('hidden');
+            });
+
+            closeMealManagementModalBtn.addEventListener('click', () => mealManagementModal.classList.add('hidden'));
+            mealManagementModal.addEventListener('click', (e) => {
+                if (e.target === mealManagementModal) mealManagementModal.classList.add('hidden');
+            });
+
+            closeDietRequestDetailsModalBtn.addEventListener('click', () => dietRequestDetailsModal.classList.add('hidden'));
+            dietRequestDetailsModal.addEventListener('click', (e) => {
+                if (e.target === dietRequestDetailsModal) dietRequestDetailsModal.classList.add('hidden');
+            });
+
+            // Initial data fetch
+            fetchDietRequests();
+            fetchDietPlans();
+        });
+    </script>
+</body>
 </html>

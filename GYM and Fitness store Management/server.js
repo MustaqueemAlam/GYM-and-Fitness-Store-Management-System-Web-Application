@@ -10,6 +10,8 @@ const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 const BD_OFFSET = 6 * 60;
+app.use(cors());
+
 
 app.use(
   cors({
@@ -83,6 +85,44 @@ const isAdmin = (req, res, next) => {
     res.status(403).json({ message: "Access denied. Admin privileges required." });
   }
 };
+
+
+/**
+ * Middleware to protect routes, ensuring only logged-in clients can access
+ */
+const requireClientAuth = (req, res, next) => {
+  if (req.session.userId && req.session.userType === "client") {
+    next(); // User is authenticated as a client, proceed
+  } else {
+    // Log for debugging:
+    console.warn(
+      `Attempted access to protected client route without auth. Session:`,
+      req.session
+    );
+    res
+      .status(403)
+      .json({
+        success: false,
+        message: "Access denied. Client authentication required.",
+      });
+  }
+};
+
+
+// Middleware to check if user is a logged-in trainer
+const isTrainer = (req, res, next) => {
+  if (req.session.userId && req.session.userType === "trainer") {
+    next();
+  } else {
+    res
+      .status(403)
+      .json({
+        success: false,
+        message: "Access denied. Trainer login required.",
+      });
+  }
+};
+
 
 
 /**
@@ -390,27 +430,6 @@ app.get("/api/admin-dashboard-kpis", isAdmin, async (req, res) => {
     if (connection) connection.release();
   }
 });
-
-/**
- * Middleware to protect routes, ensuring only logged-in clients can access
- */
-const requireClientAuth = (req, res, next) => {
-  if (req.session.userId && req.session.userType === "client") {
-    next(); // User is authenticated as a client, proceed
-  } else {
-    // Log for debugging:
-    console.warn(
-      `Attempted access to protected client route without auth. Session:`,
-      req.session
-    );
-    res
-      .status(403)
-      .json({
-        success: false,
-        message: "Access denied. Client authentication required.",
-      });
-  }
-};
 
 
 /**
@@ -3584,19 +3603,7 @@ app.get("/api/clients/:clientId/details", async (req, res) => {
   }
 });
 
-// Middleware to check if user is a logged-in trainer
-const isTrainer = (req, res, next) => {
-  if (req.session.userId && req.session.userType === "trainer") {
-    next();
-  } else {
-    res
-      .status(403)
-      .json({
-        success: false,
-        message: "Access denied. Trainer login required.",
-      });
-  }
-};
+
 
 /**
  * GET Trainer's Own Workout Plans
@@ -4288,6 +4295,584 @@ app.get("/api/admin/products/:productId/image", isAdmin, async (req, res) => {
   } finally {
     if (connection) connection.release();
   }
+});
+
+
+
+
+// --- NEW DIET MANAGEMENT API ENDPOINTS ---
+
+/** * GET /api/trainer/client-diet-logs/:clientId 
+ * Fetches all diet logs for a specific client. 
+ */ 
+app.get("/api/trainer/client-diet-logs/:clientId", isTrainer, async (req, res) => { 
+    const { clientId } = req.params; 
+    try { 
+        const [rows] = await pool.query( 
+            `SELECT * FROM client_diet_logs WHERE ClientID = ? ORDER BY LogDate DESC`, 
+            [clientId] 
+        ); 
+        res.json(rows); 
+    } catch (error) { 
+        console.error("Error fetching client diet logs:", error); 
+        res.status(500).json({ success: false, message: "Server error." }); 
+    } 
+}); 
+
+/**
+ * API endpoint to get the client's current active diet plan and its meals.
+ * This endpoint joins the `diet_plans` and `diet_meals` tables to get a comprehensive view.
+ */
+app.get("/api/client/diet/current", requireClientAuth, async (req, res) => {
+    const clientId = req.session.userId;
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+
+        // Find the most recent approved diet plan for the client
+        const [planRows] = await connection.execute(
+            `SELECT * FROM diet_plans
+             WHERE ApprovedByNutritionistID IS NOT NULL AND StartDate <= CURDATE() AND EndDate >= CURDATE()
+             ORDER BY CreatedAt DESC
+             LIMIT 1;`
+        );
+
+        if (planRows.length === 0) {
+            // No active plan found, which is a valid state
+            return res.json({ message: "No active diet plan found for this client.", plan: null, meals: [] });
+        }
+
+        const currentPlan = planRows[0];
+
+        // Fetch all meals associated with this plan
+        const [mealRows] = await connection.execute(
+            `SELECT * FROM diet_meals WHERE DietPlanID = ? ORDER BY MealTime ASC;`,
+            [currentPlan.DietPlanID]
+        );
+
+        res.json({ plan: currentPlan, meals: mealRows });
+    } catch (error) {
+        console.error("Error fetching client diet plan:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+/**
+ * API endpoint to submit a daily diet log for a client.
+ * Inserts a new row into the `client_diet_logs` table.
+ */
+app.post("/api/client/diet/log", requireClientAuth, async (req, res) => {
+    const clientId = req.session.userId;
+    const { mealDetails, caloriesIntake, waterIntake, supplementsTaken, mood, digestionStatus } = req.body;
+    let connection;
+
+    try {
+        if (!mealDetails || !caloriesIntake) {
+            return res.status(400).json({ success: false, message: "Meal details and calorie intake are required." });
+        }
+
+        connection = await pool.getConnection();
+
+        // First, check for an existing log for today to prevent duplicates.
+        // The table schema seems to allow multiple logs per day, but for a simple UI, we assume one.
+        // We can update the log if it exists instead of inserting. Let's make it an insert for now.
+        // A more advanced feature would be to update.
+        // You would also need to link this to a DietPlanID, which is currently missing in the schema.
+        // For this example, we'll find the most recent plan and link it.
+        const [planRows] = await connection.execute(
+            `SELECT DietPlanID FROM diet_plans WHERE ApprovedByNutritionistID IS NOT NULL AND StartDate <= CURDATE() AND EndDate >= CURDATE() ORDER BY CreatedAt DESC LIMIT 1;`
+        );
+        const dietPlanId = planRows.length > 0 ? planRows[0].DietPlanID : null;
+
+        const [result] = await connection.execute(
+            `INSERT INTO client_diet_logs (ClientID, DietPlanID, MealDetails, CaloriesIntake, WaterIntakeLitres, SupplementsTaken, Mood, DigestionStatus)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+            [clientId, dietPlanId, mealDetails, caloriesIntake, waterIntake, supplementsTaken, mood, digestionStatus]
+        );
+
+        res.json({ success: true, message: "Daily log submitted successfully!", logId: result.insertId });
+    } catch (error) {
+        console.error("Error submitting daily log:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+/**
+ * API endpoint to submit a new diet plan request for a client.
+ * Inserts a new row into the `diet_requests` table.
+ */
+app.post("/api/client/diet/request", requireClientAuth, async (req, res) => {
+    const clientId = req.session.userId;
+    const { goalDescription, allergies, preferences, medicalConditions } = req.body;
+    let connection;
+
+    try {
+        if (!goalDescription) {
+            return res.status(400).json({ success: false, message: "Goal description is required." });
+        }
+
+        connection = await pool.getConnection();
+        const [result] = await connection.execute(
+            `INSERT INTO diet_requests (ClientID, GoalDescription, Allergies, Preferences, MedicalConditions, Status)
+             VALUES (?, ?, ?, ?, ?, 'Pending');`,
+            [clientId, goalDescription, allergies, preferences, medicalConditions]
+        );
+
+        res.json({ success: true, message: "Diet plan request submitted successfully! A trainer will review it shortly.", requestId: result.insertId });
+    } catch (error) {
+        console.error("Error submitting diet request:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+
+// --- API Endpoints for Trainer Dashboard ---
+
+/**
+ * GET /api/trainer/clients/:id
+ * Fetches a specific client's details.
+ */
+app.get("/api/trainer/clients/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query(
+            `SELECT FullName, DOB, Country, ProfilePic FROM clients WHERE ClientID = ?`,
+            [id]
+        );
+        if (rows.length > 0) {
+            const client = rows[0];
+            client.ProfilePic = client.ProfilePic ? `data:image/jpeg;base64,${client.ProfilePic.toString('base64')}` : null;
+            res.json(client);
+        } else {
+            res.status(404).json({ success: false, message: "Client not found." });
+        }
+    } catch (error) {
+        console.error("Error fetching client:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * GET /api/trainer/diet-requests
+ * Fetches all diet requests, merging client information.
+ */
+app.get("/api/trainer/diet-requests", isTrainer, async (req, res) => {
+    try {
+        const [rows] = await pool.query(
+            `SELECT dr.RequestID, dr.GoalDescription, dr.Status, c.ClientID, c.FullName, c.ProfilePic
+             FROM diet_requests dr
+             JOIN clients c ON dr.ClientID = c.ClientID
+             ORDER BY dr.RequestDate DESC`
+        );
+        const requests = rows.map(req => ({
+            ...req,
+            ProfilePic: req.ProfilePic ? `data:image/jpeg;base64,${req.ProfilePic.toString('base64')}` : null,
+        }));
+        res.json(requests);
+    } catch (error) {
+        console.error("Error fetching diet requests:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * GET /api/trainer/diet-requests/:id
+ * Fetches full details for a specific diet request.
+ */
+app.get("/api/trainer/diet-requests/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query(
+            `SELECT dr.*, c.FullName FROM diet_requests dr JOIN clients c ON dr.ClientID = c.ClientID WHERE dr.RequestID = ?`,
+            [id]
+        );
+        if (rows.length > 0) {
+            res.json(rows[0]);
+        } else {
+            res.status(404).json({ success: false, message: "Diet request not found." });
+        }
+    } catch (error) {
+        console.error("Error fetching diet request details:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * PUT /api/trainer/diet-requests/:id
+ * Updates the status and adds notes to a diet request.
+ */
+app.put("/api/trainer/diet-requests/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    const { Status, ResponseNotes } = req.body;
+    try {
+        const [result] = await pool.query(
+            `UPDATE diet_requests SET Status = ?, ResponseNotes = ?, ReviewedBy = ? WHERE RequestID = ?`,
+            [Status, ResponseNotes, req.session.userId, id]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: "Diet request updated successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "Diet request not found." });
+        }
+    } catch (error) {
+        console.error("Error updating diet request:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * GET /api/trainer/client-diet-logs/:clientId
+ * Fetches all diet logs for a specific client.
+ */
+app.get("/api/trainer/client-diet-logs/:clientId", isTrainer, async (req, res) => {
+    const { clientId } = req.params;
+    try {
+        const [rows] = await pool.query(
+            `SELECT * FROM client_diet_logs WHERE ClientID = ? ORDER BY LogDate DESC`,
+            [clientId]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error("Error fetching client diet logs:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * PUT /api/trainer/client-diet-logs/:logId
+ * Updates trainer comments for a specific diet log.
+ */
+app.put("/api/trainer/client-diet-logs/:logId", isTrainer, async (req, res) => {
+    const { logId } = req.params;
+    const { TrainerComments } = req.body;
+    try {
+        const [result] = await pool.query(
+            `UPDATE client_diet_logs SET TrainerComments = ? WHERE LogID = ?`,
+            [TrainerComments, logId]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: "Trainer comments updated successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "Diet log not found." });
+        }
+    } catch (error) {
+        console.error("Error updating diet log comments:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+
+/**
+ * DELETE /api/trainer/client-diet-logs/:logId
+ * Deletes a specific diet log.
+ */
+app.delete("/api/trainer/client-diet-logs/:logId", isTrainer, async (req, res) => {
+    const { logId } = req.params;
+    try {
+        const [result] = await pool.query(
+            `DELETE FROM client_diet_logs WHERE LogID = ?`,
+            [logId]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: "Diet log deleted successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "Diet log not found." });
+        }
+    } catch (error) {
+        console.error("Error deleting diet log:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+
+/**
+ * GET /api/trainer/diet-plans
+ * Fetches all diet plans created by the logged-in trainer.
+ */
+app.get("/api/trainer/diet-plans", isTrainer, async (req, res) => {
+    try {
+        const [rows] = await pool.query(
+            `SELECT DietPlanID, Title, Goal, CaloriesPerDay, MacronutrientRatio FROM diet_plans WHERE TrainerID = ?`,
+            [req.session.userId]
+        );
+        res.json(rows);
+    } catch (error) {
+        console.error("Error fetching diet plans:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * GET /api/trainer/diet-plans/:id
+ * Fetches a single diet plan by ID for editing.
+ */
+app.get("/api/trainer/diet-plans/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [rows] = await pool.query(
+            `SELECT * FROM diet_plans WHERE DietPlanID = ? AND TrainerID = ?`,
+            [id, req.session.userId]
+        );
+        if (rows.length > 0) {
+            res.json(rows[0]);
+        } else {
+            res.status(404).json({ success: false, message: "Diet plan not found or not authorized." });
+        }
+    } catch (error) {
+        console.error("Error fetching diet plan for editing:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * POST /api/trainer/diet-plans
+ * Creates a new diet plan.
+ */
+app.post("/api/trainer/diet-plans", isTrainer, async (req, res) => {
+    const { title, goal, caloriesPerDay, macros, instructions } = req.body;
+    try {
+        const [result] = await pool.query(
+            `INSERT INTO diet_plans (TrainerID, Title, Goal, CaloriesPerDay, MacronutrientRatio, SpecialInstructions) VALUES (?, ?, ?, ?, ?, ?)`,
+            [req.session.userId, title, goal, caloriesPerDay, macros, instructions]
+        );
+        res.status(201).json({ success: true, message: "Diet plan created successfully.", planId: result.insertId });
+    } catch (error) {
+        console.error("Error creating diet plan:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * PUT /api/trainer/diet-plans/:id
+ * Updates an existing diet plan.
+ */
+app.put("/api/trainer/diet-plans/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    const { title, goal, caloriesPerDay, macros, instructions } = req.body;
+    try {
+        const [result] = await pool.query(
+            `UPDATE diet_plans SET Title = ?, Goal = ?, CaloriesPerDay = ?, MacronutrientRatio = ?, SpecialInstructions = ? WHERE DietPlanID = ? AND TrainerID = ?`,
+            [title, goal, caloriesPerDay, macros, instructions, id, req.session.userId]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: "Diet plan updated successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "Diet plan not found or not authorized to update." });
+        }
+    } catch (error) {
+        console.error("Error updating diet plan:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+/**
+ * DELETE /api/trainer/diet-plans/:id
+ * Deletes a diet plan.
+ */
+app.delete("/api/trainer/diet-plans/:id", isTrainer, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const [result] = await pool.query(
+            `DELETE FROM diet_plans WHERE DietPlanID = ? AND TrainerID = ?`,
+            [id, req.session.userId]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: "Diet plan deleted successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "Diet plan not found or not authorized to delete." });
+        }
+    } catch (error) {
+        console.error("Error deleting diet plan:", error);
+        res.status(500).json({ success: false, message: "Server error." });
+    }
+});
+
+
+// --- NEW API Endpoints for Meal Management ---
+
+/**
+ * GET /api/trainer/diet-plans/:planId/meals
+ * Fetches all meals for a specific diet plan.
+ */
+app.get('/api/trainer/diet-plans/:planId/meals', isTrainer, async (req, res) => {
+    const planId = parseInt(req.params.planId);
+    try {
+        const [rows] = await pool.execute('SELECT * FROM `diet_meals` WHERE `DietPlanID` = ?', [planId]);
+        res.json(rows);
+    } catch (error) {
+        console.error('Error fetching meals:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch meals.' });
+    }
+});
+
+/**
+ * GET /api/trainer/diet-plans/meals/:mealId
+ * Fetches a single meal by ID for editing.
+ */
+app.get('/api/trainer/diet-plans/meals/:mealId', isTrainer, async (req, res) => {
+    const mealId = parseInt(req.params.mealId);
+    try {
+        const [rows] = await pool.execute('SELECT * FROM `diet_meals` WHERE `MealID` = ?', [mealId]);
+        if (rows.length > 0) {
+            res.json(rows[0]);
+        } else {
+            res.status(404).json({ success: false, message: 'Meal not found.' });
+        }
+    } catch (error) {
+        console.error('Error fetching meal:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch meal.' });
+    }
+});
+
+/**
+ * POST /api/trainer/diet-plans/:planId/meals
+ * Creates a new meal for a specific diet plan.
+ */
+app.post('/api/trainer/diet-plans/:planId/meals', isTrainer, async (req, res) => {
+    const planId = parseInt(req.params.planId);
+    const { mealType, mealTime, foodItems, calories, macros, notes } = req.body;
+    try {
+        const [result] = await pool.execute(
+            'INSERT INTO `diet_meals` (`DietPlanID`, `MealType`, `MealTime`, `FoodItems`, `Calories`, `Macros`, `Notes`) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [planId, mealType, mealTime, foodItems, calories, macros, notes]
+        );
+        res.json({ success: true, message: 'Meal added successfully.', data: { MealID: result.insertId } });
+    } catch (error) {
+        console.error('Error adding meal:', error);
+        res.status(500).json({ success: false, message: 'Failed to add meal.' });
+    }
+});
+
+/**
+ * PUT /api/trainer/diet-plans/meals/:mealId
+ * Updates an existing meal.
+ */
+app.put('/api/trainer/diet-plans/meals/:mealId', isTrainer, async (req, res) => {
+    const mealId = parseInt(req.params.mealId);
+    const { mealType, mealTime, foodItems, calories, macros, notes } = req.body;
+    try {
+        const [result] = await pool.execute(
+            'UPDATE `diet_meals` SET `MealType` = ?, `MealTime` = ?, `FoodItems` = ?, `Calories` = ?, `Macros` = ?, `Notes` = ? WHERE `MealID` = ?',
+            [mealType, mealTime, foodItems, calories, macros, notes, mealId]
+        );
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: 'Meal updated successfully.' });
+        } else {
+            res.status(404).json({ success: false, message: 'Meal not found.' });
+        }
+    } catch (error) {
+        console.error('Error updating meal:', error);
+        res.status(500).json({ success: false, message: 'Failed to update meal.' });
+    }
+});
+
+/**
+ * DELETE /api/trainer/diet-plans/meals/:mealId
+ * Deletes a meal.
+ */
+app.delete('/api/trainer/diet-plans/meals/:mealId', isTrainer, async (req, res) => {
+    const mealId = parseInt(req.params.mealId);
+    try {
+        const [result] = await pool.execute('DELETE FROM `diet_meals` WHERE `MealID` = ?', [mealId]);
+        if (result.affectedRows > 0) {
+            res.json({ success: true, message: 'Meal deleted successfully.' });
+        } else {
+            res.status(404).json({ success: false, message: 'Meal not found.' });
+        }
+    } catch (error) {
+        console.error('Error deleting meal:', error);
+        res.status(500).json({ success: false, message: 'Failed to delete meal.' });
+    }
+});
+
+
+
+
+/**
+ * API endpoint to get the client's current active diet plan and its meals.
+ * This endpoint joins the `diet_plans` and `diet_meals` tables to get a comprehensive view.
+ */
+app.get("/api/client/diet/current", requireClientAuth, async (req, res) => {
+    const clientId = req.session.userId;
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+
+        // Find the most recent approved diet plan for the client
+        const [planRows] = await connection.execute(
+            `SELECT * FROM diet_plans
+             WHERE ApprovedByNutritionistID IS NOT NULL AND StartDate <= CURDATE() AND EndDate >= CURDATE()
+             ORDER BY CreatedAt DESC
+             LIMIT 1;`
+        );
+
+        if (planRows.length === 0) {
+            // No active plan found, which is a valid state
+            return res.json({ message: "No active diet plan found for this client.", plan: null, meals: [] });
+        }
+
+        const currentPlan = planRows[0];
+
+        // Fetch all meals associated with this plan
+        const [mealRows] = await connection.execute(
+            `SELECT * FROM diet_meals WHERE DietPlanID = ? ORDER BY MealTime ASC;`,
+            [currentPlan.DietPlanID]
+        );
+
+        res.json({ plan: currentPlan, meals: mealRows });
+    } catch (error) {
+        console.error("Error fetching client diet plan:", error);
+        res.status(500).json({ success: false, message: "Internal server error." });
+    } finally {
+        if (connection) connection.release();
+    }
+});
+
+
+/**
+ * GET /api/client/diet/plans
+ * Fetches all available diet plans and their associated meals.
+ */
+app.get("/api/client/diet/plans", requireClientAuth, async (req, res) => {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+
+        // Fetch all diet plans from the database
+        const [plans] = await connection.execute('SELECT * FROM diet_plans');
+
+        if (plans.length === 0) {
+            return res.json([]);
+        }
+
+        // For each plan, fetch its associated meals
+        const plansWithMeals = await Promise.all(plans.map(async (plan) => {
+            const [meals] = await connection.execute(
+                'SELECT * FROM diet_meals WHERE DietPlanID = ?',
+                [plan.DietPlanID]
+            );
+            return {
+                ...plan,
+                meals: meals || []
+            };
+        }));
+
+        res.json(plansWithMeals);
+    } catch (error) {
+        console.error('Error fetching all diet plans:', error);
+        res.status(500).json({ success: false, message: 'Failed to fetch diet plans.' });
+    } finally {
+        if (connection) connection.release();
+    }
 });
 
 /**
