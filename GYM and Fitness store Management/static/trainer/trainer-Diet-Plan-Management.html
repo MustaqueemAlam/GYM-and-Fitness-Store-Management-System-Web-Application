@@ -182,6 +182,10 @@
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Actions
                                 </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Diet History
+                                </th>
                             </tr>
                         </thead>
                         <tbody id="requestsTableBody"
@@ -550,6 +554,11 @@
                                     View Details
                                 </button>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <button class="view-diet-history-btn text-indigo-600 hover:text-indigo-900 transition" data-client-id="${request.ClientID}">
+                                    View Diet History
+                                </button>
+                            </td>
                         `;
                         requestsTableBody.appendChild(row);
                     });
@@ -567,6 +576,11 @@
                     const request = allDietRequests.find(r => r.RequestID == requestId);
                     if (request) {
                         showDietRequestDetailsModal(request);
+                    }
+                } else if (e.target.classList.contains('view-diet-history-btn')) {
+                    const clientId = e.target.dataset.clientId;
+                    if (clientId) {
+                        fetchClientDietLogs(clientId);
                     }
                 }
             });
@@ -647,7 +661,9 @@
                         headers: { 'Authorization': `Bearer ${getAuthToken()}` }
                     });
                     if (response.ok) {
-                        const logs = await response.json();
+                        let logs = await response.json();
+                        // Sort logs by date in descending order
+                        logs = logs.sort((a, b) => new Date(b.LogDate) - new Date(a.LogDate));
                         renderDietLogs(logs);
                         dietLogsModal.classList.remove('hidden');
                         dietLogsModal.classList.add('flex');

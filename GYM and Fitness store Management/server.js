@@ -757,8 +757,8 @@ app.get(
         .format("YYYY-MM-DD HH:mm:ss");
       const formattedProductPaymentDate = order.ProductPaymentDate
         ? dayjs(order.ProductPaymentDate)
-            .utcOffset(BD_OFFSET)
-            .format("YYYY-MM-DD HH:mm:ss")
+          .utcOffset(BD_OFFSET)
+          .format("YYYY-MM-DD HH:mm:ss")
         : "N/A";
 
       let receiptContent = `
@@ -826,8 +826,7 @@ app.get("/api/products", requireClientAuth, async (req, res) => {
         }; // Convert Price to float here
       }
       console.log(
-        `DEBUG: Product ${
-          product.Name
+        `DEBUG: Product ${product.Name
         } Price type after conversion: ${typeof parseFloat(
           product.Price
         )}, value: ${parseFloat(product.Price)}`
@@ -4479,11 +4478,11 @@ app.get("/api/trainer/diet-requests", isTrainer, async (req, res) => {
 
 /**
 
- * PUT /api/trainer/diet-requests/:id
+ * PUT /api/trainer/diet-requests/:id
 
- * Updates the status and adds notes to a diet request.
+ * Updates the status and adds notes to a diet request.
 
- */
+ */
 
 app.put("/api/trainer/diet-requests/:id", isTrainer, async (req, res) => {
   const { id } = req.params;

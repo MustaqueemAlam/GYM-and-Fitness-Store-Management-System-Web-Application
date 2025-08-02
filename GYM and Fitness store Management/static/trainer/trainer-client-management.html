@@ -8,8 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
-    />
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
     <style>
       /* Custom CSS for table borders and hover effects */
       #attendanceTable td, #attendanceTable th {
@@ -154,12 +153,11 @@
           <input id="searchInput" type="text"
             placeholder="Search by Client ID, Name or Email..."
             class="border p-2 rounded-md w-1/3 focus:outline-none focus:ring-2 focus:ring-red-300">
-            <button
-                id="sendUniversalGoalBtn"
-                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition"
-            >
-                Send Universal Goal to All Clients
-            </button>
+          <button
+            id="sendUniversalGoalBtn"
+            class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition">
+            Send Universal Goal to All Clients
+          </button>
         </div>
 
         <div class="overflow-x-auto">
@@ -174,9 +172,11 @@
                   class="px-6 py-3 text-left text-xs font-semibold uppercase">Full
                   Name</th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last Check-In</th>
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last
+                  Check-In</th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last Check-Out</th>
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Last
+                  Check-Out</th>
                 <th
                   class="px-6 py-3 text-left text-xs font-semibold uppercase">Method</th>
                 <th
@@ -185,7 +185,8 @@
                 <th
                   class="px-6 py-3 text-left text-xs font-semibold uppercase">History</th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Goals & Progress</th>
+                  class="px-6 py-3 text-left text-xs font-semibold uppercase">Goals
+                  & Progress</th>
               </tr>
             </thead>
             <tbody id="attendanceTable"
@@ -287,15 +288,16 @@
           class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 relative transform transition-all scale-100 opacity-100">
           <button
             onclick="closeModal('viewGoalsModal')"
-            class="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-3xl font-semibold leading-none"
-          >
+            class="absolute top-4 right-4 text-gray-500 hover:text-red-600 text-3xl font-semibold leading-none">
             &times;
           </button>
           <h2 class="text-3xl font-bold text-red-700 mb-6 border-b pb-3">
             Goals for <span id="viewGoalsClientName"></span>
           </h2>
           <div id="clientGoalsContainer" class="overflow-x-auto max-h-[60vh]">
-            <p id="noGoalsMessage" class="text-center text-gray-500 py-4 hidden">No goals set for this client.</p>
+            <p id="noGoalsMessage"
+              class="text-center text-gray-500 py-4 hidden">No goals set for
+              this client.</p>
             <table class="min-w-full divide-y divide-gray-200" id="goalsTable">
               <thead class="bg-red-100 text-red-800">
                 <tr>
@@ -306,19 +308,20 @@
                   <th class="px-4 py-2 text-left">Actions</th>
                 </tr>
               </thead>
-              <tbody class="bg-white divide-y divide-gray-100 text-sm" id="goalsTableBody">
+              <tbody class="bg-white divide-y divide-gray-100 text-sm"
+                id="goalsTableBody">
                 <!-- Goals will be loaded here -->
               </tbody>
             </table>
           </div>
           <div class="text-right mt-6">
-            <button onclick="openAddGoalModal(currentViewedClientId)" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
-                Send New Goal to This Client
+            <button onclick="openAddGoalModal(currentViewedClientId)"
+              class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700">
+              Send New Goal to This Client
             </button>
           </div>
         </div>
       </div>
-
 
       <div id="clientDetailsModal"
         class="fixed inset-0 bg-gray-900 bg-opacity-70 hidden flex items-center justify-center p-4 z-50 animate-fade-in">
@@ -1059,6 +1062,6 @@
                 Swal.fire('Error', 'Failed to delete goal', 'error');
             }
         }
-      </script><script src ="trainer-logout.js"></script>
+      </script><script src="trainer-logout.js"></script>
     </body>
   </html>
