@@ -6,6 +6,8 @@
     <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- SweetAlert2 CDN for better alerts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
     <aside
@@ -96,7 +98,7 @@
       </div>
 
       <button
-        onclick="window.location.href='../login.html';"
+        id="logoutButton"
         class="mt-10 bg-red-100 hover:bg-red-200 text-red-700 font-semibold py-2 px-4 rounded transition-colors self-start">
         <svg xmlns="http://www.w3.org/2000/svg"
           class="inline w-5 h-5 mr-2 -mb-1" fill="none"
@@ -112,148 +114,339 @@
 
     <!-- Main Content -->
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-      <!-- Header -->
-      <header class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
+      <header class="flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-gray-800">Trainer Dashboard</h1>
         <div class="flex items-center gap-4">
-          <button id="notifBtn"
-            onclick="window.location.href='trainer-noti.html';"
-            class="relative text-gray-700 hover:text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          <span class="relative">
+            <!-- Notification Bell Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600 cursor-pointer" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 17h5l-1.405-1.405C18.66 14.88 19 13.97 19 13v-2a6 6 0 00-6-6V5a3 3 0 00-6 0v2a6 6 0 00-6 6v2c0 .97.34 1.88.405 2.595L4 17h5m-1-5v2m2-2h-2m-4 0h-2" />
             </svg>
+            <!-- Notification Count Badge -->
             <span
-              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-          </button>
+              class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+              <span id="unreadNotificationsCount">0</span>
+            </span>
+          </span>
+          <!-- Placeholder for user profile picture -->
+          <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
         </div>
       </header>
 
-      <!-- Trainer Stats Cards -->
-      <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div
-          class="bg-gradient-to-br from-red-100 to-red-200 p-4 rounded-lg shadow text-red-800">
-          Clients<br><strong class="text-xl">120</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-yellow-100 to-yellow-200 p-4 rounded-lg shadow text-yellow-800">
-          Sessions This Week<br><strong class="text-xl">15</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-green-100 to-green-200 p-4 rounded-lg shadow text-green-800">
-          Upcoming Sessions<br><strong class="text-xl">5</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-purple-100 to-purple-200 p-4 rounded-lg shadow text-purple-800">
-          Attendance Rate<br><strong class="text-xl">92%</strong>
-        </div>
-        <div
-          class="bg-gradient-to-br from-pink-100 to-pink-200 p-4 rounded-lg shadow text-pink-800">
-          Feedback Score<br><strong class="text-xl">4.8 / 5</strong>
-        </div>
-      </section>
-
-      <!-- Session Scheduling and Client Management -->
-      <section class="flex flex-col lg:flex-row gap-6">
-        <!-- Upcoming Sessions -->
-        <div class="flex-1 bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold mb-4 text-red-700">Upcoming
-            Sessions</h2>
-          <ul class="divide-y divide-gray-200 max-h-60 overflow-y-auto">
-            <li class="py-3 flex justify-between">
-              <span>John Doe</span>
-              <span class="text-sm text-gray-500">June 3, 10:00 AM</span>
-            </li>
-            <li class="py-3 flex justify-between">
-              <span>Jane Smith</span>
-              <span class="text-sm text-gray-500">June 4, 2:00 PM</span>
-            </li>
-            <li class="py-3 flex justify-between">
-              <span>Mark Johnson</span>
-              <span class="text-sm text-gray-500">June 5, 5:00 PM</span>
-            </li>
-            <li class="py-3 flex justify-between">
-              <span>Lucy Brown</span>
-              <span class="text-sm text-gray-500">June 6, 9:00 AM</span>
-            </li>
-            <li class="py-3 flex justify-between">
-              <span>Chris Lee</span>
-              <span class="text-sm text-gray-500">June 7, 3:00 PM</span>
-            </li>
-          </ul>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Trainer Profile Card -->
+        <div class="lg:col-span-1 bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+          <h3 class="text-xl font-semibold text-gray-800 mb-2">Trainer Profile</h3>
+          <img id="trainerProfilePic" src="https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer" alt="Trainer Profile"
+            class="w-24 h-24 rounded-full object-cover mb-4 shadow"
+            onerror="this.onerror=null;this.src='https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer';" />
+          <p class="text-lg font-bold text-red-700" id="trainerName">Loading...</p>
+          <p class="text-sm text-gray-600" id="trainerId">ID: Loading...</p>
         </div>
 
-        <!-- Client Management -->
-        <div class="flex-1 bg-white p-6 rounded-lg shadow">
-          <h2 class="text-xl font-semibold mb-4 text-red-700">Client
-            Management</h2>
-          <ul class="divide-y divide-gray-200 max-h-60 overflow-y-auto">
-            <li class="py-3 flex justify-between items-center">
-              <div>
-                <p class="font-medium">John Doe</p>
-                <p class="text-sm text-gray-500">Age: 28, Goal: Weight Loss</p>
-              </div>
-              <button class="text-red-600 hover:text-red-800 font-semibold">View
-                Profile</button>
-            </li>
-            <li class="py-3 flex justify-between items-center">
-              <div>
-                <p class="font-medium">Jane Smith</p>
-                <p class="text-sm text-gray-500">Age: 32, Goal: Muscle Gain</p>
-              </div>
-              <button class="text-red-600 hover:text-red-800 font-semibold">View
-                Profile</button>
-            </li>
-            <li class="py-3 flex justify-between items-center">
-              <div>
-                <p class="font-medium">Mark Johnson</p>
-                <p class="text-sm text-gray-500">Age: 40, Goal: Flexibility</p>
-              </div>
-              <button class="text-red-600 hover:text-red-800 font-semibold">View
-                Profile</button>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <!-- KPI Cards Grid -->
+        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Total Diet Plans Created Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+            <h4 class="text-lg font-semibold text-gray-700 mb-2">Total Diet Plans Created</h4>
+            <p class="text-4xl font-bold text-red-600" id="totalDietPlans">0</p>
+          </div>
 
-      <!-- Performance Dashboard Chart -->
-      <section class="bg-white p-6 rounded-lg shadow">
-        <h2 class="text-xl font-semibold mb-4 text-red-700">Performance &
-          Feedback</h2>
-        <canvas id="performanceChart" height="150"></canvas>
-      </section>
+          <!-- Total Workout Plans Created Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+            <h4 class="text-lg font-semibold text-gray-700 mb-2">Total Workout Plans Created</h4>
+            <p class="text-4xl font-bold text-red-600" id="totalWorkoutPlans">0</p>
+          </div>
+
+          <!-- Total Virtual Classes Scheduled Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+            <h4 class="text-lg font-semibold text-gray-700 mb-2">Total Virtual Classes Scheduled</h4>
+            <p class="text-4xl font-bold text-red-600" id="totalVirtualClasses">0</p>
+          </div>
+
+          <!-- Total Clients Managed Card -->
+          <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+            <h4 class="text-lg font-semibold text-gray-700 mb-2">Total Clients Managed</h4>
+            <p class="text-4xl font-bold text-red-600" id="totalClientsManaged">0</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- New container for Chart and Video side-by-side -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Average Feedback Rating Chart Card (Left) -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Average Feedback Rating</h3>
+          <div class="w-full max-w-md h-64 relative">
+            <canvas id="feedbackRatingChart"></canvas>
+            <p class="text-center text-gray-600 mt-2" id="feedbackRatingText">Rating: N/A</p>
+          </div>
+        </div>
+
+        <!-- Trainer Intro Video Card (Right) -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center justify-center">
+          <h3 class="text-xl font-semibold text-gray-800 mb-4">Trainer Introduction Video</h3>
+          <div id="introVideoContainer" class="w-full h-64 mb-4 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+            <!-- Video or iframe will be dynamically inserted here by JavaScript -->
+            <p id="noVideoMessage" class="text-gray-500">No introduction video uploaded yet.</p>
+          </div>
+          <!-- Changed to a button that triggers a modal -->
+          <button id="changeVideoUrlButton" class="cursor-pointer bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+            Change Video URL
+          </button>
+        </div>
+      </div>
+
     </main>
-
+    <script src ="trainer-logout.js"></script>
     <script>
-    // Sample Chart.js performance chart
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    const performanceChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        datasets: [{
-          label: 'Client Progress Score',
-          data: [70, 75, 80, 85],
-          fill: true,
-          backgroundColor: 'rgba(239, 68, 68, 0.2)', // red-500 @ 20% opacity
-          borderColor: 'rgba(239, 68, 68, 1)',
-          borderWidth: 2,
-          tension: 0.3,
-          pointBackgroundColor: 'rgba(220, 38, 38, 1)'
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 100
+      document.addEventListener('DOMContentLoaded', async () => {
+        let trainerId = null;
+        let trainerName = null;
+
+        // Function to fetch session data
+        async function fetchSessionData() {
+          try {
+            const response = await fetch('/api/user-session');
+            if (!response.ok) {
+              if (response.status === 401) {
+                console.warn('No active session, redirecting to login.');
+                window.location.href = '../login.html'; // Redirect to login if no session
+                return null;
+              }
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            if (data.userType === 'trainer') {
+              trainerId = data.userId;
+              trainerName = data.userName;
+              document.getElementById('trainerId').textContent = `ID: ${trainerId}`;
+              document.getElementById('trainerName').textContent = trainerName;
+              return { trainerId, trainerName };
+            } else {
+              console.warn('User is not a trainer, redirecting to login.');
+              window.location.href = '../login.html'; // Redirect if not a trainer
+              return null;
+            }
+          } catch (error) {
+            console.error('Error fetching session data:', error);
+            // Consider redirecting to an error page or login if session fetching fails critically
+            window.location.href = '../login.html';
+            return null;
           }
         }
-      }
-    });
-  </script>
+
+        // Function to fetch KPI data and trainer media
+        async function fetchTrainerData(id) {
+          try {
+            const response = await fetch(`/api/trainer-dashboard-kpis?trainerId=${id}`);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data;
+          } catch (error) {
+            console.error('Error fetching trainer data:', error);
+            return null;
+          }
+        }
+
+        // Function to render the feedback chart
+        function renderFeedbackChart(rating) {
+          const ctx = document.getElementById('feedbackRatingChart').getContext('2d');
+          // Destroy existing chart instance if it exists to prevent re-rendering issues
+          if (window.feedbackChartInstance) {
+            window.feedbackChartInstance.destroy();
+          }
+
+          const defaultRating = 3; // Default rating if null
+          const displayRating = rating !== null ? parseFloat(rating).toFixed(1) : defaultRating.toFixed(1);
+
+          // Update the text display
+          document.getElementById('feedbackRatingText').textContent = `Rating: ${displayRating}/5`;
+
+          window.feedbackChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ['Average Rating', 'Remaining'],
+              datasets: [{
+                data: [displayRating, 5 - displayRating],
+                backgroundColor: ['#EF4444', '#FEE2E2'], // Red-500, Red-200
+                borderColor: ['#EF4444', '#FEE2E2'],
+                borderWidth: 1
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cutout: '70%', // Make it a doughnut chart
+              plugins: {
+                legend: {
+                  display: false // Hide legend
+                },
+                tooltip: {
+                  enabled: false // Hide tooltips
+                }
+              }
+            }
+          });
+        }
+
+
+        // Function to update the intro video URL (for YouTube links)
+        async function updateIntroVideoURL(url) {
+          try {
+            const response = await fetch('/api/trainer/update-intro-video-url', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ videoUrl: url })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              Swal.fire({
+                icon: 'success',
+                title: 'Video Updated!',
+                text: result.message || 'Introduction video URL updated successfully.',
+                showConfirmButton: false,
+                timer: 1500
+              });
+              renderIntroVideo(result.videoUrl); // Re-render with the new URL
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Update Failed!',
+                text: result.message || 'Failed to update video URL. Please try again.',
+              });
+              console.error('Video URL update failed:', response.status, result.message);
+            }
+          } catch (error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'An error occurred during video URL update. Please try again.',
+            });
+            console.error('Error during video URL update:', error);
+          }
+        }
+
+        // Function to dynamically render the intro video (video or iframe)
+        function renderIntroVideo(videoUrl) {
+          const introVideoContainer = document.getElementById('introVideoContainer');
+          const noVideoMessage = document.getElementById('noVideoMessage');
+
+          // Clear previous content
+          introVideoContainer.innerHTML = '';
+
+          if (videoUrl) {
+            let isYouTube = false;
+            // Regex to check for YouTube URLs (watch, embed, short links)
+            const youtubeMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})(?:\S+)?/);
+
+            if (youtubeMatch && youtubeMatch[1]) {
+              isYouTube = true;
+              videoUrl = `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&controls=1`; // YouTube embed URL
+            }
+
+            if (isYouTube) {
+              const iframe = document.createElement('iframe');
+              iframe.id = 'introVideoPlayer';
+              iframe.classList.add('w-full', 'h-full', 'rounded-lg');
+              iframe.src = videoUrl;
+              iframe.setAttribute('frameborder', '0');
+              iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+              iframe.setAttribute('allowfullscreen', '');
+              introVideoContainer.appendChild(iframe);
+            } else {
+              // For direct video file URLs (e.g., from your server)
+              const video = document.createElement('video');
+              video.id = 'introVideoPlayer';
+              video.controls = true;
+              video.classList.add('w-full', 'h-full', 'object-cover', 'rounded-lg');
+              video.src = videoUrl;
+              introVideoContainer.appendChild(video);
+            }
+            noVideoMessage.classList.add('hidden');
+          } else {
+            noVideoMessage.classList.remove('hidden');
+            introVideoContainer.appendChild(noVideoMessage); // Ensure message is re-added if removed
+          }
+        }
+
+
+        // Main execution flow
+        const session = await fetchSessionData();
+        if (session) {
+          const trainerData = await fetchTrainerData(session.trainerId);
+          if (trainerData) {
+            // Populate KPI cards
+            document.getElementById('totalDietPlans').textContent = trainerData.TotalDietPlansCreated || 0;
+            document.getElementById('totalWorkoutPlans').textContent = trainerData.TotalWorkoutPlansCreated || 0;
+            document.getElementById('totalVirtualClasses').textContent = trainerData.TotalVirtualClassesScheduled || 0;
+            document.getElementById('totalClientsManaged').textContent = trainerData.TotalClientsManaged || 0;
+            document.getElementById('unreadNotificationsCount').textContent = trainerData.UnreadNotificationsTrainer || 0;
+
+            // Render feedback chart
+            renderFeedbackChart(trainerData.AverageFeedbackRating);
+
+            // Display Profile Picture
+            const trainerProfilePic = document.getElementById('trainerProfilePic');
+            if (trainerData.ProfilePic) {
+              // The backend sends ProfilePic as base64 string
+              trainerProfilePic.src = `data:image/jpeg;base64,${trainerData.ProfilePic}`;
+            } else {
+              trainerProfilePic.src = "https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer"; // Default placeholder
+            }
+
+            // Display Intro Video
+            renderIntroVideo(trainerData.IntroVideoURL);
+
+          } else {
+            // If trainer data fetch fails, still render chart with default
+            renderFeedbackChart(null);
+            renderIntroVideo(null); // Also render video section as empty
+          }
+        } else {
+          // If session is null, redirection has already happened or will happen.
+          renderFeedbackChart(null);
+          renderIntroVideo(null); // Also render video section as empty
+        }
+
+        // Attach event listeners
+        document.getElementById('logoutButton').addEventListener('click', handleLogout);
+
+        // Event listener for the "Change Video URL" button
+        document.getElementById('changeVideoUrlButton').addEventListener('click', async () => {
+          const { value: youtubeUrl } = await Swal.fire({
+            title: 'Enter YouTube Video URL',
+            input: 'text',
+            inputLabel: 'YouTube URL',
+            inputPlaceholder: 'e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            showCancelButton: true,
+            confirmButtonText: 'Update Video',
+            inputValidator: (value) => {
+              if (!value) {
+                return 'Please enter a URL!';
+              }
+              // Basic YouTube URL validation
+              const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})(?:\S+)?/;
+              if (!youtubeRegex.test(value)) {
+                return 'Please enter a valid YouTube URL!';
+              }
+              return null; // Valid
+            }
+          });
+
+          if (youtubeUrl) {
+            await updateIntroVideoURL(youtubeUrl);
+          }
+        });
+      });
+    </script>
   </body>
 </html>

@@ -86,6 +86,201 @@ const isAdmin = (req, res, next) => {
 
 
 /**
+ * API endpoint to get Trainer Dashboard KPIs and media.
+ * This endpoint fetches data from the `trainer_dashboard_kpis_vw` view
+ * and also includes ProfilePic and IntroVideoURL from the `trainers` table.
+ */
+app.get("/api/trainer-dashboard-kpis", async (req, res) => {
+  // 1. Authenticate and Authorize: Check if a trainer is logged in
+  if (!req.session.userId || req.session.userType !== "trainer") {
+    return res.status(403).json({ message: "Access denied. Trainer privileges required." });
+  }
+
+  const trainerId = req.session.userId; // Get trainer ID from session
+
+  let connection;
+  try {
+    connection = await pool.getConnection();
+
+    // 2. Query the database view for the specific trainer's KPIs
+    // Also fetch ProfilePic and IntroVideoURL directly from the trainers table
+    const [rows] = await connection.execute(
+      `SELECT
+         t.TrainerID,
+         t.FullName AS TrainerName,
+         t.ProfilePic,
+         t.IntroVideoURL,
+         kpis.TotalDietPlansCreated,
+         kpis.TotalWorkoutPlansCreated,
+         kpis.TotalVirtualClassesScheduled,
+         kpis.TotalClientsManaged,
+         kpis.AverageFeedbackRating,
+         kpis.UnreadNotificationsTrainer
+       FROM trainers t
+       LEFT JOIN trainer_dashboard_kpis_vw kpis ON t.TrainerID = kpis.TrainerID
+       WHERE t.TrainerID = ?`,
+      [trainerId]
+    );
+
+    // 3. Process and send the data back to the frontend
+    if (rows.length > 0) {
+      const trainerData = rows[0];
+
+      // Convert ProfilePic BLOB to base64 string if it exists
+      if (trainerData.ProfilePic) {
+        trainerData.ProfilePic = Buffer.from(trainerData.ProfilePic).toString('base64');
+      }
+
+      res.json(trainerData);
+    } else {
+      // If no data found for the trainer (e.g., new trainer with no activities yet)
+      res.json({
+        TrainerID: trainerId,
+        TrainerName: req.session.userName, // Use session name as fallback
+        ProfilePic: null,
+        IntroVideoURL: null,
+        TotalDietPlansCreated: 0,
+        TotalWorkoutPlansCreated: 0,
+        TotalVirtualClassesScheduled: 0,
+        TotalClientsManaged: 0,
+        AverageFeedbackRating: null, // Explicitly null if no feedback
+        UnreadNotificationsTrainer: 0
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching trainer dashboard KPIs:", error);
+    res.status(500).json({ message: "Internal server error while fetching KPIs." });
+  } finally {
+    if (connection) {
+      connection.release(); // Release the connection back to the pool
+    }
+  }
+});
+
+
+
+/**
+ * API endpoint to get Trainer Dashboard KPIs and media.
+ * This endpoint fetches data from the `trainer_dashboard_kpis_vw` view
+ * and also includes ProfilePic and IntroVideoURL from the `trainers` table.
+ */
+app.get("/api/trainer-dashboard-kpis", async (req, res) => {
+  // 1. Authenticate and Authorize: Check if a trainer is logged in
+  if (!req.session.userId || req.session.userType !== "trainer") {
+    return res.status(403).json({ message: "Access denied. Trainer privileges required." });
+  }
+
+  const trainerId = req.session.userId; // Get trainer ID from session
+
+  let connection;
+  try {
+    connection = await pool.getConnection();
+
+    // 2. Query the database view for the specific trainer's KPIs
+    // Also fetch ProfilePic and IntroVideoURL directly from the trainers table
+    const [rows] = await connection.execute(
+      `SELECT
+         t.TrainerID,
+         t.FullName AS TrainerName,
+         t.ProfilePic,
+         t.IntroVideoURL,
+         kpis.TotalDietPlansCreated,
+         kpis.TotalWorkoutPlansCreated,
+         kpis.TotalVirtualClassesScheduled,
+         kpis.TotalClientsManaged,
+         kpis.AverageFeedbackRating,
+         kpis.UnreadNotificationsTrainer
+       FROM trainers t
+       LEFT JOIN trainer_dashboard_kpis_vw kpis ON t.TrainerID = kpis.TrainerID
+       WHERE t.TrainerID = ?`,
+      [trainerId]
+    );
+
+    // 3. Process and send the data back to the frontend
+    if (rows.length > 0) {
+      const trainerData = rows[0];
+
+      // Convert ProfilePic BLOB to base64 string if it exists
+      if (trainerData.ProfilePic) {
+        trainerData.ProfilePic = Buffer.from(trainerData.ProfilePic).toString('base64');
+      }
+
+      res.json(trainerData);
+    } else {
+      // If no data found for the trainer (e.g., new trainer with no activities yet)
+      res.json({
+        TrainerID: trainerId,
+        TrainerName: req.session.userName, // Use session name as fallback
+        ProfilePic: null,
+        IntroVideoURL: null,
+        TotalDietPlansCreated: 0,
+        TotalWorkoutPlansCreated: 0,
+        TotalVirtualClassesScheduled: 0,
+        TotalClientsManaged: 0,
+        AverageFeedbackRating: null, // Explicitly null if no feedback
+        UnreadNotificationsTrainer: 0
+      });
+    }
+  } catch (error) {
+    console.error("Error fetching trainer dashboard KPIs:", error);
+    res.status(500).json({ message: "Internal server error while fetching KPIs." });
+  } finally {
+    if (connection) {
+      connection.release(); // Release the connection back to the pool
+    }
+  }
+});
+
+
+/**
+ * NEW API endpoint for updating trainer introduction video URL (e.g., YouTube link).
+ * This replaces the file upload for intro videos.
+ */
+app.post("/api/trainer/update-intro-video-url", async (req, res) => {
+  // 1. Authenticate and Authorize: Check if a trainer is logged in
+  if (!req.session.userId || req.session.userType !== "trainer") {
+    return res.status(403).json({ message: "Access denied. Trainer privileges required." });
+  }
+
+  const trainerId = req.session.userId;
+  const { videoUrl } = req.body; // Expecting the video URL in the request body
+
+  // Basic validation for the URL
+  if (typeof videoUrl !== 'string' || (videoUrl.trim() === '' && videoUrl !== null)) {
+      return res.status(400).json({ message: "A valid video URL (or null to clear) is required." });
+  }
+
+  // Optional: Add more robust URL validation (e.g., check if it's a valid YouTube URL format)
+  // For now, we'll allow any string to be stored as the URL.
+
+  let connection;
+  try {
+    connection = await pool.getConnection();
+
+    // Update the IntroVideoURL in the trainers table
+    await connection.execute(
+      `UPDATE trainers SET IntroVideoURL = ? WHERE TrainerID = ?`,
+      [videoUrl.trim() === '' ? null : videoUrl, trainerId] // Store null if empty string is provided
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Introduction video URL updated successfully!",
+      videoUrl: videoUrl.trim() === '' ? null : videoUrl // Send back the URL that was saved
+    });
+
+  } catch (error) {
+    console.error("Error updating intro video URL:", error);
+    res.status(500).json({ message: "Internal server error during video URL update." });
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+});
+
+
+/**
  * Login POST handler for all users (Client, Admin, Trainer)
  */
 app.post("/login", async (req, res) => {
