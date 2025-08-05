@@ -118,6 +118,81 @@ const isTrainer = (req, res, next) => {
 };
 
 /**
+ * Fetch notifications for the currently logged-in client
+ */
+app.get("/api/notifications", requireClientAuth, async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT * FROM notifications WHERE ReceiverID = ? ORDER BY CreatedAt DESC`,
+      [req.session.userId] // Session-based filtering
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching notifications:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+/**
+ * API endpoint to toggle the read status of a specific notification
+ */
+app.patch("/api/notifications/:id/toggle-read", requireClientAuth, async (req, res) => {
+  const { id } = req.params; // The ID of the notification to update
+  const clientId = req.session.userId; // The ID of the logged-in user
+
+  try {
+    // We use "NOT IsRead" to easily toggle the boolean value (0 to 1, or 1 to 0)
+    // We ALSO check that the ReceiverID matches the logged-in user's ID.
+    // This is a CRITICAL security step to ensure users can only modify their own notifications.
+    const [result] = await pool.query(
+      `UPDATE notifications SET IsRead = NOT IsRead WHERE NotificationID = ? AND ReceiverID = ?`,
+      [id, clientId]
+    );
+
+    // The 'affectedRows' property tells us if the update was successful.
+    if (result.affectedRows === 0) {
+      // This means no notification was found with that ID for that user.
+      return res.status(404).json({ success: false, message: "Notification not found or access denied." });
+    }
+
+    // Optionally, fetch the updated notification to send back the new state
+    const [[updatedNotification]] = await pool.query(
+      'SELECT IsRead FROM notifications WHERE NotificationID = ?', [id]
+    );
+
+    res.json({ success: true, message: "Notification status updated.", isRead: updatedNotification.IsRead });
+
+  } catch (err) {
+    console.error("Error toggling notification status:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+/**
+ * API endpoint to get the COUNT of unread notifications for the logged-in client
+ */
+app.get("/api/notifications/unread-count", requireClientAuth, async (req, res) => {
+  const clientId = req.session.userId;
+
+  try {
+    // Use COUNT(*) for an efficient query that only returns a number
+    const [rows] = await pool.query(
+      `SELECT COUNT(*) as unreadCount FROM notifications WHERE ReceiverID = ? AND IsRead = 0`,
+      [clientId]
+    );
+
+    // The result will be an array with one object, e.g., [{ unreadCount: 5 }]
+    res.json({ success: true, count: rows[0].unreadCount });
+
+  } catch (err) {
+    console.error("Error fetching unread notification count:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+/**
  * API endpoint to get Trainer Dashboard KPIs and media.
  * This endpoint fetches data from the `trainer_dashboard_kpis_vw` view
  * and also includes ProfilePic and IntroVideoURL from the `trainers` table.
