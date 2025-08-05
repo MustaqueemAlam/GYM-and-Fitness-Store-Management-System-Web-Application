@@ -9,277 +9,181 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body class="flex h-screen bg-gradient-to-r from-red-50 to-red-100">
-            <aside
-            class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg rounded-r-3xl">
-            <div>
-                <!-- Logo + Title -->
-                <a href="client-dashboard.html"
-                    class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
-                    <img
-                        src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                        alt="Gym Logo"
-                        class="w-10 h-10 rounded-full object-cover shadow-md" />
-                    <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                        Client</h2>
-                </a>
+    <aside
+      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between shadow-lg rounded-r-3xl">
+      <div>
+        <a href="client-dashboard.html"
+          class="flex items-center gap-3 mb-8 hover:opacity-90 transition">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Gym Logo"
+            class="w-10 h-10 rounded-full object-cover shadow-md" />
+          <h2 class="text-2xl font-bold text-red-700">E-Fitness Client</h2>
+        </a>
 
-                <!-- Navigation -->
-                <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
-                    <a href="client-reg-and-prof.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: User -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
-                        </svg>
-                        Registration & Profile
-                    </a>
-                    <a href="client-regular-prog-tracker.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Credit Card -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect width="20" height="12" x="2" y="6" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="2" y1="10" x2="22" y2="10"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Progress Tracker
-                    </a>
-                    <a href="client-diet-management.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Calendar -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-600"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="18" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="3" y1="10" x2="21" y2="10"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Diet Management
-                    </a>
-                    <a href="client-daily-progress.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Chart Line -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <polyline points="3 17 9 11 13 15 21 7"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></polyline>
-                            <circle cx="3" cy="17" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="9" cy="11" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="13" cy="15" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="21" cy="7" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Daily Metrics and Attendance
-                    </a>
-                    <a href="client-fitness-store.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Shopping Cart -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                            <circle cx="7" cy="21" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="17" cy="21" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Fitness Store
-                    </a>
-                    <a href="client-subscription-management.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Document Text -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M9 12h6M9 16h6M13 8h-2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                            <path d="M4 4h16v16H4z" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                        </svg>
-                        Subscription Management
-                    </a>
-                    <a href="client-fitness-goals.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Target -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <circle cx="12" cy="12" r="10" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="12" cy="12" r="6" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                            <circle cx="12" cy="12" r="2" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></circle>
-                        </svg>
-                        Fitness Goals
-                    </a>
-                    <a href="client-workout-sessions.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Heart -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></path>
-                        </svg>
-                        Workout and sessions
-                    </a>
-                    <a href="client-virtual-classes.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Newspaper -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="16" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="12" x2="17" y2="12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="16" x2="17" y2="16"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Virtual classes
-                    </a>
-                    <a href="client-Feedback.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Newspaper -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="16" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="12" x2="17" y2="12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="16" x2="17" y2="16"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Feedback
-                    </a>
-                    <a href="client-order-payment.html"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
-                        <!-- Icon: Newspaper -->
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <rect x="3" y="4" width="18" height="16" rx="2"
-                                ry="2"
-                                stroke-width="2" stroke-linejoin="round"
-                                stroke-linecap="round"></rect>
-                            <line x1="7" y1="8" x2="17" y2="8" stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="12" x2="17" y2="12"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                            <line x1="7" y1="16" x2="17" y2="16"
-                                stroke-width="2"
-                                stroke-linejoin="round"
-                                stroke-linecap="round"></line>
-                        </svg>
-                        Order and Purchase History
-                    </a>
-                    <a
-                        href="#"
-                        id="logoutButton"
-                        class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="w-5 h-5 text-red-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                            ></path>
-                        </svg>
-                        Logout
-                    </a>
-                </nav>
+        <nav class="flex flex-col space-y-3 text-gray-700 font-medium">
+          <div class="nav-group">
+            <div
+              class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+              onclick="toggleDropdown('profileDropdown')">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.121 17.804A9 9 0 1112 21a9 9 0 01-6.879-3.196z" />
+              </svg>
+              <span>Profile & Account</span>
+              <svg
+                class="w-4 h-4 ml-auto transform transition-transform duration-200"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
+            <div id="profileDropdown" class="hidden pl-4 space-y-2">
+              <a href="client-reg-and-prof.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Registration & Profile
+              </a>
+              <a href="client-subscription-management.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Subscription Management
+              </a>
+            </div>
+          </div>
 
-            <div class="text-center text-xs text-gray-400 mt-6">
-                &copy; 2025 E-Fitness. All rights reserved.
+          <div class="nav-group">
+            <div
+              class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+              onclick="toggleDropdown('fitnessDropdown')">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>Fitness Tracking</span>
+              <svg
+                class="w-4 h-4 ml-auto transform transition-transform duration-200"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </div>
-        </aside>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-        <style>
+            <div id="fitnessDropdown" class="hidden pl-4 space-y-2">
+              <a href="client-regular-prog-tracker.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Progress Tracker
+              </a>
+              <a href="client-daily-progress.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Daily Metrics
+              </a>
+              <a href="client-fitness-goals.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Fitness Goals
+              </a>
+            </div>
+          </div>
+
+          <div class="nav-group">
+            <div
+              class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+              onclick="toggleDropdown('trainingDropdown')">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 12l1.41 1.41L12 7.83l6.59 6.58L20 12" />
+              </svg>
+              <span>Training</span>
+              <svg
+                class="w-4 h-4 ml-auto transform transition-transform duration-200"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div id="trainingDropdown" class="hidden pl-4 space-y-2">
+              <a href="client-workout-sessions.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Workout Sessions
+              </a>
+              <a href="client-virtual-classes.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Virtual Classes
+              </a>
+              <a href="client-diet-management.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Diet Management
+              </a>
+            </div>
+          </div>
+
+          <div class="nav-group">
+            <div
+              class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors cursor-pointer"
+              onclick="toggleDropdown('storeDropdown')">
+              <svg xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" stroke-width="2"
+                  stroke-linejoin="round" stroke-linecap="round" />
+              </svg>
+              <span>Store & Orders</span>
+              <svg
+                class="w-4 h-4 ml-auto transform transition-transform duration-200"
+                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+            <div id="storeDropdown" class="hidden pl-4 space-y-2">
+              <a href="client-fitness-store.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Fitness Store
+              </a>
+              <a href="client-order-payment.html"
+                class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+                Order History
+              </a>
+            </div>
+          </div>
+
+          <a href="client-Feedback.html"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+            </svg>
+            Feedback
+          </a>
+          <a href="#" id="logoutButton"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-red-100 hover:text-red-600 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            Logout
+          </a>
+        </nav>
+      </div>
+
+      <div class="text-center text-xs text-gray-400 mt-6">
+        &copy; 2025 E-Fitness. All rights reserved.
+      </div>
+    </aside>
+    <script src="client-nav-bar.js"></script>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
             body {
                 font-family: 'Inter', sans-serif;
             }
@@ -294,299 +198,246 @@
       <div class="container mx-auto bg-white p-8 rounded-lg shadow-xl">
         <section class="mb-12 border-b pb-8 border-gray-200">
           <h2
-            class="text-3xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3"
-          >
+            class="text-3xl font-bold mb-6 text-gray-800 border-l-4 border-blue-500 pl-3">
             Add Progress Snapshot
           </h2>
           <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-          >
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div>
               <label
                 for="snapshotDate"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Date:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Date:</label>
               <input
                 type="date"
                 id="snapshotDate"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label
                 for="weightKg"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Weight (kg):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Weight
+                (kg):</label>
               <input
                 type="number"
                 id="weightKg"
                 step="0.1"
                 placeholder="e.g., 75.5"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label
                 for="heightMeters"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Height (meters):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Height
+                (meters):</label>
               <input
                 type="number"
                 id="heightMeters"
                 step="0.01"
                 placeholder="e.g., 1.75"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label
                 for="bodyFatPercent"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Body Fat (%):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Body Fat
+                (%):</label>
               <input
                 type="number"
                 id="bodyFatPercent"
                 step="0.1"
                 placeholder="e.g., 18.2"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500" />
             </div>
             <div>
               <label
                 for="bmi"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >BMI:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">BMI:</label>
               <input
                 type="text"
                 id="bmi"
                 placeholder="Calculated automatically"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 bg-gray-100 text-gray-600 cursor-not-allowed"
-                readonly
-              />
+                readonly />
             </div>
-                      <div
-            class="flex items-center justify-center p-6 bg-purple-50 rounded-lg shadow-md"
-          >
-            <p class="text-lg text-gray-700 mr-4">
-              External Body Fat Calculator , visit:
-            </p>
-            <a
-              href="https://www.calculator.net/body-fat-calculator.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-purple-600 hover:text-purple-800 font-semibold underline text-lg transition-colors duration-200"
-            >
-              Fat Calculator
-            </a>
-          </div>
+            <div
+              class="flex items-center justify-center p-6 bg-purple-50 rounded-lg shadow-md">
+              <p class="text-lg text-gray-700 mr-4">
+                External Body Fat Calculator , visit:
+              </p>
+              <a
+                href="https://www.calculator.net/body-fat-calculator.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-purple-600 hover:text-purple-800 font-semibold underline text-lg transition-colors duration-200">
+                Fat Calculator
+              </a>
+            </div>
             <div class="md:col-span-2 lg:col-span-3">
               <label
                 for="snapshotNotes"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Notes:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Notes:</label>
               <textarea
                 id="snapshotNotes"
                 rows="3"
                 placeholder="Any additional notes on your progress..."
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"
-              ></textarea>
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-blue-500 focus:border-blue-500"></textarea>
             </div>
             <div class="md:col-span-2 lg:col-span-3">
               <label
                 for="progressImage"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Upload Image (Optional):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Upload
+                Image (Optional):</label>
               <input
                 type="file"
                 id="progressImage"
                 accept="image/*"
-                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer"
-              />
+                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 cursor-pointer" />
             </div>
           </div>
           <button
             id="addSnapshotBtn"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105"
-          >
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105">
             Add Progress Snapshot
           </button>
 
           <h3
-            class="text-2xl font-bold mt-10 mb-5 text-gray-800 border-l-4 border-blue-500 pl-3"
-          >
+            class="text-2xl font-bold mt-10 mb-5 text-gray-800 border-l-4 border-blue-500 pl-3">
             Your Progress History
           </h3>
           <div
-            class="overflow-x-auto rounded-lg shadow-md border border-gray-200"
-          >
+            class="overflow-x-auto rounded-lg shadow-md border border-gray-200">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-blue-50">
                 <tr>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Date
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Weight (kg)
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Body Fat (%)
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     BMI
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Notes
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Image
                   </th>
                 </tr>
               </thead>
               <tbody
                 id="progressSnapshotTableBody"
-                class="bg-white divide-y divide-gray-200 text-gray-700 text-sm"
-              ></tbody>
+                class="bg-white divide-y divide-gray-200 text-gray-700 text-sm"></tbody>
             </table>
           </div>
         </section>
 
         <section>
           <h2
-            class="text-3xl font-bold mb-6 text-gray-800 border-l-4 border-green-500 pl-3"
-          >
+            class="text-3xl font-bold mb-6 text-gray-800 border-l-4 border-green-500 pl-3">
             Add Workout Log
           </h2>
           <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-          >
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
             <div>
               <label
                 for="workoutDate"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Date:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Date:</label>
               <input
                 type="date"
                 id="workoutDate"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="exercise"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Exercise:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Exercise:</label>
               <select
                 id="exercise"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              >
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500">
                 <option value>Select Exercise</option>
               </select>
             </div>
             <div>
               <label
                 for="sets"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Sets:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Sets:</label>
               <input
                 type="number"
                 id="sets"
                 min="1"
                 placeholder="e.g., 3"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="reps"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Reps:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Reps:</label>
               <input
                 type="number"
                 id="reps"
                 min="1"
                 placeholder="e.g., 10"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="weightUsed"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Weight Used (kg):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Weight
+                Used (kg):</label>
               <input
                 type="number"
                 id="weightUsed"
                 step="0.1"
                 placeholder="e.g., 50.0"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="heartRate"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Heart Rate (BPM, Optional):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Heart
+                Rate (BPM, Optional):</label>
               <input
                 type="number"
                 id="heartRate"
                 placeholder="e.g., 140"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="caloriesBurned"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Calories Burned (Optional):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Calories
+                Burned (Optional):</label>
               <input
                 type="number"
                 id="caloriesBurned"
                 placeholder="e.g., 300"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              />
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500" />
             </div>
             <div>
               <label
                 for="fatigueLevel"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Fatigue Level:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Fatigue
+                Level:</label>
               <select
                 id="fatigueLevel"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              >
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500">
                 <option value="Low">Low</option>
                 <option value="Moderate" selected>Moderate</option>
                 <option value="High">High</option>
@@ -595,119 +446,100 @@
             <div class="md:col-span-2 lg:col-span-3">
               <label
                 for="clientFeedback"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Your Feedback:</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Your
+                Feedback:</label>
               <textarea
                 id="clientFeedback"
                 rows="3"
                 placeholder="How did you feel during this workout?"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"
-              ></textarea>
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-3 focus:ring-green-500 focus:border-green-500"></textarea>
             </div>
             <div class="md:col-span-2 lg:col-span-3">
               <label
                 for="workoutAttachment"
-                class="block text-sm font-semibold text-gray-700 mb-1"
-                >Upload Attachment (Optional):</label
-              >
+                class="block text-sm font-semibold text-gray-700 mb-1">Upload
+                Attachment (Optional):</label>
               <input
                 type="file"
                 id="workoutAttachment"
-                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200 cursor-pointer"
-              />
+                class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-100 file:text-green-700 hover:file:bg-green-200 cursor-pointer" />
             </div>
           </div>
           <button
             id="addWorkoutBtn"
-            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105"
-          >
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-200 ease-in-out transform hover:scale-105">
             Add Workout Log
           </button>
 
           <h3
-            class="text-2xl font-bold mt-10 mb-5 text-gray-800 border-l-4 border-green-500 pl-3"
-          >
+            class="text-2xl font-bold mt-10 mb-5 text-gray-800 border-l-4 border-green-500 pl-3">
             Your Workout History
           </h3>
           <div
-            class="overflow-x-auto rounded-lg shadow-md border border-gray-200"
-          >
+            class="overflow-x-auto rounded-lg shadow-md border border-gray-200">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-green-50">
                 <tr>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Date
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Exercise
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Sets
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Reps
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Weight (kg)
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Heart Rate
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Calories
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Fatigue
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Feedback
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Trainer Notes
                   </th>
                   <th
                     scope="col"
-                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
-                  >
+                    class="py-3 px-6 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                     Attachment
                   </th>
                 </tr>
               </thead>
               <tbody
                 id="workoutLogTableBody"
-                class="bg-white divide-y divide-gray-200 text-gray-700 text-sm"
-              ></tbody>
+                class="bg-white divide-y divide-gray-200 text-gray-700 text-sm"></tbody>
             </table>
           </div>
         </section>
