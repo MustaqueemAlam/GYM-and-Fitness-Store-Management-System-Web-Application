@@ -17,6 +17,11 @@ Thumbs.db
 .vscode/
 .idea/
 
+
+# Build artifacts
+package.json
+package-lock.json
+
 # Optional: Ignore package-lock if you don’t want it versioned
 # Uncomment if needed
 # package-lock.json
