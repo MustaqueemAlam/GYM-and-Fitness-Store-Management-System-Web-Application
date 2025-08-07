@@ -1,0 +1,32 @@
+# Node modules
+node_modules/
+
+# Local environment variables
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and IDE junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Optional: Ignore package-lock if you don’t want it versioned
+# Uncomment if needed
+# package-lock.json
+
+# Optional: Ignore build or dist folders if generated
+build/
+dist/
+
+# Ignore coverage folders (e.g. from tests)
+coverage/
+
+# Global npm install artifacts (if accidentally created locally)
+.npm/

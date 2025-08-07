@@ -6,7 +6,7 @@
     <title>Admin Dashboard - Red Theme</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-   <style>
+    <style>
       /* Custom scrollbar for main content */
       main::-webkit-scrollbar {
         width: 8px;
@@ -61,7 +61,7 @@
           </a>
           <a
             href="admin-manage-users.html"
-                        class="flex items-center gap-3 py-2 px-3 rounded-lg text-white bg-red-600 font-semibold transition-colors shadow-md">
+            class="flex items-center gap-3 py-2 px-3 rounded-lg text-white bg-red-600 font-semibold transition-colors shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-red-500"
@@ -177,7 +177,6 @@
       </div>
     </aside>
 
-
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
       <div class="flex gap-4">
         <button
@@ -239,25 +238,18 @@
           <table class="w-full text-sm text-left text-gray-700">
             <thead class="text-xs text-red-900 uppercase bg-red-200">
               <tr>
-                <th scope="col" class="px-4 py-3">ID</th>
-                <th scope="col" class="px-4 py-3">Profile</th>
-                <th scope="col" class="px-4 py-3">Name</th>
-                <th scope="col" class="px-4 py-3">Email</th>
-                <th scope="col" class="px-4 py-3">Phone</th>
-                <th scope="col" class="px-4 py-3">Gender</th>
-                <th scope="col" class="px-4 py-3">DOB</th>
-                <th scope="col" class="px-4 py-3">Address</th>
-                <th scope="col" class="px-4 py-3">City</th>
-                <th scope="col" class="px-4 py-3">Country</th>
-                <th scope="col" class="px-4 py-3">Qualifications</th>
-                <th scope="col" class="px-4 py-3">Expertise</th>
-                <th scope="col" class="px-4 py-3">Intro Video</th>
-                <th scope="col" class="px-4 py-3">Cert Title</th>
-                <th scope="col" class="px-4 py-3">Cert Issuer</th>
-                <th scope="col" class="px-4 py-3">Cert Year</th>
-                <th scope="col" class="px-4 py-3">Cert ID</th>
-                <th scope="col" class="px-4 py-3">Date Joined</th>
-                <th scope="col" class="px-4 py-3">Actions</th>
+                <th scope="col" class="px-2 py-2 w-12">ID</th>
+                <th scope="col" class="px-2 py-2 w-24">Profile & Details</th>
+                <th scope="col" class="px-2 py-2 w-32">Name</th>
+                <th scope="col" class="px-2 py-2 w-48">Qualifications</th>
+                <th scope="col" class="px-2 py-2 w-48">Expertise</th>
+                <th scope="col" class="px-2 py-2 w-24">Video</th>
+                <th scope="col" class="px-2 py-2 w-32">Cert Title</th>
+                <th scope="col" class="px-2 py-2 w-32">Issuer</th>
+                <th scope="col" class="px-2 py-2 w-20">Year</th>
+                <th scope="col" class="px-2 py-2 w-24">Cert ID</th>
+                <th scope="col" class="px-2 py-2 w-24">Joined</th>
+                <th scope="col" class="px-2 py-2 w-20">Actions</th>
               </tr>
             </thead>
             <tbody id="trainersTable">
@@ -649,8 +641,39 @@
           </form>
         </div>
       </div>
+
+      <!-- Trainer Details Modal -->
+      <div id="trainerDetailsModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50 p-4">
+        <div
+          class="bg-white p-6 rounded-lg shadow-xl w-full max-w-2xl overflow-y-auto max-h-[90vh]">
+          <h3 class="text-2xl font-bold text-red-700 mb-5">Trainer Personal
+            Details</h3>
+          <div id="trainerDetailsPDF" class="grid grid-cols-2 gap-4">
+            <table class="w-full text-sm text-left text-gray-700">
+              <tbody id="trainerDetailsContent">
+                <!-- Content will be dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+          <div class="flex justify-end gap-3 mt-6">
+            <button
+              onclick="downloadTrainerDetails()"
+              class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-md transition-colors">
+              Download PDF
+            </button>
+            <button
+              onclick="closeModal('trainerDetailsModal')"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition-colors">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
     
     // Function to show/hide tabs and apply active styles
@@ -677,9 +700,16 @@
         document.getElementById(modalId).classList.remove('hidden');
     }
 
+    // Track clicks outside modal
+    let clickCount = 0;
+    let clickTimer = null;
+
     // Helper to close a modal
     function closeModal(modalId) {
         document.getElementById(modalId).classList.add('hidden');
+        // Reset click count when modal is manually closed
+        resetClickCount();
+        
         // Reset forms when closing to clear old data
         ['trainerForm', 'clientForm', 'adminForm'].forEach((formId) => {
             const form = document.getElementById(formId);
@@ -702,6 +732,203 @@
                 }
             }
         });
+    }
+
+    // Helper to reset click count
+    function resetClickCount() {
+        clickCount = 0;
+        if (clickTimer) {
+            clearTimeout(clickTimer);
+            clickTimer = null;
+        }
+    }
+
+    // Initialize click outside handlers for all modals
+    function initializeModalHandlers() {
+        const modals = ['trainerModal', 'clientModal', 'adminModal', 'trainerDetailsModal'];
+        
+        modals.forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+
+            modal.addEventListener('click', (event) => {
+                // If clicked on the modal backdrop (not the content)
+                if (event.target === modal) {
+                    clickCount++;
+                    
+                    // Reset click count after 500ms if no second click
+                    if (clickTimer) clearTimeout(clickTimer);
+                    clickTimer = setTimeout(resetClickCount, 500);
+
+                    // Close modal on double click
+                    if (clickCount >= 2) {
+                        closeModal(modalId);
+                        resetClickCount();
+                    }
+                } else {
+                    // Reset click count when clicking inside modal content
+                    resetClickCount();
+                }
+            });
+
+            // Prevent clicks inside modal content from triggering the outside click handler
+            const modalContent = modal.querySelector('.bg-white');
+            if (modalContent) {
+                modalContent.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                });
+            }
+        });
+    }
+
+    // Initialize modal handlers when the page loads
+    window.addEventListener('DOMContentLoaded', initializeModalHandlers);
+
+    // Function to download trainer details as PDF
+    async function downloadTrainerDetails() {
+        const element = document.getElementById('trainerDetailsPDF');
+        const contentElement = document.getElementById('trainerDetailsContent');
+        
+        if (!element || !contentElement || contentElement.children.length === 0) {
+            console.error('PDF content element not found or empty');
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Could not find content to generate PDF. Please ensure the trainer details are loaded.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
+
+        // Show loading indicator
+        const loadingAlert = Swal.fire({
+            title: 'Generating PDF',
+            text: 'Please wait while we prepare your document...',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        try {
+            // Clone the element to modify it for PDF without affecting the display
+            const pdfContent = element.cloneNode(true);
+            
+            // Ensure all images are loaded before generating PDF
+            const images = pdfContent.getElementsByTagName('img');
+            const imagePromises = Array.from(images).map(img => {
+                return new Promise((resolve, reject) => {
+                    const image = new Image();
+                    image.onload = resolve;
+                    image.onerror = resolve; // Continue even if image fails to load
+                    image.src = img.src;
+                });
+            });
+
+            // Wait for all images to load
+            await Promise.all(imagePromises);
+
+            // PDF generation options
+            const opt = {
+                margin: [0.5, 0.5],
+                filename: 'trainer-details.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { 
+                    scale: 2,
+                    useCORS: true,
+                    logging: true
+                },
+                jsPDF: { 
+                    unit: 'in', 
+                    format: 'a4', 
+                    orientation: 'portrait'
+                }
+            };
+
+            // Generate and save PDF
+            await html2pdf().set(opt).from(pdfContent).save();
+            
+            // Show success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'PDF has been generated successfully',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'PDF Generation Failed',
+                text: 'There was an error generating the PDF. Please try again.',
+                confirmButtonText: 'OK'
+            });
+        }
+    }
+
+    // Function to view trainer details
+    async function viewTrainerDetails(trainerId) {
+        try {
+            const response = await fetch(`/manage/profile/trainer/${trainerId}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+            }
+            const trainer = await response.json();
+
+            const detailsContent = document.getElementById('trainerDetailsContent');
+            const profilePicSrc = `/profile-pic/trainer/${trainer.TrainerID}`;
+            
+            // Create a template with print-friendly styles
+            detailsContent.innerHTML = `
+                <tr>
+                    <td colspan="2" class="px-4 py-4 text-center">
+                        <img src="${profilePicSrc}" alt="Trainer Profile" class="w-32 h-32 rounded-full object-cover mx-auto mb-4 print:shadow-none" 
+                             onerror="this.onerror=null;this.src='https://via.placeholder.com/128?text=No+Pic';">
+                    </td>
+                </tr>
+                <tr class="border-b print:border-gray-300">
+                    <td class="px-4 py-2 font-semibold">Name:</td>
+                    <td class="px-4 py-2">${trainer.FullName}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Email:</td>
+                    <td class="px-4 py-2">${trainer.Email}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Phone:</td>
+                    <td class="px-4 py-2">${trainer.Phone || 'N/A'}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Gender:</td>
+                    <td class="px-4 py-2">${trainer.Gender || 'N/A'}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Date of Birth:</td>
+                    <td class="px-4 py-2">${trainer.DOB ? trainer.DOB.split('T')[0] : 'N/A'}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Address:</td>
+                    <td class="px-4 py-2">${trainer.Address || 'N/A'}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">City:</td>
+                    <td class="px-4 py-2">${trainer.City || 'N/A'}</td>
+                </tr>
+                <tr class="border-b">
+                    <td class="px-4 py-2 font-semibold">Country:</td>
+                    <td class="px-4 py-2">${trainer.Country || 'N/A'}</td>
+                </tr>
+            `;
+
+            openModal('trainerDetailsModal');
+        } catch (error) {
+            console.error('Error fetching trainer details:', error);
+            Swal.fire('Error', `Failed to load trainer details. ${error.message}`, 'error');
+        }
     }
 
     // API Endpoints
@@ -774,16 +1001,12 @@
                         <tr class="border-b odd:bg-white even:bg-red-50">
                             <td class="px-4 py-2">${user.TrainerID}</td>
                             <td class="px-4 py-2">
-                                <img src="${profilePicSrc}" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/50?text=No+Pic';">
+                                <div class="flex flex-col items-center gap-2">
+                                    <img src="${profilePicSrc}" alt="Profile" class="w-12 h-12 rounded-full object-cover" onerror="this.onerror=null;this.src='https://via.placeholder.com/50?text=No+Pic';">
+                                    <button onclick="viewTrainerDetails(${user.TrainerID})" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View Details</button>
+                                </div>
                             </td>
                             <td class="px-4 py-2">${user.FullName}</td>
-                            <td class="px-4 py-2">${user.Email}</td>
-                            <td class="px-4 py-2">${user.Phone || 'N/A'}</td>
-                            <td class="px-4 py-2">${user.Gender || 'N/A'}</td>
-                            <td class="px-4 py-2">${user.DOB ? user.DOB.split('T')[0] : 'N/A'}</td>
-                            <td class="px-4 py-2">${user.Address || 'N/A'}</td>
-                            <td class="px-4 py-2">${user.City || 'N/A'}</td>
-                            <td class="px-4 py-2">${user.Country || 'N/A'}</td>
                             <td class="px-4 py-2 w-48 whitespace-normal">${user.Qualifications || 'N/A'}</td>
                             <td class="px-4 py-2 w-48 whitespace-normal">${user.Expertise || 'N/A'}</td>
                             <td class="px-4 py-2">${user.IntroVideoURL ? `<a href="${user.IntroVideoURL}" target="_blank" class="text-blue-600 hover:underline">Link</a>` : 'N/A'}</td>
@@ -1075,6 +1298,8 @@
     }
 
 
-</script><script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script src="admin-logout.js"></script>
+</script><script
+      src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script><script
+      src="admin-logout.js"></script>
   </body>
 </html>

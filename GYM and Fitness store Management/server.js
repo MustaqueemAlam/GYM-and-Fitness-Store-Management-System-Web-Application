@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const mysql = require("mysql2/promise");
 const bcrypt = require("bcrypt");
@@ -24,16 +26,15 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  session({
-    secret: "your-secret-key-please-change-this-in-production",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 24 hours // Session configuration (1 day validity)
-    },
-  })
-);
+// Session using env secret
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // 24 hours
+  },
+}));
 
 const PORT = process.env.PORT || 4444;
 
@@ -41,12 +42,12 @@ app.use(express.static(path.join(__dirname, "static"))); // Serve static files (
 const storage = multer.memoryStorage(); // Multer setup for file uploads (using memory storage for profile pictures)
 const upload = multer({ storage });
 
+// MySQL connection using env
 const pool = mysql.createPool({
-  // MySQL connection pool setup
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "gym",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   connectionLimit: 10,
 });
 
@@ -881,7 +882,7 @@ Thank you for your purchase!
 // Endpoint to fetch all active products
 app.get("/api/products", requireClientAuth, async (req, res) => {
   try {
-    console.log("Fetching all active products...");
+    //console.log("Fetching all active products...");
     const [rows] = await pool.query(
       "SELECT ProductID, Name, Description, Category, Brand, Price, Stock, Image FROM products WHERE IsActive = 1 AND Stock > 0"
     );
@@ -900,16 +901,16 @@ app.get("/api/products", requireClientAuth, async (req, res) => {
           Price: parseFloat(product.Price),
         }; // Convert Price to float here
       }
-      console.log(
-        `DEBUG: Product ${product.Name
-        } Price type after conversion: ${typeof parseFloat(
-          product.Price
-        )}, value: ${parseFloat(product.Price)}`
-      );
+      // console.log(
+      //   `DEBUG: Product ${product.Name
+      //   } Price type after conversion: ${typeof parseFloat(
+      //     product.Price
+      //   )}, value: ${parseFloat(product.Price)}`
+      // );
       return { ...product, Price: parseFloat(product.Price) }; // Convert Price to float here
     });
 
-    console.log(`Fetched ${products.length} products.`);
+    // console.log(`Fetched ${products.length} products.`);
     res.json({ success: true, products });
   } catch (err) {
     console.error("Error fetching products:", err);
@@ -936,9 +937,9 @@ app.post("/api/cart/add", requireClientAuth, async (req, res) => {
   }
 
   try {
-    console.log(
-      `Client ${clientId} attempting to add ProductID ${productId} with quantity ${quantity} to cart.`
-    );
+    // console.log(
+    //   `Client ${clientId} attempting to add ProductID ${productId} with quantity ${quantity} to cart.`
+    // );
     // Fetch product details to ensure it's valid and get current stock/price
     const [productRows] = await pool.query(
       "SELECT ProductID, Name, Price, Stock FROM products WHERE ProductID = ? AND IsActive = 1",
@@ -961,11 +962,11 @@ app.post("/api/cart/add", requireClientAuth, async (req, res) => {
     }
 
     // DEBUG: Log cart state before map
-    console.log(
-      "DEBUG: Cart before map in add:",
-      typeof req.session.cart,
-      req.session.cart
-    );
+    // console.log(
+    //   "DEBUG: Cart before map in add:",
+    //   typeof req.session.cart,
+    //   req.session.cart
+    // );
 
     let itemAdded = false;
     // Check if product already exists in cart, update quantity if so
@@ -1009,10 +1010,10 @@ app.post("/api/cart/add", requireClientAuth, async (req, res) => {
 
     // After updating, check if the item was truly added (or its quantity was increased)
     if (itemAdded) {
-      console.log(
-        `ProductID ${productId} added to cart. Current cart:`,
-        req.session.cart
-      );
+      // console.log(
+      //   `ProductID ${productId} added to cart. Current cart:`,
+      //   req.session.cart
+      // );
       res.json({
         success: true,
         message: "Product added to cart successfully!",
@@ -1039,8 +1040,8 @@ app.post("/api/cart/add", requireClientAuth, async (req, res) => {
 app.get("/api/cart", requireClientAuth, (req, res) => {
   const cart = req.session.cart || [];
   // DEBUG: Log cart state when fetched
-  console.log("DEBUG: Cart when fetched:", typeof cart, cart);
-  console.log("Fetching cart contents. Current cart:", cart);
+  // console.log("DEBUG: Cart when fetched:", typeof cart, cart);
+  // console.log("Fetching cart contents. Current cart:", cart);
   res.json({ success: true, cart });
 });
 
@@ -1107,7 +1108,7 @@ app.post("/api/purchase", requireClientAuth, async (req, res) => {
   }
 
   // DEBUG: Log cart state before purchase length check
-  console.log("DEBUG: Cart before purchase length check:", typeof cart, cart);
+  // console.log("DEBUG: Cart before purchase length check:", typeof cart, cart);
 
   if (cart.length === 0) {
     console.warn(
@@ -1163,11 +1164,11 @@ app.post("/api/purchase", requireClientAuth, async (req, res) => {
       [clientId, orderDate, totalAmount.toFixed(2), "Pending"]
     );
     const orderId = orderResult.insertId;
-    console.log(
-      `Order ${orderId} created for client ${clientId} with total amount ${totalAmount.toFixed(
-        2
-      )}.`
-    );
+    // console.log(
+    //   `Order ${orderId} created for client ${clientId} with total amount ${totalAmount.toFixed(
+    //     2
+    //   )}.`
+    // );
 
     // 3. Create Order Items
     for (const item of cart) {
@@ -1183,7 +1184,7 @@ app.post("/api/purchase", requireClientAuth, async (req, res) => {
         [orderId, item.productId, item.quantity, unitPrice]
       );
     }
-    console.log(`Order items for OrderID ${orderId} created.`);
+    // console.log(`Order items for OrderID ${orderId} created.`);
 
     // 4. Create Payment
     const [paymentResult] = await connection.query(
@@ -1191,16 +1192,16 @@ app.post("/api/purchase", requireClientAuth, async (req, res) => {
       [orderId, clientId, totalAmount.toFixed(2), paymentMethod]
     );
     const paymentId = paymentResult.insertId;
-    console.log(
-      `Payment ${paymentId} recorded for OrderID ${orderId} using method ${paymentMethod}.`
-    );
+    // console.log(
+    //   `Payment ${paymentId} recorded for OrderID ${orderId} using method ${paymentMethod}.`
+    // );
 
     // 5. Update Order with PaymentID
     await connection.query(
       "UPDATE orders SET PaymentID = ? WHERE OrderID = ?",
       [paymentId, orderId]
     );
-    console.log(`Order ${orderId} updated with PaymentID ${paymentId}.`);
+    // console.log(`Order ${orderId} updated with PaymentID ${paymentId}.`);
 
     // 6. Update Product Stock
     for (const update of productUpdates) {
@@ -1209,11 +1210,11 @@ app.post("/api/purchase", requireClientAuth, async (req, res) => {
         [update.newStock, update.productId]
       );
     }
-    console.log(`Product stocks updated for OrderID ${orderId}.`);
+    // console.log(`Product stocks updated for OrderID ${orderId}.`);
 
     await connection.commit(); // Commit the transaction
     req.session.cart = []; // Clear the cart after successful purchase
-    console.log(`Purchase for OrderID ${orderId} completed successfully.`);
+    // console.log(`Purchase for OrderID ${orderId} completed successfully.`);
     res.json({
       success: true,
       message: "Purchase completed successfully!",

@@ -1,0 +1,11 @@
+Mandatory: 
+npm init -y
+npm install express mysql2 bcrypt multer path express-session cors dayjs
+npm install dotenv
+
+
+
+For later: 
+npm install @google/generative-ai
+npm install express-list-endpoints
+npm install -g npm@11.5.2
