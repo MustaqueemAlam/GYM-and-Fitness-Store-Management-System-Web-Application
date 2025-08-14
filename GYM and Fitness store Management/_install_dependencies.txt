@@ -5,7 +5,7 @@ npm install dotenv
 
 
 
-For later: 
+TBA: 
 npm install @google/generative-ai
 npm install express-list-endpoints
 npm install -g npm@11.5.2

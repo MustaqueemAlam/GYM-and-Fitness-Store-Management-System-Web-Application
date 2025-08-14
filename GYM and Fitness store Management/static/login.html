@@ -8,202 +8,51 @@
     <link rel="stylesheet" href="./assets/css/login.css">
     <link
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       rel="shortcut icon"
       href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-      type="image/svg+xml"
-    />
+      type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap"
-      rel="stylesheet"
-    />
+      rel="stylesheet" />
     <script
       type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script
       nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      .input {
-        @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
-      }
-
-      /* Custom Styles for Login UI */
-      .login-container {
-        max-width: 48rem; /* Increased width */
-        background-color: rgba(
-          255,
-          255,
-          255,
-          0.95
-        ); /* Slightly more opaque */
-        border-radius: 1.5rem; /* More rounded */
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Stronger shadow */
-        padding: 3rem; /* Increased padding */
-      }
-
-      .btn-primary {
-        background-color: #f94a4a;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        font-weight: bold;
-        transition: background-color 0.3s ease;
-      }
-
-      .btn-primary:hover {
-        background-color: #e03a3a; /* Darker red on hover */
-      }
-
-      .btn-google {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.75rem;
-        background-color: #ffffff;
-        color: #333;
-        padding: 0.75rem 1.5rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        border: 1px solid #ccc;
-        transition: all 0.3s ease;
-      }
-
-      .btn-google:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        border-color: #999;
-      }
-
-      .link {
-        color: #f94a4a;
-        transition: color 0.3s ease, text-decoration 0.3s ease;
-      }
-
-      .link:hover {
-        color: #e03a3a;
-        text-decoration: underline;
-      }
-
-      select.input {
-        /* Ensuring consistent styling for select */
-        -webkit-appearance: none; /* Remove default arrow on WebKit browsers */
-        -moz-appearance: none; /* Remove default arrow on Firefox */
-        appearance: none;
-        background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M205.66%2099.66L128%20177.34%2050.34%2099.66z%22%2F%3E%3C%2Fsvg%3E'); /* Custom arrow */
-        background-repeat: no-repeat;
-        background-position: right 0.75rem center;
-        background-size: 1em;
-        padding-right: 2.5rem; /* Make space for the custom arrow */
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .login-container {
-          max-width: 100%;
-          margin: 1rem;
-          padding: 2rem;
-        }
-
-        h1 {
-          font-size: 2rem !important;
-          margin-bottom: 1.5rem !important;
-        }
-
-        .btn-primary, .btn-google {
-          padding: 0.625rem 1.25rem;
-        }
-
-        .input {
-          font-size: 1rem;
-          padding: 0.5rem 0.75rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .login-container {
-          margin: 0.5rem;
-          padding: 1.5rem;
-          border-width: 2px;
-        }
-
-        h1 {
-          font-size: 1.75rem !important;
-          margin-bottom: 1.25rem !important;
-        }
-
-        .btn-primary, .btn-google {
-          padding: 0.5rem 1rem;
-          font-size: 0.95rem;
-        }
-
-        .text-4xl {
-          font-size: 1.75rem;
-        }
-
-        .space-y-6 > * + * {
-          margin-top: 1.25rem;
-        }
-
-        .py-24 {
-          padding-top: 4rem;
-          padding-bottom: 4rem;
-        }
-      }
-
-      @media (max-width: 360px) {
-        .login-container {
-          margin: 0;
-          padding: 1rem;
-          border-radius: 0;
-        }
-
-        h1 {
-          font-size: 1.5rem !important;
-        }
-
-        .btn-google {
-          font-size: 0.9rem;
-        }
-
-        .text-lg {
-          font-size: 1rem;
-        }
-      }
-    </style>
   </head>
   <body
     id="top"
-    class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col"
-  >
+    class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col">
     <header class="header" data-header>
       <div class="container">
         <a href="index.html" class="logo">
           <ion-icon
             name="barbell-sharp"
             aria-hidden="true"
-            class="text-[#f94a4a] text-2xl"
-          ></ion-icon>
+            class="text-[#f94a4a] text-2xl"></ion-icon>
           <span class="span">E- Fitness</span>
         </a>
         <nav class="navbar" data-navbar>
-          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <button class="nav-close-btn" aria-label="close menu"
+            data-nav-toggler>
             <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
           </button>
           <ul class="navbar-list">
             <li>
-              <a href="index.html" class="navbar-link active" data-nav-link>Home</a>
+              <a href="index.html" class="navbar-link active"
+                data-nav-link>Home</a>
             </li>
             <li>
-              <a href="signup.html" class="navbar-link" data-nav-link>Join Now</a>
+              <a href="signup.html" class="navbar-link" data-nav-link>Join
+                Now</a>
             </li>
           </ul>
         </nav>
@@ -212,171 +61,50 @@
         </button>
       </div>
     </header>
-    <style>
-      @media (max-width: 768px) {
-        .header {
-          background: rgba(255, 255, 255, 0.95);
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          z-index: 1000;
-          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar {
-          position: fixed;
-          top: 0;
-          right: -100%;
-          background: white;
-          width: 280px;
-          height: 100vh;
-          padding: 20px;
-          box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
-          transition: 0.3s ease;
-        }
-
-        .navbar.active {
-          right: 0;
-        }
-
-        .navbar-list {
-          margin-top: 60px;
-        }
-
-        .navbar-link {
-          display: block;
-          padding: 15px;
-          font-size: 1.1rem;
-          font-weight: 500;
-          transition: 0.3s;
-          color: #333;
-        }
-
-        .navbar-link:hover,
-        .navbar-link.active {
-          color: #f94a4a;
-          background: rgba(249, 74, 74, 0.1);
-          border-radius: 8px;
-        }
-
-        .nav-close-btn,
-        .nav-open-btn {
-          display: block;
-          font-size: 1.8rem;
-          color: #333;
-          background: none;
-          border: none;
-          cursor: pointer;
-        }
-
-        .nav-close-btn {
-          position: absolute;
-          top: 15px;
-          right: 15px;
-        }
-
-        .nav-open-btn {
-          margin-left: auto;
-        }
-
-        [data-navbar] {
-          transform: translateX(100%);
-          transition: transform 0.3s ease-in-out;
-        }
-
-        [data-navbar].active {
-          transform: translateX(0);
-        }
-      }
-
-      @media (min-width: 769px) {
-        .nav-close-btn,
-        .nav-open-btn {
-          display: none;
-        }
-
-        .navbar-list {
-          display: flex;
-          gap: 2rem;
-        }
-
-        .navbar-link {
-          color: #333;
-          font-weight: 500;
-          transition: color 0.3s;
-        }
-
-        .navbar-link:hover,
-        .navbar-link.active {
-          color: #f94a4a;
-        }
-      }
-    </style>
-    <script>
-      // Add this script for mobile menu functionality
-      document.addEventListener('DOMContentLoaded', function() {
-        const navTogglers = document.querySelectorAll('[data-nav-toggler]');
-        const navbar = document.querySelector('[data-navbar]');
-        
-        navTogglers.forEach(toggler => {
-          toggler.addEventListener('click', function() {
-            navbar.classList.toggle('active');
-          });
-        });
-      });
-    </script>
-
     <div class="absolute inset-0 -z-10">
       <img
         src="assets/images/GYMHOMEBD.jpg"
         alt="Gym Background GIF"
-        class="w-full h-full object-cover opacity-40"
-      />
+        class="w-full h-full object-cover opacity-40" />
       <div class="absolute inset-0 bg-black bg-opacity-40"></div>
     </div>
 
     <main class="flex-grow flex items-center justify-center px-4 py-24">
       <section
-        class="relative z-10 w-full login-container border-4 border-[#f94a4a]"
-      >
+        class="relative z-10 w-full login-container border-4 border-[#f94a4a]">
         <h1
-          class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide"
-        >
+          class="text-4xl font-extrabold text-[#f94a4a] mb-8 text-center tracking-wide">
           E-Fitness Login
         </h1>
         <form id="loginForm" class="space-y-6" novalidate>
           <div>
             <label for="email" class="block font-semibold mb-1">Email</label>
-            <input id="email" name="email" type="email" required class="input" />
+            <input id="email" name="email" type="email" required
+              class="input" />
           </div>
 
           <div>
-            <label for="password" class="block font-semibold mb-1"
-              >Password</label
-            >
+            <label for="password"
+              class="block font-semibold mb-1">Password</label>
             <div class="relative">
               <input
                 id="password"
                 name="password"
                 type="password"
                 required
-                class="input pr-10"
-              />
+                class="input pr-10" />
               <button
                 type="button"
                 id="togglePassword"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#f94a4a]"
-              >
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#f94a4a]">
                 <ion-icon name="eye-outline" id="eyeIcon"></ion-icon>
               </button>
             </div>
           </div>
 
           <div>
-            <label for="userType" class="block font-semibold mb-1"
-              >User Type</label
-            >
+            <label for="userType" class="block font-semibold mb-1">User
+              Type</label>
             <select id="userType" name="userType" required class="input">
               <option value disabled selected>Select User Type</option>
               <option value="client">Client</option>
@@ -386,18 +114,15 @@
           </div>
 
           <div class="flex justify-between items-center text-sm">
-            <a href="#" id="forgotPasswordLink" class="link"
-              >Forgot Password?</a
-            >
+            <a href="#" id="forgotPasswordLink" class="link">Forgot
+              Password?</a>
           </div>
 
           <button type="submit" class="w-full btn-primary">Login</button>
 
           <div class="relative flex py-4 items-center">
             <div class="flex-grow border-t border-gray-300"></div>
-            <span class="flex-shrink mx-4 text-gray-500 font-medium"
-              >OR</span
-            >
+            <span class="flex-shrink mx-4 text-gray-500 font-medium">OR</span>
             <div class="flex-grow border-t border-gray-300"></div>
           </div>
 
@@ -406,26 +131,26 @@
               src="https://img.icons8.com/color/24/000000/google-logo.png"
               alt="Google logo"
               width="24"
-              height="24"
-            />
+              height="24" />
             Sign up with Google
           </button>
         </form>
 
         <div class="mt-8 text-center">
-          <p class="text-lg font-semibold text-gray-700 uppercase tracking-wide">
+          <p
+            class="text-lg font-semibold text-gray-700 uppercase tracking-wide">
             Don’t have an account?
             <a
               href="signup.html"
-              class="text-[#f94a4a] font-extrabold hover:underline hover:text-red-600 ml-1"
-            >
+              class="text-[#f94a4a] font-extrabold hover:underline hover:text-red-600 ml-1">
               Sign Up
             </a>
           </p>
         </div>
 
         <div class="text-center mt-6">
-          <a href="index.html" id="returnHomeLink" class="link">← Return to Home</a>
+          <a href="index.html" id="returnHomeLink" class="link">← Return to
+            Home</a>
         </div>
       </section>
     </main>
