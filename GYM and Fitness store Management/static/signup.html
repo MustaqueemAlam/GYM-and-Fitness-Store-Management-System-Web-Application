@@ -5,410 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>E-Fitness Signup</title>
+    <link rel="stylesheet" href="./assets/css/signup.css">
     <link
       rel="shortcut icon"
       href="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-      type="image/svg+xml"
-    />
+      type="image/svg+xml" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700;800;900&family=Rubik:wght@400;500;800&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.tailwindcss.com"></script>
+      rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
-    />
-    <style>
-      :root {
-        --primary-color: #f94a4a;
-        --primary-hover: #e03a3a;
-        --text-dark: #1a1a1a;
-        --text-light: #666;
-        --bg-light: #fff;
-        --border-color: #d1d5db;
-        --border-focus: rgba(249,74,74,0.2);
-        --shadow-color: rgba(0,0,0,0.1);
-        --transition: all 0.3s ease;
-      }
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
 
-      body {
-        margin: 0;
-        min-height: 100vh;
-        font-family: 'Rubik', sans-serif;
-        color: var(--text-dark);
-        background: linear-gradient(135deg, #fbe9e9 0%, #f9c0c0 50%, #f94a4a 100%);
-        position: relative;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .signup-container {
-        max-width: 1000px;
-        width: 100%;
-        background-color: rgba(255,255,255,0.98);
-        border-radius: 1.25rem;
-        box-shadow: 0 20px 40px var(--shadow-color);
-        padding: 2.5rem;
-        border: 3px solid var(--primary-color);
-        margin: 1.5rem auto;
-        position: relative;
-        z-index: 10;
-        overflow-y: auto;
-        max-height: 85vh;
-      }
-
-      .signup-container::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      .signup-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 4px;
-      }
-
-      .signup-container::-webkit-scrollbar-thumb {
-        background: var(--primary-color);
-        border-radius: 4px;
-      }
-
-      .form-title {
-        font-size: 2.25rem;
-        font-weight: 800;
-        color: #f94a4a;
-        text-align: center;
-        margin-bottom: 2rem;
-        letter-spacing: 0.05em;
-      }
-
-      .form-group {
-        margin-bottom: 2rem;
-        text-align: center;
-      }
-
-      .form-group.text-center {
-        text-align: center;
-      }
-
-      .form-label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: var(--text-dark);
-        font-size: 0.95rem;
-      }
-
-      .input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 2px solid var(--border-color);
-        border-radius: 0.5rem;
-        outline: none;
-        transition: var(--transition);
-        font-size: 1rem;
-        background: var(--bg-light);
-        color: var(--text-dark);
-      }
-
-      .input:focus {
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px var(--border-focus);
-      }
-
-      .input::placeholder {
-        color: #999;
-      }
-
-      .btn-primary {
-        width: 100%;
-        background-color: var(--primary-color);
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        transition: var(--transition);
-        font-size: 1.1rem;
-        margin-top: 2rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .btn-primary:hover {
-        background-color: var(--primary-hover);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px var(--shadow-color);
-      }
-
-      .btn-primary:active {
-        transform: translateY(0);
-      }
-
-      .link {
-        color: var(--primary-color);
-        text-decoration: none;
-        transition: var(--transition);
-        font-weight: 500;
-      }
-
-      .link:hover {
-        color: var(--primary-hover);
-        text-decoration: underline;
-      }
-
-      .profile-preview {
-        width: 130px;
-        height: 130px;
-        border-radius: 50%;
-        background: #f8f8f8;
-        border: 3px solid var(--primary-color);
-        overflow: hidden;
-        margin: 0 auto 1.5rem auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 12px var(--shadow-color);
-        transition: var(--transition);
-      }
-
-      .profile-preview:hover {
-        transform: scale(1.02);
-        border-width: 4px;
-      }
-
-      .upload-label {
-        cursor: pointer;
-        display: block;
-        font-weight: 600;
-        color: var(--primary-color);
-        margin-top: 0.5rem;
-      }
-
-      .text-center {
-        text-align: center;
-      }
-
-      .mt-4 {
-        margin-top: 2rem;
-      }
-
-      .text-muted {
-        color: var(--text-light);
-      }
-
-      .form-row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1.5rem;
-      }
-      .form-col {
-        flex: 1 1 250px;
-        min-width: 220px;
-      }
-
-      textarea.input {
-        resize: none;
-        height: 80px;
-        min-height: 80px;
-      }
-
-      input[type="radio"] {
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #d1d5db;
-        border-radius: 50%;
-        margin-right: 0.5em;
-        position: relative;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-
-      input[type="radio"]:checked {
-        border-color: #f94a4a;
-        background-color: #fff;
-      }
-
-      input[type="radio"]:checked::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 10px;
-        height: 10px;
-        background-color: #f94a4a;
-        border-radius: 50%;
-        animation: pulse 0.2s ease-in-out;
-      }
-
-      input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-        accent-color: #f94a4a;
-        margin-right: 0.5em;
-      }
-
-      .checkbox-label {
-        display: flex;
-        align-items: center;
-        gap: 0.5em;
-        font-size: 1rem;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: translate(-50%, -50%) scale(0);
-        }
-        50% {
-          transform: translate(-50%, -50%) scale(1.2);
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-
-      /* Additional utility classes */
-      .gender-group {
-        display: flex;
-        gap: 1.5em;
-        align-items: center;
-      }
-
-      .terms-group {
-        margin-top: 1.5em;
-        flex-direction: column;
-        gap: 1em;
-      }
-
-      .footer-links {
-        text-align: center;
-        margin-top: 2em;
-        font-size: 1.1em;
-        color: var(--text-light);
-      }
-
-      .clickable {
-        text-decoration: underline;
-        cursor: pointer;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 1024px) {
-        .signup-container {
-          max-width: 90%;
-          padding: 2rem;
-          margin: 1rem auto;
-        }
-
-        .form-title {
-          font-size: 2rem;
-          margin-bottom: 1.5rem;
-        }
-
-        .form-row {
-          gap: 1.25rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .signup-container {
-          margin: 0.5rem;
-          padding: 1.5rem;
-          max-width: 100%;
-          border-width: 2px;
-          max-height: 90vh;
-        }
-
-        .form-row {
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .form-col {
-          min-width: 100%;
-        }
-
-        .btn-primary {
-          padding: 0.875rem 1.25rem;
-          font-size: 1rem;
-        }
-
-        .profile-preview {
-          width: 110px;
-          height: 110px;
-        }
-      }
-
-      @media (max-width: 480px) {
-        body {
-          background: linear-gradient(135deg, #fbe9e9 0%, #f9c0c0 100%);
-        }
-
-        .signup-container {
-          margin: 0;
-          padding: 1rem;
-          border-radius: 0;
-          border-width: 2px;
-          border-left: none;
-          border-right: none;
-          max-height: 100vh;
-        }
-
-        .form-title {
-          font-size: 1.5rem;
-          margin-bottom: 1rem;
-        }
-
-        .form-label {
-          font-size: 0.9rem;
-        }
-
-        .input {
-          padding: 0.625rem 0.875rem;
-          font-size: 0.95rem;
-        }
-
-        .btn-primary {
-          padding: 0.75rem 1rem;
-          font-size: 0.95rem;
-          margin-top: 1.5rem;
-        }
-
-        .footer-links {
-          font-size: 0.95rem;
-          margin-top: 1.5rem;
-        }
-
-        .gender-group {
-          gap: 1rem;
-        }
-
-        .profile-preview {
-          width: 100px;
-          height: 100px;
-          border-width: 2px;
-        }
-      }
-
-      @media (max-height: 700px) {
-        .signup-container {
-          margin: 0;
-          max-height: 100vh;
-          border-radius: 0;
-        }
-      }
-    </style>
   </head>
-  <body
-    id="top"
-    class="relative min-h-screen bg-gradient-to-br from-[#fbe9e9] via-[#f9c0c0] to-[#f94a4a] text-gray-900 flex flex-col"
-  >
+  <body id="top">
     <header class="header" data-header>
       <div class="container">
         <a href="./index.html" class="logo">
@@ -416,14 +30,14 @@
           <span class="span">E- Fitness</span>
         </a>
         <nav class="navbar" data-navbar>
-          <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <button class="nav-close-btn" aria-label="close menu"
+            data-nav-toggler>
             <ion-icon name="close-sharp" aria-hidden="true"></ion-icon>
           </button>
           <ul class="navbar-list">
             <li>
-              <a href="index.html" class="navbar-link active" data-nav-link
-                >Home</a
-              >
+              <a href="index.html" class="navbar-link active"
+                data-nav-link>Home</a>
             </li>
             <li>
               <a href="login.html" class="navbar-link" data-nav-link>Login</a>
@@ -432,15 +46,14 @@
         </nav>
       </div>
     </header>
-    <div class="absolute inset-0 -z-10">
+    <div class="background-overlay">
       <img
         src="assets/images/GYMHOMEBD.jpg"
         alt="Gym Background GIF"
-        class="w-full h-full object-cover opacity-40"
-      />
-      <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        class="background-image" />
+      <div class="overlay"></div>
     </div>
-    <main class="flex-grow flex items-center justify-center px-4 py-12">
+    <main class="main-content">
       <section class="signup-container">
         <h1 class="form-title">E-Fitness Signup</h1>
         <form id="signupForm" enctype="multipart/form-data" novalidate>
@@ -448,43 +61,52 @@
             <div id="profilePreview" class="profile-preview">
               <span class="text-muted">No Image</span>
             </div>
-            <label for="profilePic" class="upload-label">Upload Profile Picture</label>
+            <label for="profilePic" class="upload-label">Upload Profile
+              Picture</label>
           </div>
           <div class="form-row">
             <div class="form-col">
               <label for="fullname" class="form-label">Full Name</label>
-              <input id="fullname" name="FullName" type="text" required class="input" placeholder="Enter your full name" />
+              <input id="fullname" name="FullName" type="text" required
+                class="input" placeholder="Enter your full name" />
             </div>
             <div class="form-col">
               <label for="email" class="form-label">Email</label>
-              <input id="email" name="Email" type="email" required class="input" placeholder="Enter your email" />
+              <input id="email" name="Email" type="email" required class="input"
+                placeholder="Enter your email" />
             </div>
             <div class="form-col">
               <label for="password" class="form-label">Password</label>
-              <input id="password" name="Password" type="password" required class="input" placeholder="Choose a password" />
+              <input id="password" name="Password" type="password" required
+                class="input" placeholder="Choose a password" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-col">
               <label for="phone" class="form-label">Phone</label>
-              <input id="phone" name="Phone" type="text" required class="input" placeholder="Enter your phone number" />
+              <input id="phone" name="Phone" type="text" required class="input"
+                placeholder="Enter your phone number" />
             </div>
             <div class="form-col">
               <label class="form-label">Gender</label>
               <div class="gender-group">
-                <label class="checkbox-label"><input type="radio" name="Gender" value="Male" required />Male</label>
-                <label class="checkbox-label"><input type="radio" name="Gender" value="Female" />Female</label>
+                <label class="checkbox-label"><input type="radio" name="Gender"
+                    value="Male" required />Male</label>
+                <label class="checkbox-label"><input type="radio" name="Gender"
+                    value="Female" />Female</label>
               </div>
             </div>
             <div class="form-col">
               <label for="dob" class="form-label">Date of Birth</label>
-              <input id="dob" name="DOB" type="text" required class="input" placeholder="Select your date of birth" />
+              <input id="dob" name="DOB" type="text" required class="input"
+                placeholder="Select your date of birth" />
             </div>
           </div>
           <div class="form-row">
             <div class="form-col">
               <label for="country" class="form-label">Country</label>
-              <select id="country" name="Country" class="input" onchange="populateCities()" required>
+              <select id="country" name="Country" class="input"
+                onchange="populateCities()" required>
                 <option value selected disabled>-- Select Country --</option>
                 <option value="Bangladesh">🇧🇩 Bangladesh</option>
                 <option value="India">🇮🇳 India</option>
@@ -505,37 +127,37 @@
             </div>
             <div class="form-col">
               <label for="address" class="form-label">Address</label>
-              <textarea id="address" name="Address" rows="2" required class="input"></textarea>
+              <textarea id="address" name="Address" rows="2" required
+                class="input"></textarea>
             </div>
           </div>
           <div class="form-row terms-group">
             <label class="checkbox-label">
               <input type="checkbox" id="agreeTerms" required />
-              I agree to the <span class="link clickable" onclick="openModal('termsModal')">Terms of Service</span>
+              I agree to the <span class="link clickable"
+                onclick="openModal('termsModal')">Terms of Service</span>
             </label>
             <label class="checkbox-label">
               <input type="checkbox" id="agreePrivacy" required />
-              I agree to the <span class="link clickable" onclick="openModal('privacyModal')">Privacy Policy</span>
+              I agree to the <span class="link clickable"
+                onclick="openModal('privacyModal')">Privacy Policy</span>
             </label>
           </div>
-          <input id="profilePic" name="ProfilePic" type="file" accept="image/*" class="hidden" onchange="previewProfilePic(event)" />
+          <input id="profilePic" name="ProfilePic" type="file" accept="image/*"
+            class="hidden" onchange="previewProfilePic(event)" />
           <button type="submit" class="btn-primary">Sign Up</button>
           <div class="footer-links">
-            <p>Already have an account? <a href="login.html" class="link">Log in</a></p>
+            <p>Already have an account? <a href="login.html" class="link">Log
+                in</a></p>
             <p><a href="index.html" class="link">← Go back to Home</a></p>
           </div>
         </form>
       </section>
     </main>
-    <div
-      id="termsModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
-    >
-      <div
-        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto"
-      >
-        <h2 class="text-2xl font-bold mb-4">Terms of Service</h2>
-        <div class="text-gray-800 text-sm space-y-4">
+    <div id="termsModal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-title">Terms of Service</h2>
+        <div class="modal-text">
           <p>
             By using our service, you agree to comply with and be bound by the
             following terms and conditions. Please review them carefully. If you
@@ -547,12 +169,14 @@
             laws.
           </p>
           <p>
-            2. <strong>Accounts:</strong> You are responsible for maintaining the
+            2. <strong>Accounts:</strong> You are responsible for maintaining
+            the
             confidentiality of your account and password and for restricting
             access to your device.
           </p>
           <p>
-            3. <strong>Modification:</strong> We reserve the right to change these
+            3. <strong>Modification:</strong> We reserve the right to change
+            these
             terms at any time. It is your responsibility to review them
             regularly.
           </p>
@@ -563,25 +187,20 @@
         </div>
         <button
           onclick="closeModal('termsModal')"
-          class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
-          aria-label="Close Terms Modal"
-        >
+          class="modal-close"
+          aria-label="Close Terms Modal">
           &times;
         </button>
       </div>
     </div>
 
-    <div
-      id="privacyModal"
-      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
-    >
-      <div
-        class="bg-white rounded-lg max-w-3xl w-full p-6 relative max-h-[80vh] overflow-y-auto"
-      >
-        <h2 class="text-2xl font-bold mb-4">Privacy Policy</h2>
-        <div class="text-gray-800 text-sm space-y-4">
+    <div id="privacyModal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-title">Privacy Policy</h2>
+        <div class="modal-text">
           <p>
-            We respect your privacy and are committed to protecting your personal
+            We respect your privacy and are committed to protecting your
+            personal
             information. This Privacy Policy explains how we collect, use, and
             disclose your data.
           </p>
@@ -607,27 +226,23 @@
         <button
           onclick="closeModal('privacyModal')"
           class="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-xl font-bold"
-          aria-label="Close Privacy Modal"
-        >
+          aria-label="Close Privacy Modal">
           &times;
         </button>
       </div>
     </div>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+      href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="signup.js"></script>
-    <link rel="stylesheet" href="css/signup.css" />
     <script
       type="module"
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-    ></script>
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script
       nomodule
-      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-    ></script>
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
 </html>

@@ -232,6 +232,8 @@ body {
   z-index: -1;
   animation: rotate360 15s linear infinite;
 }
+/* a keyframe marks a point in time where you define a specific value for an object's attribute,
+like position, scale, or rotation */
 
 @keyframes rotate360 {
   0% { transform: translate(-50%, -56%) rotate(0); }

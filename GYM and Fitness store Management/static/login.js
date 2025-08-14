@@ -102,3 +102,15 @@ document.getElementById("googleSignInBtn").addEventListener("click", function ()
     confirmButtonColor: "#f94a4a",
   });
 });
+
+// for mobile menu functionality
+document.addEventListener('DOMContentLoaded', function () {
+  const navTogglers = document.querySelectorAll('[data-nav-toggler]');
+  const navbar = document.querySelector('[data-navbar]');
+
+  navTogglers.forEach(toggler => {
+    toggler.addEventListener('click', function () {
+      navbar.classList.toggle('active');
+    });
+  });
+});

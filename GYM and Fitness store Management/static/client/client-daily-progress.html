@@ -667,6 +667,8 @@
         cursor: pointer;
       }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       function openProgressModal() {
         const modal = document.getElementById('progressModal');
@@ -694,7 +696,7 @@
           const logData = await logRes.json();
           const attData = await attRes.json();
 
-          // ✅ Render Health Log Table
+          // Render Health Log Table
           if (logData.success && Array.isArray(logData.logs)) {
             const logTable = document.getElementById("logTable");
             logTable.innerHTML = ""; // Clear table
@@ -711,7 +713,7 @@
               logTable.appendChild(tr);
             });
 
-            // ✅ Show latest log summary
+            // Show latest log summary
             const latest = logData.logs[0];
             if (latest) {
               document.getElementById("weight").textContent =
@@ -725,7 +727,7 @@
             }
           }
 
-          // ✅ Render Attendance
+          // Render Attendance
           if (attData.success && attData.records) {
             const table = document.getElementById("attendanceTable");
             table.innerHTML = "";
@@ -851,7 +853,6 @@
         .addEventListener("click", checkOut);
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="client-logout.js"></script>
   </body>
 </html>

@@ -1,0 +1,256 @@
+.input {
+    @apply w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#f94a4a];
+}
+
+/* Custom Styles for Login UI */
+.login-container {
+    max-width: 48rem;
+    /* Increased width */
+    background-color: rgba(255,
+            255,
+            255,
+            0.95);
+    /* Slightly more opaque */
+    border-radius: 1.5rem;
+    /* More rounded */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    /* Stronger shadow */
+    padding: 3rem;
+    /* Increased padding */
+}
+
+.btn-primary {
+    background-color: #f94a4a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #e03a3a;
+    /* Darker red on hover */
+}
+
+.btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: #ffffff;
+    color: #333;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-color: #999;
+}
+
+.link {
+    color: #f94a4a;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.link:hover {
+    color: #e03a3a;
+    text-decoration: underline;
+}
+
+select.input {
+    /* Ensuring consistent styling for select */
+    -webkit-appearance: none;
+    /* Remove default arrow on WebKit browsers */
+    -moz-appearance: none;
+    /* Remove default arrow on Firefox */
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M205.66%2099.66L128%20177.34%2050.34%2099.66z%22%2F%3E%3C%2Fsvg%3E');
+    /* Custom arrow */
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+    /* Make space for the custom arrow */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .login-container {
+        max-width: 100%;
+        margin: 1rem;
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .btn-primary,
+    .btn-google {
+        padding: 0.625rem 1.25rem;
+    }
+
+    .input {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        margin: 0.5rem;
+        padding: 1.5rem;
+        border-width: 2px;
+    }
+
+    h1 {
+        font-size: 1.75rem !important;
+        margin-bottom: 1.25rem !important;
+    }
+
+    .btn-primary,
+    .btn-google {
+        padding: 0.5rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .text-4xl {
+        font-size: 1.75rem;
+    }
+
+    .space-y-6>*+* {
+        margin-top: 1.25rem;
+    }
+
+    .py-24 {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .login-container {
+        margin: 0;
+        padding: 1rem;
+        border-radius: 0;
+    }
+
+    h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .btn-google {
+        font-size: 0.9rem;
+    }
+
+    .text-lg {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        background: rgba(255, 255, 255, 0.95);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        background: white;
+        width: 280px;
+        height: 100vh;
+        padding: 20px;
+        box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+        transition: 0.3s ease;
+    }
+
+    .navbar.active {
+        right: 0;
+    }
+
+    .navbar-list {
+        margin-top: 60px;
+    }
+
+    .navbar-link {
+        display: block;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        transition: 0.3s;
+        color: #333;
+    }
+
+    .navbar-link:hover,
+    .navbar-link.active {
+        color: #f94a4a;
+        background: rgba(249, 74, 74, 0.1);
+        border-radius: 8px;
+    }
+
+    .nav-close-btn,
+    .nav-open-btn {
+        display: block;
+        font-size: 1.8rem;
+        color: #333;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nav-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+
+    .nav-open-btn {
+        margin-left: auto;
+    }
+
+    [data-navbar] {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    [data-navbar].active {
+        transform: translateX(0);
+    }
+}
+
+@media (min-width: 769px) {
+
+    .nav-close-btn,
+    .nav-open-btn {
+        display: none;
+    }
+
+    .navbar-list {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .navbar-link {
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .navbar-link:hover,
+    .navbar-link.active {
+        color: #f94a4a;
+    }
+}
