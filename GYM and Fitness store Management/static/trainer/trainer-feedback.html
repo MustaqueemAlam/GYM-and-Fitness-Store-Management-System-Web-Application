@@ -1,38 +1,479 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>E-Fitness Trainer - Client Management</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="trainer-logout.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link rel="stylesheet" href="css/nav.css">
+        <style>
+    /* --- CSS Reset & Root Variables --- */
+    :root {
+      --red-50: #FEF2F2;
+      --red-100: #FEE2E2;
+      --red-200: #FECACA;
+      --red-300: #FCA5A5;
+      --red-500: #EF4444;
+      --red-600: #DC2626;
+      --red-700: #B91C1C;
+      --red-800: #991B1B;
+      --green-600: #16A34A;
+      --green-700: #15803D;
+      --indigo-600: #4F46E5;
+      --indigo-700: #4338CA;
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-300: #D1D5DB;
+      --gray-500: #6B7280;
+      --gray-600: #4B5563;
+      --gray-700: #374151;
+      --gray-800: #1F2937;
+      --gray-900: #111827;
+      --white: #FFFFFF;
+      --black: #000000;
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* --- General Body & Typography --- */
+    body {
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      display: flex;
+      background-color: var(--red-50);
+      color: var(--gray-700);
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* --- Layout --- */
+    .sidebar {
+      width: 256px;
+      background-color: var(--white);
+      border-right: 1px solid var(--gray-200);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+    }
+
+    .main-content {
+      flex: 1;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* --- Components --- */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      transition: opacity 0.3s;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .logo img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow-md);
+    }
+
+    .logo h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--red-700);
+    }
+
+    .main-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background-color: var(--red-50);
+      color: var(--red-600);
+    }
+
+    .nav-link:hover .nav-icon-container {
+      background-color: var(--red-200);
+    }
+
+    .nav-link.active {
+      background-color: var(--red-50);
+      color: var(--red-600);
+    }
+
+    .nav-link.active .nav-icon-container {
+      background-color: var(--red-200);
+    }
+
+    .nav-icon-container {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--red-100);
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-icon-container svg {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--red-600);
+    }
+
+    .btn-logout {
+      margin-top: 2.5rem;
+      background-image: linear-gradient(to right, var(--red-600), var(--red-500));
+      color: var(--white);
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      transform-origin: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-lg);
+      cursor: pointer;
+    }
+
+    .btn-logout:hover {
+      background-image: linear-gradient(to right, var(--red-700), var(--red-600));
+      transform: scale(1.05);
+    }
+
+    .btn-logout .nav-icon-container {
+      background-color: var(--red-500);
+    }
+
+    .btn-logout:hover .nav-icon-container {
+      background-color: var(--red-600);
+    }
+
+    .btn-logout svg {
+      color: var(--white);
+    }
+
+    .header-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: var(--red-800);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .notification-btn {
+      position: relative;
+      color: var(--gray-700);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .notification-btn:hover {
+      color: var(--red-600);
+    }
+
+    .notification-btn svg {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0.5rem;
+      height: 0.5rem;
+      background-color: var(--red-600);
+      border-radius: 50%;
+    }
+
+    .content-card {
+      background-color: var(--white);
+      box-shadow: var(--shadow-md);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+    }
+
+    .content-card-header {
+      margin-bottom: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .search-input {
+      border: 1px solid var(--gray-200);
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--red-300);
+    }
+
+    .btn {
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 500;
+    }
+
+    .btn-indigo {
+      background-color: var(--indigo-600);
+    }
+    .btn-indigo:hover {
+      background-color: var(--indigo-700);
+    }
+
+    .btn-green {
+      background-color: var(--green-600);
+    }
+
+    .btn-green:hover {
+      background-color: var(--green-700);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .data-table thead {
+      background-color: var(--red-100);
+      color: var(--red-800);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 0.75rem 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-100);
+      border-right: 1px solid var(--gray-200);
+    }
+    .data-table th:last-child,
+    .data-table td:last-child {
+      border-right: none;
+    }
+
+
+    .data-table tbody tr:hover {
+      background-color: var(--red-50);
+    }
+
+    .profile-pic-table {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    /* --- Modal Styles --- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      padding: 1rem;
+    }
+
+    .modal-overlay.hidden {
+      display: none;
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      border-radius: 0.75rem;
+      box-shadow: var(--shadow-xl);
+      width: 100%;
+      padding: 1.5rem;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      color: var(--gray-600);
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-close-btn:hover {
+      color: var(--red-600);
+    }
+
+    .modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--red-700);
+      margin-bottom: 1rem;
+    }
+    
+    /* --- Mobile Navigation --- */
+    .menu-toggle-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    .menu-toggle-btn svg {
+        width: 2rem;
+        height: 2rem;
+        color: var(--red-600);
+    }
+
+    .mobile-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .mobile-overlay.is-active {
+        display: block;
+    }
+
+    /* --- Responsive Media Queries --- */
+    @media (max-width: 1024px) {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            transform: translateX(-100%);
+            box-shadow: var(--shadow-lg);
+        }
+        .sidebar.is-open {
+            transform: translateX(0);
+        }
+        .main-content {
+            padding: 1rem;
+            gap: 1rem;
+        }
+        .header {
+            padding: 0 0.5rem;
+        }
+        .header-title {
+            font-size: 1.1rem;
+            line-height: 1.4;
+        }
+        .menu-toggle-btn {
+            display: block;
+        }
+    }
+    @media (max-width: 640px) {
+        .content-card-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        .search-input {
+            max-width: 100%;
+        }
+    }
+
+  </style>
     </head>
-    <body class="flex h-screen bg-red-50">
-        <aside
-            class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+
+    <body>
+        <aside class="sidebar">
             <div>
-                <a href="trainer-dashboard.html" class="block">
-                    <div
-                        class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-                        <img
-                            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-                            alt="Trainer Logo"
-                            class="w-10 h-10 rounded-full object-cover shadow-md" />
-                        <h2 class="text-2xl font-bold text-red-700">E-Fitness
-                            Trainer</h2>
-                    </div>
+                <a href="trainer-dashboard.html" class="logo">
+                    <img
+                        src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+                        alt="Trainer Logo" />
+                    <h2>E-Fitness Trainer</h2>
                 </a>
 
-                <nav class="flex flex-col space-y-2">
-                    <a href="trainer-reg-and-profile.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                <nav class="main-nav">
+                    <a href="trainer-reg-and-profile.html" class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2" d="M5 13l4 4L19 7" />
@@ -41,13 +482,10 @@
                         Profile Management
                     </a>
                     <a href="trainer-Diet-Plan-Management.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                        class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -57,13 +495,10 @@
                         Diet Plan Management
                     </a>
                     <a href="trainer-Workout-Plan-Management.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                        class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -72,14 +507,10 @@
                         </div>
                         Workout Plan Management
                     </a>
-                    <a href="trainer-client-management.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                    <a href="trainer-client-management.html" class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -88,14 +519,10 @@
                         </div>
                         Client Overview & Management
                     </a>
-                    <a href="trainer-host-virtualclass.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                    <a href="trainer-host-virtualclass.html" class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -104,14 +531,10 @@
                         </div>
                         Virtual Classes
                     </a>
-                    <a href="trainer-feedback.html"
-                        class="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 text-red-600 font-medium transition-all duration-300 group">
-                        <div
-                            class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="w-5 h-5 text-red-600"
-                                fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
+                    <a href="trainer-feedback.html" class="nav-link">
+                        <div class="nav-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round"
                                     stroke-linejoin="round"
                                     stroke-width="2"
@@ -123,15 +546,10 @@
                 </nav>
             </div>
 
-            <button
-                id="logoutButton"
-                class="mt-10 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg group">
-                <div
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 group-hover:bg-red-600 transition-colors duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5" fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
+            <button id="logoutButton" class="btn-logout">
+                <div class="nav-icon-container">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             stroke-width="2"
                             d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
@@ -140,6 +558,8 @@
                 Logout
             </button>
         </aside>
+
+        <div id="mobile-overlay" class="mobile-overlay"></div>
         <main
             class="flex-1 p-4 md:p-6 lg:p-8 overflow-auto bg-gradient-to-br from-red-50 via-white to-red-50 flex items-center justify-center">
             <div class="text-center">

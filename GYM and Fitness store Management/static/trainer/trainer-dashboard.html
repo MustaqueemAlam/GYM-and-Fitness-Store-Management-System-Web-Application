@@ -1,111 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- SweetAlert2 CDN for better alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/trainer-dashboard.css">
   </head>
-  <body class="flex h-screen bg-red-50">
-    <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+
+  <body>
+    <aside class="sidebar">
       <div>
-        <a href="trainer-dashboard.html" class="block">
-          <div
-            class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-            <img
-              src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-              alt="Trainer Logo"
-              class="w-10 h-10 rounded-full object-cover shadow-md" />
-            <h2 class="text-2xl font-bold text-red-700">E-Fitness
-              Trainer</h2>
-          </div>
+        <a href="trainer-dashboard.html" class="logo">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Trainer Logo" />
+          <h2>E-Fitness Trainer</h2>
         </a>
 
-        <nav class="flex flex-col space-y-2">
-          <a href="trainer-reg-and-profile.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+        <nav class="main-nav">
+          <a href="trainer-reg-and-profile.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
             </div>
             Profile Management
           </a>
           <a href="trainer-Diet-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Diet Plan Management
           </a>
           <a href="trainer-Workout-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Workout Plan Management
           </a>
-          <a href="trainer-client-management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+          <a href="trainer-client-management.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 8h10M7 12h8m-8 4h6" />
               </svg>
             </div>
             Client Overview & Management
           </a>
-          <a href="trainer-host-virtualclass.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-host-virtualclass.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
               </svg>
             </div>
             Virtual Classes
           </a>
-          <a href="trainer-feedback.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-feedback.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
               </svg>
@@ -115,15 +100,10 @@
         </nav>
       </div>
 
-      <button
-        id="logoutButton"
-        class="mt-10 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg group">
-        <div
-          class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 group-hover:bg-red-600 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5" fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
+      <button id="logoutButton" class="btn-logout">
+        <div class="nav-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
               stroke-width="2"
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
@@ -133,177 +113,141 @@
       </button>
     </aside>
 
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
     <!-- Main Content -->
-    <main
-      class="flex-1 p-8 flex flex-col gap-8 overflow-y-auto bg-gradient-to-r from-red-100 to-red-50">
-      <header
-        class="flex items-center justify-between bg-white p-6 rounded-xl shadow-lg backdrop-blur-sm bg-opacity-90">
-        <h1
-          class="text-3xl font-bold text-gray-800 bg-gradient-to-r from-red-600 to-red-800 bg-clip-text text-transparent">Trainer
-          Dashboard</h1>
-        <div class="flex items-center gap-4">
-          <span class="relative">
-            <!-- Notification Bell Icon -->
-            <svg xmlns="http://www.w3.org/2000/svg"
-              class="h-8 w-8 text-red-600 cursor-pointer" fill="none"
+    <main class="main-content">
+      <header class="header">
+        <button id="menu-toggle" class="menu-toggle-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+        </button>
+        <h1 class="header-title">Trainer Dashboard</h1>
+        <div class="header-actions">
+          <span class="notification-bell">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
                 d="M15 17h5l-1.405-1.405C18.66 14.88 19 13.97 19 13v-2a6 6 0 00-6-6V5a3 3 0 00-6 0v2a6 6 0 00-6 6v2c0 .97.34 1.88.405 2.595L4 17h5m-1-5v2m2-2h-2m-4 0h-2" />
             </svg>
-            <!-- Notification Count Badge -->
-            <span
-              class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+            <span class="notification-badge">
               <span id="unreadNotificationsCount">0</span>
             </span>
           </span>
-          <!-- Placeholder for user profile picture -->
-          <div class="w-10 h-10 bg-gray-300 rounded-full"></div>
+          <div class="profile-pic-placeholder"></div>
         </div>
       </header>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid-container grid-container-main">
         <!-- Trainer Profile Card -->
-        <div
-          class="lg:col-span-1 bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 border-2 border-red-200">
-          <div class="relative">
-            <div
-              class="absolute -inset-0.5 rounded-full blur opacity-30"></div>
-            <img id="trainerProfilePic"
-              src="https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer"
-              alt="Trainer Profile"
-              class="relative w-32 h-32 rounded-full object-cover mb-6 shadow-lg ring-4 ring-white"
-              onerror="this.onerror=null;this.src='https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer';" />
-          </div>
-          <h3 class="text-2xl font-semibold text-gray-800 mb-4">Trainer
-            Profile</h3>
-          <p class="text-xl font-bold text-red-700 mb-2"
-            id="trainerName">Loading...</p>
-          <p
-            class="text-sm font-medium text-gray-600 px-4 py-2 bg-gray-50 rounded-full"
-            id="trainerId">ID: Loading...</p>
+        <div class="card">
+          <img id="trainerProfilePic"
+            src="https://placehold.co/128x128/FF0000/FFFFFF?text=Trainer"
+            alt="Trainer Profile" class="trainer-profile-pic"
+            onerror="this.onerror=null;this.src='https://placehold.co/128x128/FF0000/FFFFFF?text=Trainer';" />
+          <h3>Trainer Profile</h3>
+          <p class="trainer-name" id="trainerName">Loading...</p>
+          <p class="trainer-id" id="trainerId">ID: Loading...</p>
         </div>
 
         <!-- KPI Cards Grid -->
-        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="kpi-grid">
           <!-- Total Diet Plans Created Card -->
-          <div
-            class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 border-2 border-red-200">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+          <div class="card kpi-card">
+            <div class="kpi-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2"
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
-            <h4 class="text-lg font-semibold text-gray-700 mb-3">Total Diet
-              Plans Created</h4>
-            <p class="text-4xl font-bold text-red-600" id="totalDietPlans">0</p>
+            <h4>Total Diet Plans Created</h4>
+            <p id="totalDietPlans">0</p>
           </div>
 
           <!-- Total Workout Plans Created Card -->
-          <div
-            class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 border-2 border-red-200">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+          <div class="card kpi-card">
+            <div class="kpi-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
             </div>
-            <h4 class="text-lg font-semibold text-gray-700 mb-3">Total Workout
-              Plans Created</h4>
-            <p class="text-4xl font-bold text-red-600"
-              id="totalWorkoutPlans">0</p>
+            <h4>Total Workout Plans Created</h4>
+            <p id="totalWorkoutPlans">0</p>
           </div>
 
           <!-- Total Virtual Classes Scheduled Card -->
-          <div
-            class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 border-2 border-red-200">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+          <div class="card kpi-card">
+            <div class="kpi-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
               </svg>
             </div>
-            <h4 class="text-lg font-semibold text-gray-700 mb-3">Total Virtual
-              Classes Scheduled</h4>
-            <p class="text-4xl font-bold text-red-600"
-              id="totalVirtualClasses">0</p>
+            <h4>Total Virtual Classes Scheduled</h4>
+            <p id="totalVirtualClasses">0</p>
           </div>
 
           <!-- Total Clients Managed Card -->
-          <div
-            class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 hover:scale-105 border-2 border-red-200">
-            <div
-              class="w-16 h-16 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
+          <div class="card kpi-card">
+            <div class="kpi-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2"
                   d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
             </div>
-            <h4 class="text-lg font-semibold text-gray-700 mb-3">Total Clients
-              Managed</h4>
-            <p class="text-4xl font-bold text-red-600"
-              id="totalClientsManaged">0</p>
+            <h4>Total Clients Managed</h4>
+            <p id="totalClientsManaged">0</p>
           </div>
         </div>
       </div>
 
       <!-- New container for Chart and Video side-by-side -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class="grid-container chart-video-grid">
         <!-- Average Feedback Rating Chart Card (Left) -->
-        <div
-          class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 border-2 border-red-200">
-          <div class="flex items-center gap-3 mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="card">
+          <div class="chart-video-header">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
                 d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
-            <h3 class="text-2xl font-semibold text-gray-800">Average Feedback
-              Rating</h3>
+            <h3>Average Feedback Rating</h3>
           </div>
-          <div class="w-full max-w-md h-64 relative">
+          <div class="chart-container">
             <canvas id="feedbackRatingChart"></canvas>
-            <p class="text-center text-lg font-medium text-gray-700 mt-4"
-              id="feedbackRatingText">Rating: N/A</p>
+            <p class="chart-rating-text" id="feedbackRatingText">Rating: N/A</p>
           </div>
         </div>
 
         <!-- Trainer Intro Video Card (Right) -->
-        <div
-          class="bg-gradient-to-br from-white to-red-50 rounded-xl p-10 flex flex-col items-center justify-center transform transition-all duration-300 border-2 border-red-200">
-          <div class="flex items-center gap-3 mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-red-600"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="card">
+          <div class="chart-video-header">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
                 d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
             </svg>
-            <h3 class="text-2xl font-semibold text-gray-800">Trainer
-              Introduction Video</h3>
+            <h3>Trainer Introduction Video</h3>
           </div>
-          <div id="introVideoContainer"
-            class="w-full h-64 mb-6 rounded-xl overflow-hidden bg-gray-50 flex items-center justify-center shadow-inner">
-            <!-- Video or iframe will be dynamically inserted here by JavaScript -->
-            <p id="noVideoMessage"
-              class="text-gray-500 flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
-                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div id="introVideoContainer" class="video-container">
+            <p id="noVideoMessage" class="no-video-message">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor"
+                style="width: 1.5rem; height: 1.5rem;">
                 <path stroke-linecap="round" stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
@@ -311,10 +255,8 @@
               No introduction video uploaded yet
             </p>
           </div>
-          <!-- Enhanced button with icon -->
-          <button id="changeVideoUrlButton"
-            class="cursor-pointer bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+          <button id="changeVideoUrlButton" class="btn-change-video">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2"
@@ -328,251 +270,244 @@
     </main>
     <script src="trainer-logout.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', async () => {
+    // --- Mobile Navigation Toggle ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const menuButton = document.getElementById('menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+
+        function closeMenu() {
+            sidebar.classList.remove('is-open');
+            overlay.classList.remove('is-active');
+        }
+
+        if (menuButton && sidebar && overlay) {
+            menuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('is-open');
+                overlay.classList.toggle('is-active');
+            });
+
+            overlay.addEventListener('click', closeMenu);
+        }
+
+        // --- Original Dashboard Logic ---
         let trainerId = null;
         let trainerName = null;
 
         // Function to fetch session data
         async function fetchSessionData() {
-          try {
-            const response = await fetch('/api/user-session');
-            if (!response.ok) {
-              if (response.status === 401) {
-                console.warn('No active session, redirecting to login.');
-                window.location.href = '../login.html'; // Redirect to login if no session
+            try {
+                const response = await fetch('/api/user-session');
+                if (!response.ok) {
+                    if (response.status === 401) {
+                        console.warn('No active session, redirecting to login.');
+                        window.location.href = '../login.html';
+                        return null;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.userType === 'trainer') {
+                    trainerId = data.userId;
+                    trainerName = data.userName;
+                    document.getElementById('trainerId').textContent = `ID: ${trainerId}`;
+                    document.getElementById('trainerName').textContent = trainerName;
+                    return {
+                        trainerId,
+                        trainerName
+                    };
+                } else {
+                    console.warn('User is not a trainer, redirecting to login.');
+                    window.location.href = '../login.html';
+                    return null;
+                }
+            } catch (error) {
+                console.error('Error fetching session data:', error);
+                window.location.href = '../login.html';
                 return null;
-              }
-              throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
-            if (data.userType === 'trainer') {
-              trainerId = data.userId;
-              trainerName = data.userName;
-              document.getElementById('trainerId').textContent = `ID: ${trainerId}`;
-              document.getElementById('trainerName').textContent = trainerName;
-              return { trainerId, trainerName };
-            } else {
-              console.warn('User is not a trainer, redirecting to login.');
-              window.location.href = '../login.html'; // Redirect if not a trainer
-              return null;
-            }
-          } catch (error) {
-            console.error('Error fetching session data:', error);
-            // Consider redirecting to an error page or login if session fetching fails critically
-            window.location.href = '../login.html';
-            return null;
-          }
         }
 
         // Function to fetch KPI data and trainer media
         async function fetchTrainerData(id) {
-          try {
-            const response = await fetch(`/api/trainer-dashboard-kpis?trainerId=${id}`);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
+            try {
+                const response = await fetch(`/api/trainer-dashboard-kpis?trainerId=${id}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching trainer data:', error);
+                return null;
             }
-            const data = await response.json();
-            return data;
-          } catch (error) {
-            console.error('Error fetching trainer data:', error);
-            return null;
-          }
         }
 
         // Function to render the feedback chart
         function renderFeedbackChart(rating) {
-          const ctx = document.getElementById('feedbackRatingChart').getContext('2d');
-          // Destroy existing chart instance if it exists to prevent re-rendering issues
-          if (window.feedbackChartInstance) {
-            window.feedbackChartInstance.destroy();
-          }
+            const ctx = document.getElementById('feedbackRatingChart').getContext('2d');
+            if (window.feedbackChartInstance) {
+                window.feedbackChartInstance.destroy();
+            }
 
-          const defaultRating = 3; // Default rating if null
-          const displayRating = rating !== null ? parseFloat(rating).toFixed(1) : defaultRating.toFixed(1);
+            const defaultRating = 3;
+            const displayRating = rating !== null ? parseFloat(rating).toFixed(1) : defaultRating.toFixed(1);
 
-          // Update the text display
-          document.getElementById('feedbackRatingText').textContent = `Rating: ${displayRating}/5`;
+            document.getElementById('feedbackRatingText').textContent = `Rating: ${displayRating}/5`;
 
-          window.feedbackChartInstance = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-              labels: ['Average Rating', 'Remaining'],
-              datasets: [{
-                data: [displayRating, 5 - displayRating],
-                backgroundColor: ['#EF4444', '#FEE2E2'], // Red-500, Red-200
-                borderColor: ['#EF4444', '#FEE2E2'],
-                borderWidth: 1
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              cutout: '70%', // Make it a doughnut chart
-              plugins: {
-                legend: {
-                  display: false // Hide legend
+            window.feedbackChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Average Rating', 'Remaining'],
+                    datasets: [{
+                        data: [displayRating, 5 - displayRating],
+                        backgroundColor: ['#EF4444', '#FEE2E2'],
+                        borderColor: ['#EF4444', '#FEE2E2'],
+                        borderWidth: 1
+                    }]
                 },
-                tooltip: {
-                  enabled: false // Hide tooltips
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    }
                 }
-              }
-            }
-          });
+            });
         }
 
 
-        // Function to update the intro video URL (for YouTube links)
+        // Function to update the intro video URL
         async function updateIntroVideoURL(url) {
-          try {
-            const response = await fetch('/api/trainer/update-intro-video-url', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({ videoUrl: url })
-            });
+            try {
+                const response = await fetch('/api/trainer/update-intro-video-url', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        videoUrl: url
+                    })
+                });
 
-            const result = await response.json();
+                const result = await response.json();
 
-            if (response.ok) {
-              Swal.fire({
-                icon: 'success',
-                title: 'Video Updated!',
-                text: result.message || 'Introduction video URL updated successfully.',
-                showConfirmButton: false,
-                timer: 1500
-              });
-              renderIntroVideo(result.videoUrl); // Re-render with the new URL
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'Update Failed!',
-                text: result.message || 'Failed to update video URL. Please try again.',
-              });
-              console.error('Video URL update failed:', response.status, result.message);
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Video Updated!',
+                        text: result.message || 'Introduction video URL updated successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    renderIntroVideo(result.videoUrl);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed!',
+                        text: result.message || 'Failed to update video URL. Please try again.',
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: 'An error occurred during video URL update. Please try again.',
+                });
             }
-          } catch (error) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: 'An error occurred during video URL update. Please try again.',
-            });
-            console.error('Error during video URL update:', error);
-          }
         }
 
-        // Function to dynamically render the intro video (video or iframe)
+        // Function to dynamically render the intro video
         function renderIntroVideo(videoUrl) {
-          const introVideoContainer = document.getElementById('introVideoContainer');
-          const noVideoMessage = document.getElementById('noVideoMessage');
+            const introVideoContainer = document.getElementById('introVideoContainer');
+            const noVideoMessage = document.getElementById('noVideoMessage');
+            introVideoContainer.innerHTML = ''; // Clear previous content
 
-          // Clear previous content
-          introVideoContainer.innerHTML = '';
+            if (videoUrl) {
+                const youtubeMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})/);
 
-          if (videoUrl) {
-            let isYouTube = false;
-            // Regex to check for YouTube URLs (watch, embed, short links)
-            const youtubeMatch = videoUrl.match(/(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})(?:\S+)?/);
-
-            if (youtubeMatch && youtubeMatch[1]) {
-              isYouTube = true;
-              videoUrl = `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&controls=1`; // YouTube embed URL
-            }
-
-            if (isYouTube) {
-              const iframe = document.createElement('iframe');
-              iframe.id = 'introVideoPlayer';
-              iframe.classList.add('w-full', 'h-full', 'rounded-lg');
-              iframe.src = videoUrl;
-              iframe.setAttribute('frameborder', '0');
-              iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-              iframe.setAttribute('allowfullscreen', '');
-              introVideoContainer.appendChild(iframe);
+                if (youtubeMatch && youtubeMatch[1]) {
+                    const embedUrl = `https://www.youtube.com/embed/${youtubeMatch[1]}?autoplay=0&controls=1`;
+                    const iframe = document.createElement('iframe');
+                    iframe.src = embedUrl;
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                    iframe.setAttribute('allowfullscreen', '');
+                    introVideoContainer.appendChild(iframe);
+                } else {
+                    const video = document.createElement('video');
+                    video.controls = true;
+                    video.src = videoUrl;
+                    introVideoContainer.appendChild(video);
+                }
             } else {
-              // For direct video file URLs (e.g., from your server)
-              const video = document.createElement('video');
-              video.id = 'introVideoPlayer';
-              video.controls = true;
-              video.classList.add('w-full', 'h-full', 'object-cover', 'rounded-lg');
-              video.src = videoUrl;
-              introVideoContainer.appendChild(video);
+                introVideoContainer.appendChild(noVideoMessage);
             }
-            noVideoMessage.classList.add('hidden');
-          } else {
-            noVideoMessage.classList.remove('hidden');
-            introVideoContainer.appendChild(noVideoMessage); // Ensure message is re-added if removed
-          }
         }
 
 
         // Main execution flow
-        const session = await fetchSessionData();
-        if (session) {
-          const trainerData = await fetchTrainerData(session.trainerId);
-          if (trainerData) {
-            // Populate KPI cards
-            document.getElementById('totalDietPlans').textContent = trainerData.TotalDietPlansCreated || 0;
-            document.getElementById('totalWorkoutPlans').textContent = trainerData.TotalWorkoutPlansCreated || 0;
-            document.getElementById('totalVirtualClasses').textContent = trainerData.TotalVirtualClassesScheduled || 0;
-            document.getElementById('totalClientsManaged').textContent = trainerData.TotalClientsManaged || 0;
-            document.getElementById('unreadNotificationsCount').textContent = trainerData.UnreadNotificationsTrainer || 0;
+        (async () => {
+            const session = await fetchSessionData();
+            if (session) {
+                const trainerData = await fetchTrainerData(session.trainerId);
+                if (trainerData) {
+                    document.getElementById('totalDietPlans').textContent = trainerData.TotalDietPlansCreated || 0;
+                    document.getElementById('totalWorkoutPlans').textContent = trainerData.TotalWorkoutPlansCreated || 0;
+                    document.getElementById('totalVirtualClasses').textContent = trainerData.TotalVirtualClassesScheduled || 0;
+                    document.getElementById('totalClientsManaged').textContent = trainerData.TotalClientsManaged || 0;
+                    document.getElementById('unreadNotificationsCount').textContent = trainerData.UnreadNotificationsTrainer || 0;
 
-            // Render feedback chart
-            renderFeedbackChart(trainerData.AverageFeedbackRating);
+                    renderFeedbackChart(trainerData.AverageFeedbackRating);
 
-            // Display Profile Picture
-            const trainerProfilePic = document.getElementById('trainerProfilePic');
-            if (trainerData.ProfilePic) {
-              // The backend sends ProfilePic as base64 string
-              trainerProfilePic.src = `data:image/jpeg;base64,${trainerData.ProfilePic}`;
+                    const trainerProfilePic = document.getElementById('trainerProfilePic');
+                    if (trainerData.ProfilePic) {
+                        trainerProfilePic.src = `data:image/jpeg;base64,${trainerData.ProfilePic}`;
+                    }
+                    
+                    renderIntroVideo(trainerData.IntroVideoURL);
+
+                } else {
+                    renderFeedbackChart(null);
+                    renderIntroVideo(null);
+                }
             } else {
-              trainerProfilePic.src = "https://placehold.co/100x100/FF0000/FFFFFF?text=Trainer"; // Default placeholder
+                renderFeedbackChart(null);
+                renderIntroVideo(null);
             }
 
-            // Display Intro Video
-            renderIntroVideo(trainerData.IntroVideoURL);
+            document.getElementById('logoutButton').addEventListener('click', handleLogout);
 
-          } else {
-            // If trainer data fetch fails, still render chart with default
-            renderFeedbackChart(null);
-            renderIntroVideo(null); // Also render video section as empty
-          }
-        } else {
-          // If session is null, redirection has already happened or will happen.
-          renderFeedbackChart(null);
-          renderIntroVideo(null); // Also render video section as empty
-        }
+            document.getElementById('changeVideoUrlButton').addEventListener('click', async () => {
+                const {
+                    value: youtubeUrl
+                } = await Swal.fire({
+                    title: 'Enter YouTube Video URL',
+                    input: 'text',
+                    inputLabel: 'YouTube URL',
+                    inputPlaceholder: 'e.g., https://www.youtube.com/watch?v=...',
+                    showCancelButton: true,
+                    confirmButtonText: 'Update Video',
+                    inputValidator: (value) => {
+                        if (!value) return 'Please enter a URL!';
+                        const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})/;
+                        if (!youtubeRegex.test(value)) return 'Please enter a valid YouTube URL!';
+                        return null;
+                    }
+                });
 
-        // Attach event listeners
-        document.getElementById('logoutButton').addEventListener('click', handleLogout);
-
-        // Event listener for the "Change Video URL" button
-        document.getElementById('changeVideoUrlButton').addEventListener('click', async () => {
-          const { value: youtubeUrl } = await Swal.fire({
-            title: 'Enter YouTube Video URL',
-            input: 'text',
-            inputLabel: 'YouTube URL',
-            inputPlaceholder: 'e.g., https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-            showCancelButton: true,
-            confirmButtonText: 'Update Video',
-            inputValidator: (value) => {
-              if (!value) {
-                return 'Please enter a URL!';
-              }
-              // Basic YouTube URL validation
-              const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:m\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=|embed\/|v\/|)([a-zA-Z0-9_-]{11})(?:\S+)?/;
-              if (!youtubeRegex.test(value)) {
-                return 'Please enter a valid YouTube URL!';
-              }
-              return null; // Valid
-            }
-          });
-
-          if (youtubeUrl) {
-            await updateIntroVideoURL(youtubeUrl);
-          }
-        });
-      });
-    </script>
+                if (youtubeUrl) {
+                    await updateIntroVideoURL(youtubeUrl);
+                }
+            });
+        })();
+    });
+  </script>
   </body>
+
 </html>

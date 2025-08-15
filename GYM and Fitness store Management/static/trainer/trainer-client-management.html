@@ -1,124 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>E-Fitness Trainer - Workout Plan & Exercise Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-Fitness Trainer - Client Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
-    <style>
-      /* Custom CSS for table borders and hover effects */
-      #attendanceTable td, #attendanceTable th {
-        border-right: 1px solid #e5e7eb; /* Light gray border for columns */
-      }
-      #attendanceTable tr:last-child td {
-        border-bottom: 1px solid #e5e7eb; /* Bottom border for the last row */
-      }
-      #attendanceTable tr:hover {
-        background-color: #fef2f2; /* Light red background on hover */
-      }
-    </style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/trainer-client-management.css">
   </head>
-  <body class="flex h-screen bg-red-50">
-    <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+
+  <body>
+    <aside class="sidebar">
       <div>
-        <a href="trainer-dashboard.html" class="block">
-          <div
-            class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-            <img
-              src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-              alt="Trainer Logo"
-              class="w-10 h-10 rounded-full object-cover shadow-md" />
-            <h2 class="text-2xl font-bold text-red-700">E-Fitness
-              Trainer</h2>
-          </div>
+        <a href="trainer-dashboard.html" class="logo">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Trainer Logo" />
+          <h2>E-Fitness Trainer</h2>
         </a>
 
-        <nav class="flex flex-col space-y-2">
-          <a href="trainer-reg-and-profile.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+        <nav class="main-nav">
+          <a href="trainer-reg-and-profile.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
             </div>
             Profile Management
           </a>
           <a href="trainer-Diet-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Diet Plan Management
           </a>
           <a href="trainer-Workout-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Workout Plan Management
           </a>
-          <a href="trainer-client-management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+          <a href="trainer-client-management.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 8h10M7 12h8m-8 4h6" />
               </svg>
             </div>
             Client Overview & Management
           </a>
-          <a href="trainer-host-virtualclass.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-host-virtualclass.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
               </svg>
             </div>
             Virtual Classes
           </a>
-          <a href="trainer-feedback.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-feedback.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
               </svg>
@@ -128,15 +100,10 @@
         </nav>
       </div>
 
-      <button
-        id="logoutButton"
-        class="mt-10 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg group">
-        <div
-          class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 group-hover:bg-red-600 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5" fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
+      <button id="logoutButton" class="btn-logout">
+        <div class="nav-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
               stroke-width="2"
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
@@ -146,24 +113,13 @@
       </button>
     </aside>
 
+    <div id="mobile-overlay" class="mobile-overlay"></div>
+
     <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
       <header class="flex justify-between items-center">
         <h1 class="text-3xl font-bold text-red-800">Client
           attendance records, progress and personalized goal management</h1>
         <div class="flex items-center gap-4">
-          <button id="notifBtn"
-            onclick="window.location.href='trainer-noti.html';"
-            class="relative text-gray-700 hover:text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
-            </svg>
-            <span
-              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-          </button>
         </div>
       </header>
 

@@ -7,104 +7,114 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="trainer-logout.js"></script>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/trainer-reg-and-profile.css">
+    <style>
+      .header-title {
+        color: #7F1D1D;  /* dark red color */
+        font-size: 2.25rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+      
+      .profile-pic-label {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .form-grid {
+        margin-top: 1rem;
+      }
+
+      .form-input,
+      .form-select,
+      .form-textarea {
+        margin-top: 0.5rem;
+      }
+
+      .form-grid-section {
+        margin-top: 1rem;
+      }
+    </style>
   </head>
   <body class="flex h-screen bg-red-50">
-    <aside
-      class="w-64 bg-white border-r border-gray-200 p-5 flex flex-col justify-between">
+    <aside class="sidebar">
       <div>
-        <a href="trainer-dashboard.html" class="block">
-          <div
-            class="flex items-center gap-3 mb-8 hover:opacity-80 transition">
-            <img
-              src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
-              alt="Trainer Logo"
-              class="w-10 h-10 rounded-full object-cover shadow-md" />
-            <h2 class="text-2xl font-bold text-red-700">E-Fitness
-              Trainer</h2>
-          </div>
+        <a href="trainer-dashboard.html" class="logo">
+          <img
+            src="https://cdn.pixabay.com/photo/2014/03/25/16/25/gym-297059_640.png"
+            alt="Trainer Logo" />
+          <h2>E-Fitness Trainer</h2>
         </a>
 
-        <nav class="flex flex-col space-y-2">
-          <a href="trainer-reg-and-profile.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+        <nav class="main-nav">
+          <a href="trainer-reg-and-profile.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2" d="M5 13l4 4L19 7" />
               </svg>
             </div>
             Profile Management
           </a>
           <a href="trainer-Diet-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Diet Plan Management
           </a>
           <a href="trainer-Workout-Plan-Management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M9 17v-2a4 4 0 014-4h4" />
+            class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 17v-2a4 4 0 014-4h4" />
               </svg>
             </div>
             Workout Plan Management
           </a>
-          <a href="trainer-client-management.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                  stroke-width="2" d="M7 8h10M7 12h8m-8 4h6" />
+          <a href="trainer-client-management.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 8h10M7 12h8m-8 4h6" />
               </svg>
             </div>
             Client Overview & Management
           </a>
-          <a href="trainer-host-virtualclass.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-host-virtualclass.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M15 10l4.553 2.276a1 1 0 010 1.448L15 16m0-6v6m-6-6h.01M6 10h.01" />
               </svg>
             </div>
             Virtual Classes
           </a>
-          <a href="trainer-feedback.html"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-600 font-medium transition-all duration-300 group">
-            <div
-              class="w-8 h-8 flex items-center justify-center rounded-full bg-red-100 group-hover:bg-red-200 transition-colors duration-300">
-              <svg xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5 text-red-600"
-                fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round"
+          <a href="trainer-feedback.html" class="nav-link">
+            <div class="nav-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round"
+                  stroke-linejoin="round"
                   stroke-width="2"
                   d="M11 17h2M12 12v3m-1 0h2m-6 4h8a2 2 0 002-2v-6a2 2 0 00-2-2h-8a2 2 0 00-2 2v6a2 2 0 002 2z" />
               </svg>
@@ -114,15 +124,10 @@
         </nav>
       </div>
 
-      <button
-        id="logoutButton"
-        class="mt-10 bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg group">
-        <div
-          class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 group-hover:bg-red-600 transition-colors duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5" fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor">
+      <button id="logoutButton" class="btn-logout">
+        <div class="nav-icon-container">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round"
               stroke-width="2"
               d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1" />
@@ -133,162 +138,144 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 flex flex-col gap-6 overflow-y-auto">
-      <!-- Header -->
-      <header class="flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-red-800">Welcome, Trainer</h1>
-        <div class="flex items-center gap-4">
-          <button id="notifBtn"
-            onclick="window.location.href='trainer-noti.html';"
-            class="relative text-gray-700 hover:text-red-600">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-              viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 17h5l-1.405-1.405M19 13v-3a7 7 0 10-14 0v3l-1.405 1.405M13 21h-2" />
-            </svg>
-            <span
-              class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-600 rounded-full"></span>
-          </button>
+    <main class="main-content">
+      <header class="header">
+        <h1 class="header-title">Trainer Profile Form</h1>
+        <div class="header-actions">
         </div>
       </header>
 
       <section id="profile-management">
-        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Trainer
-          Profile Form</h2>
 
-        <form id="profileForm"
-          class="max-w-6xl mx-auto p-8 bg-white border-2 border-red-500 rounded-2xl shadow-lg space-y-8"
+        <form id="profileForm" class="profile-form"
           enctype="multipart/form-data">
-          <!-- Profile Picture -->
-          <div class="flex justify-center mb-6">
-            <label for="ProfilePic" class="relative group cursor-pointer">
-              <div
-                class="w-32 h-32 rounded-full border-4 border-red-400 overflow-hidden shadow-md">
+
+          <div class="profile-pic-container">
+            <label for="ProfilePic"
+              style="position: relative; cursor: pointer;">
+              <div class="profile-pic-wrapper">
                 <img id="profilePicPreview"
                   src="https://via.placeholder.com/150" alt="Profile Preview"
-                  class="object-cover w-full h-full" />
+                  class="profile-pic-preview" />
               </div>
               <input type="file" id="ProfilePic" name="ProfilePic"
                 class="hidden" accept="image/*"
                 onchange="previewImage(event)" />
-              <div
-                class="mt-2 text-sm text-red-600 font-semibold underline text-center">Upload
-                Profile Picture</div>
+              <div class="upload-prompt">Upload Profile Picture</div>
             </label>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label class="block font-semibold">Full Name</label>
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Full Name</label>
               <input id="FullName" name="FullName" type="text"
-                class="w-full p-3 border rounded-md" required>
+                class="form-input" required
+                placeholder="Enter your full name"
+                title="Your full name">
             </div>
-            <div>
-              <label class="block font-semibold">Email</label>
+            <div class="form-group">
+              <label>Email</label>
               <input id="Email" name="Email" type="email" readonly
-                class="w-full p-3 border rounded-md bg-gray-100">
+                class="form-input form-input-readonly"
+                title="Your email address"
+                placeholder="Your email address">
             </div>
-            <div>
-              <label class="block font-semibold">Phone</label>
-              <input id="Phone" name="Phone" type="text"
-                class="w-full p-3 border rounded-md">
+            <div class="form-group">
+              <label>Phone</label>
+              <input id="Phone" name="Phone" type="text" class="form-input"
+                     title="Your phone number" placeholder="Enter your phone number">
             </div>
-            <div>
-              <label class="block font-semibold">Gender</label>
-              <select id="Gender" name="Gender"
-                class="w-full p-3 border rounded-md">
-                <option value>Select</option>
+            <div class="form-group">
+              <label>Gender</label>
+              <select id="Gender" name="Gender" class="form-select" 
+                     title="Select your gender">
+                <option value>Select your gender</option>
                 <option>Male</option>
                 <option>Female</option>
                 <option>Other</option>
               </select>
             </div>
-            <div>
-              <label class="block font-semibold">Date of Birth</label>
-              <input id="DOB" name="DOB" type="date"
-                class="w-full p-3 border rounded-md">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input id="DOB" name="DOB" type="date" class="form-input">
             </div>
-            <div>
-              <label class="block font-semibold">Date Joined</label>
+            <div class="form-group">
+              <label>Date Joined</label>
               <input id="DateJoined" name="DateJoined" type="text" readonly
-                class="w-full p-3 border rounded-md bg-gray-100">
+                class="form-input form-input-readonly">
             </div>
-            <div class="md:col-span-2">
-              <label class="block font-semibold">Address</label>
+            <div class="md-col-span-2 form-group">
+              <label>Address</label>
               <textarea id="Address" name="Address" rows="2"
-                class="w-full p-3 border rounded-md"></textarea>
+                class="form-textarea"></textarea>
             </div>
-            <div>
-              <label class="block font-semibold">City</label>
-              <input id="City" name="City" type="text"
-                class="w-full p-3 border rounded-md">
+            <div class="form-group">
+              <label>City</label>
+              <input id="City" name="City" type="text" class="form-input">
             </div>
-            <div>
-              <label class="block font-semibold">Country</label>
-              <input id="Country" name="Country" type="text"
-                class="w-full p-3 border rounded-md">
+            <div class="form-group">
+              <label>Country</label>
+              <input id="Country" name="Country" type="text" class="form-input">
             </div>
-            <div class="md:col-span-2">
-              <label class="block font-semibold">Intro Video URL</label>
+            <div class="md-col-span-2 form-group">
+              <label>Intro Video URL</label>
               <input id="IntroVideoURL" name="IntroVideoURL" type="url"
-                class="w-full p-3 border rounded-md">
+                class="form-input">
             </div>
-            <div class="md:col-span-2">
-              <label class="block font-semibold">Qualifications</label>
+            <div class="md-col-span-2 form-group">
+              <label>Qualifications</label>
               <textarea id="Qualifications" name="Qualifications" rows="2"
-                class="w-full p-3 border rounded-md"></textarea>
+                class="form-textarea"></textarea>
             </div>
-            <div class="md:col-span-2">
-              <label class="block font-semibold">Expertise</label>
+            <div class="md-col-span-2 form-group">
+              <label>Expertise</label>
               <textarea id="Expertise" name="Expertise" rows="2"
-                class="w-full p-3 border rounded-md"></textarea>
+                class="form-textarea"></textarea>
             </div>
           </div>
 
-          <h3 class="text-xl font-bold mt-6">Certification Details</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            <div>
-              <label class="block font-semibold">Certification Title</label>
-              <input id="CertTitle" name="CertTitle" type="text"
-                class="w-full p-3 border rounded-md">
-            </div>
-            <div>
-              <label class="block font-semibold">Cert Issuer</label>
-              <input id="CertIssuer" name="CertIssuer" type="text"
-                class="w-full p-3 border rounded-md">
-            </div>
-            <div>
-              <label class="block font-semibold">Cert Year</label>
-              <input id="CertYear" name="CertYear" type="number" min="1900"
-                max="2099" class="w-full p-3 border rounded-md">
-            </div>
-            <div>
-              <label class="block font-semibold">Cert ID</label>
-              <input id="CertID" name="CertID" type="text"
-                class="w-full p-3 border rounded-md">
-            </div>
-            <div class="md:col-span-2">
-              <label class="block font-semibold">Certificate File</label>
-              <input id="CertFile" name="CertFile" type="file"
-                class="w-full p-3 border rounded-md">
-              <a id="certDownloadLink" href="#" download="Certificate.pdf"
-                class="text-blue-600 underline mt-2 hidden">Download Existing
-                Certificate</a>
+          <div>
+            <h3 class="form-subtitle">Certification Details</h3>
+            <div class="form-grid form-grid-section">
+              <div class="form-group">
+                <label>Certification Title</label>
+                <input id="CertTitle" name="CertTitle" type="text"
+                  class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Cert Issuer</label>
+                <input id="CertIssuer" name="CertIssuer" type="text"
+                  class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Cert Year</label>
+                <input id="CertYear" name="CertYear" type="number" min="1900"
+                  max="2099" class="form-input">
+              </div>
+              <div class="form-group">
+                <label>Cert ID</label>
+                <input id="CertID" name="CertID" type="text" class="form-input">
+              </div>
+              <div class="md-col-span-2 form-group">
+                <label>Certificate File</label>
+                <input id="CertFile" name="CertFile" type="file"
+                  class="form-input">
+                <a id="certDownloadLink" href="#" download="Certificate.pdf"
+                  class="download-link hidden">Download Existing Certificate</a>
+              </div>
             </div>
           </div>
 
-          <div class="text-center pt-6">
-            <button type="submit"
-              class="bg-red-600 text-white px-8 py-3 rounded-md hover:bg-red-700">Update
-              Profile</button>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Update Profile</button>
           </div>
         </form>
 
-        <div id="message" class="text-red-600 mt-4 text-center"></div>
+        <div id="message" class="message-area"></div>
       </section>
+    </main>
 
-      <script>
+    <script>
   fetch('/trainer/profile', { credentials: 'include' })
     .then(res => res.json())
     .then(data => {
@@ -373,10 +360,8 @@
       reader.readAsDataURL(file);
     }
   }
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</script>
-
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    </body>
-  </html>
+  </body>
+</html>
