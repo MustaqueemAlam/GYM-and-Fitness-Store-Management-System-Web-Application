@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="client-navbar-toggle.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet" />
@@ -657,35 +658,6 @@
     </main>
 
     <script src="client-logout.js"></script>
-    <script>
-      // Dropdown functionality
-      function toggleDropdown(dropdownId) {
-        const dropdown = document.getElementById(dropdownId);
-        const allDropdowns = document.querySelectorAll('.nav-group > div[id$="Dropdown"]');
-        const currentArrow = dropdown.previousElementSibling.querySelector('svg:last-child');
-        const allArrows = document.querySelectorAll('.nav-group > div > svg:last-child');
-        
-        // Close all other dropdowns
-        allDropdowns.forEach(d => {
-          if (d.id !== dropdownId && !d.classList.contains('hidden')) {
-            d.classList.add('hidden');
-            // Reset other arrows
-            const arrow = d.previousElementSibling.querySelector('svg:last-child');
-            arrow.style.transform = 'rotate(0deg)';
-          }
-        });
-
-        // Toggle current dropdown
-        dropdown.classList.toggle('hidden');
-        
-        // Rotate arrow
-        if (dropdown.classList.contains('hidden')) {
-          currentArrow.style.transform = 'rotate(0deg)';
-        } else {
-          currentArrow.style.transform = 'rotate(180deg)';
-        }
-      }
-    </script>
     <script>
       // Function to safely format a number, returning a fallback if not a number
       function formatNumber(value, decimals, suffix = "") {

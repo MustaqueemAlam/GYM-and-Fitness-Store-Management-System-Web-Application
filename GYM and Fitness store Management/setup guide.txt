@@ -1,0 +1,21 @@
+1. a .env file should be setup along with the folling setup, to run the project:
+
+PORT=
+FRONTEND_PORT=
+SESSION_SECRET=your-strong-secret-key
+
+# MySQL config
+DB_HOST=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=gym
+
+
+
+
+
+2. install from terminal: 
+
+npm init -y
+npm install express mysql2 bcrypt multer path express-session cors dayjs
+npm install dotenv

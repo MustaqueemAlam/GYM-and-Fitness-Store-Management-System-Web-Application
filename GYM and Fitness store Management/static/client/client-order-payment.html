@@ -7,6 +7,7 @@
     <title>Client Dashboard - E-Fitness</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="client-navbar-toggle.js"></script>
     <style>
         /* Basic Modal Styles */
         .modal {
@@ -518,7 +519,7 @@
                                 <td class="py-3 px-4 text-sm text-gray-700">${formatDate(
                                   order.OrderDate
                                 )}</td>
-                                <td class="py-3 px-4 text-sm text-gray-700">$${parseFloat(
+                                <td class="py-3 px-4 text-sm text-gray-700">BDT${parseFloat(
                                   order.TotalAmount
                                 ).toFixed(2)}</td>
                                 <td class="py-3 px-4 text-sm text-gray-700">
@@ -605,13 +606,13 @@
                                 <td class="py-2 px-3 text-sm text-gray-700">${
                                   item.Brand || "N/A"
                                 }</td>
-                                <td class="py-2 px-3 text-sm text-gray-700">$${parseFloat(
+                                <td class="py-2 px-3 text-sm text-gray-700">BDT${parseFloat(
                                   item.UnitPrice
                                 ).toFixed(2)}</td>
                                 <td class="py-2 px-3 text-sm text-gray-700">${
                                   item.Quantity
                                 }</td>
-                                <td class="py-2 px-3 text-sm text-gray-700">$${subtotal}</td>
+                                <td class="py-2 px-3 text-sm text-gray-700">BDT${subtotal}</td>
                                 <td class="py-2 px-3 text-sm text-gray-700">
                                     <img src="${imgSrc}" alt="${
               item.Name || "Product"
@@ -666,7 +667,7 @@
                                 <td class="py-3 px-4 text-sm text-gray-700">${
                                   payment.SubscriptionID || "N/A"
                                 }</td>
-                                <td class="py-3 px-4 text-sm text-gray-700">$${parseFloat(
+                                <td class="py-3 px-4 text-sm text-gray-700">BDT${parseFloat(
                                   payment.Amount
                                 ).toFixed(2)}</td>
                                 <td class="py-3 px-4 text-sm text-gray-700">${formatDate(
